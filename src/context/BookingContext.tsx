@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Booking, Comment, User } from '@/types';
 import { 
@@ -12,12 +11,12 @@ import {
   approveBooking
 } from '@/lib/storage';
 import { generateId, generateVerificationToken, sendVerificationEmail } from '@/lib/utils';
-import { toast } from '@/components/ui/sonner';
+import { toast } from '@/hooks/use-toast';
 
 interface BookingContextType {
   bookings: Booking[];
   user: User | null;
-  createBooking: (booking: Omit<Booking, 'id' | 'createdAt' | 'status' | 'comments' | 'createdBy'>) => Promise<string>;
+  createBooking: (booking: Omit<Booking, 'id' | 'createdAt' | 'status' | 'comments' | 'createdBy'> & { createdBy: User }) => Promise<string>;
   addCommentToBooking: (bookingId: string, content: string, email: string) => Promise<string>;
   getBookingById: (id: string) => Booking | undefined;
   verifyBookingEmail: (id: string, token: string) => boolean;
@@ -39,7 +38,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }, []);
 
   const createBooking = async (
-    bookingData: Omit<Booking, 'id' | 'createdAt' | 'status' | 'comments' | 'createdBy'>
+    bookingData: Omit<Booking, 'id' | 'createdAt' | 'status' | 'comments' | 'createdBy'> & { createdBy: User }
   ): Promise<string> => {
     const currentUser = getUser() || { email: bookingData.createdBy.email, verified: false };
     const token = generateVerificationToken();

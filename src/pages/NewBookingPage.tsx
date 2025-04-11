@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -19,8 +18,8 @@ import { Calendar } from '@/components/ui/calendar';
 import { cn } from '@/lib/utils';
 import { useBooking } from '@/context/BookingContext';
 import { rooms } from '@/data/mockData';
-import { Room } from '@/types';
-import { toast } from '@/components/ui/sonner';
+import { Room, User } from '@/types';
+import { toast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
   title: z.string().min(5, { message: 'Title must be at least 5 characters' }),
@@ -70,7 +69,7 @@ const NewBookingPage = () => {
       const endDate = new Date(data.date);
       endDate.setHours(endHour, endMinute);
       
-      // Create booking
+      // Create booking with correct type structure
       const bookingId = await createBooking({
         title: data.title,
         description: data.description,
