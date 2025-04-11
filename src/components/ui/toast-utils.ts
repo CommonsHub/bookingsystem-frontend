@@ -8,17 +8,13 @@ export const toast = {
   
   // Add convenience methods
   success: (message: string) => {
-    return sonnerToast({
-      title: "Success",
-      description: message,
+    return sonnerToast.success(message, {
       className: "bg-green-50 border-green-200 text-green-800"
     });
   },
   
   error: (message: string) => {
-    return sonnerToast({
-      title: "Error",
-      description: message,
+    return sonnerToast.error(message, {
       className: "bg-red-50 border-red-200 text-red-800"
     });
   }
