@@ -1,10 +1,21 @@
 
 import { User, Booking, Comment } from '@/types';
+import { generateMockBookings } from '@/data/mockData';
 
 // LocalStorage keys
 const BOOKINGS_KEY = 'room-time-scribe-bookings';
 const USER_KEY = 'room-time-scribe-user';
 const TOKENS_KEY = 'room-time-scribe-tokens';
+
+// Initialize localStorage with mock data if empty
+const initializeStorage = () => {
+  if (!localStorage.getItem(BOOKINGS_KEY)) {
+    localStorage.setItem(BOOKINGS_KEY, JSON.stringify(generateMockBookings()));
+  }
+};
+
+// Call initialization
+initializeStorage();
 
 // User management
 export const saveUser = (email: string, verified: boolean = false): User => {

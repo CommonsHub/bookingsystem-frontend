@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useBooking } from '@/context/BookingContext';
 import { formatDateTime, getRelativeTime } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { CalendarDays, Filter, PlusCircle } from 'lucide-react';
+import { CalendarDays, Filter, PlusCircle, Clock, Check, X, MessageSquare } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -11,13 +11,42 @@ import { Separator } from '@/components/ui/separator';
 const HomePage = () => {
   const { bookings, user } = useBooking();
 
-  const statusColor = (status: string) => {
+  const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'draft': return 'bg-muted text-muted-foreground';
-      case 'pending': return 'bg-yellow-500 text-white';
-      case 'approved': return 'bg-green-500 text-white';
-      case 'rejected': return 'bg-red-500 text-white';
-      default: return 'bg-muted text-muted-foreground';
+      case 'draft':
+        return (
+          <Badge variant="outline" className="flex items-center gap-1 text-muted-foreground">
+            <Clock className="h-3 w-3" />
+            <span>Draft</span>
+          </Badge>
+        );
+      case 'pending':
+        return (
+          <Badge variant="warning" className="flex items-center gap-1 bg-yellow-500 text-white">
+            <Clock className="h-3 w-3" />
+            <span>Pending</span>
+          </Badge>
+        );
+      case 'approved':
+        return (
+          <Badge variant="success" className="flex items-center gap-1 bg-green-500 text-white">
+            <Check className="h-3 w-3" />
+            <span>Approved</span>
+          </Badge>
+        );
+      case 'rejected':
+        return (
+          <Badge variant="destructive" className="flex items-center gap-1">
+            <X className="h-3 w-3" />
+            <span>Rejected</span>
+          </Badge>
+        );
+      default:
+        return (
+          <Badge variant="outline" className="text-muted-foreground">
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+          </Badge>
+        );
     }
   };
 
@@ -72,9 +101,7 @@ const HomePage = () => {
               <Card className="h-full transition-all hover:shadow-md">
                 <CardHeader className="pb-3">
                   <div className="flex justify-between items-start">
-                    <Badge className={statusColor(booking.status)}>
-                      {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
-                    </Badge>
+                    {getStatusBadge(booking.status)}
                     {booking.status === 'draft' && (
                       <Badge variant="outline" className="text-muted-foreground">
                         Awaiting verification
@@ -103,8 +130,9 @@ const HomePage = () => {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Comments:</span>
-                      <span className="font-medium">
+                      <span className="font-medium flex items-center gap-1">
                         {booking.comments.filter(c => c.status === 'published').length}
+                        {booking.comments.length > 0 && <MessageSquare className="h-3 w-3" />}
                       </span>
                     </div>
                   </div>
