@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -19,7 +20,7 @@ import { cn } from '@/lib/utils';
 import { useBooking } from '@/context/BookingContext';
 import { rooms } from '@/data/mockData';
 import { Room, User } from '@/types';
-import { toast } from '@/hooks/use-toast';
+import { toast } from '@/components/ui/toast-utils';
 
 const formSchema = z.object({
   title: z.string().min(5, { message: 'Title must be at least 5 characters' }),
@@ -189,7 +190,13 @@ const NewBookingPage = () => {
                     <Calendar
                       mode="single"
                       selected={form.getValues('date')}
-                      onSelect={(date) => date && form.setValue('date', date)}
+                      onSelect={(date) => {
+                        if (date) {
+                          form.setValue('date', date);
+                          // Force re-render to update the button text
+                          form.trigger('date');
+                        }
+                      }}
                       initialFocus
                       disabled={(date) => date < new Date()}
                       className={cn("p-3 pointer-events-auto")}

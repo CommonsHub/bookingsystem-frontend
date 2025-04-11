@@ -11,7 +11,7 @@ import {
   approveBooking
 } from '@/lib/storage';
 import { generateId, generateVerificationToken, sendVerificationEmail } from '@/lib/utils';
-import { toast } from '@/hooks/use-toast';
+import { toast } from '@/components/ui/toast-utils';
 
 interface BookingContextType {
   bookings: Booking[];

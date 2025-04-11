@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useBooking } from '@/context/BookingContext';
@@ -26,7 +25,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { toast } from '@/hooks/use-toast';
+import { toast as toastUtils } from '@/components/ui/toast-utils';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { getUser } from '@/lib/storage';
 
@@ -42,10 +41,8 @@ const BookingDetail = () => {
   const booking = getBookingById(id);
   if (!booking) return <div>Booking not found</div>;
   
-  // Determine if the current user can approve the booking
   const canApproveBooking = booking.status === 'pending' && user?.verified;
   
-  // Filter comments to only show published ones, or drafts by the current user
   const visibleComments = booking.comments.filter(comment => {
     if (comment.status === 'published') return true;
     return user && user.email === comment.createdBy.email;
@@ -79,7 +76,6 @@ const BookingDetail = () => {
       await addCommentToBooking(id, comment, email);
       setComment('');
       
-      // Don't clear email as we want to remember it
       toast.success("Comment submitted! Please check your email to verify.");
     } catch (error) {
       toast.error("Failed to submit comment");
