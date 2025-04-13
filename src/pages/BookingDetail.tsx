@@ -17,7 +17,8 @@ import {
   CheckCircle2, 
   MailCheck,
   ChevronLeft,
-  Send
+  Send,
+  MessageSquare
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -143,6 +144,16 @@ const BookingDetail = () => {
               <AlertTitle>Booking Approved</AlertTitle>
               <AlertDescription>
                 Approved by {booking.approvedBy.email} on {formatDate(booking.approvedAt)}
+              </AlertDescription>
+            </Alert>
+          )}
+          
+          {booking.matrixRoomId && (
+            <Alert className="bg-blue-50 text-blue-800 border-blue-200">
+              <MessageSquare className="h-4 w-4" />
+              <AlertTitle>Matrix Room Available</AlertTitle>
+              <AlertDescription>
+                This booking has an associated Matrix room for communication.
               </AlertDescription>
             </Alert>
           )}
@@ -356,6 +367,28 @@ const BookingDetail = () => {
               </div>
             </CardContent>
           </Card>
+          
+          {booking.matrixRoomId && (
+            <Card className="bg-blue-50 border-blue-200">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MessageSquare className="h-5 w-5" />
+                  Matrix Room
+                </CardTitle>
+                <CardDescription>
+                  Communication channel for this booking
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="text-sm">
+                  <p>A Matrix room has been created for this booking. All participants can join to discuss details.</p>
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  <p>Room ID: {booking.matrixRoomId}</p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </div>

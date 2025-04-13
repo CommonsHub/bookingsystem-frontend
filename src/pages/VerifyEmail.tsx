@@ -22,10 +22,10 @@ export const VerifyEmail = () => {
     }
     
     // Short delay for UX
-    const timeoutId = setTimeout(() => {
+    const timeoutId = setTimeout(async () => {
       try {
         if (type === 'booking') {
-          const verified = verifyBookingEmail(id, token);
+          const verified = await verifyBookingEmail(id, token);
           setSuccess(verified);
           setBookingId(id);
         } else if (type === 'comment') {

@@ -12,6 +12,7 @@ import {
 } from '@/lib/storage';
 import { generateId, generateVerificationToken, sendVerificationEmail } from '@/lib/utils';
 import { toast } from '@/components/ui/toast-utils';
+import { createMatrixRoom, initMatrixClient, loginOrRegisterWithEmail } from '@/services/matrixService';
 
 interface BookingContextType {
   bookings: Booking[];
@@ -19,9 +20,9 @@ interface BookingContextType {
   createBooking: (booking: Omit<Booking, 'id' | 'createdAt' | 'status' | 'comments' | 'createdBy'> & { createdBy: User }) => Promise<string>;
   addCommentToBooking: (bookingId: string, content: string, email: string) => Promise<string>;
   getBookingById: (id: string) => Booking | undefined;
-  verifyBookingEmail: (id: string, token: string) => boolean;
+  verifyBookingEmail: (id: string, token: string) => Promise<boolean>;
   verifyCommentEmail: (bookingId: string, commentId: string, token: string) => boolean;
-  approveBookingRequest: (id: string) => void;
+  approveBookingRequest: (id: string) => Promise<void>;
   getUserEmail: () => string | null;
 }
 
@@ -105,7 +106,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     return bookings.find(booking => booking.id === id);
   };
 
-  const verifyBookingEmail = (id: string, token: string): boolean => {
+  const verifyBookingEmail = async (id: string, token: string): Promise<boolean> => {
     const booking = getBookingById(id);
     if (!booking) return false;
     
@@ -113,17 +114,50 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const tokens = JSON.parse(tokensString);
     
     if (tokens[`booking-${id}`] === token) {
-      // Update booking status
-      booking.status = 'pending';
-      saveBooking(booking);
-      
-      // Verify user email
-      verifyUser(booking.createdBy.email);
-      setUser(getUser());
-      
-      // Update state
-      setBookings(getBookings());
-      return true;
+      try {
+        // Update booking status
+        booking.status = 'pending';
+        
+        // Verify user email
+        verifyUser(booking.createdBy.email);
+        setUser(getUser());
+        
+        // Create Matrix room for the booking
+        const currentUser = getUser();
+        if (currentUser) {
+          // Login or register user with Matrix
+          const matrixAuth = await loginOrRegisterWithEmail(currentUser.email);
+          
+          if (matrixAuth) {
+            // Initialize Matrix client
+            initMatrixClient(matrixAuth.userId, matrixAuth.accessToken);
+            
+            // Create Matrix room
+            const roomId = await createMatrixRoom(booking, [matrixAuth.userId]);
+            
+            if (roomId) {
+              // Store Matrix room ID in booking
+              booking.matrixRoomId = roomId;
+              
+              // Update Matrix credentials in user
+              currentUser.matrixUserId = matrixAuth.userId;
+              currentUser.matrixAccessToken = matrixAuth.accessToken;
+              localStorage.setItem('room-time-scribe-user', JSON.stringify(currentUser));
+              setUser(currentUser);
+            }
+          }
+        }
+        
+        // Save booking with updated information
+        saveBooking(booking);
+        
+        // Update state
+        setBookings(getBookings());
+        return true;
+      } catch (error) {
+        console.error("Error creating Matrix room:", error);
+        return true; // Still return true to verify the booking even if Matrix room creation fails
+      }
     }
     
     return false;
@@ -155,16 +189,43 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     return false;
   };
 
-  const approveBookingRequest = (id: string): void => {
+  const approveBookingRequest = async (id: string): Promise<void> => {
     if (!user) {
       toast.error("You must be logged in to approve bookings");
       return;
     }
     
-    approveBooking(id, user);
-    setBookings(getBookings());
+    // Get the booking
+    const booking = getBookingById(id);
+    if (!booking) {
+      toast.error("Booking not found");
+      return;
+    }
     
-    toast.success("Booking request approved successfully!");
+    // Approve the booking in local storage
+    approveBooking(id, user);
+    
+    // Update the Matrix room status if it exists
+    if (booking.matrixRoomId && user.matrixUserId && user.matrixAccessToken) {
+      try {
+        // Initialize Matrix client
+        initMatrixClient(user.matrixUserId, user.matrixAccessToken);
+        
+        // Update room status
+        const { updateBookingStatus } = await import('@/services/matrixService');
+        await updateBookingStatus(booking.matrixRoomId, 'approved');
+        
+        toast.success("Booking approved and Matrix room updated");
+      } catch (error) {
+        console.error("Failed to update Matrix room status:", error);
+        toast.error("Booking approved but failed to update Matrix room");
+      }
+    } else {
+      toast.success("Booking request approved successfully!");
+    }
+    
+    // Update local state
+    setBookings(getBookings());
   };
 
   const getUserEmail = (): string | null => {
