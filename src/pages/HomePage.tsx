@@ -22,14 +22,14 @@ const HomePage = () => {
         );
       case 'pending':
         return (
-          <Badge variant="warning" className="flex items-center gap-1 bg-yellow-500 text-white">
+          <Badge className="flex items-center gap-1 bg-yellow-500 text-white">
             <Clock className="h-3 w-3" />
             <span>Pending</span>
           </Badge>
         );
       case 'approved':
         return (
-          <Badge variant="success" className="flex items-center gap-1 bg-green-500 text-white">
+          <Badge className="flex items-center gap-1 bg-green-500 text-white">
             <Check className="h-3 w-3" />
             <span>Approved</span>
           </Badge>

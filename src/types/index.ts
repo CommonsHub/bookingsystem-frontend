@@ -9,6 +9,8 @@ export interface Room {
 export interface User {
   email: string;
   verified: boolean;
+  matrixUserId?: string; // Matrix user ID (@username:server.org)
+  matrixAccessToken?: string; // Matrix access token for authentication
 }
 
 export interface Booking {
@@ -24,6 +26,7 @@ export interface Booking {
   comments: Comment[];
   approvedBy?: User;
   approvedAt?: string;
+  matrixRoomId?: string; // ID of the associated Matrix room
 }
 
 export interface Comment {
