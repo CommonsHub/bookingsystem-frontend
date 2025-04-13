@@ -3,7 +3,7 @@ import * as sdk from "matrix-js-sdk";
 import { Booking } from "@/types";
 
 // Matrix connection details
-const MATRIX_SERVER_URL = "https://matrix.org"; // Replace with your Matrix server URL
+const MATRIX_SERVER_URL = "https://matrix.commonshub.brussels";
 const ADMIN_USER_ID = "mushroom@commonshub.brussels";
 
 // Matrix client instance
