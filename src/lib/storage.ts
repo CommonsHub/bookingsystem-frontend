@@ -1,4 +1,3 @@
-
 import { User, Booking, Comment } from '@/types';
 import { generateMockBookings } from '@/data/mockData';
 
@@ -33,7 +32,7 @@ export const getUser = (): User | null => {
 export const verifyUser = (email: string): void => {
   const user = getUser();
   if (user && user.email === email) {
-    saveUser(email, true);
+    saveUser(email, user.name || '', true);
   }
 };
 

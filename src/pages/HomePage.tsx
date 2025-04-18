@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { useBooking } from '@/context/BookingContext';
 import { formatDateTime, getRelativeTime } from '@/lib/utils';
@@ -22,14 +21,14 @@ const HomePage = () => {
         );
       case 'pending':
         return (
-          <Badge variant="warning" className="flex items-center gap-1 bg-yellow-500 text-white">
+          <Badge variant="warning" className="flex items-center gap-1">
             <Clock className="h-3 w-3" />
             <span>Pending</span>
           </Badge>
         );
       case 'approved':
         return (
-          <Badge variant="success" className="flex items-center gap-1 bg-green-500 text-white">
+          <Badge variant="success" className="flex items-center gap-1">
             <Check className="h-3 w-3" />
             <span>Approved</span>
           </Badge>
