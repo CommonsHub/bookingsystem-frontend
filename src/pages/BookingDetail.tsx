@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useBooking } from '@/context/BookingContext';
+import AddComment from '@/components/AddComment';
 import { 
   formatDateTime, 
   formatDate, 
