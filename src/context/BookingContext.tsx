@@ -4,6 +4,7 @@ import { Booking, Comment, User } from '@/types';
 import { generateId, generateVerificationToken, sendVerificationEmail } from '@/lib/utils';
 import { toast } from '@/components/ui/toast-utils';
 import { supabase } from '@/integrations/supabase/client';
+import { generateMockBookings, rooms } from '@/data/mockData';
 
 interface BookingContextType {
   bookings: Booking[];
@@ -71,6 +72,15 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
         if (error) {
           console.error('Error fetching bookings:', error);
+          // If there's an error fetching from Supabase, load mock data instead
+          setBookings(generateMockBookings());
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          // If no data from Supabase, load mock data
+          console.log('No bookings found in database, loading mock data');
+          setBookings(generateMockBookings());
           return;
         }
 
@@ -86,7 +96,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
           },
           startTime: booking.start_time,
           endTime: booking.end_time,
-          status: booking.status as "draft" | "pending" | "approved" | "rejected", // Fix type casting
+          status: booking.status as "draft" | "pending" | "approved" | "rejected",
           createdAt: booking.created_at,
           createdBy: {
             email: booking.created_by_email,
@@ -105,6 +115,8 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
       } catch (error) {
         console.error('Error in fetchBookings:', error);
         toast.error('Failed to fetch bookings');
+        // Load mock data as fallback
+        setBookings(generateMockBookings());
       }
     };
 
@@ -112,6 +124,10 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const storedUser = getStorageUser();
     if (storedUser) {
       setUser(storedUser);
+    } else {
+      // Create a demo user if none exists
+      const demoUser = saveStorageUser('demo.user@example.com', 'Demo User', true);
+      setUser(demoUser);
     }
 
     fetchBookings();
