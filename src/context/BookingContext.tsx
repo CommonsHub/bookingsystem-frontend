@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Booking, Comment, User } from '@/types';
 import { generateId, generateVerificationToken, sendVerificationEmail } from '@/lib/utils';
@@ -15,6 +16,44 @@ interface BookingContextType {
   approveBookingRequest: (id: string) => void;
   getUserEmail: () => string | null;
 }
+
+// Local storage helper functions
+const getStorageUser = (): User | null => {
+  const data = localStorage.getItem('room-time-scribe-user');
+  if (!data) return null;
+  return JSON.parse(data) as User;
+};
+
+const saveStorageUser = (email: string, name: string = '', verified: boolean = false): User => {
+  const user: User = { email, name, verified };
+  localStorage.setItem('room-time-scribe-user', JSON.stringify(user));
+  return user;
+};
+
+const verifyStorageUser = (email: string): void => {
+  const user = getStorageUser();
+  if (user && user.email === email) {
+    saveStorageUser(email, user.name || '', true);
+  }
+};
+
+const saveStorageToken = (id: string, token: string, type: 'booking' | 'comment'): void => {
+  const existingTokensStr = localStorage.getItem('room-time-scribe-tokens') || '{}';
+  const existingTokens = JSON.parse(existingTokensStr);
+  
+  existingTokens[`${type}-${id}`] = token;
+  localStorage.setItem('room-time-scribe-tokens', JSON.stringify(existingTokens));
+};
+
+const addStorageComment = (bookingId: string, comment: Comment): void => {
+  // For now, we'll just update the local state
+  // In a real implementation, this would save to database
+};
+
+const updateStorageCommentStatus = (bookingId: string, commentId: string, status: 'draft' | 'published'): void => {
+  // For now, we'll just update the local state
+  // In a real implementation, this would save to database
+};
 
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
 
@@ -47,7 +86,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
           },
           startTime: booking.start_time,
           endTime: booking.end_time,
-          status: booking.status,
+          status: booking.status as "draft" | "pending" | "approved" | "rejected", // Fix type casting
           createdAt: booking.created_at,
           createdBy: {
             email: booking.created_by_email,
@@ -68,6 +107,12 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
         toast.error('Failed to fetch bookings');
       }
     };
+
+    // Set user from localStorage if available
+    const storedUser = getStorageUser();
+    if (storedUser) {
+      setUser(storedUser);
+    }
 
     fetchBookings();
   }, []);
@@ -127,6 +172,9 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
         });
       }
 
+      // Save token for verification
+      saveStorageToken(id, token, 'booking');
+
       return id;
     } catch (error) {
       console.error('Error in createBooking:', error);
@@ -141,7 +189,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     email: string
   ): Promise<string> => {
     const commentId = generateId('comment-');
-    const currentUser = getUser() || { email, verified: false };
+    const currentUser = getStorageUser() || { email, verified: false };
     const token = generateVerificationToken();
     
     const comment: Comment = {
@@ -153,9 +201,17 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
       status: 'draft'
     };
     
-    addComment(bookingId, comment);
-    saveToken(commentId, token, 'comment');
-    setBookings(getBookings());
+    addStorageComment(bookingId, comment);
+    saveStorageToken(commentId, token, 'comment');
+    
+    // Update local state
+    setBookings(prevBookings => 
+      prevBookings.map(booking => 
+        booking.id === bookingId 
+          ? { ...booking, comments: [...booking.comments, comment] }
+          : booking
+      )
+    );
     
     await sendVerificationEmail(
       email, 
@@ -179,13 +235,26 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const tokens = JSON.parse(tokensString);
     
     if (tokens[`booking-${id}`] === token) {
-      booking.status = 'pending';
-      saveBooking(booking);
+      // Update booking status
+      setBookings(prevBookings => 
+        prevBookings.map(b => 
+          b.id === id ? { ...b, status: 'pending' as const } : b
+        )
+      );
       
-      verifyUser(booking.createdBy.email);
-      setUser(getUser());
+      // Also update in Supabase
+      supabase
+        .from('bookings')
+        .update({ status: 'pending' })
+        .eq('id', id)
+        .then(({ error }) => {
+          if (error) console.error('Error updating booking status:', error);
+        });
       
-      setBookings(getBookings());
+      // Verify user
+      verifyStorageUser(booking.createdBy.email);
+      setUser(getStorageUser());
+      
       return true;
     }
     
@@ -203,12 +272,27 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const tokens = JSON.parse(tokensString);
     
     if (tokens[`comment-${commentId}`] === token) {
-      updateCommentStatus(bookingId, commentId, 'published');
+      updateStorageCommentStatus(bookingId, commentId, 'published');
       
-      verifyUser(comment.createdBy.email);
-      setUser(getUser());
+      // Update local state
+      setBookings(prevBookings => 
+        prevBookings.map(b => 
+          b.id === bookingId 
+            ? {
+                ...b,
+                comments: b.comments.map(c => 
+                  c.id === commentId 
+                    ? { ...c, status: 'published' as const }
+                    : c
+                )
+              }
+            : b
+        )
+      );
       
-      setBookings(getBookings());
+      verifyStorageUser(comment.createdBy.email);
+      setUser(getStorageUser());
+      
       return true;
     }
     
