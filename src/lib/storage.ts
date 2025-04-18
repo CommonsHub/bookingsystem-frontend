@@ -18,8 +18,8 @@ const initializeStorage = () => {
 initializeStorage();
 
 // User management
-export const saveUser = (email: string, verified: boolean = false): User => {
-  const user: User = { email, verified };
+export const saveUser = (email: string, name: string = '', verified: boolean = false): User => {
+  const user: User = { email, name, verified };
   localStorage.setItem(USER_KEY, JSON.stringify(user));
   return user;
 };

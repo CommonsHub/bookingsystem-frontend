@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -31,6 +30,7 @@ const formSchema = z.object({
   endTime: z.string({ required_error: 'Please select an end time' })
     .refine(time => time !== '', { message: 'Please select an end time' }),
   email: z.string().email({ message: 'Please enter a valid email address' }),
+  name: z.string().min(2, { message: 'Please enter your name' }),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -51,6 +51,7 @@ const NewBookingPage = () => {
       startTime: '',
       endTime: '',
       email: defaultEmail,
+      name: '',
     },
   });
 
@@ -77,7 +78,7 @@ const NewBookingPage = () => {
         room: selectedRoom,
         startTime: startDate.toISOString(),
         endTime: endDate.toISOString(),
-        createdBy: { email: data.email, verified: false }
+        createdBy: { email: data.email, name: data.name, verified: false }
       });
 
       toast.success("Booking request submitted! Please check your email to verify.");
@@ -249,23 +250,40 @@ const NewBookingPage = () => {
             
             <Separator />
             
-            <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="Your email address"
-                {...form.register('email')}
-              />
-              <p className="text-sm text-muted-foreground">
-                A confirmation link will be sent to this email to verify your booking request.
-              </p>
-              {form.formState.errors.email && (
-                <p className="text-sm font-medium text-destructive">
-                  {form.formState.errors.email.message}
-                </p>
-              )}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="Your name"
+                  {...form.register('name')}
+                />
+                {form.formState.errors.name && (
+                  <p className="text-sm font-medium text-destructive">
+                    {form.formState.errors.name.message}
+                  </p>
+                )}
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="email">Email Address</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Your email address"
+                  {...form.register('email')}
+                />
+                {form.formState.errors.email && (
+                  <p className="text-sm font-medium text-destructive">
+                    {form.formState.errors.email.message}
+                  </p>
+                )}
+              </div>
             </div>
+            <p className="text-sm text-muted-foreground">
+              A confirmation link will be sent to this email to verify your booking request.
+            </p>
           </CardContent>
           
           <CardFooter className="flex justify-between">
