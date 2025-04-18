@@ -1,6 +1,6 @@
 
 import { Booking } from '@/types';
-import { verifyStorageUser } from '@/utils/storage-helpers';
+import { verifyStorageUser, getStorageUser } from '@/utils/storage-helpers';
 
 export const useVerification = (
   bookings: Booking[],

@@ -6,6 +6,7 @@ import { generateMockBookings } from '@/data/mockData';
 import { useBookingOperations } from '@/hooks/useBookingOperations';
 import { useVerification } from '@/hooks/useVerification';
 import { getStorageUser, saveStorageUser } from '@/utils/storage-helpers';
+import { toast } from '@/components/ui/toast-utils';
 
 interface BookingContextType {
   bookings: Booking[];
