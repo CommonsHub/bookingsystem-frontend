@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useBooking } from '@/context/BookingContext';
@@ -59,24 +58,16 @@ const BookingDetail = () => {
     }
   };
 
-  const handleSubmitComment = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!comment.trim()) {
+  const handleSubmitComment = async (commentData: { content: string; name: string; email: string }) => {
+    if (!commentData.content.trim()) {
       toast.error("Comment cannot be empty");
-      return;
-    }
-    
-    if (!email.trim()) {
-      toast.error("Email is required");
       return;
     }
     
     setSubmitting(true);
     
     try {
-      await addCommentToBooking(id, comment, email);
-      setComment('');
-      
+      await addCommentToBooking(id, commentData.content, commentData.email);
       toast.success("Comment submitted! Please check your email to verify.");
     } catch (error) {
       toast.error("Failed to submit comment");
@@ -223,16 +214,16 @@ const BookingDetail = () => {
                   <Card key={comment.id} className={comment.status === 'draft' ? 'border-dashed' : ''}>
                     <CardHeader className="pb-2">
                       <div className="flex justify-between items-center">
-                        <div className="font-medium">{comment.createdBy.email}</div>
+                        <div className="font-medium">
+                          {comment.createdBy.name || 'Anonymous'}
+                        </div>
                         <div className="text-xs text-muted-foreground">
                           {getRelativeTime(comment.createdAt)}
                         </div>
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <p>
-                        {comment.content}
-                      </p>
+                      <p>{comment.content}</p>
                     </CardContent>
                     {comment.status === 'draft' && (
                       <CardFooter className="bg-muted/20 pt-2 pb-2 text-sm text-muted-foreground italic">
@@ -244,42 +235,10 @@ const BookingDetail = () => {
               </div>
             )}
             
-            <form onSubmit={handleSubmitComment} className="space-y-4">
-              <Textarea
-                placeholder="Add a comment..."
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                className="min-h-32"
-              />
-              
-              {!user?.email && (
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Your email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    A confirmation link will be sent to this email to verify your comment.
-                  </p>
-                </div>
-              )}
-              
-              <div className="flex justify-end">
-                <Button 
-                  type="submit" 
-                  disabled={submitting}
-                  className="gap-2"
-                >
-                  <Send className="h-4 w-4" />
-                  {submitting ? 'Submitting...' : 'Add Comment'}
-                </Button>
-              </div>
-            </form>
+            <AddComment 
+              onSubmit={handleSubmitComment}
+              isSubmitting={submitting}
+            />
           </div>
         </div>
         
