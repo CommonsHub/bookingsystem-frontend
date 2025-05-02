@@ -7,6 +7,7 @@ type AuthContextType = {
   loading: boolean;
   signInWithMagicLink: (email: string) => Promise<void>;
   signOut: () => Promise<void>;
+  getDisplayName: () => string;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -46,8 +47,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (error) throw error;
   };
 
+  const getDisplayName = (): string => {
+    if (!user) return 'anon';
+    return 'commoner'; // TODO read display name
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithMagicLink, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signInWithMagicLink, signOut, getDisplayName }}>
       {children}
     </AuthContext.Provider>
   );

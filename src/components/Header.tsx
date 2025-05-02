@@ -1,9 +1,17 @@
-
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/context/AuthContext";
 import { CalendarDays, PlusCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
+  const { user, signOut, getDisplayName } = useAuth();
+
   return (
     <header className="w-full border-b bg-card">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
@@ -18,6 +26,24 @@ const Header = () => {
               <span>New Booking</span>
             </Link>
           </Button>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">
+                  Hi {getDisplayName()}!
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => signOut()}>
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button asChild variant="outline">
+              <Link to="/login">Login</Link>
+            </Button>
+          )}
         </div>
       </div>
     </header>
