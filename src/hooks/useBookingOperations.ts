@@ -5,6 +5,7 @@ import { generateId, generateVerificationToken, sendVerificationEmail } from '@/
 import { toast } from '@/components/ui/toast-utils';
 import { supabase } from '@/integrations/supabase/client';
 import { saveStorageToken, verifyStorageUser } from '@/utils/storage-helpers';
+import { v4 as uuidv4 } from 'uuid';
 
 export const useBookingOperations = (
   bookings: Booking[], 
@@ -14,7 +15,9 @@ export const useBookingOperations = (
     bookingData: Omit<Booking, 'id' | 'createdAt' | 'status' | 'comments' | 'createdBy'> & { createdBy: User }
   ): Promise<string> => {
     const token = generateVerificationToken();
-    const id = generateId('booking-');
+
+    // generate uuid v4
+    const id = uuidv4();
     
     try {
       const { error } = await supabase
