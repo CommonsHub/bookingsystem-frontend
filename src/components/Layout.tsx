@@ -11,7 +11,7 @@ const Layout = () => {
       </main>
       <footer className="py-6 border-t">
         <div className="container mx-auto px-4 text-center text-muted-foreground text-sm">
-          © {new Date().getFullYear()} Room Time Scribe. All rights reserved.
+          © {new Date().getFullYear()} Commons Hub Brussels. All rights reserved.
         </div>
       </footer>
     </div>
