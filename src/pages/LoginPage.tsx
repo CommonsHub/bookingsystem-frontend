@@ -38,10 +38,8 @@ export default function LoginPage() {
           <CardHeader>
             <CardTitle>Woohoo</CardTitle>
             <CardDescription>
-              <p>
-                Your magic link is on its way! Check your mail at <b>{email}</b>{" "}
-                to continue sign in.
-              </p>
+              Your magic link is on its way! Check your mail at <b>{email}</b>{" "}
+              to continue sign in.
             </CardDescription>
           </CardHeader>
         </Card>
