@@ -17,7 +17,7 @@ const Header = () => {
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
           <CalendarDays className="h-6 w-6 text-brand-600" />
-          <span className="font-semibold text-xl">Room Time Scribe</span>
+          <span className="font-semibold text-xl">Commons Hub Brussels Bookings</span>
         </Link>
         <div className="flex items-center space-x-4">
           <Button asChild variant="default">
