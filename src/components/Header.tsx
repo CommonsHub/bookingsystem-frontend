@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
-import { CalendarDays, PlusCircle } from "lucide-react";
+import { CalendarDays, PlusCircle, UserIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -21,17 +21,25 @@ const Header = () => {
             Commons Hub Brussels Bookings
           </span>
         </Link>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2">
           <Button asChild variant="default">
             <Link to="/bookings/new" className="flex items-center space-x-2">
               <PlusCircle className="h-4 w-4" />
-              <span>New Booking</span>
+              <span className="hidden md:block">New Booking</span>
             </Link>
           </Button>
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline">Hi {getDisplayName()}!</Button>
+                <Button
+                  variant="outline"
+                  className="flex items-center space-x-2"
+                >
+                  <UserIcon className="h-4 w-4" />
+                  <span className="hidden md:block">
+                    Hi {getDisplayName()}!
+                  </span>
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => signOut()}>
@@ -41,7 +49,10 @@ const Header = () => {
             </DropdownMenu>
           ) : (
             <Button asChild variant="outline">
-              <Link to="/login">Login</Link>
+              <Link to="/login" className="flex items-center space-x-2">
+                <UserIcon className="h-4 w-4" />
+                <span className="hidden md:block">Login</span>
+              </Link>
             </Button>
           )}
         </div>
