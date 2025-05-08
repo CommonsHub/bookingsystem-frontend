@@ -1,23 +1,60 @@
-
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, PlusCircle } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/context/AuthContext";
+import { CalendarDays, PlusCircle, UserIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
+  const { user, signOut, getDisplayName } = useAuth();
+
   return (
     <header className="w-full border-b bg-card">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
           <CalendarDays className="h-6 w-6 text-brand-600" />
-          <span className="font-semibold text-xl">Commons Hub Brussels Bookings</span>
+          <span className="font-semibold text-xl">
+            Commons Hub Brussels Bookings
+          </span>
         </Link>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2">
           <Button asChild variant="default">
             <Link to="/bookings/new" className="flex items-center space-x-2">
               <PlusCircle className="h-4 w-4" />
-              <span>New Booking</span>
+              <span className="hidden md:block">New Booking</span>
             </Link>
           </Button>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="flex items-center space-x-2"
+                >
+                  <UserIcon className="h-4 w-4" />
+                  <span className="hidden md:block">
+                    Hi {getDisplayName()}!
+                  </span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => signOut()}>
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button asChild variant="outline">
+              <Link to="/login" className="flex items-center space-x-2">
+                <UserIcon className="h-4 w-4" />
+                <span className="hidden md:block">Login</span>
+              </Link>
+            </Button>
+          )}
         </div>
       </div>
     </header>
