@@ -6,8 +6,8 @@ import { Toaster as SonnerToaster } from "sonner";
 
 import Layout from "./components/Layout";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import { AuthProvider } from "./context/AuthContext";
-import { BookingProvider } from "./context/BookingContext";
+import { AuthProvider } from "./context/AuthProvider";
+import { BookingProvider } from "./context/BookingProvider";
 import AuthCallback from "./pages/AuthCallback";
 import BookingDetail from "./pages/BookingDetail";
 import HomePage from "./pages/HomePage";

@@ -1,38 +1,12 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { Booking, User } from "@/types";
-import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/components/ui/toast-utils";
 import { generateMockBookings } from "@/data/mockData";
 import { useBookingOperations } from "@/hooks/useBookingOperations";
 import { useVerification } from "@/hooks/useVerification";
+import { supabase } from "@/integrations/supabase/client";
+import { Booking, User } from "@/types";
 import { getStorageUser, saveStorageUser } from "@/utils/storage-helpers";
-import { toast } from "@/components/ui/toast-utils";
-
-interface BookingContextType {
-  bookings: Booking[];
-  user: User | null;
-  createBooking: (
-    booking: Omit<
-      Booking,
-      "id" | "createdAt" | "status" | "comments" | "createdBy"
-    > & { createdBy: User },
-  ) => Promise<string>;
-  addCommentToBooking: (
-    bookingId: string,
-    content: string,
-    email: string,
-  ) => Promise<string>;
-  getBookingById: (id: string) => Booking | undefined;
-  verifyBookingEmail: (id: string, token: string) => boolean;
-  verifyCommentEmail: (
-    bookingId: string,
-    commentId: string,
-    token: string,
-  ) => boolean;
-  approveBookingRequest: (id: string) => void;
-  getUserEmail: () => string | null;
-}
-
-const BookingContext = createContext<BookingContextType | undefined>(undefined);
+import React, { useEffect, useState } from "react";
+import { BookingContext } from "./BookingContext";
 
 export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -149,12 +123,4 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
       {children}
     </BookingContext.Provider>
   );
-};
-
-export const useBooking = () => {
-  const context = useContext(BookingContext);
-  if (context === undefined) {
-    throw new Error("useBooking must be used within a BookingProvider");
-  }
-  return context;
 };
