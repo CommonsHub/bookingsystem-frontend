@@ -1,6 +1,6 @@
-import { supabase } from '@/integrations/supabase/client';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthCallback() {
   const navigate = useNavigate();
@@ -8,10 +8,10 @@ export default function AuthCallback() {
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        navigate('/');
-      } else if (event === 'SIGNED_OUT') {
-        setError('Authentication failed. Please try again.');
+      if (event === "SIGNED_IN" && session) {
+        navigate("/");
+      } else if (event === "SIGNED_OUT") {
+        setError("Authentication failed. Please try again.");
       }
     });
   }, [navigate]);
@@ -25,4 +25,4 @@ export default function AuthCallback() {
       )}
     </div>
   );
-} 
+}

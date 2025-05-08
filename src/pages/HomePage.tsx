@@ -1,10 +1,18 @@
-import { Link } from 'react-router-dom';
-import { useBooking } from '@/context/BookingContext';
-import { formatDateTime } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { CalendarDays, PlusCircle, Clock, Check, X, MessageSquare, Users } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+import { Link } from "react-router-dom";
+import { useBooking } from "@/context/BookingContext";
+import { formatDateTime } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import {
+  CalendarDays,
+  PlusCircle,
+  Clock,
+  Check,
+  X,
+  MessageSquare,
+  Users,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import {
   Table,
   TableBody,
@@ -20,28 +28,31 @@ const HomePage = () => {
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'draft':
+      case "draft":
         return (
-          <Badge variant="outline" className="flex items-center gap-1 text-muted-foreground">
+          <Badge
+            variant="outline"
+            className="flex items-center gap-1 text-muted-foreground"
+          >
             <Clock className="h-3 w-3" />
             <span>Draft</span>
           </Badge>
         );
-      case 'pending':
+      case "pending":
         return (
           <Badge variant="warning" className="flex items-center gap-1">
             <Clock className="h-3 w-3" />
             <span>Pending</span>
           </Badge>
         );
-      case 'approved':
+      case "approved":
         return (
           <Badge variant="success" className="flex items-center gap-1">
             <Check className="h-3 w-3" />
             <span>Approved</span>
           </Badge>
         );
-      case 'rejected':
+      case "rejected":
         return (
           <Badge variant="destructive" className="flex items-center gap-1">
             <X className="h-3 w-3" />
@@ -57,8 +68,8 @@ const HomePage = () => {
     }
   };
 
-  const visibleBookings = bookings.filter(booking => {
-    if (booking.status !== 'draft') return true;
+  const visibleBookings = bookings.filter((booking) => {
+    if (booking.status !== "draft") return true;
     return user && user.email === booking.createdBy.email;
   });
 
@@ -71,7 +82,7 @@ const HomePage = () => {
             View all room booking requests and their status
           </p>
         </div>
-        
+
         <Button asChild>
           <Link to="/bookings/new" className="flex items-center space-x-2">
             <PlusCircle className="h-4 w-4" />
@@ -79,7 +90,7 @@ const HomePage = () => {
           </Link>
         </Button>
       </div>
-      
+
       <Separator />
 
       {visibleBookings.length === 0 ? (
@@ -110,7 +121,13 @@ const HomePage = () => {
             </TableHeader>
             <TableBody>
               {visibleBookings.map((booking) => (
-                <TableRow key={booking.id} className="cursor-pointer" onClick={() => window.location.href = `/bookings/${booking.id}`}>
+                <TableRow
+                  key={booking.id}
+                  className="cursor-pointer"
+                  onClick={() =>
+                    (window.location.href = `/bookings/${booking.id}`)
+                  }
+                >
                   <TableCell className="font-medium">{booking.title}</TableCell>
                   <TableCell>{booking.room.name}</TableCell>
                   <TableCell>{formatDateTime(booking.startTime)}</TableCell>
@@ -121,11 +138,19 @@ const HomePage = () => {
                     </div>
                   </TableCell>
                   <TableCell>{getStatusBadge(booking.status)}</TableCell>
-                  <TableCell>{booking.createdBy.email.split('@')[0]}</TableCell>
+                  <TableCell>{booking.createdBy.email.split("@")[0]}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <span>{booking.comments.filter(c => c.status === 'published').length}</span>
-                      {booking.comments.length > 0 && <MessageSquare className="h-3 w-3" />}
+                      <span>
+                        {
+                          booking.comments.filter(
+                            (c) => c.status === "published",
+                          ).length
+                        }
+                      </span>
+                      {booking.comments.length > 0 && (
+                        <MessageSquare className="h-3 w-3" />
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>

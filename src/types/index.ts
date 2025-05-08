@@ -1,4 +1,3 @@
-
 export interface Room {
   id: string;
   name: string;
@@ -19,7 +18,7 @@ export interface Booking {
   room: Room;
   startTime: string;
   endTime: string;
-  status: 'draft' | 'pending' | 'approved' | 'rejected';
+  status: "draft" | "pending" | "approved" | "rejected";
   createdAt: string;
   createdBy: User;
   comments: Comment[];
@@ -33,5 +32,5 @@ export interface Comment {
   content: string;
   createdAt: string;
   createdBy: User;
-  status: 'draft' | 'published';
+  status: "draft" | "published";
 }

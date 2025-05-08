@@ -40,7 +40,10 @@ const App = () => (
                   }
                 />
                 <Route path="bookings/:id" element={<BookingDetail />} />
-                <Route path="verify/:type/:id/:token" element={<VerifyEmail />} />
+                <Route
+                  path="verify/:type/:id/:token"
+                  element={<VerifyEmail />}
+                />
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>
