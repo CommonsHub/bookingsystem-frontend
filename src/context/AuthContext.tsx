@@ -1,6 +1,6 @@
-import { supabase } from '@/integrations/supabase/client';
-import { User } from '@supabase/supabase-js';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { supabase } from "@/integrations/supabase/client";
+import { User } from "@supabase/supabase-js";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type AuthContextType = {
   user: User | null;
@@ -24,7 +24,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
 
     // Listen for changes on auth state (sign in, sign out, etc.)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setLoading(false);
     });
@@ -48,12 +50,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const getDisplayName = (): string => {
-    if (!user) return 'anon';
-    return 'commoner'; // TODO read display name
+    if (!user) return "anon";
+    return "commoner"; // TODO read display name
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithMagicLink, signOut, getDisplayName }}>
+    <AuthContext.Provider
+      value={{ user, loading, signInWithMagicLink, signOut, getDisplayName }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -62,7 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
-} 
+}

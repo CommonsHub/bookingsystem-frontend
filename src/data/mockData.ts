@@ -1,36 +1,36 @@
 import { Room, Booking, User, Comment } from "../types";
 
 export const rooms: Room[] = [
-  { 
-    id: "room-001", 
-    name: "Conference Room A", 
-    capacity: 12, 
-    location: "1st Floor, East Wing" 
+  {
+    id: "room-001",
+    name: "Conference Room A",
+    capacity: 12,
+    location: "1st Floor, East Wing",
   },
-  { 
-    id: "room-002", 
-    name: "Meeting Room B", 
-    capacity: 8, 
-    location: "2nd Floor, West Wing" 
+  {
+    id: "room-002",
+    name: "Meeting Room B",
+    capacity: 8,
+    location: "2nd Floor, West Wing",
   },
-  { 
-    id: "room-003", 
-    name: "Boardroom", 
-    capacity: 20, 
-    location: "3rd Floor, Executive Suite" 
+  {
+    id: "room-003",
+    name: "Boardroom",
+    capacity: 20,
+    location: "3rd Floor, Executive Suite",
   },
-  { 
-    id: "room-004", 
-    name: "Brainstorm Room", 
-    capacity: 6, 
-    location: "1st Floor, Innovation Hub" 
+  {
+    id: "room-004",
+    name: "Brainstorm Room",
+    capacity: 6,
+    location: "1st Floor, Innovation Hub",
   },
-  { 
-    id: "room-005", 
-    name: "Training Room", 
-    capacity: 30, 
-    location: "4th Floor, Learning Center" 
-  }
+  {
+    id: "room-005",
+    name: "Training Room",
+    capacity: 30,
+    location: "4th Floor, Learning Center",
+  },
 ];
 
 // Demo users with more variety
@@ -40,7 +40,7 @@ const demoUsers: User[] = [
   { email: "tech.lead@example.com", verified: true },
   { email: "product.manager@example.com", verified: true },
   { email: "dev.team@example.com", verified: true },
-  { email: "marketing@example.com", verified: true }
+  { email: "marketing@example.com", verified: true },
 ];
 
 // Create sample comments with more variety
@@ -48,38 +48,42 @@ const createSampleComments = (bookingId: string): Comment[] => {
   const commentTemplates = [
     {
       content: "Can we make sure the projector is set up for this meeting?",
-      createdBy: demoUsers[0]
+      createdBy: demoUsers[0],
     },
     {
       content: "I've invited the marketing team to join as well.",
-      createdBy: demoUsers[1]
+      createdBy: demoUsers[1],
     },
     {
       content: "We might need to extend this meeting by 30 minutes.",
-      createdBy: demoUsers[2]
+      createdBy: demoUsers[2],
     },
     {
       content: "Please prepare the whiteboard markers.",
-      createdBy: demoUsers[3]
+      createdBy: demoUsers[3],
     },
     {
       content: "I'll bring the presentation materials.",
-      createdBy: demoUsers[4]
+      createdBy: demoUsers[4],
     },
     {
       content: "Can we also discuss the Q3 roadmap?",
-      createdBy: demoUsers[5]
-    }
+      createdBy: demoUsers[5],
+    },
   ];
-  
-  return commentTemplates.slice(0, Math.floor(Math.random() * 4) + 1).map((template, index) => ({
-    id: `comment-${bookingId}-${index}`,
-    bookingId,
-    content: template.content,
-    createdAt: new Date(Date.now() - Math.random() * 86400000 * 3).toISOString(),
-    createdBy: template.createdBy,
-    status: 'published'
-  }));
+
+  return commentTemplates
+    .slice(0, Math.floor(Math.random() * 4) + 1)
+    .map((template, index) => ({
+      id: `comment-${bookingId}-${index}`,
+      bookingId,
+      content: template.content,
+      createdAt: new Date(
+        Date.now() - Math.random() * 86400000 * 3,
+      ).toISOString(),
+      createdBy: template.createdBy,
+      status: "published",
+    }));
 };
 
 // Generate dates including past dates
@@ -101,12 +105,12 @@ export const generateMockBookings = (): Booking[] => {
       room: rooms[2],
       startTime: getDate(-5, 10),
       endTime: getDate(-5, 12),
-      status: 'approved',
+      status: "approved",
       createdAt: getDate(-7),
       createdBy: demoUsers[0],
       comments: createSampleComments("booking-001"),
       approvedBy: demoUsers[3],
-      approvedAt: getDate(-6)
+      approvedAt: getDate(-6),
     },
     {
       id: "booking-002",
@@ -115,12 +119,12 @@ export const generateMockBookings = (): Booking[] => {
       room: rooms[3],
       startTime: getDate(-2, 14),
       endTime: getDate(-2, 16),
-      status: 'approved',
+      status: "approved",
       createdAt: getDate(-4),
       createdBy: demoUsers[1],
       comments: createSampleComments("booking-002"),
       approvedBy: demoUsers[2],
-      approvedAt: getDate(-3)
+      approvedAt: getDate(-3),
     },
     // Current/upcoming approved bookings
     {
@@ -130,12 +134,12 @@ export const generateMockBookings = (): Booking[] => {
       room: rooms[0],
       startTime: getDate(1, 9),
       endTime: getDate(1, 17),
-      status: 'approved',
+      status: "approved",
       createdAt: getDate(-3),
       createdBy: demoUsers[2],
       comments: createSampleComments("booking-003"),
       approvedBy: demoUsers[3],
-      approvedAt: getDate(-1)
+      approvedAt: getDate(-1),
     },
     // Pending bookings
     {
@@ -145,10 +149,10 @@ export const generateMockBookings = (): Booking[] => {
       room: rooms[1],
       startTime: getDate(3, 13),
       endTime: getDate(3, 15),
-      status: 'pending',
+      status: "pending",
       createdAt: getDate(-1),
       createdBy: demoUsers[4],
-      comments: createSampleComments("booking-004")
+      comments: createSampleComments("booking-004"),
     },
     {
       id: "booking-005",
@@ -157,10 +161,10 @@ export const generateMockBookings = (): Booking[] => {
       room: rooms[4],
       startTime: getDate(4, 10),
       endTime: getDate(4, 12),
-      status: 'pending',
+      status: "pending",
       createdAt: getDate(-1),
       createdBy: demoUsers[2],
-      comments: createSampleComments("booking-005")
+      comments: createSampleComments("booking-005"),
     },
     // Draft bookings
     {
@@ -170,10 +174,10 @@ export const generateMockBookings = (): Booking[] => {
       room: rooms[4],
       startTime: getDate(7, 9),
       endTime: getDate(7, 17),
-      status: 'draft',
+      status: "draft",
       createdAt: new Date().toISOString(),
       createdBy: demoUsers[1],
-      comments: []
+      comments: [],
     },
     // Rejected booking
     {
@@ -183,14 +187,14 @@ export const generateMockBookings = (): Booking[] => {
       room: rooms[2],
       startTime: getDate(5, 16),
       endTime: getDate(5, 18),
-      status: 'rejected',
+      status: "rejected",
       createdAt: getDate(-2),
       createdBy: demoUsers[5],
       comments: createSampleComments("booking-007"),
       approvedBy: demoUsers[3],
-      approvedAt: getDate(-1)
-    }
+      approvedAt: getDate(-1),
+    },
   ];
-  
+
   return mockBookings;
 };
