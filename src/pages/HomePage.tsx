@@ -1,40 +1,58 @@
-
-import { Link } from 'react-router-dom';
-import { useBooking } from '@/context/BookingContext';
-import { formatDateTime, getRelativeTime } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { CalendarDays, Filter, PlusCircle, Clock, Check, X, MessageSquare } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { Link } from "react-router-dom";
+import { useBooking } from "@/context/BookingContext";
+import { formatDateTime } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import {
+  CalendarDays,
+  PlusCircle,
+  Clock,
+  Check,
+  X,
+  MessageSquare,
+  Users,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const HomePage = () => {
   const { bookings, user } = useBooking();
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'draft':
+      case "draft":
         return (
-          <Badge variant="outline" className="flex items-center gap-1 text-muted-foreground">
+          <Badge
+            variant="outline"
+            className="flex items-center gap-1 text-muted-foreground"
+          >
             <Clock className="h-3 w-3" />
             <span>Draft</span>
           </Badge>
         );
-      case 'pending':
+      case "pending":
         return (
-          <Badge className="flex items-center gap-1 bg-yellow-500 text-white">
+          <Badge variant="warning" className="flex items-center gap-1">
             <Clock className="h-3 w-3" />
             <span>Pending</span>
           </Badge>
         );
-      case 'approved':
+      case "approved":
         return (
-          <Badge className="flex items-center gap-1 bg-green-500 text-white">
+          <Badge variant="success" className="flex items-center gap-1">
             <Check className="h-3 w-3" />
             <span>Approved</span>
           </Badge>
         );
-      case 'rejected':
+      case "rejected":
         return (
           <Badge variant="destructive" className="flex items-center gap-1">
             <X className="h-3 w-3" />
@@ -50,12 +68,8 @@ const HomePage = () => {
     }
   };
 
-  // Filter bookings to show only visible ones
-  const visibleBookings = bookings.filter(booking => {
-    // Show all non-draft bookings
-    if (booking.status !== 'draft') return true;
-    
-    // Show draft bookings only to the creator
+  const visibleBookings = bookings.filter((booking) => {
+    if (booking.status !== "draft") return true;
     return user && user.email === booking.createdBy.email;
   });
 
@@ -68,7 +82,7 @@ const HomePage = () => {
             View all room booking requests and their status
           </p>
         </div>
-        
+
         <Button asChild>
           <Link to="/bookings/new" className="flex items-center space-x-2">
             <PlusCircle className="h-4 w-4" />
@@ -76,7 +90,7 @@ const HomePage = () => {
           </Link>
         </Button>
       </div>
-      
+
       <Separator />
 
       {visibleBookings.length === 0 ? (
@@ -91,62 +105,58 @@ const HomePage = () => {
           </Button>
         </div>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {visibleBookings.map(booking => (
-            <Link 
-              to={`/bookings/${booking.id}`}
-              key={booking.id}
-              className="block group"
-            >
-              <Card className="h-full transition-all hover:shadow-md">
-                <CardHeader className="pb-3">
-                  <div className="flex justify-between items-start">
-                    {getStatusBadge(booking.status)}
-                    {booking.status === 'draft' && (
-                      <Badge variant="outline" className="text-muted-foreground">
-                        Awaiting verification
-                      </Badge>
-                    )}
-                  </div>
-                  <CardTitle className="line-clamp-1 group-hover:text-brand-600 transition-colors">
-                    {booking.title}
-                  </CardTitle>
-                  <CardDescription className="line-clamp-2">
-                    {booking.description}
-                  </CardDescription>
-                </CardHeader>
-                
-                <CardContent className="pb-3">
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Room:</span>
-                      <span className="font-medium">{booking.room.name}</span>
+        <div className="rounded-md border">
+          <Table>
+            <TableCaption>A list of all room booking requests.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Title</TableHead>
+                <TableHead>Room</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>Capacity</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Created by</TableHead>
+                <TableHead>Comments</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {visibleBookings.map((booking) => (
+                <TableRow
+                  key={booking.id}
+                  className="cursor-pointer"
+                  onClick={() =>
+                    (window.location.href = `/bookings/${booking.id}`)
+                  }
+                >
+                  <TableCell className="font-medium">{booking.title}</TableCell>
+                  <TableCell>{booking.room.name}</TableCell>
+                  <TableCell>{formatDateTime(booking.startTime)}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      <Users className="h-3 w-3" />
+                      <span>{booking.room.capacity}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Date:</span>
-                      <span className="font-medium">
-                        {formatDateTime(booking.startTime)}
+                  </TableCell>
+                  <TableCell>{getStatusBadge(booking.status)}</TableCell>
+                  <TableCell>{booking.createdBy.email.split("@")[0]}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      <span>
+                        {
+                          booking.comments.filter(
+                            (c) => c.status === "published",
+                          ).length
+                        }
                       </span>
+                      {booking.comments.length > 0 && (
+                        <MessageSquare className="h-3 w-3" />
+                      )}
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Comments:</span>
-                      <span className="font-medium flex items-center gap-1">
-                        {booking.comments.filter(c => c.status === 'published').length}
-                        {booking.comments.length > 0 && <MessageSquare className="h-3 w-3" />}
-                      </span>
-                    </div>
-                  </div>
-                </CardContent>
-                
-                <CardFooter className="pt-0 text-xs text-muted-foreground">
-                  <div className="w-full flex justify-between items-center">
-                    <span>{booking.createdBy.email}</span>
-                    <span>{getRelativeTime(booking.createdAt)}</span>
-                  </div>
-                </CardFooter>
-              </Card>
-            </Link>
-          ))}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </div>
       )}
     </div>

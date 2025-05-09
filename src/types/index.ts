@@ -1,4 +1,3 @@
-
 export interface Room {
   id: string;
   name: string;
@@ -8,6 +7,7 @@ export interface Room {
 
 export interface User {
   email: string;
+  name?: string;
   verified: boolean;
   matrixUserId?: string; // Matrix user ID (@username:server.org)
   matrixAccessToken?: string; // Matrix access token for authentication
@@ -20,7 +20,7 @@ export interface Booking {
   room: Room;
   startTime: string;
   endTime: string;
-  status: 'draft' | 'pending' | 'approved' | 'rejected';
+  status: BookingStatus;
   createdAt: string;
   createdBy: User;
   comments: Comment[];
@@ -35,5 +35,8 @@ export interface Comment {
   content: string;
   createdAt: string;
   createdBy: User;
-  status: 'draft' | 'published';
+  status: CommentStatus;
 }
+
+export type BookingStatus = "draft" | "pending" | "approved" | "rejected";
+export type CommentStatus = "draft" | "published";
