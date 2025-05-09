@@ -2,9 +2,7 @@ import { User, Booking, Comment } from "@/types";
 import { generateMockBookings } from "@/data/mockData";
 
 // LocalStorage keys
-const BOOKINGS_KEY = "room-time-scribe-bookings";
-const USER_KEY = "room-time-scribe-user";
-const TOKENS_KEY = "room-time-scribe-tokens";
+const BOOKINGS_KEY = "chb-bs-bookings";
 
 // Initialize localStorage with mock data if empty
 const initializeStorage = () => {
@@ -15,55 +13,6 @@ const initializeStorage = () => {
 
 // Call initialization
 initializeStorage();
-
-// User management
-export const saveUser = (
-  email: string,
-  name: string = "",
-  verified: boolean = false,
-): User => {
-  const user: User = { email, name, verified };
-  localStorage.setItem(USER_KEY, JSON.stringify(user));
-  return user;
-};
-
-export const getUser = (): User | null => {
-  const data = localStorage.getItem(USER_KEY);
-  if (!data) return null;
-  return JSON.parse(data) as User;
-};
-
-export const verifyUser = (email: string): void => {
-  const user = getUser();
-  if (user && user.email === email) {
-    saveUser(email, user.name || "", true);
-  }
-};
-
-// Tokens for email verification
-export const saveToken = (
-  id: string,
-  token: string,
-  type: "booking" | "comment",
-): void => {
-  const existingTokensStr = localStorage.getItem(TOKENS_KEY) || "{}";
-  const existingTokens = JSON.parse(existingTokensStr);
-
-  existingTokens[`${type}-${id}`] = token;
-  localStorage.setItem(TOKENS_KEY, JSON.stringify(existingTokens));
-};
-
-export const verifyToken = (
-  id: string,
-  token: string,
-  type: "booking" | "comment",
-): boolean => {
-  const existingTokensStr = localStorage.getItem(TOKENS_KEY) || "{}";
-  const existingTokens = JSON.parse(existingTokensStr);
-
-  const storedToken = existingTokens[`${type}-${id}`];
-  return storedToken === token;
-};
 
 // Booking management
 export const getBookings = (): Booking[] => {

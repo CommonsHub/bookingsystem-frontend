@@ -55,22 +55,3 @@ export function getRelativeTime(dateString: string): string {
 
   return format(date, "PPP");
 }
-
-// Mock email sending - in a real app, this would call a backend API
-export function sendVerificationEmail(
-  email: string,
-  type: "booking" | "comment",
-  id: string,
-  token: string,
-): Promise<boolean> {
-  console.log(`Sending verification email to ${email} for ${type} ${id}`);
-  console.log(
-    `Verification link: ${window.location.origin}/verify/${type}/${id}/${token}`,
-  );
-
-  // In a real app, this would send an actual email
-  // For demo purposes, we'll just return a success after a delay
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(true), 1000);
-  });
-}

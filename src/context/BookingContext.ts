@@ -16,12 +16,6 @@ interface BookingContextType {
     email: string,
   ) => Promise<string>;
   getBookingById: (id: string) => Booking | undefined;
-  verifyBookingEmail: (id: string, token: string) => boolean;
-  verifyCommentEmail: (
-    bookingId: string,
-    commentId: string,
-    token: string,
-  ) => boolean;
   approveBookingRequest: (id: string) => void;
   getUserEmail: () => string | null;
 }

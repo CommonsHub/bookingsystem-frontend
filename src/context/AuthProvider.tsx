@@ -1,7 +1,8 @@
 import { supabase } from "@/integrations/supabase/client";
 import { AuthContext } from "./AuthContext";
 import { useEffect, useState } from "react";
-import { User } from "@supabase/supabase-js";
+import { User } from "@/types";
+import { User as SupabaseUser } from "@supabase/supabase-js";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -10,7 +11,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Check active sessions and sets the user
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
+      setUser(supaBaseUserToUser(session?.user ?? null));
       setLoading(false);
     });
 
@@ -18,7 +19,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
+      setUser(supaBaseUserToUser(session?.user ?? null));
       setLoading(false);
     });
 
@@ -42,7 +43,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const getDisplayName = (): string => {
     if (!user) return "anon";
-    return "commoner"; // TODO read display name
+    return user.name || "commoner";
   };
 
   return (
@@ -53,3 +54,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     </AuthContext.Provider>
   );
 }
+
+const supaBaseUserToUser = (user: SupabaseUser): User | null => {
+  if (!user) return null;
+  return {
+    email: user.email,
+    name: user.user_metadata.full_name || "",
+    verified: user.user_metadata.email_verified || false,
+  };
+};
