@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 
@@ -5,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "./button-variants";
 import { VariantProps } from "class-variance-authority";
 
-interface ButtonProps
+export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
@@ -25,4 +26,4 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = "Button";
 
-export { Button };
+export { Button, buttonVariants };
