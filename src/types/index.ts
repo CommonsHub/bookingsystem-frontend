@@ -6,6 +6,7 @@ export interface Room {
 }
 
 export interface User {
+  id: string;
   email: string;
   name?: string;
   verified: boolean;
@@ -33,6 +34,16 @@ export interface Comment {
   createdAt: string;
   createdBy: User;
   status: CommentStatus;
+}
+
+export interface Profile {
+  id: string;
+  full_name: string | null;
+  address: string | null;
+  vat_number: string | null;
+  has_business: boolean | null;
+  created_at: string;
+  updated_at: string;
 }
 
 export type BookingStatus = "draft" | "pending" | "approved" | "rejected";

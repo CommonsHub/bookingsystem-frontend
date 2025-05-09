@@ -1,3 +1,4 @@
+
 import { Booking, User } from "@/types";
 import { createContext, useContext } from "react";
 
@@ -14,6 +15,7 @@ interface BookingContextType {
     bookingId: string,
     content: string,
     email: string,
+    name?: string,
   ) => Promise<string>;
   getBookingById: (id: string) => Booking | undefined;
   approveBookingRequest: (id: string) => void;
