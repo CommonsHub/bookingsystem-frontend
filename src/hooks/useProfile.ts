@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Profile } from "@/types";
@@ -21,13 +20,13 @@ export function useProfile() {
 
   const fetchProfile = async () => {
     if (!user) return;
-    
+
     try {
       setLoading(true);
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
-        .eq("id", user.email)
+        .eq("id", user.id)
         .single();
 
       if (error) {
@@ -44,21 +43,21 @@ export function useProfile() {
 
   const updateProfile = async (updates: Partial<Profile>) => {
     if (!user) return;
-    
+
     try {
       setLoading(true);
-      
+
       const { error } = await supabase
         .from("profiles")
         .update(updates)
-        .eq("id", user.email);
-      
+        .eq("id", user.id);
+
       if (error) {
         toast.error("Error updating profile");
         console.error("Error updating profile:", error);
         return false;
       }
-      
+
       toast.success("Profile updated successfully");
       await fetchProfile();
       return true;
@@ -75,6 +74,6 @@ export function useProfile() {
     profile,
     loading,
     fetchProfile,
-    updateProfile
+    updateProfile,
   };
 }

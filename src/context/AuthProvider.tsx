@@ -59,6 +59,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 const supabaseUserToUser = (user: SupabaseUser | null): User | null => {
   if (!user) return null;
   return {
+    id: user.id,
     email: user.email || "",
     name: user.user_metadata.full_name || "",
     verified: user.user_metadata.email_verified || false,
