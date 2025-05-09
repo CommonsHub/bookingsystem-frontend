@@ -1,3 +1,4 @@
+
 import { toast } from "@/components/ui/toast-utils";
 import { generateMockBookings } from "@/data/mockData";
 import { useBookingOperations } from "@/hooks/useBookingOperations";
@@ -19,51 +20,88 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const { data, error } = await supabase
+        const { data: bookingsData, error: bookingsError } = await supabase
           .from("bookings")
           .select("*")
           .order("created_at", { ascending: false });
 
-        if (error) {
-          console.error("Error fetching bookings:", error);
+        if (bookingsError) {
+          console.error("Error fetching bookings:", bookingsError);
           setBookings(generateMockBookings());
           return;
         }
 
-        if (!data || data.length === 0) {
+        if (!bookingsData || bookingsData.length === 0) {
           console.log("No bookings found in database, loading mock data");
           setBookings(generateMockBookings());
           return;
         }
 
-        const transformedBookings: Booking[] = data.map((booking) => ({
-          id: booking.id,
-          title: booking.title,
-          description: booking.description || "",
-          room: {
-            id: booking.room_id,
-            name: booking.room_name,
-            capacity: booking.room_capacity,
-            location: "Main Building",
-          },
-          startTime: booking.start_time,
-          endTime: booking.end_time,
-          status: booking.status as BookingStatus,
-          createdAt: booking.created_at,
-          createdBy: {
-            email: booking.created_by_email,
-            name: booking.created_by_name || "",
-            verified: true,
-          },
-          comments: [],
-          approvedBy: booking.approved_by_email
-            ? {
-                email: booking.approved_by_email,
-                verified: true,
-              }
-            : undefined,
-          approvedAt: booking.approved_at,
-        }));
+        // Fetch comments for all bookings
+        const { data: commentsData, error: commentsError } = await supabase
+          .from("comments")
+          .select("*");
+
+        if (commentsError) {
+          console.error("Error fetching comments:", commentsError);
+        }
+
+        // Group comments by booking_id
+        const commentsByBookingId: Record<string, any[]> = {};
+        if (commentsData) {
+          commentsData.forEach(comment => {
+            if (!commentsByBookingId[comment.booking_id]) {
+              commentsByBookingId[comment.booking_id] = [];
+            }
+            commentsByBookingId[comment.booking_id].push(comment);
+          });
+        }
+
+        const transformedBookings: Booking[] = bookingsData.map((booking) => {
+          // Transform comments for this booking
+          const bookingComments = commentsByBookingId[booking.id] || [];
+          const transformedComments = bookingComments.map(comment => ({
+            id: comment.id,
+            bookingId: comment.booking_id,
+            content: comment.content,
+            createdAt: comment.created_at,
+            createdBy: {
+              email: comment.created_by_email,
+              name: comment.created_by_name || "",
+              verified: true,
+            },
+            status: comment.status,
+          }));
+
+          return {
+            id: booking.id,
+            title: booking.title,
+            description: booking.description || "",
+            room: {
+              id: booking.room_id,
+              name: booking.room_name,
+              capacity: booking.room_capacity,
+              location: "Main Building",
+            },
+            startTime: booking.start_time,
+            endTime: booking.end_time,
+            status: booking.status as BookingStatus,
+            createdAt: booking.created_at,
+            createdBy: {
+              email: booking.created_by_email,
+              name: booking.created_by_name || "",
+              verified: true,
+            },
+            comments: transformedComments,
+            approvedBy: booking.approved_by_email
+              ? {
+                  email: booking.approved_by_email,
+                  verified: true,
+                }
+              : undefined,
+            approvedAt: booking.approved_at,
+          };
+        });
 
         setBookings(transformedBookings);
       } catch (error) {

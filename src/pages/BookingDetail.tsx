@@ -29,8 +29,6 @@ const BookingDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { getBookingById, addCommentToBooking, approveBookingRequest, user } =
     useBooking();
-  const [comment, setComment] = useState("");
-  const [email, setEmail] = useState(user?.email || "");
   const [submitting, setSubmitting] = useState(false);
 
   if (!id) return <div>Booking ID is missing</div>;
@@ -73,7 +71,7 @@ const BookingDetail = () => {
     setSubmitting(true);
 
     try {
-      await addCommentToBooking(id, commentData.content, commentData.email);
+      await addCommentToBooking(id, commentData.content, commentData.email, commentData.name);
       toast.success("Comment submitted! Please check your email to verify.");
     } catch (error) {
       toast.error("Failed to submit comment");

@@ -1,3 +1,4 @@
+
 import { toast } from "@/components/ui/toast-utils";
 import { supabase } from "@/integrations/supabase/client";
 import { generateId } from "@/lib/utils";
@@ -69,28 +70,56 @@ export const useBookingOperations = (
     bookingId: string,
     content: string,
     email: string,
+    name: string = "",
   ): Promise<string> => {
-    const commentId = generateId("comment-");
-    const currentUser = { email, verified: false };
+    try {
+      // Insert comment into the database
+      const { data, error } = await supabase
+        .from("comments")
+        .insert({
+          booking_id: bookingId,
+          content,
+          created_by_email: email,
+          created_by_name: name,
+          status: "draft"
+        })
+        .select()
+        .single();
 
-    const comment: Comment = {
-      id: commentId,
-      bookingId,
-      content,
-      createdAt: new Date().toISOString(),
-      createdBy: currentUser,
-      status: "draft",
-    };
+      if (error) {
+        console.error("Error creating comment:", error);
+        toast.error("Failed to create comment");
+        throw error;
+      }
 
-    setBookings((prevBookings) =>
-      prevBookings.map((booking) =>
-        booking.id === bookingId
-          ? { ...booking, comments: [...booking.comments, comment] }
-          : booking,
-      ),
-    );
+      const newComment: Comment = {
+        id: data.id,
+        bookingId,
+        content,
+        createdAt: data.created_at,
+        createdBy: { 
+          email, 
+          name: name || "",
+          verified: false 
+        },
+        status: "draft",
+      };
 
-    return commentId;
+      // Update local state
+      setBookings((prevBookings) =>
+        prevBookings.map((booking) =>
+          booking.id === bookingId
+            ? { ...booking, comments: [...booking.comments, newComment] }
+            : booking,
+        ),
+      );
+
+      return data.id;
+    } catch (error) {
+      console.error("Error in addCommentToBooking:", error);
+      toast.error("Failed to add comment");
+      throw error;
+    }
   };
 
   const approveBookingRequest = async (
