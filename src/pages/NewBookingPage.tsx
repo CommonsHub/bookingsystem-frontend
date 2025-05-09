@@ -1,12 +1,13 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { format } from "date-fns";
 import { CalendarIcon, Clock } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Card,
   CardContent,
@@ -31,12 +32,12 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-import { Calendar } from "@/components/ui/calendar";
-import { cn } from "@/lib/utils";
+import { toast } from "@/components/ui/toast-utils";
+import { useAuth } from "@/context/AuthContext";
 import { useBooking } from "@/context/BookingContext";
 import { rooms } from "@/data/mockData";
-import { Room, User } from "@/types";
-import { toast } from "@/components/ui/toast-utils";
+import { cn } from "@/lib/utils";
+import { Room } from "@/types";
 
 const formSchema = z.object({
   title: z.string().min(5, { message: "Title must be at least 5 characters" }),
@@ -57,10 +58,11 @@ type FormData = z.infer<typeof formSchema>;
 
 const NewBookingPage = () => {
   const navigate = useNavigate();
-  const { createBooking, getUserEmail } = useBooking();
+  const { createBooking } = useBooking();
   const [submitting, setSubmitting] = useState(false);
+  const { user } = useAuth();
 
-  const defaultEmail = getUserEmail() || "";
+  const defaultEmail = user?.email || "";
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),

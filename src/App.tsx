@@ -14,7 +14,6 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import NewBookingPage from "./pages/NewBookingPage";
 import NotFound from "./pages/NotFound";
-import { VerifyEmail } from "./pages/VerifyEmail";
 
 const queryClient = new QueryClient();
 
@@ -40,10 +39,6 @@ const App = () => (
                   }
                 />
                 <Route path="bookings/:id" element={<BookingDetail />} />
-                <Route
-                  path="verify/:type/:id/:token"
-                  element={<VerifyEmail />}
-                />
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>

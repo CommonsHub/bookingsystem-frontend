@@ -1,26 +1,20 @@
 import { toast } from "@/components/ui/toast-utils";
 import { generateMockBookings } from "@/data/mockData";
 import { useBookingOperations } from "@/hooks/useBookingOperations";
-import { useVerification } from "@/hooks/useVerification";
 import { supabase } from "@/integrations/supabase/client";
-import { Booking, User } from "@/types";
-import { getStorageUser, saveStorageUser } from "@/utils/storage-helpers";
+import { Booking, BookingStatus, User } from "@/types";
 import React, { useEffect, useState } from "react";
 import { BookingContext } from "./BookingContext";
+import { useAuth } from "./AuthContext";
 
 export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [bookings, setBookings] = useState<Booking[]>([]);
-  const [user, setUser] = useState<User | null>(null);
+  const { user } = useAuth();
 
   const { createBooking, addCommentToBooking, approveBookingRequest } =
     useBookingOperations(bookings, setBookings);
-  const { verifyBookingEmail, verifyCommentEmail } = useVerification(
-    bookings,
-    setBookings,
-    setUser,
-  );
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -54,11 +48,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
           },
           startTime: booking.start_time,
           endTime: booking.end_time,
-          status: booking.status as
-            | "draft"
-            | "pending"
-            | "approved"
-            | "rejected",
+          status: booking.status as BookingStatus,
           createdAt: booking.created_at,
           createdBy: {
             email: booking.created_by_email,
@@ -83,18 +73,6 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     };
 
-    const storedUser = getStorageUser();
-    if (storedUser) {
-      setUser(storedUser);
-    } else {
-      const demoUser = saveStorageUser(
-        "demo.user@example.com",
-        "Demo User",
-        true,
-      );
-      setUser(demoUser);
-    }
-
     fetchBookings();
   }, []);
 
@@ -114,8 +92,6 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
         createBooking,
         addCommentToBooking,
         getBookingById,
-        verifyBookingEmail,
-        verifyCommentEmail,
         approveBookingRequest: (id: string) => approveBookingRequest(id, user!),
         getUserEmail,
       }}

@@ -1,13 +1,7 @@
-import { useState } from "react";
-import { Booking, Comment, User } from "@/types";
-import {
-  generateId,
-  generateVerificationToken,
-  sendVerificationEmail,
-} from "@/lib/utils";
 import { toast } from "@/components/ui/toast-utils";
 import { supabase } from "@/integrations/supabase/client";
-import { saveStorageToken, verifyStorageUser } from "@/utils/storage-helpers";
+import { generateId } from "@/lib/utils";
+import { Booking, Comment, User } from "@/types";
 import { v4 as uuidv4 } from "uuid";
 
 export const useBookingOperations = (
@@ -20,8 +14,6 @@ export const useBookingOperations = (
       "id" | "createdAt" | "status" | "comments" | "createdBy"
     > & { createdBy: User },
   ): Promise<string> => {
-    const token = generateVerificationToken();
-
     // generate uuid v4
     const id = uuidv4();
 
@@ -46,13 +38,6 @@ export const useBookingOperations = (
         throw error;
       }
 
-      await sendVerificationEmail(
-        bookingData.createdBy.email,
-        "booking",
-        id,
-        token,
-      );
-
       const { data: newBookings } = await supabase
         .from("bookings")
         .select("*")
@@ -72,7 +57,6 @@ export const useBookingOperations = (
         });
       }
 
-      saveStorageToken(id, token, "booking");
       return id;
     } catch (error) {
       console.error("Error in createBooking:", error);
@@ -88,7 +72,6 @@ export const useBookingOperations = (
   ): Promise<string> => {
     const commentId = generateId("comment-");
     const currentUser = { email, verified: false };
-    const token = generateVerificationToken();
 
     const comment: Comment = {
       id: commentId,
@@ -106,10 +89,6 @@ export const useBookingOperations = (
           : booking,
       ),
     );
-
-    saveStorageToken(commentId, token, "comment");
-
-    await sendVerificationEmail(email, "comment", commentId, token);
 
     return commentId;
   };

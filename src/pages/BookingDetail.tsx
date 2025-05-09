@@ -1,41 +1,29 @@
-import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { useBooking } from "@/context/BookingContext";
 import AddComment from "@/components/AddComment";
-import {
-  formatDateTime,
-  formatDate,
-  formatTime,
-  getRelativeTime,
-  generateId,
-} from "@/lib/utils";
-import {
-  CalendarDays,
-  Clock,
-  MapPin,
-  Users,
-  CheckCircle2,
-  MailCheck,
-  ChevronLeft,
-  Send,
-} from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
 import { toast } from "@/components/ui/toast-utils";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { getUser } from "@/lib/storage";
+import { useBooking } from "@/context/BookingContext";
+import { formatDate, formatTime, getRelativeTime } from "@/lib/utils";
+import {
+  CalendarDays,
+  CheckCircle2,
+  ChevronLeft,
+  Clock,
+  MailCheck,
+  MapPin,
+  Users,
+} from "lucide-react";
+import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 const BookingDetail = () => {
   const { id } = useParams<{ id: string }>();

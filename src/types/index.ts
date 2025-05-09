@@ -18,7 +18,7 @@ export interface Booking {
   room: Room;
   startTime: string;
   endTime: string;
-  status: "draft" | "pending" | "approved" | "rejected";
+  status: BookingStatus;
   createdAt: string;
   createdBy: User;
   comments: Comment[];
@@ -32,5 +32,8 @@ export interface Comment {
   content: string;
   createdAt: string;
   createdBy: User;
-  status: "draft" | "published";
+  status: CommentStatus;
 }
+
+export type BookingStatus = "draft" | "pending" | "approved" | "rejected";
+export type CommentStatus = "draft" | "published";
