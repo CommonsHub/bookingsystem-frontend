@@ -98,6 +98,36 @@ export type Database = {
           },
         ]
       }
+      profiles: {
+        Row: {
+          address: string | null
+          created_at: string
+          full_name: string | null
+          has_business: boolean | null
+          id: string
+          updated_at: string
+          vat_number: string | null
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          full_name?: string | null
+          has_business?: boolean | null
+          id: string
+          updated_at?: string
+          vat_number?: string | null
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          full_name?: string | null
+          has_business?: boolean | null
+          id?: string
+          updated_at?: string
+          vat_number?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

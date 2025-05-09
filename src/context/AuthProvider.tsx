@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import { AuthContext } from "./AuthContext";
 import { useEffect, useState } from "react";
@@ -11,7 +12,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Check active sessions and sets the user
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(supaBaseUserToUser(session?.user ?? null));
+      setUser(supabaseUserToUser(session?.user ?? null));
       setLoading(false);
     });
 
@@ -19,7 +20,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(supaBaseUserToUser(session?.user ?? null));
+      setUser(supabaseUserToUser(session?.user ?? null));
       setLoading(false);
     });
 
@@ -55,10 +56,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-const supaBaseUserToUser = (user: SupabaseUser): User | null => {
+const supabaseUserToUser = (user: SupabaseUser | null): User | null => {
   if (!user) return null;
   return {
-    email: user.email,
+    email: user.email || "",
     name: user.user_metadata.full_name || "",
     verified: user.user_metadata.email_verified || false,
   };

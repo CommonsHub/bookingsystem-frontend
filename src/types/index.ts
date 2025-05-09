@@ -38,5 +38,15 @@ export interface Comment {
   status: CommentStatus;
 }
 
+export interface Profile {
+  id: string;
+  full_name: string | null;
+  address: string | null;
+  vat_number: string | null;
+  has_business: boolean | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export type BookingStatus = "draft" | "pending" | "approved" | "rejected";
 export type CommentStatus = "draft" | "published";
