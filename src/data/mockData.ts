@@ -1,4 +1,6 @@
+
 import { Room, Booking, User, Comment } from "../types";
+import { v4 as uuidv4 } from "uuid";
 
 export const rooms: Room[] = [
   {
@@ -35,12 +37,12 @@ export const rooms: Room[] = [
 
 // Demo users with more variety
 const demoUsers: User[] = [
-  { email: "john.doe@example.com", verified: true },
-  { email: "sarah.smith@example.com", verified: true },
-  { email: "tech.lead@example.com", verified: true },
-  { email: "product.manager@example.com", verified: true },
-  { email: "dev.team@example.com", verified: true },
-  { email: "marketing@example.com", verified: true },
+  { id: "user-001", email: "john.doe@example.com", verified: true },
+  { id: "user-002", email: "sarah.smith@example.com", verified: true },
+  { id: "user-003", email: "tech.lead@example.com", verified: true },
+  { id: "user-004", email: "product.manager@example.com", verified: true },
+  { id: "user-005", email: "dev.team@example.com", verified: true },
+  { id: "user-006", email: "marketing@example.com", verified: true },
 ];
 
 // Create sample comments with more variety

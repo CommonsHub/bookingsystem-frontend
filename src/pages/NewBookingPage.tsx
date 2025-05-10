@@ -1,7 +1,6 @@
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import { CalendarIcon, Clock, Music, Mic, Users, Theater, MessageSquare, Sandwich, Wine, Snacks } from "lucide-react";
+import { CalendarIcon, Clock, Music, Mic, Users, Theater, MessageSquare, Sandwich, Wine } from "lucide-react";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
