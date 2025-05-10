@@ -1,8 +1,17 @@
+
 export interface Room {
   id: string;
   name: string;
   capacity: number;
   location: string;
+  setupOptions?: RoomSetupOption[];
+}
+
+export interface RoomSetupOption {
+  type: string;
+  minCapacity: number;
+  maxCapacity: number;
+  icon: string;
 }
 
 export interface User {
@@ -25,6 +34,8 @@ export interface Booking {
   comments: Comment[];
   approvedBy?: User;
   approvedAt?: string;
+  selectedSetup?: string;
+  requiresAdditionalSpace?: boolean;
 }
 
 export interface Comment {
