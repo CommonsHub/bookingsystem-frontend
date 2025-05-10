@@ -1,4 +1,3 @@
-
 export interface Room {
   id: string;
   name: string;
@@ -59,3 +58,22 @@ export interface Profile {
 
 export type BookingStatus = "draft" | "pending" | "approved" | "rejected";
 export type CommentStatus = "draft" | "published";
+
+export interface CateringOption {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  emoji: string;
+}
+
+export interface EventSupportOption {
+  id: string;
+  name: string;
+  description: string;
+}
+
+export interface MembershipStatus {
+  id: string;
+  name: string;
+}

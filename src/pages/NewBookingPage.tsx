@@ -1,7 +1,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import { CalendarIcon, Clock, Music, Mic, Users, Theatre } from "lucide-react";
+import { CalendarIcon, Clock, Music, Mic, Users, Theater, MessageSquare, Sandwich, Wine, Snacks } from "lucide-react";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -58,9 +58,36 @@ const formSchema = z.object({
     .refine((time) => time !== "", { message: "Please select an end time" }),
   email: z.string().email({ message: "Please enter a valid email address" }),
   name: z.string().min(2, { message: "Please enter your name" }),
+  // New fields
+  cateringOptions: z.array(z.string()).optional(),
+  cateringComments: z.string().optional(),
+  eventSupportOptions: z.array(z.string()).optional(),
+  membershipStatus: z.string().optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
+
+// Catering options data
+const cateringOptions = [
+  { id: "simple-lunch", name: "Simple lunch: sandwiches", price: 7, description: "€7/per person", emoji: "🥪" },
+  { id: "awesome-lunch", name: "Awesome lunch: salads/sandwiches from organic caterer", price: 25, description: "€25 (<25) or €22", emoji: "🥗" },
+  { id: "after-event-drinks", name: "After event drinks (wine and juice)", price: 8, description: "€8/person", emoji: "🍷" },
+  { id: "after-event-snacks", name: "After event snacks", price: 4, description: "€4/person", emoji: "🍿" },
+  { id: "coffee-break-snacks", name: "Snacks during coffee break (fruit|nuts|sweets)", price: 4, description: "€4/pp half day | €6/pp full day", emoji: "🍊" },
+];
+
+// Event support options
+const eventSupportOptions = [
+  { id: "logistics", name: "Interested in full logistic support during the day (AV and tech support | help with setup)" },
+  { id: "facilitation", name: "Interested in facilitation support and conference design" },
+];
+
+// Membership options
+const membershipOptions = [
+  { id: "yes", name: "Yes" },
+  { id: "no", name: "No" },
+  { id: "interested", name: "Interested in becoming member (we will contact you)" },
+];
 
 const NewBookingPage = () => {
   const navigate = useNavigate();
@@ -94,7 +121,7 @@ const NewBookingPage = () => {
         capacity: 120,
         setupOptions: [
           { type: "Workshop", minCapacity: 17, maxCapacity: 50, icon: "music" },
-          { type: "Theatre", minCapacity: 50, maxCapacity: 80, icon: "theatre" },
+          { type: "Theater", minCapacity: 50, maxCapacity: 80, icon: "theater" },
           { type: "Networking", minCapacity: 80, maxCapacity: 120, icon: "mic" }
         ]
       };
@@ -114,6 +141,10 @@ const NewBookingPage = () => {
       endTime: "",
       email: defaultEmail,
       name: "",
+      cateringOptions: [],
+      cateringComments: "",
+      eventSupportOptions: [],
+      membershipStatus: "",
     },
   });
 
@@ -142,7 +173,12 @@ const NewBookingPage = () => {
         room: selectedRoom,
         startTime: startDate.toISOString(),
         endTime: endDate.toISOString(),
-        createdBy: { email: data.email, name: data.name, verified: false },
+        createdBy: { 
+          id: user?.id || crypto.randomUUID(),
+          email: data.email, 
+          name: data.name, 
+          verified: false 
+        },
         selectedSetup: data.setupOption,
         requiresAdditionalSpace: data.requiresAdditionalSpace
       });
@@ -304,7 +340,7 @@ const NewBookingPage = () => {
                                     <RadioGroupItem value="theatre" />
                                   </FormControl>
                                   <div className="flex items-center">
-                                    <Theatre className="h-4 w-4 text-amber-600 mr-2" />
+                                    <Theater className="h-4 w-4 text-amber-600 mr-2" />
                                     <span>50-80 theatre set up</span>
                                   </div>
                                 </FormItem>
@@ -351,6 +387,183 @@ const NewBookingPage = () => {
                       )}
                     />
                   </div>
+                </div>
+              </div>
+
+              <Separator />
+              
+              {/* Catering Options Section */}
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <h3 className="text-lg font-medium">Do you need catering?</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Coffee, tea and water are included in the price. For lunch catering we work with local suppliers (Tasty Break for simple sandwiches, Apus et Les Cocottes Volantes for organic awesome food).
+                  </p>
+                  
+                  <FormField
+                    control={form.control}
+                    name="cateringOptions"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="space-y-2">
+                          {cateringOptions.map((option) => (
+                            <FormField
+                              key={option.id}
+                              control={form.control}
+                              name="cateringOptions"
+                              render={({ field }) => (
+                                <FormItem
+                                  key={option.id}
+                                  className="flex flex-row items-start space-x-3 space-y-0"
+                                >
+                                  <FormControl>
+                                    <Checkbox
+                                      checked={field.value?.includes(option.id)}
+                                      onCheckedChange={(checked) => {
+                                        const updatedValue = checked
+                                          ? [...(field.value || []), option.id]
+                                          : (field.value || []).filter(
+                                              (value) => value !== option.id
+                                            );
+                                        field.onChange(updatedValue);
+                                      }}
+                                    />
+                                  </FormControl>
+                                  <div className="space-y-1 leading-none">
+                                    <FormLabel className="flex items-center">
+                                      <span className="mr-2">{option.emoji}</span>
+                                      <span>{option.name}</span>
+                                    </FormLabel>
+                                    <p className="text-sm text-muted-foreground">
+                                      {option.description}
+                                    </p>
+                                  </div>
+                                </FormItem>
+                              )}
+                            />
+                          ))}
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                
+                <FormField
+                  control={form.control}
+                  name="cateringComments"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Any extra comments for the catering or other requests?</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Add any special dietary requirements or other requests here"
+                          rows={2}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              
+              <Separator />
+              
+              {/* Event Support Options Section */}
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <h3 className="text-lg font-medium">We have several professional event organisers and facilitators/conference designers available for an optimal experience</h3>
+                  <p className="text-sm text-muted-foreground">
+                    If you are interested in additional support, you can add this here.
+                  </p>
+                  
+                  <FormField
+                    control={form.control}
+                    name="eventSupportOptions"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="space-y-2">
+                          {eventSupportOptions.map((option) => (
+                            <FormField
+                              key={option.id}
+                              control={form.control}
+                              name="eventSupportOptions"
+                              render={({ field }) => (
+                                <FormItem
+                                  key={option.id}
+                                  className="flex flex-row items-start space-x-3 space-y-0"
+                                >
+                                  <FormControl>
+                                    <Checkbox
+                                      checked={field.value?.includes(option.id)}
+                                      onCheckedChange={(checked) => {
+                                        const updatedValue = checked
+                                          ? [...(field.value || []), option.id]
+                                          : (field.value || []).filter(
+                                              (value) => value !== option.id
+                                            );
+                                        field.onChange(updatedValue);
+                                      }}
+                                    />
+                                  </FormControl>
+                                  <div className="space-y-1 leading-none">
+                                    <FormLabel>
+                                      {option.name}
+                                    </FormLabel>
+                                  </div>
+                                </FormItem>
+                              )}
+                            />
+                          ))}
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+              
+              <Separator />
+              
+              {/* Membership Status Section */}
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <h3 className="text-lg font-medium">Are you a member of the Commons Hub?</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Members get 30% discount on all rental prices. Membership starts from €10/month or €100/year.
+                  </p>
+                  
+                  <FormField
+                    control={form.control}
+                    name="membershipStatus"
+                    render={({ field }) => (
+                      <FormItem className="space-y-3">
+                        <FormControl>
+                          <RadioGroup
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            className="space-y-1"
+                          >
+                            {membershipOptions.map((option) => (
+                              <FormItem
+                                key={option.id}
+                                className="flex items-start space-x-3 space-y-0"
+                              >
+                                <FormControl>
+                                  <RadioGroupItem value={option.id} />
+                                </FormControl>
+                                <FormLabel className="font-normal">
+                                  {option.name}
+                                </FormLabel>
+                              </FormItem>
+                            ))}
+                          </RadioGroup>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
               </div>
 

@@ -98,6 +98,7 @@ export const useBookingOperations = (
         content,
         createdAt: data.created_at,
         createdBy: { 
+          id: uuidv4(), // Generate a temporary ID for the user
           email, 
           name: name || "",
           verified: false 

@@ -4,6 +4,7 @@ import { generateMockBookings } from "@/data/mockData";
 import { useBookingOperations } from "@/hooks/useBookingOperations";
 import { supabase } from "@/integrations/supabase/client";
 import { Booking, BookingStatus, User } from "@/types";
+import { v4 as uuidv4 } from "uuid";
 import React, { useEffect, useState } from "react";
 import { BookingContext } from "./BookingContext";
 import { useAuth } from "./AuthContext";
@@ -66,6 +67,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
             content: comment.content,
             createdAt: comment.created_at,
             createdBy: {
+              id: uuidv4(), // Generate a temporary ID for the user
               email: comment.created_by_email,
               name: comment.created_by_name || "",
               verified: true,
@@ -88,6 +90,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
             status: booking.status as BookingStatus,
             createdAt: booking.created_at,
             createdBy: {
+              id: uuidv4(), // Generate a temporary ID for the user
               email: booking.created_by_email,
               name: booking.created_by_name || "",
               verified: true,
@@ -95,6 +98,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
             comments: transformedComments,
             approvedBy: booking.approved_by_email
               ? {
+                  id: uuidv4(), // Generate a temporary ID for the approver
                   email: booking.approved_by_email,
                   verified: true,
                 }
