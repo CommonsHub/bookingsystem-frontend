@@ -112,16 +112,18 @@ export const useDraftBooking = () => {
           // If both local and remote drafts exist, compare timestamps if available
           if (localData) {
             const localDataObj = JSON.parse(localData);
+            const remoteDraftData = draftBookings[0].draft_data as DraftBookingData;
+            
             // Use the most recent version
-            if (draftBookings[0].draft_data.updatedAt && localDataObj.updatedAt) {
-              if (new Date(draftBookings[0].draft_data.updatedAt) > new Date(localDataObj.updatedAt)) {
-                return draftBookings[0].draft_data;
+            if (remoteDraftData.updatedAt && localDataObj.updatedAt) {
+              if (new Date(remoteDraftData.updatedAt) > new Date(localDataObj.updatedAt)) {
+                return remoteDraftData;
               } else {
                 return localDataObj;
               }
             }
           }
-          return draftBookings[0].draft_data;
+          return draftBookings[0].draft_data as DraftBookingData;
         }
       }
       
