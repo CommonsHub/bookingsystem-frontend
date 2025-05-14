@@ -19,6 +19,10 @@ export const useBookingOperations = (
     const id = uuidv4();
 
     try {
+      // Get the draft key if it exists in localStorage
+      const draftKey = localStorage.getItem("anonymous-booking-draft-key") || 
+        (bookingData.createdBy?.email ? `booking-draft-${bookingData.createdBy.email}` : null);
+
       const { error } = await supabase.from("bookings").insert({
         id,
         title: bookingData.title,
@@ -31,6 +35,7 @@ export const useBookingOperations = (
         status: "draft",
         created_by_email: bookingData.createdBy.email,
         created_by_name: bookingData.createdBy.name,
+        draft_key: draftKey, // Store the draft key
       });
 
       if (error) {
@@ -56,6 +61,11 @@ export const useBookingOperations = (
           };
           return [transformedNewBooking, ...prevBookings];
         });
+      }
+
+      // Clear the draft data from localStorage after successful submission
+      if (draftKey) {
+        localStorage.removeItem(draftKey);
       }
 
       return id;

@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon, Clock, Music, Mic, Users, Theater, MessageSquare, Sandwich, Wine } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as z from "zod";
@@ -41,6 +41,7 @@ import { useBooking } from "@/context/BookingContext";
 import { rooms } from "@/data/mockData";
 import { cn } from "@/lib/utils";
 import { Room } from "@/types";
+import { useDraftBooking } from "@/hooks/useDraftBooking";
 
 const formSchema = z.object({
   title: z.string().min(5, { message: "Title must be at least 5 characters" }),
@@ -94,6 +95,9 @@ const NewBookingPage = () => {
   const [submitting, setSubmitting] = useState(false);
   const { user } = useAuth();
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
+  const { saveDraft, loadDraft, clearDraft, isLoading } = useDraftBooking();
+  const [draftLoaded, setDraftLoaded] = useState(false);
+  const [autoSaveTimerId, setAutoSaveTimerId] = useState<NodeJS.Timeout | null>(null);
 
   const defaultEmail = user?.email || "";
 
@@ -147,6 +151,56 @@ const NewBookingPage = () => {
     },
   });
 
+  // Load saved draft on initial render
+  useEffect(() => {
+    const fetchDraft = async () => {
+      try {
+        const draftData = await loadDraft();
+        if (draftData && !draftLoaded) {
+          form.reset(draftData);
+          if (draftData.roomId) {
+            setSelectedRoomId(draftData.roomId);
+          }
+          setDraftLoaded(true);
+          toast.success("Draft booking loaded");
+        }
+      } catch (error) {
+        console.error("Error loading draft:", error);
+      }
+    };
+
+    fetchDraft();
+  }, [form, loadDraft, draftLoaded]);
+
+  // Auto-save form values when they change
+  useEffect(() => {
+    // Watch for form changes
+    const subscription = form.watch((formValues) => {
+      // Debounce the auto-save to prevent too many saves
+      if (autoSaveTimerId) {
+        clearTimeout(autoSaveTimerId);
+      }
+
+      // Only save if there are actual values
+      if (formValues.title || formValues.description || formValues.roomId) {
+        const timerId = setTimeout(() => {
+          // Add timestamp to detect which version is newer
+          const dataToSave = {
+            ...formValues,
+            updatedAt: new Date().toISOString(),
+            selectedRoom: enhancedRooms.find(r => r.id === formValues.roomId)
+          };
+          saveDraft(dataToSave);
+        }, 2000); // Save after 2 seconds of inactivity
+
+        setAutoSaveTimerId(timerId);
+      }
+    });
+
+    // Cleanup subscription
+    return () => subscription.unsubscribe();
+  }, [form, saveDraft, autoSaveTimerId]);
+
   const onSubmit = async (data: FormData) => {
     setSubmitting(true);
     try {
@@ -182,6 +236,9 @@ const NewBookingPage = () => {
         requiresAdditionalSpace: data.requiresAdditionalSpace
       });
 
+      // Clear the draft data after successful submission
+      await clearDraft();
+      
       toast.success(
         "Booking request submitted! Please check your email to verify.",
       );
@@ -205,6 +262,8 @@ const NewBookingPage = () => {
         </h1>
         <p className="text-muted-foreground mt-1">
           Fill out the form below to request a room booking
+          {isLoading && " (Saving draft...)"}
+          {!isLoading && draftLoaded && " (Draft loaded)"}
         </p>
       </div>
 
@@ -691,13 +750,27 @@ const NewBookingPage = () => {
             </CardContent>
 
             <CardFooter className="flex justify-between">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => navigate("/")}
-              >
-                Cancel
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => navigate("/")}
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  type="button" 
+                  variant="outline"
+                  onClick={async () => {
+                    await clearDraft();
+                    form.reset();
+                    setDraftLoaded(false);
+                    toast.success("Draft cleared");
+                  }}
+                >
+                  Clear Draft
+                </Button>
+              </div>
               <Button type="submit" disabled={submitting}>
                 {submitting ? "Submitting..." : "Submit Booking Request"}
               </Button>
