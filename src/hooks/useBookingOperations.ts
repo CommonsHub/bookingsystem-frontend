@@ -23,13 +23,17 @@ export const useBookingOperations = (
       const draftKey = localStorage.getItem("anonymous-booking-draft-key") || 
         (bookingData.createdBy?.email ? `booking-draft-${bookingData.createdBy.email}` : null);
 
+      // Parse the capacity string to an integer for database storage
+      // The database still expects an integer but our application uses strings
+      const roomCapacityInt = parseInt(bookingData.room.capacity, 10);
+
       const { error } = await supabase.from("bookings").insert({
         id,
         title: bookingData.title,
         description: bookingData.description,
         room_id: bookingData.room.id,
         room_name: bookingData.room.name,
-        room_capacity: bookingData.room.capacity, // Now a string
+        room_capacity: roomCapacityInt, // Convert string to integer for storage
         start_time: bookingData.startTime,
         end_time: bookingData.endTime,
         status: "draft",
