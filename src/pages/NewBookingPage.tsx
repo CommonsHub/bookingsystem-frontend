@@ -63,8 +63,9 @@ const formSchema = z.object({
   cateringComments: z.string().optional(),
   eventSupportOptions: z.array(z.string()).optional(),
   membershipStatus: z.string().optional(),
-  // Add the new additional comments field
   additionalComments: z.string().optional(),
+  // Add the public event field
+  isPublicEvent: z.boolean().default(false),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -121,7 +122,8 @@ const NewBookingPage = () => {
       cateringComments: "",
       eventSupportOptions: [],
       membershipStatus: "",
-      additionalComments: "", // Initialize the new field
+      additionalComments: "",
+      isPublicEvent: false, // Initialize the public event field
     },
   });
 
@@ -207,7 +209,9 @@ const NewBookingPage = () => {
           verified: false
         },
         selectedSetup: data.setupOption,
-        requiresAdditionalSpace: data.requiresAdditionalSpace
+        requiresAdditionalSpace: data.requiresAdditionalSpace,
+        additionalComments: data.additionalComments,
+        isPublicEvent: data.isPublicEvent
       });
 
       // Clear the draft data after successful submission
@@ -683,6 +687,30 @@ const NewBookingPage = () => {
                         />
                       </FormControl>
                       <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Public Event Checkbox */}
+                <FormField
+                  control={form.control}
+                  name="isPublicEvent"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div>
+                        <FormLabel>
+                          Public event (we will publish through our channels as well)
+                        </FormLabel>
+                        <p className="text-sm text-muted-foreground">
+                          Check this box if you want your event to be promoted on our public channels.
+                        </p>
+                      </div>
                     </FormItem>
                   )}
                 />

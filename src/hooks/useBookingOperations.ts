@@ -13,7 +13,7 @@ export const useBookingOperations = (
     bookingData: Omit<
       Booking,
       "id" | "createdAt" | "status" | "comments" | "createdBy"
-    > & { createdBy: User },
+    > & { createdBy: User; additionalComments?: string; isPublicEvent?: boolean },
   ): Promise<string> => {
     // generate uuid v4
     const id = uuidv4();
@@ -26,10 +26,21 @@ export const useBookingOperations = (
       // Always store 0 as room_capacity regardless of the actual value
       const roomCapacityInt = 0;
 
-      // Store the complete booking data including any additional comments in draft_data
-      const fullBookingData = {
-        ...bookingData,
-        // Any other metadata that's not part of the main table schema
+      // Create a sanitized version of the data for JSON storage
+      // This prevents type errors by ensuring we only store JSON-compatible data
+      const sanitizedDraftData = {
+        title: bookingData.title,
+        description: bookingData.description,
+        roomId: bookingData.room.id,
+        roomName: bookingData.room.name,
+        startTime: bookingData.startTime,
+        endTime: bookingData.endTime,
+        createdByEmail: bookingData.createdBy.email,
+        createdByName: bookingData.createdBy.name,
+        selectedSetup: bookingData.selectedSetup,
+        requiresAdditionalSpace: bookingData.requiresAdditionalSpace,
+        additionalComments: bookingData.additionalComments,
+        isPublicEvent: bookingData.isPublicEvent
       };
 
       const { error } = await supabase.from("bookings").insert({
@@ -45,7 +56,7 @@ export const useBookingOperations = (
         created_by_email: bookingData.createdBy.email,
         created_by_name: bookingData.createdBy.name,
         draft_key: draftKey, // Store the draft key
-        draft_data: fullBookingData, // Store the complete booking data as JSON
+        draft_data: sanitizedDraftData, // Store the sanitized JSON data
       });
 
       if (error) {

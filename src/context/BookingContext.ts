@@ -9,7 +9,7 @@ interface BookingContextType {
     booking: Omit<
       Booking,
       "id" | "createdAt" | "status" | "comments" | "createdBy"
-    > & { createdBy: User, additionalComments?: string },
+    > & { createdBy: User, additionalComments?: string, isPublicEvent?: boolean },
   ) => Promise<string>;
   addCommentToBooking: (
     bookingId: string,
