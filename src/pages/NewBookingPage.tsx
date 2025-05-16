@@ -223,8 +223,9 @@ const NewBookingPage = () => {
       // Clear the draft data after successful submission
       await clearDraft();
 
+      // Updated message to remove reference to email verification
       toast.success(
-        "Booking request submitted! Please check your email to verify.",
+        "Booking request submitted! It will be reviewed by an administrator."
       );
       navigate(`/bookings/${bookingId}`);
     } catch (error) {

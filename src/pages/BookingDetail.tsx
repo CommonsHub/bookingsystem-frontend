@@ -1,4 +1,3 @@
-
 import AddComment from "@/components/AddComment";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
@@ -110,9 +109,9 @@ const BookingDetail = () => {
               {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
             </Badge>
 
-            {booking.status === "draft" && (
+            {booking.status === "pending" && (
               <Badge variant="outline" className="text-muted-foreground">
-                Not yet confirmed
+                Awaiting approval
               </Badge>
             )}
           </div>
@@ -127,13 +126,12 @@ const BookingDetail = () => {
             </p>
           </div>
 
-          {booking.status === "draft" && (
+          {booking.status === "pending" && (
             <Alert>
               <MailCheck className="h-4 w-4" />
-              <AlertTitle>Verification needed</AlertTitle>
+              <AlertTitle>Awaiting Approval</AlertTitle>
               <AlertDescription>
-                This booking request is waiting for email verification. Please
-                check your email.
+                This booking request is waiting for administrator approval.
               </AlertDescription>
             </Alert>
           )}
@@ -282,9 +280,9 @@ const BookingDetail = () => {
                 </div>
               )}
 
-              {booking.status === "draft" && (
+              {booking.status === "pending" && !canApproveBooking && (
                 <div className="text-center text-sm text-muted-foreground">
-                  Booking can be approved once verified
+                  Only administrators can approve bookings
                 </div>
               )}
             </CardContent>

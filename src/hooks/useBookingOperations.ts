@@ -52,7 +52,7 @@ export const useBookingOperations = (
         room_capacity: roomCapacity, // Store as string
         start_time: bookingData.startTime,
         end_time: bookingData.endTime,
-        status: "draft",
+        status: "pending", // Changed from "draft" to "pending" to skip email verification
         created_by_email: bookingData.createdBy.email,
         created_by_name: bookingData.createdBy.name,
         draft_key: draftKey, // Store the draft key
@@ -78,7 +78,7 @@ export const useBookingOperations = (
             ...bookingData,
             id,
             createdAt: new Date().toISOString(),
-            status: "draft" as const,
+            status: "pending" as const, // Changed from "draft" to "pending"
             comments: [],
             createdBy: bookingData.createdBy,
           };
