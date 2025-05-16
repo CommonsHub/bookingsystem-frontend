@@ -45,10 +45,8 @@ const BookingDetail = () => {
   // Updated logic to check if user can approve bookings
   const canApproveBooking = booking.status === "pending" && canUserApproveBookings(user);
 
-  const visibleComments = booking.comments.filter((comment) => {
-    if (comment.status === "published") return true;
-    return user && user.email === comment.createdBy.email;
-  });
+  // Show all comments since we're not using the draft/verification system anymore
+  const visibleComments = booking.comments;
 
   const statusColor = (status: string) => {
     switch (status) {
@@ -79,7 +77,7 @@ const BookingDetail = () => {
 
     try {
       await addCommentToBooking(id, commentData.content, commentData.email, commentData.name);
-      toast.success("Comment submitted! Please check your email to verify.");
+      toast.success("Comment added successfully!");
     } catch (error) {
       toast.error("Failed to submit comment");
       console.error(error);
@@ -226,12 +224,7 @@ const BookingDetail = () => {
             ) : (
               <div className="space-y-4">
                 {visibleComments.map((comment) => (
-                  <Card
-                    key={comment.id}
-                    className={
-                      comment.status === "draft" ? "border-dashed" : ""
-                    }
-                  >
+                  <Card key={comment.id}>
                     <CardHeader className="pb-2">
                       <div className="flex justify-between items-center">
                         <div className="font-medium">
@@ -245,11 +238,6 @@ const BookingDetail = () => {
                     <CardContent>
                       <p>{comment.content}</p>
                     </CardContent>
-                    {comment.status === "draft" && (
-                      <CardFooter className="bg-muted/20 pt-2 pb-2 text-sm text-muted-foreground italic">
-                        Awaiting email verification - only visible to you
-                      </CardFooter>
-                    )}
                   </Card>
                 ))}
               </div>

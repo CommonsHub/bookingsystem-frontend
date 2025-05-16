@@ -106,7 +106,7 @@ export const useBookingOperations = (
     name: string = "",
   ): Promise<string> => {
     try {
-      // Insert comment into the database
+      // Insert comment into the database as published instead of draft
       const { data, error } = await supabase
         .from("comments")
         .insert({
@@ -114,7 +114,7 @@ export const useBookingOperations = (
           content,
           created_by_email: email,
           created_by_name: name,
-          status: "draft"
+          status: "published"  // Changed from "draft" to "published"
         })
         .select()
         .single();
@@ -136,7 +136,7 @@ export const useBookingOperations = (
           name: name || "",
           verified: false 
         },
-        status: "draft",
+        status: "published",  // Changed from "draft" to "published"
       };
 
       // Update local state
