@@ -1,4 +1,3 @@
-
 import { toast } from "@/components/ui/toast-utils";
 import { supabase } from "@/integrations/supabase/client";
 import { generateId } from "@/lib/utils";
@@ -23,9 +22,8 @@ export const useBookingOperations = (
       const draftKey = localStorage.getItem("anonymous-booking-draft-key") || 
         (bookingData.createdBy?.email ? `booking-draft-${bookingData.createdBy.email}` : null);
 
-      // Parse the capacity string to an integer for database storage
-      // The database still expects an integer but our application uses strings
-      const roomCapacityInt = parseInt(bookingData.room.capacity, 10);
+      // Always store 0 as room_capacity regardless of the actual value
+      const roomCapacityInt = 0;
 
       const { error } = await supabase.from("bookings").insert({
         id,
@@ -33,7 +31,7 @@ export const useBookingOperations = (
         description: bookingData.description,
         room_id: bookingData.room.id,
         room_name: bookingData.room.name,
-        room_capacity: roomCapacityInt, // Convert string to integer for storage
+        room_capacity: roomCapacityInt, // Always store 0 regardless of actual capacity
         start_time: bookingData.startTime,
         end_time: bookingData.endTime,
         status: "draft",
