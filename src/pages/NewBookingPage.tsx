@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon, Clock, Mic, Music, Theater, Users } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as z from "zod";
@@ -101,6 +101,7 @@ const NewBookingPage = () => {
   const { saveDraft, loadDraft, clearDraft, isLoading } = useDraftBooking();
   const [draftLoaded, setDraftLoaded] = useState(false);
   const [autoSaveTimerId, setAutoSaveTimerId] = useState<NodeJS.Timeout | null>(null);
+  const shouldAutoSave = useRef<boolean>(true);
 
   const defaultEmail = user?.email || "";
 
@@ -152,6 +153,11 @@ const NewBookingPage = () => {
   useEffect(() => {
     // Watch for form changes
     const subscription = form.watch((formValues) => {
+      // Don't auto-save if we just cleared the draft
+      if (!shouldAutoSave.current) {
+        return;
+      }
+      
       // Debounce the auto-save to prevent too many saves
       if (autoSaveTimerId) {
         clearTimeout(autoSaveTimerId);
@@ -227,6 +233,45 @@ const NewBookingPage = () => {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleClearDraft = async () => {
+    // Prevent auto-saving during form reset
+    shouldAutoSave.current = false;
+    
+    // Clear the draft data
+    await clearDraft();
+    
+    // Reset form to default values
+    form.reset({
+      title: "",
+      description: "",
+      roomId: "",
+      setupOption: "",
+      requiresAdditionalSpace: false,
+      date: undefined,
+      startTime: "",
+      endTime: "",
+      email: defaultEmail,
+      name: "",
+      cateringOptions: [],
+      cateringComments: "",
+      eventSupportOptions: [],
+      membershipStatus: "",
+      additionalComments: "",
+      isPublicEvent: false,
+    });
+    
+    // Reset UI state
+    setSelectedRoomId(null);
+    setDraftLoaded(false);
+    
+    // Allow auto-saving again after a short delay (to prevent immediate re-save of empty form)
+    setTimeout(() => {
+      shouldAutoSave.current = true;
+    }, 500);
+    
+    toast.success("Draft cleared");
   };
 
   const watchedRoomId = form.watch("roomId");
@@ -771,12 +816,7 @@ const NewBookingPage = () => {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={async () => {
-                    await clearDraft();
-                    form.reset();
-                    setDraftLoaded(false);
-                    toast.success("Draft cleared");
-                  }}
+                  onClick={handleClearDraft}
                 >
                   Clear Draft
                 </Button>
