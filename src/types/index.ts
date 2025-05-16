@@ -1,3 +1,4 @@
+
 export interface Room {
   id: string;
   name: string;
@@ -37,6 +38,8 @@ export interface Booking {
   approvedAt?: string;
   selectedSetup?: string;
   requiresAdditionalSpace?: boolean;
+  additionalComments?: string;
+  isPublicEvent?: boolean;
 }
 
 export interface Comment {

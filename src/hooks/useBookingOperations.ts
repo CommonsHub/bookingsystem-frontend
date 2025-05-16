@@ -1,4 +1,3 @@
-
 import { toast } from "@/components/ui/toast-utils";
 import { supabase } from "@/integrations/supabase/client";
 import { generateId } from "@/lib/utils";
@@ -56,7 +55,9 @@ export const useBookingOperations = (
         created_by_email: bookingData.createdBy.email,
         created_by_name: bookingData.createdBy.name,
         draft_key: draftKey, // Store the draft key
-        draft_data: sanitizedDraftData, // Store the sanitized JSON data
+        draft_data: sanitizedDraftData, // Keep storing sanitized data for compatibility
+        additional_comments: bookingData.additionalComments, // Store in dedicated column
+        is_public_event: bookingData.isPublicEvent // Store in dedicated column
       });
 
       if (error) {

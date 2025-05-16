@@ -104,6 +104,11 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
                 }
               : undefined,
             approvedAt: booking.approved_at,
+            // Add additional properties from the new columns
+            additionalComments: booking.additional_comments,
+            isPublicEvent: booking.is_public_event,
+            selectedSetup: booking.draft_data?.selectedSetup,
+            requiresAdditionalSpace: booking.draft_data?.requiresAdditionalSpace,
           };
         });
 

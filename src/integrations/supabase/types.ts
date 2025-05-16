@@ -11,6 +11,7 @@ export type Database = {
     Tables: {
       bookings: {
         Row: {
+          additional_comments: string | null
           approved_at: string | null
           approved_by_email: string | null
           created_at: string | null
@@ -21,6 +22,7 @@ export type Database = {
           draft_key: string | null
           end_time: string
           id: string
+          is_public_event: boolean | null
           room_capacity: number
           room_id: string
           room_name: string
@@ -29,6 +31,7 @@ export type Database = {
           title: string
         }
         Insert: {
+          additional_comments?: string | null
           approved_at?: string | null
           approved_by_email?: string | null
           created_at?: string | null
@@ -39,6 +42,7 @@ export type Database = {
           draft_key?: string | null
           end_time: string
           id?: string
+          is_public_event?: boolean | null
           room_capacity: number
           room_id: string
           room_name: string
@@ -47,6 +51,7 @@ export type Database = {
           title: string
         }
         Update: {
+          additional_comments?: string | null
           approved_at?: string | null
           approved_by_email?: string | null
           created_at?: string | null
@@ -57,6 +62,7 @@ export type Database = {
           draft_key?: string | null
           end_time?: string
           id?: string
+          is_public_event?: boolean | null
           room_capacity?: number
           room_id?: string
           room_name?: string
