@@ -1,4 +1,3 @@
-
 import { toast } from "@/components/ui/toast-utils";
 import { supabase } from "@/integrations/supabase/client";
 import { generateId } from "@/lib/utils";
@@ -19,18 +18,26 @@ export const useBookingOperations = (
     const id = uuidv4();
 
     try {
+      // Get the draft key if it exists in localStorage
+      const draftKey = localStorage.getItem("anonymous-booking-draft-key") || 
+        (bookingData.createdBy?.email ? `booking-draft-${bookingData.createdBy.email}` : null);
+
+      // Always store 0 as room_capacity regardless of the actual value
+      const roomCapacityInt = 0;
+
       const { error } = await supabase.from("bookings").insert({
         id,
         title: bookingData.title,
         description: bookingData.description,
         room_id: bookingData.room.id,
         room_name: bookingData.room.name,
-        room_capacity: bookingData.room.capacity,
+        room_capacity: roomCapacityInt, // Always store 0 regardless of actual capacity
         start_time: bookingData.startTime,
         end_time: bookingData.endTime,
         status: "draft",
         created_by_email: bookingData.createdBy.email,
         created_by_name: bookingData.createdBy.name,
+        draft_key: draftKey, // Store the draft key
       });
 
       if (error) {
@@ -56,6 +63,11 @@ export const useBookingOperations = (
           };
           return [transformedNewBooking, ...prevBookings];
         });
+      }
+
+      // Clear the draft data from localStorage after successful submission
+      if (draftKey) {
+        localStorage.removeItem(draftKey);
       }
 
       return id;
@@ -98,6 +110,7 @@ export const useBookingOperations = (
         content,
         createdAt: data.created_at,
         createdBy: { 
+          id: uuidv4(), // Generate a temporary ID for the user
           email, 
           name: name || "",
           verified: false 

@@ -1,46 +1,75 @@
 import { Room, Booking, User, Comment } from "../types";
+import { v4 as uuidv4 } from "uuid";
 
 export const rooms: Room[] = [
   {
     id: "room-001",
-    name: "Conference Room A",
-    capacity: 12,
-    location: "1st Floor, East Wing",
+    name: "Elinor Ostrom room ",
+    capacity: "17 - 100",
+    location: "2st Floor",
+    description: "Large conference space",
+    setupOptions: [
+      {
+        type: "Workshop",
+        minCapacity: 17,
+        maxCapacity: 50,
+        icon: "music",
+        description: "in dynamic workshop set up or circle",
+      },
+      {
+        type: "Theater",
+        minCapacity: 50,
+        maxCapacity: 80,
+        icon: "theater",
+        description: "theater setup",
+      },
+      {
+        type: "Networking",
+        minCapacity: 80,
+        maxCapacity: 120,
+        icon: "mic",
+        description: "standing, networking",
+      },
+    ],
   },
   {
     id: "room-002",
-    name: "Meeting Room B",
-    capacity: 8,
-    location: "2nd Floor, West Wing",
+    name: "Satoshi room",
+    capacity: "10 - 17",
+    location: "2nd Floor",
+    description: "Medium-sized conference room",
+    setupOptions: [],
   },
   {
     id: "room-003",
-    name: "Boardroom",
-    capacity: 20,
-    location: "3rd Floor, Executive Suite",
+    name: "Angel Room",
+    capacity: "12",
+    location: "2rd Floor",
+    description: "Perfect for small meetings",
+    setupOptions: [],
   },
   {
     id: "room-004",
-    name: "Brainstorm Room",
-    capacity: 6,
-    location: "1st Floor, Innovation Hub",
+    name: "Mush Room",
+    capacity: "10",
+    location: "1st Floor",
   },
   {
     id: "room-005",
-    name: "Training Room",
-    capacity: 30,
-    location: "4th Floor, Learning Center",
+    name: "Mediation Room",
+    capacity: "10",
+    location: "1th Floor",
   },
 ];
 
 // Demo users with more variety
 const demoUsers: User[] = [
-  { email: "john.doe@example.com", verified: true },
-  { email: "sarah.smith@example.com", verified: true },
-  { email: "tech.lead@example.com", verified: true },
-  { email: "product.manager@example.com", verified: true },
-  { email: "dev.team@example.com", verified: true },
-  { email: "marketing@example.com", verified: true },
+  { id: "user-001", email: "john.doe@example.com", verified: true },
+  { id: "user-002", email: "sarah.smith@example.com", verified: true },
+  { id: "user-003", email: "tech.lead@example.com", verified: true },
+  { id: "user-004", email: "product.manager@example.com", verified: true },
+  { id: "user-005", email: "dev.team@example.com", verified: true },
+  { id: "user-006", email: "marketing@example.com", verified: true },
 ];
 
 // Create sample comments with more variety

@@ -17,6 +17,8 @@ export type Database = {
           created_by_email: string
           created_by_name: string | null
           description: string | null
+          draft_data: Json | null
+          draft_key: string | null
           end_time: string
           id: string
           room_capacity: number
@@ -33,6 +35,8 @@ export type Database = {
           created_by_email: string
           created_by_name?: string | null
           description?: string | null
+          draft_data?: Json | null
+          draft_key?: string | null
           end_time: string
           id?: string
           room_capacity: number
@@ -49,6 +53,8 @@ export type Database = {
           created_by_email?: string
           created_by_name?: string | null
           description?: string | null
+          draft_data?: Json | null
+          draft_key?: string | null
           end_time?: string
           id?: string
           room_capacity?: number
