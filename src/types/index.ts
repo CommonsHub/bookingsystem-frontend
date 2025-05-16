@@ -1,8 +1,18 @@
 export interface Room {
   id: string;
   name: string;
-  capacity: number;
+  capacity: string;
   location: string;
+  description?: string;
+  setupOptions?: RoomSetupOption[];
+}
+
+export interface RoomSetupOption {
+  type: string;
+  minCapacity: number;
+  maxCapacity: number;
+  icon: string;
+  description: string;
 }
 
 export interface User {
@@ -25,6 +35,8 @@ export interface Booking {
   comments: Comment[];
   approvedBy?: User;
   approvedAt?: string;
+  selectedSetup?: string;
+  requiresAdditionalSpace?: boolean;
 }
 
 export interface Comment {
@@ -48,3 +60,22 @@ export interface Profile {
 
 export type BookingStatus = "draft" | "pending" | "approved" | "rejected";
 export type CommentStatus = "draft" | "published";
+
+export interface CateringOption {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  emoji: string;
+}
+
+export interface EventSupportOption {
+  id: string;
+  name: string;
+  description: string;
+}
+
+export interface MembershipStatus {
+  id: string;
+  name: string;
+}
