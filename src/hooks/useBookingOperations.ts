@@ -1,3 +1,4 @@
+
 import { toast } from "@/components/ui/toast-utils";
 import { supabase } from "@/integrations/supabase/client";
 import { generateId } from "@/lib/utils";
@@ -25,6 +26,12 @@ export const useBookingOperations = (
       // Always store 0 as room_capacity regardless of the actual value
       const roomCapacityInt = 0;
 
+      // Store the complete booking data including any additional comments in draft_data
+      const fullBookingData = {
+        ...bookingData,
+        // Any other metadata that's not part of the main table schema
+      };
+
       const { error } = await supabase.from("bookings").insert({
         id,
         title: bookingData.title,
@@ -38,6 +45,7 @@ export const useBookingOperations = (
         created_by_email: bookingData.createdBy.email,
         created_by_name: bookingData.createdBy.name,
         draft_key: draftKey, // Store the draft key
+        draft_data: fullBookingData, // Store the complete booking data as JSON
       });
 
       if (error) {

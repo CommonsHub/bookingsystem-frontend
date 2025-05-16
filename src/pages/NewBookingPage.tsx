@@ -63,6 +63,8 @@ const formSchema = z.object({
   cateringComments: z.string().optional(),
   eventSupportOptions: z.array(z.string()).optional(),
   membershipStatus: z.string().optional(),
+  // Add the new additional comments field
+  additionalComments: z.string().optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -119,6 +121,7 @@ const NewBookingPage = () => {
       cateringComments: "",
       eventSupportOptions: [],
       membershipStatus: "",
+      additionalComments: "", // Initialize the new field
     },
   });
 
@@ -664,7 +667,28 @@ const NewBookingPage = () => {
 
               <Separator />
 
+              {/* Additional Comments Section */}
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="additionalComments"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Any additional information you want to share</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Please share any other information that might be relevant for your booking"
+                          rows={3}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
+              <Separator />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
