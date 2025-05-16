@@ -29,7 +29,7 @@ export const useBookingOperations = (
         description: bookingData.description,
         room_id: bookingData.room.id,
         room_name: bookingData.room.name,
-        room_capacity: bookingData.room.capacity,
+        room_capacity: bookingData.room.capacity, // Now a string
         start_time: bookingData.startTime,
         end_time: bookingData.endTime,
         status: "draft",

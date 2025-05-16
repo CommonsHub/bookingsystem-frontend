@@ -4,7 +4,7 @@ import { toast } from "@/components/ui/toast-utils";
 import { v4 as uuidv4 } from "uuid";
 import { useAuth } from "@/context/AuthContext";
 
-type DraftBookingData = Record<string, any>;
+export type DraftBookingData = Record<string, any>;
 
 export const useDraftBooking = () => {
   const { user } = useAuth();
@@ -59,7 +59,18 @@ export const useDraftBooking = () => {
     try {
       // Load from localStorage
       const localData = localStorage.getItem(draftKey);
-      return localData ? JSON.parse(localData) as DraftBookingData : null;
+      
+      if (!localData) return null;
+      
+      // Parse the data
+      const parsedData = JSON.parse(localData) as DraftBookingData;
+      
+      // Ensure date field is properly loaded as a Date object if it exists
+      if (parsedData.date && typeof parsedData.date === 'string') {
+        parsedData.date = new Date(parsedData.date);
+      }
+      
+      return parsedData;
     } catch (error) {
       console.error("Error loading draft:", error);
       return null;

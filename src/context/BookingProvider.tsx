@@ -82,7 +82,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
             room: {
               id: booking.room_id,
               name: booking.room_name,
-              capacity: booking.room_capacity,
+              capacity: String(booking.room_capacity), // Convert to string
               location: "Main Building",
             },
             startTime: booking.start_time,

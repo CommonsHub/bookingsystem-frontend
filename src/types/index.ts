@@ -1,7 +1,8 @@
+
 export interface Room {
   id: string;
   name: string;
-  capacity: number;
+  capacity: string;
   location: string;
   setupOptions?: RoomSetupOption[];
 }
