@@ -1,3 +1,4 @@
+
 import AddComment from "@/components/AddComment";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
@@ -121,7 +122,7 @@ const BookingDetail = () => {
               {booking.title}
             </h1>
             <p className="text-muted-foreground mt-1">
-              Requested by {booking.createdBy.email} •{" "}
+              Requested by {booking.createdBy.name || booking.createdBy.email} •{" "}
               {getRelativeTime(booking.createdAt)}
             </p>
           </div>
@@ -143,7 +144,7 @@ const BookingDetail = () => {
                 <CheckCircle2 className="h-4 w-4" />
                 <AlertTitle>Booking Approved</AlertTitle>
                 <AlertDescription>
-                  Approved by {booking.approvedBy.email} on{" "}
+                  Approved by {booking.approvedBy.name || booking.approvedBy.email} on{" "}
                   {formatDate(booking.approvedAt)}
                 </AlertDescription>
               </Alert>

@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { useBooking } from "@/context/BookingContext";
 import { formatDateTime } from "@/lib/utils";
@@ -138,7 +139,9 @@ const HomePage = () => {
                     </div>
                   </TableCell>
                   <TableCell>{getStatusBadge(booking.status)}</TableCell>
-                  <TableCell>{booking.createdBy.email.split("@")[0]}</TableCell>
+                  <TableCell>
+                    {booking.createdBy.name || booking.createdBy.email.split("@")[0]}
+                  </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1">
                       <span>
