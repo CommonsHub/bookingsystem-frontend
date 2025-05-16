@@ -11,6 +11,8 @@ import {
   X,
   MessageSquare,
   Users,
+  LayoutList,
+  LayoutGrid,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -23,9 +25,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { useState } from "react";
 
 const HomePage = () => {
   const { bookings, user } = useBooking();
+  const isMobile = useIsMobile();
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>(isMobile ? 'grid' : 'list');
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -106,60 +113,128 @@ const HomePage = () => {
           </Button>
         </div>
       ) : (
-        <div className="rounded-md border">
-          <Table>
-            <TableCaption>A list of all room booking requests.</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Room</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Capacity</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Created by</TableHead>
-                <TableHead>Comments</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+        <div>
+          <div className="flex justify-end mb-4">
+            <div className="flex items-center space-x-2">
+              <Button
+                variant={viewMode === 'list' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setViewMode('list')}
+                className="px-3"
+              >
+                <LayoutList className="h-4 w-4" />
+                <span className="ml-2 hidden md:inline">Table</span>
+              </Button>
+              <Button
+                variant={viewMode === 'grid' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setViewMode('grid')}
+                className="px-3"
+              >
+                <LayoutGrid className="h-4 w-4" />
+                <span className="ml-2 hidden md:inline">Cards</span>
+              </Button>
+            </div>
+          </div>
+
+          {viewMode === 'list' ? (
+            <div className="rounded-md border overflow-x-auto">
+              <Table>
+                <TableCaption>A list of all room booking requests.</TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Title</TableHead>
+                    <TableHead>Room</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Capacity</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Created by</TableHead>
+                    <TableHead>Comments</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {visibleBookings.map((booking) => (
+                    <TableRow
+                      key={booking.id}
+                      className="cursor-pointer"
+                      onClick={() =>
+                        (window.location.href = `/bookings/${booking.id}`)
+                      }
+                    >
+                      <TableCell className="font-medium">{booking.title}</TableCell>
+                      <TableCell>{booking.room.name}</TableCell>
+                      <TableCell>{formatDateTime(booking.startTime)}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-1">
+                          <Users className="h-3 w-3" />
+                          <span>{booking.room.capacity}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>{getStatusBadge(booking.status)}</TableCell>
+                      <TableCell>
+                        {booking.createdBy.name || booking.createdBy.email.split("@")[0]}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-1">
+                          <span>
+                            {
+                              booking.comments.filter(
+                                (c) => c.status === "published",
+                              ).length
+                            }
+                          </span>
+                          {booking.comments.length > 0 && (
+                            <MessageSquare className="h-3 w-3" />
+                          )}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {visibleBookings.map((booking) => (
-                <TableRow
-                  key={booking.id}
-                  className="cursor-pointer"
-                  onClick={() =>
-                    (window.location.href = `/bookings/${booking.id}`)
-                  }
+                <Card 
+                  key={booking.id} 
+                  className="cursor-pointer hover:shadow-md transition-shadow"
+                  onClick={() => (window.location.href = `/bookings/${booking.id}`)}
                 >
-                  <TableCell className="font-medium">{booking.title}</TableCell>
-                  <TableCell>{booking.room.name}</TableCell>
-                  <TableCell>{formatDateTime(booking.startTime)}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1">
-                      <Users className="h-3 w-3" />
-                      <span>{booking.room.capacity}</span>
+                  <CardContent className="pt-6">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="font-medium text-lg line-clamp-2">{booking.title}</h3>
+                      {getStatusBadge(booking.status)}
                     </div>
-                  </TableCell>
-                  <TableCell>{getStatusBadge(booking.status)}</TableCell>
-                  <TableCell>
-                    {booking.createdBy.name || booking.createdBy.email.split("@")[0]}
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1">
-                      <span>
-                        {
-                          booking.comments.filter(
-                            (c) => c.status === "published",
-                          ).length
-                        }
-                      </span>
-                      {booking.comments.length > 0 && (
+                    
+                    <div className="text-sm text-muted-foreground space-y-2 mt-3">
+                      <div className="flex items-center gap-2">
+                        <CalendarDays className="h-3.5 w-3.5 flex-shrink-0" />
+                        <span>{formatDateTime(booking.startTime)}</span>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        <Users className="h-3.5 w-3.5 flex-shrink-0" />
+                        <span>{booking.room.name} ({booking.room.capacity})</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                  
+                  <CardFooter className="border-t pt-4 flex justify-between">
+                    <div className="text-xs text-muted-foreground">
+                      By {booking.createdBy.name || booking.createdBy.email.split("@")[0]}
+                    </div>
+                    {booking.comments.length > 0 && (
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <span>{booking.comments.filter((c) => c.status === "published").length}</span>
                         <MessageSquare className="h-3 w-3" />
-                      )}
-                    </div>
-                  </TableCell>
-                </TableRow>
+                      </div>
+                    )}
+                  </CardFooter>
+                </Card>
               ))}
-            </TableBody>
-          </Table>
+            </div>
+          )}
         </div>
       )}
     </div>
