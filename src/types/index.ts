@@ -1,9 +1,9 @@
-
 export interface Room {
   id: string;
   name: string;
   capacity: string;
   location: string;
+  description?: string;
   setupOptions?: RoomSetupOption[];
 }
 
@@ -12,6 +12,7 @@ export interface RoomSetupOption {
   minCapacity: number;
   maxCapacity: number;
   icon: string;
+  description: string;
 }
 
 export interface User {

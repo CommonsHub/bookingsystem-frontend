@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import { CalendarIcon, Clock, Music, Mic, Users, Theater, MessageSquare, Sandwich, Wine } from "lucide-react";
+import { CalendarIcon, Clock, Mic, Music, Theater, Users } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -101,36 +101,7 @@ const NewBookingPage = () => {
 
   const defaultEmail = user?.email || "";
 
-  // Enhanced room data with setup options
-  const enhancedRooms = rooms.map(room => {
-    if (room.name === "Angel Room") {
-      return {
-        ...room,
-        description: "Perfect for small meetings",
-        capacity: 12,
-        setupOptions: []
-      };
-    } else if (room.name === "Satoshi Room") {
-      return {
-        ...room,
-        description: "Medium-sized conference room",
-        capacity: 17,
-        setupOptions: []
-      };
-    } else if (room.name === "Ostrom Conference Room") {
-      return {
-        ...room,
-        description: "Large conference space",
-        capacity: 120,
-        setupOptions: [
-          { type: "Workshop", minCapacity: 17, maxCapacity: 50, icon: "music" },
-          { type: "Theater", minCapacity: 50, maxCapacity: 80, icon: "theater" },
-          { type: "Networking", minCapacity: 80, maxCapacity: 120, icon: "mic" }
-        ]
-      };
-    }
-    return room;
-  });
+  const enhancedRooms = rooms;
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -199,7 +170,7 @@ const NewBookingPage = () => {
 
     // Cleanup subscription
     return () => subscription.unsubscribe();
-  }, [form, saveDraft, autoSaveTimerId]);
+  }, [form, saveDraft]);
 
   const onSubmit = async (data: FormData) => {
     setSubmitting(true);
@@ -226,11 +197,11 @@ const NewBookingPage = () => {
         room: selectedRoom,
         startTime: startDate.toISOString(),
         endTime: endDate.toISOString(),
-        createdBy: { 
+        createdBy: {
           id: user?.id || crypto.randomUUID(),
-          email: data.email, 
-          name: data.name, 
-          verified: false 
+          email: data.email,
+          name: data.name,
+          verified: false
         },
         selectedSetup: data.setupOption,
         requiresAdditionalSpace: data.requiresAdditionalSpace
@@ -238,7 +209,7 @@ const NewBookingPage = () => {
 
       // Clear the draft data after successful submission
       await clearDraft();
-      
+
       toast.success(
         "Booking request submitted! Please check your email to verify.",
       );
@@ -320,7 +291,7 @@ const NewBookingPage = () => {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <h3 className="text-lg font-medium">Which space would you like to book?</h3>
-                  
+
                   <FormField
                     control={form.control}
                     name="roomId"
@@ -348,15 +319,7 @@ const NewBookingPage = () => {
                                   <div className="space-y-1">
                                     <div className="flex items-center">
                                       <Users className="h-4 w-4 text-red-500 mr-2" />
-                                      {room.name === "Angel Room" && (
-                                        <span>&gt;12 people: {room.name}</span>
-                                      )}
-                                      {room.name === "Satoshi Room" && (
-                                        <span>10-17 people: {room.name}</span>
-                                      )}
-                                      {room.name === "Ostrom Conference Room" && (
-                                        <span>17-120: {room.name}</span>
-                                      )}
+                                      <span>{room.capacity} people: {room.name}</span>
                                     </div>
                                   </div>
                                 </FormItem>
@@ -369,58 +332,6 @@ const NewBookingPage = () => {
                     )}
                   />
 
-                  {selectedRoom?.name === "Ostrom Conference Room" && (
-                    <div className="mt-4 pl-7">
-                      <h4 className="text-muted-foreground mb-2">Possible setup Ostrom:</h4>
-                      <FormField
-                        control={form.control}
-                        name="setupOption"
-                        render={({ field }) => (
-                          <FormItem className="space-y-3">
-                            <FormControl>
-                              <RadioGroup
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                                className="space-y-1"
-                              >
-                                <FormItem className="flex items-start space-x-3 space-y-0">
-                                  <FormControl>
-                                    <RadioGroupItem value="workshop" />
-                                  </FormControl>
-                                  <div className="flex items-center">
-                                    <Music className="h-4 w-4 text-amber-600 mr-2" />
-                                    <span>17-50 in dynamic workshop set up or circle</span>
-                                  </div>
-                                </FormItem>
-                                
-                                <FormItem className="flex items-start space-x-3 space-y-0">
-                                  <FormControl>
-                                    <RadioGroupItem value="theatre" />
-                                  </FormControl>
-                                  <div className="flex items-center">
-                                    <Theater className="h-4 w-4 text-amber-600 mr-2" />
-                                    <span>50-80 theatre set up</span>
-                                  </div>
-                                </FormItem>
-                                
-                                <FormItem className="flex items-start space-x-3 space-y-0">
-                                  <FormControl>
-                                    <RadioGroupItem value="networking" />
-                                  </FormControl>
-                                  <div className="flex items-center">
-                                    <Mic className="h-4 w-4 text-amber-600 mr-2" />
-                                    <span>80-120 standing, networking</span>
-                                  </div>
-                                </FormItem>
-                              </RadioGroup>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                  )}
-                  
                   <div className="mt-4 pl-7">
                     <FormField
                       control={form.control}
@@ -445,11 +356,56 @@ const NewBookingPage = () => {
                       )}
                     />
                   </div>
+
+
+                  {selectedRoom?.setupOptions?.length > 0 && (
+                    <div className="mt-4 pl-7">
+                      <h4 className="text-muted-foreground mb-2">Possible setup:</h4>
+                      <FormField
+                        control={form.control}
+                        name="setupOption"
+                        render={({ field }) => (
+                          <FormItem className="space-y-3">
+                            <FormControl>
+                              <RadioGroup
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                                className="space-y-1"
+                              >
+                                {selectedRoom.setupOptions.map((option) => {
+                                  return <FormItem className="flex items-start space-x-3 space-y-0">
+                                    <FormControl>
+                                      <RadioGroupItem value={option.type} />
+                                    </FormControl>
+                                    <div className="flex items-center">
+                                      {option.icon === "music" ?
+                                        <Music className="h-4 w-4 text-amber-600 mr-2" />
+                                        : option.icon === "theater" ?
+                                          <Theater className="h-4 w-4 text-amber-600 mr-2" />
+                                          : option.icon === "mic" ?
+                                            <Mic className="h-4 w-4 text-amber-600 mr-2" />
+                                            : <Users className="h-4 w-4 text-amber-600 mr-2" />
+                                      }
+
+                                      <span>{option.minCapacity}-{option.maxCapacity}, {option.description}</span>
+                                    </div>
+                                  </FormItem>
+                                })
+                                }
+                              </RadioGroup>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  )}
+
                 </div>
               </div>
 
               <Separator />
-              
+
               {/* Catering Options Section */}
               <div className="space-y-4">
                 <div className="space-y-2">
@@ -457,7 +413,7 @@ const NewBookingPage = () => {
                   <p className="text-sm text-muted-foreground">
                     Coffee, tea and water are included in the price. For lunch catering we work with local suppliers (Tasty Break for simple sandwiches, Apus et Les Cocottes Volantes for organic awesome food).
                   </p>
-                  
+
                   <FormField
                     control={form.control}
                     name="cateringOptions"
@@ -481,8 +437,8 @@ const NewBookingPage = () => {
                                         const updatedValue = checked
                                           ? [...(field.value || []), option.id]
                                           : (field.value || []).filter(
-                                              (value) => value !== option.id
-                                            );
+                                            (value) => value !== option.id
+                                          );
                                         field.onChange(updatedValue);
                                       }}
                                     />
@@ -506,7 +462,7 @@ const NewBookingPage = () => {
                     )}
                   />
                 </div>
-                
+
                 <FormField
                   control={form.control}
                   name="cateringComments"
@@ -525,9 +481,9 @@ const NewBookingPage = () => {
                   )}
                 />
               </div>
-              
+
               <Separator />
-              
+
               {/* Event Support Options Section */}
               <div className="space-y-4">
                 <div className="space-y-2">
@@ -535,7 +491,7 @@ const NewBookingPage = () => {
                   <p className="text-sm text-muted-foreground">
                     If you are interested in additional support, you can add this here.
                   </p>
-                  
+
                   <FormField
                     control={form.control}
                     name="eventSupportOptions"
@@ -559,8 +515,8 @@ const NewBookingPage = () => {
                                         const updatedValue = checked
                                           ? [...(field.value || []), option.id]
                                           : (field.value || []).filter(
-                                              (value) => value !== option.id
-                                            );
+                                            (value) => value !== option.id
+                                          );
                                         field.onChange(updatedValue);
                                       }}
                                     />
@@ -581,9 +537,9 @@ const NewBookingPage = () => {
                   />
                 </div>
               </div>
-              
+
               <Separator />
-              
+
               {/* Membership Status Section */}
               <div className="space-y-4">
                 <div className="space-y-2">
@@ -591,7 +547,7 @@ const NewBookingPage = () => {
                   <p className="text-sm text-muted-foreground">
                     Members get 30% discount on all rental prices. Membership starts from €10/month or €100/year.
                   </p>
-                  
+
                   <FormField
                     control={form.control}
                     name="membershipStatus"
@@ -758,8 +714,8 @@ const NewBookingPage = () => {
                 >
                   Cancel
                 </Button>
-                <Button 
-                  type="button" 
+                <Button
+                  type="button"
                   variant="outline"
                   onClick={async () => {
                     await clearDraft();
