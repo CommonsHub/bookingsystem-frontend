@@ -75,6 +75,13 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
             status: comment.status,
           }));
 
+          // Extract setup options from draft_data safely
+          const draftData = booking.draft_data || {};
+          const selectedSetup = typeof draftData === 'object' ? 
+            (draftData as any)?.selectedSetup : undefined;
+          const requiresAdditionalSpace = typeof draftData === 'object' ? 
+            (draftData as any)?.requiresAdditionalSpace : undefined;
+
           return {
             id: booking.id,
             title: booking.title,
@@ -82,7 +89,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
             room: {
               id: booking.room_id,
               name: booking.room_name,
-              capacity: String(booking.room_capacity), // Convert to string
+              capacity: booking.room_capacity, // Now this is stored as string
               location: "Main Building",
             },
             startTime: booking.start_time,
@@ -104,11 +111,12 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
                 }
               : undefined,
             approvedAt: booking.approved_at,
-            // Add additional properties from the new columns
+            // Use dedicated columns instead of draft_data
             additionalComments: booking.additional_comments,
             isPublicEvent: booking.is_public_event,
-            selectedSetup: booking.draft_data?.selectedSetup,
-            requiresAdditionalSpace: booking.draft_data?.requiresAdditionalSpace,
+            // Still use draft_data for these fields for backward compatibility
+            selectedSetup,
+            requiresAdditionalSpace,
           };
         });
 

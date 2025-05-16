@@ -23,7 +23,7 @@ export type Database = {
           end_time: string
           id: string
           is_public_event: boolean | null
-          room_capacity: number
+          room_capacity: string
           room_id: string
           room_name: string
           start_time: string
@@ -43,7 +43,7 @@ export type Database = {
           end_time: string
           id?: string
           is_public_event?: boolean | null
-          room_capacity: number
+          room_capacity?: string
           room_id: string
           room_name: string
           start_time: string
@@ -63,7 +63,7 @@ export type Database = {
           end_time?: string
           id?: string
           is_public_event?: boolean | null
-          room_capacity?: number
+          room_capacity?: string
           room_id?: string
           room_name?: string
           start_time?: string

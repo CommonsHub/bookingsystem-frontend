@@ -1,3 +1,4 @@
+
 import { toast } from "@/components/ui/toast-utils";
 import { supabase } from "@/integrations/supabase/client";
 import { generateId } from "@/lib/utils";
@@ -22,8 +23,8 @@ export const useBookingOperations = (
       const draftKey = localStorage.getItem("anonymous-booking-draft-key") || 
         (bookingData.createdBy?.email ? `booking-draft-${bookingData.createdBy.email}` : null);
 
-      // Always store 0 as room_capacity regardless of the actual value
-      const roomCapacityInt = 0;
+      // Store room capacity as a string (no need to convert since it's already a string)
+      const roomCapacity = bookingData.room.capacity;
 
       // Create a sanitized version of the data for JSON storage
       // This prevents type errors by ensuring we only store JSON-compatible data
@@ -48,7 +49,7 @@ export const useBookingOperations = (
         description: bookingData.description,
         room_id: bookingData.room.id,
         room_name: bookingData.room.name,
-        room_capacity: roomCapacityInt, // Always store 0 regardless of actual capacity
+        room_capacity: roomCapacity, // Store as string
         start_time: bookingData.startTime,
         end_time: bookingData.endTime,
         status: "draft",
