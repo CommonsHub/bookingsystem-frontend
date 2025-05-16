@@ -1,3 +1,4 @@
+
 import AddComment from "@/components/AddComment";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
@@ -27,8 +28,13 @@ import { Link, useParams } from "react-router-dom";
 
 const BookingDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const { getBookingById, addCommentToBooking, approveBookingRequest, user } =
-    useBooking();
+  const { 
+    getBookingById, 
+    addCommentToBooking, 
+    approveBookingRequest, 
+    user,
+    canUserApproveBookings 
+  } = useBooking();
   const [submitting, setSubmitting] = useState(false);
 
   if (!id) return <div>Booking ID is missing</div>;
@@ -36,7 +42,8 @@ const BookingDetail = () => {
   const booking = getBookingById(id);
   if (!booking) return <div>Booking not found</div>;
 
-  const canApproveBooking = booking.status === "pending" && user?.verified;
+  // Updated logic to check if user can approve bookings
+  const canApproveBooking = booking.status === "pending" && canUserApproveBookings(user);
 
   const visibleComments = booking.comments.filter((comment) => {
     if (comment.status === "published") return true;
@@ -273,7 +280,7 @@ const BookingDetail = () => {
                   title={
                     booking.status !== "pending"
                       ? "This booking is not pending approval"
-                      : "You need to verify your email to approve bookings"
+                      : "You need to be verified or have a commonshub.brussels email to approve bookings"
                   }
                 >
                   <CheckCircle2 className="h-4 w-4" />
@@ -289,7 +296,7 @@ const BookingDetail = () => {
 
               {booking.status === "draft" && (
                 <div className="text-center text-sm text-muted-foreground">
-                  Booking can be approved by admins only
+                  Booking can be approved once verified
                 </div>
               )}
             </CardContent>

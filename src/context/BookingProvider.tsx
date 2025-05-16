@@ -139,6 +139,19 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
     return user?.email || null;
   };
 
+  // New function to check if a user can approve bookings
+  const canUserApproveBookings = (user: User | null): boolean => {
+    if (!user) return false;
+    
+    // Allow verified users to approve bookings
+    if (user.verified) return true;
+    
+    // Allow users with commonshub.brussels email domain
+    if (user.email.endsWith('@commonshub.brussels')) return true;
+    
+    return false;
+  };
+
   return (
     <BookingContext.Provider
       value={{
@@ -149,6 +162,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
         getBookingById,
         approveBookingRequest: (id: string) => approveBookingRequest(id, user!),
         getUserEmail,
+        canUserApproveBookings,
       }}
     >
       {children}
