@@ -28,6 +28,9 @@ export const BookingHeader = ({ booking }: BookingHeaderProps) => {
     }
   };
 
+  // Get the creator's display name
+  const creatorName = booking.createdBy.name || booking.createdBy.email;
+
   return (
     <>
       <div className="flex items-center mb-6">
@@ -59,7 +62,7 @@ export const BookingHeader = ({ booking }: BookingHeaderProps) => {
             {booking.title}
           </h1>
           <p className="text-muted-foreground mt-1">
-            Requested by {booking.createdBy.name || booking.createdBy.email} •{" "}
+            Requested by {creatorName} •{" "}
             {getRelativeTime(booking.createdAt)}
           </p>
         </div>

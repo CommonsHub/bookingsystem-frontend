@@ -3,7 +3,7 @@ import { toast } from "@/components/ui/toast-utils";
 import { generateMockBookings } from "@/data/mockData";
 import { useBookingOperations } from "@/hooks/useBookingOperations";
 import { supabase } from "@/integrations/supabase/client";
-import { Booking, BookingStatus, User } from "@/types";
+import { Booking, BookingStatus, User, Profile } from "@/types";
 import { v4 as uuidv4 } from "uuid";
 import React, { useEffect, useState } from "react";
 import { BookingContext } from "./BookingContext";
@@ -47,6 +47,30 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
           console.error("Error fetching comments:", commentsError);
         }
 
+        // Fetch profiles for creators
+        const uniqueEmails = [...new Set(bookingsData.map(booking => booking.created_by_email))];
+        const { data: profilesData, error: profilesError } = await supabase
+          .from("profiles")
+          .select("*");
+
+        if (profilesError) {
+          console.error("Error fetching profiles:", profilesError);
+        }
+
+        // Create a map of email to profile
+        const emailToProfileMap: Record<string, Profile> = {};
+        if (profilesData) {
+          profilesData.forEach(profile => {
+            // We need to find the corresponding email
+            const bookingWithEmail = bookingsData.find(booking => 
+              booking.created_by_email && profile.id === booking.created_by_email.split('@')[0]
+            );
+            if (bookingWithEmail) {
+              emailToProfileMap[bookingWithEmail.created_by_email] = profile;
+            }
+          });
+        }
+
         // Group comments by booking_id
         const commentsByBookingId: Record<string, any[]> = {};
         if (commentsData) {
@@ -82,6 +106,10 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
           const requiresAdditionalSpace = typeof draftData === 'object' ? 
             (draftData as any)?.requiresAdditionalSpace : undefined;
 
+          // Get profile name if available
+          const profile = emailToProfileMap[booking.created_by_email];
+          const creatorName = profile?.full_name || booking.created_by_name || "";
+
           return {
             id: booking.id,
             title: booking.title,
@@ -99,8 +127,9 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
             createdBy: {
               id: uuidv4(), // Generate a temporary ID for the user
               email: booking.created_by_email,
-              name: booking.created_by_name || "",
+              name: creatorName,
               verified: true,
+              profileId: profile?.id, // Add the profile ID if available
             },
             comments: transformedComments,
             approvedBy: booking.approved_by_email

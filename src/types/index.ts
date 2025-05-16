@@ -21,6 +21,7 @@ export interface User {
   email: string;
   name?: string;
   verified: boolean;
+  profileId?: string;
 }
 
 export interface Booking {
