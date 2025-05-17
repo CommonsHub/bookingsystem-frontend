@@ -14,6 +14,7 @@ import {
   LayoutList,
   LayoutGrid,
   Filter,
+  Trash2,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -29,12 +30,25 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "@/components/ui/toast-utils";
 
 const HomePage = () => {
-  const { bookings, user } = useBooking();
+  const { bookings, user, canUserCancelBooking, cancelBookingRequest } = useBooking();
   const isMobile = useIsMobile();
   const [viewMode, setViewMode] = useState<'list' | 'grid'>(isMobile ? 'grid' : 'list');
   const [showAllBookings, setShowAllBookings] = useState(false);
+  const [bookingToCancel, setBookingToCancel] = useState<string | null>(null);
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -85,6 +99,16 @@ const HomePage = () => {
     }
   };
 
+  const handleCancelBooking = (id: string) => {
+    cancelBookingRequest(id);
+    toast.success("Booking cancelled successfully");
+    setBookingToCancel(null);
+  };
+
+  const stopPropagation = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   const visibleBookings = bookings.filter((booking) => {
     // First filter for permissions - hide drafts not created by the current user
     if (booking.status === "draft" && (!user || user.email !== booking.createdBy.email)) {
@@ -112,6 +136,26 @@ const HomePage = () => {
       </div>
 
       <Separator />
+
+      <AlertDialog open={!!bookingToCancel} onOpenChange={(open) => !open && setBookingToCancel(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Cancel booking</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to cancel this booking? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>No, keep the booking</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={() => bookingToCancel && handleCancelBooking(bookingToCancel)}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Yes, cancel booking
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {visibleBookings.length === 0 ? (
         <div className="text-center py-12 space-y-4">
@@ -184,6 +228,7 @@ const HomePage = () => {
                     <TableHead>Status</TableHead>
                     <TableHead>Created by</TableHead>
                     <TableHead>Comments</TableHead>
+                    <TableHead>Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -215,6 +260,23 @@ const HomePage = () => {
                             <MessageSquare className="h-3 w-3" />
                           )}
                         </div>
+                      </TableCell>
+                      <TableCell onClick={stopPropagation}>
+                        {(booking.status === "pending" || booking.status === "approved") && 
+                          canUserCancelBooking(booking, user) && (
+                            <Button 
+                              variant="ghost" 
+                              size="icon"
+                              className="h-8 w-8 text-destructive" 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setBookingToCancel(booking.id);
+                              }}
+                              title="Cancel booking"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -252,9 +314,27 @@ const HomePage = () => {
                     <div className="text-xs text-muted-foreground">
                       By {booking.createdBy.name || booking.createdBy.email.split("@")[0]}
                     </div>
-                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                      <span>{booking.comments.length}</span>
-                      <MessageSquare className="h-3 w-3" />
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <span>{booking.comments.length}</span>
+                        <MessageSquare className="h-3 w-3" />
+                      </div>
+                      
+                      {(booking.status === "pending" || booking.status === "approved") && 
+                        canUserCancelBooking(booking, user) && (
+                          <Button 
+                            variant="ghost" 
+                            size="icon"
+                            className="h-8 w-8 text-destructive" 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setBookingToCancel(booking.id);
+                            }}
+                            title="Cancel booking"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                      )}
                     </div>
                   </CardFooter>
                 </Card>
