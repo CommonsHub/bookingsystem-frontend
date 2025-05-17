@@ -5,11 +5,12 @@ import { createContext, useContext } from "react";
 interface BookingContextType {
   bookings: Booking[];
   user: User | null;
+  isLoading: boolean;
   createBooking: (
     booking: Omit<
       Booking,
       "id" | "createdAt" | "status" | "comments" | "createdBy"
-    > & { createdBy: User },
+    > & { createdBy: User, additionalComments?: string, isPublicEvent?: boolean },
   ) => Promise<string>;
   addCommentToBooking: (
     bookingId: string,
@@ -19,7 +20,10 @@ interface BookingContextType {
   ) => Promise<string>;
   getBookingById: (id: string) => Booking | undefined;
   approveBookingRequest: (id: string) => void;
+  cancelBookingRequest: (id: string) => void;
   getUserEmail: () => string | null;
+  canUserApproveBookings: (user: User | null) => boolean;
+  canUserCancelBooking: (booking: Booking, user: User | null) => boolean;
 }
 
 export const BookingContext = createContext<BookingContextType | undefined>(
