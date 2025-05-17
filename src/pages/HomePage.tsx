@@ -100,6 +100,7 @@ const HomePage = () => {
   };
 
   const handleCancelBooking = (id: string) => {
+    // Pass the user object to cancelBookingRequest
     cancelBookingRequest(id);
     toast.success("Booking cancelled successfully");
     setBookingToCancel(null);
