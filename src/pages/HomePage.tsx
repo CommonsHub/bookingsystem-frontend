@@ -35,7 +35,7 @@ const HomePage = () => {
   const isMobile = useIsMobile();
   const [viewMode, setViewMode] = useState<'list' | 'grid'>(isMobile ? 'grid' : 'list');
   const [showAllBookings, setShowAllBookings] = useState(false);
-  
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "draft":
@@ -90,13 +90,13 @@ const HomePage = () => {
     if (booking.status === "draft" && (!user || user.email !== booking.createdBy.email)) {
       return false;
     }
-    
+
     // Then filter by date if not showing all bookings
     if (!showAllBookings) {
       // Only show bookings with start dates in the future
       return new Date(booking.startTime) >= new Date();
     }
-    
+
     return true;
   });
 
@@ -109,13 +109,6 @@ const HomePage = () => {
             View all room booking requests and their status
           </p>
         </div>
-
-        <Button asChild>
-          <Link to="/bookings/new" className="flex items-center space-x-2">
-            <PlusCircle className="h-4 w-4" />
-            <span>New Booking</span>
-          </Link>
-        </Button>
       </div>
 
       <Separator />
@@ -132,8 +125,8 @@ const HomePage = () => {
               <Link to="/bookings/new">New Booking Request</Link>
             </Button>
             {!showAllBookings && (
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => setShowAllBookings(true)}
                 className="flex items-center gap-2"
               >
@@ -155,7 +148,7 @@ const HomePage = () => {
               <Filter className="h-4 w-4" />
               <span>{showAllBookings ? "Show upcoming only" : "Show all bookings"}</span>
             </Button>
-            
+
             <div className="flex items-center space-x-2">
               <Button
                 variant={viewMode === 'list' ? 'default' : 'outline'}
@@ -231,8 +224,8 @@ const HomePage = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {visibleBookings.map((booking) => (
-                <Card 
-                  key={booking.id} 
+                <Card
+                  key={booking.id}
                   className="cursor-pointer hover:shadow-md transition-shadow"
                   onClick={() => (window.location.href = `/bookings/${booking.id}`)}
                 >
@@ -241,20 +234,20 @@ const HomePage = () => {
                       <h3 className="font-medium text-lg line-clamp-2">{booking.title}</h3>
                       {getStatusBadge(booking.status)}
                     </div>
-                    
+
                     <div className="text-sm text-muted-foreground space-y-2 mt-3">
                       <div className="flex items-center gap-2">
                         <CalendarDays className="h-3.5 w-3.5 flex-shrink-0" />
                         <span>{formatDateTime(booking.startTime)}</span>
                       </div>
-                      
+
                       <div className="flex items-center gap-2">
                         <Users className="h-3.5 w-3.5 flex-shrink-0" />
                         <span>{booking.room.name} ({booking.room.capacity})</span>
                       </div>
                     </div>
                   </CardContent>
-                  
+
                   <CardFooter className="border-t pt-4 flex justify-between">
                     <div className="text-xs text-muted-foreground">
                       By {booking.createdBy.name || booking.createdBy.email.split("@")[0]}
