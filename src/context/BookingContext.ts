@@ -5,6 +5,7 @@ import { createContext, useContext } from "react";
 interface BookingContextType {
   bookings: Booking[];
   user: User | null;
+  isLoading: boolean;
   createBooking: (
     booking: Omit<
       Booking,
