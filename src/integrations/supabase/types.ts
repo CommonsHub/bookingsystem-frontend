@@ -14,6 +14,8 @@ export type Database = {
           additional_comments: string | null
           approved_at: string | null
           approved_by_email: string | null
+          cancelled_at: string | null
+          cancelled_by_email: string | null
           created_at: string | null
           created_by_email: string
           created_by_name: string | null
@@ -34,6 +36,8 @@ export type Database = {
           additional_comments?: string | null
           approved_at?: string | null
           approved_by_email?: string | null
+          cancelled_at?: string | null
+          cancelled_by_email?: string | null
           created_at?: string | null
           created_by_email: string
           created_by_name?: string | null
@@ -54,6 +58,8 @@ export type Database = {
           additional_comments?: string | null
           approved_at?: string | null
           approved_by_email?: string | null
+          cancelled_at?: string | null
+          cancelled_by_email?: string | null
           created_at?: string | null
           created_by_email?: string
           created_by_name?: string | null
