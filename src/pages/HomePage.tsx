@@ -21,7 +21,7 @@ const HomePage = () => {
   const [bookingToCancel, setBookingToCancel] = useState<string | null>(null);
 
   const handleCancelBooking = (id: string) => {
-    cancelBookingRequest(id, user);
+    cancelBookingRequest(id);
     setBookingToCancel(null);
   };
 
