@@ -1,3 +1,4 @@
+
 export interface Room {
   id: string;
   name: string;
@@ -20,6 +21,7 @@ export interface User {
   email: string;
   name?: string;
   verified: boolean;
+  profileId?: string;
 }
 
 export interface Booking {
@@ -37,6 +39,10 @@ export interface Booking {
   approvedAt?: string;
   selectedSetup?: string;
   requiresAdditionalSpace?: boolean;
+  additionalComments?: string;
+  isPublicEvent?: boolean;
+  cancelledAt?: string;
+  cancelledBy?: User;
 }
 
 export interface Comment {
@@ -58,7 +64,7 @@ export interface Profile {
   updated_at: string;
 }
 
-export type BookingStatus = "draft" | "pending" | "approved" | "rejected";
+export type BookingStatus = "draft" | "pending" | "approved" | "rejected" | "cancelled";
 export type CommentStatus = "draft" | "published";
 
 export interface CateringOption {
@@ -78,4 +84,28 @@ export interface EventSupportOption {
 export interface MembershipStatus {
   id: string;
   name: string;
+}
+
+// This type represents the database fields for the bookings table
+export interface BookingDatabaseFields {
+  id: string;
+  title: string;
+  description?: string;
+  room_id: string;
+  room_name: string;
+  room_capacity: string;
+  start_time: string;
+  end_time: string;
+  status: string;
+  created_at: string;
+  created_by_email: string;
+  created_by_name?: string;
+  approved_by_email?: string;
+  approved_at?: string;
+  draft_data?: any;
+  draft_key?: string;
+  additional_comments?: string;
+  is_public_event?: boolean;
+  cancelled_at?: string;
+  cancelled_by_email?: string;
 }

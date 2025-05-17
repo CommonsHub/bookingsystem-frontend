@@ -11,8 +11,11 @@ export type Database = {
     Tables: {
       bookings: {
         Row: {
+          additional_comments: string | null
           approved_at: string | null
           approved_by_email: string | null
+          cancelled_at: string | null
+          cancelled_by_email: string | null
           created_at: string | null
           created_by_email: string
           created_by_name: string | null
@@ -21,7 +24,8 @@ export type Database = {
           draft_key: string | null
           end_time: string
           id: string
-          room_capacity: number
+          is_public_event: boolean | null
+          room_capacity: string
           room_id: string
           room_name: string
           start_time: string
@@ -29,8 +33,11 @@ export type Database = {
           title: string
         }
         Insert: {
+          additional_comments?: string | null
           approved_at?: string | null
           approved_by_email?: string | null
+          cancelled_at?: string | null
+          cancelled_by_email?: string | null
           created_at?: string | null
           created_by_email: string
           created_by_name?: string | null
@@ -39,7 +46,8 @@ export type Database = {
           draft_key?: string | null
           end_time: string
           id?: string
-          room_capacity: number
+          is_public_event?: boolean | null
+          room_capacity?: string
           room_id: string
           room_name: string
           start_time: string
@@ -47,8 +55,11 @@ export type Database = {
           title: string
         }
         Update: {
+          additional_comments?: string | null
           approved_at?: string | null
           approved_by_email?: string | null
+          cancelled_at?: string | null
+          cancelled_by_email?: string | null
           created_at?: string | null
           created_by_email?: string
           created_by_name?: string | null
@@ -57,7 +68,8 @@ export type Database = {
           draft_key?: string | null
           end_time?: string
           id?: string
-          room_capacity?: number
+          is_public_event?: boolean | null
+          room_capacity?: string
           room_id?: string
           room_name?: string
           start_time?: string
