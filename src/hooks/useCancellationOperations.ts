@@ -14,6 +14,7 @@ export const useCancellationOperations = (
 
     try {
       // Update the booking status in the database
+      // The RLS policies will ensure only authorized users can cancel bookings
       const { error } = await supabase
         .from("bookings")
         .update({
