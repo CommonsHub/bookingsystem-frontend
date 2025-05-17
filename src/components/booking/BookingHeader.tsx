@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { getRelativeTime } from "@/lib/utils";
 import { Booking } from "@/types";
-import { CheckCircle2, ChevronLeft, MailCheck } from "lucide-react";
+import { CheckCircle2, ChevronLeft, MailCheck, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { formatDate } from "@/lib/utils";
 
@@ -23,6 +23,8 @@ export const BookingHeader = ({ booking }: BookingHeaderProps) => {
         return "bg-green-500 text-white";
       case "rejected":
         return "bg-red-500 text-white";
+      case "cancelled":
+        return "bg-gray-500 text-white";
       default:
         return "bg-muted text-muted-foreground";
     }
@@ -86,6 +88,19 @@ export const BookingHeader = ({ booking }: BookingHeaderProps) => {
               <AlertDescription>
                 Approved by {booking.approvedBy.name || booking.approvedBy.email} on{" "}
                 {formatDate(booking.approvedAt)}
+              </AlertDescription>
+            </Alert>
+          )}
+
+        {booking.status === "cancelled" &&
+          booking.cancelledBy &&
+          booking.cancelledAt && (
+            <Alert className="bg-red-50 text-red-800 border-red-200">
+              <X className="h-4 w-4" />
+              <AlertTitle>Booking Cancelled</AlertTitle>
+              <AlertDescription>
+                Cancelled by {booking.cancelledBy.name || booking.cancelledBy.email} on{" "}
+                {formatDate(booking.cancelledAt)}
               </AlertDescription>
             </Alert>
           )}

@@ -41,6 +41,8 @@ export interface Booking {
   requiresAdditionalSpace?: boolean;
   additionalComments?: string;
   isPublicEvent?: boolean;
+  cancelledAt?: string;
+  cancelledBy?: User;
 }
 
 export interface Comment {
@@ -62,7 +64,7 @@ export interface Profile {
   updated_at: string;
 }
 
-export type BookingStatus = "draft" | "pending" | "approved" | "rejected";
+export type BookingStatus = "draft" | "pending" | "approved" | "rejected" | "cancelled";
 export type CommentStatus = "draft" | "published";
 
 export interface CateringOption {

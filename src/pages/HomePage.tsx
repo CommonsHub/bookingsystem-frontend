@@ -67,6 +67,13 @@ const HomePage = () => {
             <span>Rejected</span>
           </Badge>
         );
+      case "cancelled":
+        return (
+          <Badge variant="secondary" className="flex items-center gap-1">
+            <X className="h-3 w-3" />
+            <span>Cancelled</span>
+          </Badge>
+        );
       default:
         return (
           <Badge variant="outline" className="text-muted-foreground">
@@ -176,13 +183,7 @@ const HomePage = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1">
-                          <span>
-                            {
-                              booking.comments.filter(
-                                (c) => c.status === "published",
-                              ).length
-                            }
-                          </span>
+                          <span>{booking.comments.length}</span>
                           {booking.comments.length > 0 && (
                             <MessageSquare className="h-3 w-3" />
                           )}
@@ -224,12 +225,10 @@ const HomePage = () => {
                     <div className="text-xs text-muted-foreground">
                       By {booking.createdBy.name || booking.createdBy.email.split("@")[0]}
                     </div>
-                    {booking.comments.length > 0 && (
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <span>{booking.comments.filter((c) => c.status === "published").length}</span>
-                        <MessageSquare className="h-3 w-3" />
-                      </div>
-                    )}
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <span>{booking.comments.length}</span>
+                      <MessageSquare className="h-3 w-3" />
+                    </div>
                   </CardFooter>
                 </Card>
               ))}

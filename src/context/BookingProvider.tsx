@@ -15,7 +15,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
   const [bookings, setBookings] = useState<Booking[]>([]);
   const { user } = useAuth();
 
-  const { createBooking, addCommentToBooking, approveBookingRequest } =
+  const { createBooking, addCommentToBooking, approveBookingRequest, cancelBookingRequest } =
     useBookingOperations(bookings, setBookings);
 
   useEffect(() => {
@@ -146,6 +146,15 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
             // Still use draft_data for these fields for backward compatibility
             selectedSetup,
             requiresAdditionalSpace,
+            // Add cancellation fields
+            cancelledAt: booking.cancelled_at,
+            cancelledBy: booking.cancelled_by_email
+              ? {
+                  id: uuidv4(), // Generate a temporary ID for the canceller
+                  email: booking.cancelled_by_email,
+                  verified: true,
+                }
+              : undefined,
           };
         });
 
@@ -168,7 +177,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
     return user?.email || null;
   };
 
-  // New function to check if a user can approve bookings
+  // Function to check if a user can approve bookings
   const canUserApproveBookings = (user: User | null): boolean => {
     if (!user) return false;
     
@@ -177,6 +186,19 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
     
     // Allow users with commonshub.brussels email domain
     if (user.email.endsWith('@commonshub.brussels')) return true;
+    
+    return false;
+  };
+
+  // Function to check if a user can cancel a specific booking
+  const canUserCancelBooking = (booking: Booking, user: User | null): boolean => {
+    if (!user) return false;
+    
+    // Only the creator of the booking can cancel it
+    if (booking.createdBy.email === user.email) return true;
+    
+    // Also allow administrators to cancel bookings
+    if (canUserApproveBookings(user)) return true;
     
     return false;
   };
@@ -190,8 +212,10 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
         addCommentToBooking,
         getBookingById,
         approveBookingRequest: (id: string) => approveBookingRequest(id, user!),
+        cancelBookingRequest: (id: string) => cancelBookingRequest(id, user!),
         getUserEmail,
         canUserApproveBookings,
+        canUserCancelBooking,
       }}
     >
       {children}

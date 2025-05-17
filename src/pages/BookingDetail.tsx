@@ -15,9 +15,11 @@ const BookingDetail = () => {
   const { 
     getBookingById, 
     addCommentToBooking, 
-    approveBookingRequest, 
+    approveBookingRequest,
+    cancelBookingRequest, 
     user,
-    canUserApproveBookings 
+    canUserApproveBookings,
+    canUserCancelBooking 
   } = useBooking();
   const [submitting, setSubmitting] = useState(false);
 
@@ -28,6 +30,10 @@ const BookingDetail = () => {
 
   // Check if user can approve bookings
   const canApproveBooking = booking.status === "pending" && canUserApproveBookings(user);
+  
+  // Check if user can cancel this booking
+  const canCancelBooking = (booking.status === "pending" || booking.status === "approved") && 
+    canUserCancelBooking(booking, user);
 
   const handleSubmitComment = async (commentData: {
     content: string;
@@ -56,6 +62,10 @@ const BookingDetail = () => {
     approveBookingRequest(id);
   };
 
+  const handleCancelBooking = () => {
+    cancelBookingRequest(id);
+  };
+
   return (
     <div className="space-y-8">
       <BookingHeader booking={booking} />
@@ -73,8 +83,10 @@ const BookingDetail = () => {
         <div className="booking-sidebar">
           <BookingActions 
             booking={booking} 
-            canApproveBooking={canApproveBooking} 
-            onApprove={handleApproveBooking} 
+            canApproveBooking={canApproveBooking}
+            canCancelBooking={canCancelBooking}
+            onApprove={handleApproveBooking}
+            onCancel={handleCancelBooking}
           />
           <RoomInfoCard booking={booking} />
         </div>
