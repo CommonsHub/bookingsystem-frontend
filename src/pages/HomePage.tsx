@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { useBooking } from "@/context/BookingContext";
 import { formatDateTime } from "@/lib/utils";
@@ -101,8 +100,7 @@ const HomePage = () => {
 
   const handleCancelBooking = (id: string) => {
     // Pass the user object to cancelBookingRequest
-    cancelBookingRequest(id);
-    toast.success("Booking cancelled successfully");
+    cancelBookingRequest(id, user);
     setBookingToCancel(null);
   };
 
