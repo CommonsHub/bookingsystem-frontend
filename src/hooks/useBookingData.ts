@@ -140,7 +140,7 @@ export const useBookingData = () => {
             // Still use draft_data for these fields for backward compatibility
             selectedSetup,
             requiresAdditionalSpace,
-            // Add cancellation fields - Fixed by accessing database fields properly
+            // Add cancellation fields
             cancelledAt: booking.cancelled_at,
             cancelledBy: booking.cancelled_by_email
               ? {

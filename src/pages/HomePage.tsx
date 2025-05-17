@@ -13,6 +13,7 @@ import {
   Users,
   LayoutList,
   LayoutGrid,
+  Filter,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -33,7 +34,8 @@ const HomePage = () => {
   const { bookings, user } = useBooking();
   const isMobile = useIsMobile();
   const [viewMode, setViewMode] = useState<'list' | 'grid'>(isMobile ? 'grid' : 'list');
-
+  const [showAllBookings, setShowAllBookings] = useState(false);
+  
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "draft":
@@ -84,8 +86,18 @@ const HomePage = () => {
   };
 
   const visibleBookings = bookings.filter((booking) => {
-    if (booking.status !== "draft") return true;
-    return user && user.email === booking.createdBy.email;
+    // First filter for permissions - hide drafts not created by the current user
+    if (booking.status === "draft" && (!user || user.email !== booking.createdBy.email)) {
+      return false;
+    }
+    
+    // Then filter by date if not showing all bookings
+    if (!showAllBookings) {
+      // Only show bookings with start dates in the future
+      return new Date(booking.startTime) >= new Date();
+    }
+    
+    return true;
   });
 
   return (
@@ -111,17 +123,39 @@ const HomePage = () => {
       {visibleBookings.length === 0 ? (
         <div className="text-center py-12 space-y-4">
           <CalendarDays className="h-12 w-12 mx-auto text-muted-foreground" />
-          <h3 className="text-xl font-medium">No booking requests yet</h3>
+          <h3 className="text-xl font-medium">No booking requests {!showAllBookings && "upcoming"}</h3>
           <p className="text-muted-foreground max-w-sm mx-auto">
-            Create your first room booking request to get started.
+            {showAllBookings ? "There are no bookings in the system yet." : "There are no upcoming bookings. You can create one or view past bookings."}
           </p>
-          <Button asChild variant="default" className="mt-4">
-            <Link to="/bookings/new">New Booking Request</Link>
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mt-4">
+            <Button asChild variant="default">
+              <Link to="/bookings/new">New Booking Request</Link>
+            </Button>
+            {!showAllBookings && (
+              <Button 
+                variant="outline" 
+                onClick={() => setShowAllBookings(true)}
+                className="flex items-center gap-2"
+              >
+                <Filter className="h-4 w-4" />
+                View All Bookings
+              </Button>
+            )}
+          </div>
         </div>
       ) : (
         <div>
-          <div className="flex justify-end mb-4">
+          <div className="flex justify-between items-center mb-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowAllBookings(!showAllBookings)}
+              className="px-3 flex items-center gap-2"
+            >
+              <Filter className="h-4 w-4" />
+              <span>{showAllBookings ? "Show upcoming only" : "Show all bookings"}</span>
+            </Button>
+            
             <div className="flex items-center space-x-2">
               <Button
                 variant={viewMode === 'list' ? 'default' : 'outline'}
@@ -147,7 +181,7 @@ const HomePage = () => {
           {viewMode === 'list' ? (
             <div className="rounded-md border overflow-x-auto">
               <Table>
-                <TableCaption>A list of all room booking requests.</TableCaption>
+                <TableCaption>A list of {!showAllBookings && "upcoming"} room booking requests.</TableCaption>
                 <TableHeader>
                   <TableRow>
                     <TableHead>Title</TableHead>
