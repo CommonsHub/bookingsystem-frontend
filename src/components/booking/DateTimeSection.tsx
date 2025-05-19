@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
-import { Control } from "react-hook-form";
+import { Control, useFormContext } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { formSchema } from "./BookingFormSchema";
@@ -21,9 +21,10 @@ interface DateTimeSectionProps {
 export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
   const [startDateText, setStartDateText] = useState("");
   const [endDateText, setEndDateText] = useState("");
+  const { setValue, getValues } = useFormContext<FormData>();
   
   // Function to handle start date natural language parsing
-  const handleStartDateParse = (text: string, setValue: (name: any, value: any) => void) => {
+  const handleStartDateParse = (text: string) => {
     try {
       if (!text) return;
       
@@ -45,7 +46,7 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
   };
   
   // Function to handle end date natural language parsing
-  const handleEndDateParse = (text: string, startDate: Date | undefined, setValue: (name: any, value: any) => void) => {
+  const handleEndDateParse = (text: string, startDate: Date | undefined) => {
     try {
       if (!text || !startDate) return;
       
@@ -85,12 +86,7 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
                   placeholder="e.g., tomorrow at 2pm, next Monday at 10am" 
                   value={startDateText}
                   onChange={(e) => setStartDateText(e.target.value)}
-                  onBlur={() => handleStartDateParse(
-                    startDateText, 
-                    control._formState.defaultValues ? 
-                      (name, value) => control.setValue(name, value) : 
-                      () => {}
-                  )}
+                  onBlur={() => handleStartDateParse(startDateText)}
                   className="flex-1"
                 />
               </div>
@@ -98,7 +94,7 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
             {field.value && (
               <p className="text-sm text-muted-foreground mt-1">
                 {format(field.value, "PPP")}
-                {control._formValues.startTime && ` at ${control._formValues.startTime}`}
+                {getValues("startTime") && ` at ${getValues("startTime")}`}
               </p>
             )}
             <FormMessage />
@@ -120,15 +116,9 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
                   value={endDateText}
                   onChange={(e) => setEndDateText(e.target.value)}
                   onBlur={() => {
-                    const date = control._formValues.date;
+                    const date = getValues("date");
                     if (date) {
-                      handleEndDateParse(
-                        endDateText, 
-                        date, 
-                        control._formState.defaultValues ? 
-                          (name, value) => control.setValue(name, value) : 
-                          () => {}
-                      );
+                      handleEndDateParse(endDateText, date);
                     } else {
                       toast.error("Please set a start date first");
                     }
@@ -137,9 +127,9 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
                 />
               </div>
             </FormControl>
-            {field.value && control._formValues.date && (
+            {field.value && getValues("date") && (
               <p className="text-sm text-muted-foreground mt-1">
-                {format(control._formValues.date, "PPP")} at {field.value}
+                {format(getValues("date"), "PPP")} at {field.value}
               </p>
             )}
             <FormMessage />
