@@ -9,11 +9,11 @@ export const formSchema = z.object({
   roomId: z.string({ required_error: "Please select a room" }),
   setupOption: z.string().optional(),
   requiresAdditionalSpace: z.boolean().default(false),
-  date: z.date({ required_error: "Please select a date" }),
-  startTime: z.string({ required_error: "Please select a start time" }),
+  date: z.date({ required_error: "Please enter a valid start date and time" }),
+  startTime: z.string({ required_error: "Please enter a valid start time" }),
   endTime: z
-    .string({ required_error: "Please select an end time" })
-    .refine((time) => time !== "", { message: "Please select an end time" }),
+    .string({ required_error: "Please enter a valid end time" })
+    .refine((time) => time !== "", { message: "Please enter a valid end time" }),
   email: z.string().email({ message: "Please enter a valid email address" }),
   name: z.string().min(2, { message: "Please enter your name" }),
   // New fields
