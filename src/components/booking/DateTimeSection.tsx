@@ -22,8 +22,8 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
   const [startDateText, setStartDateText] = useState("");
   const [endDateText, setEndDateText] = useState("");
   
-  // Effect to handle start date natural language parsing
-  const handleStartDateParse = (text: string, onChange: (value: any) => void) => {
+  // Function to handle start date natural language parsing
+  const handleStartDateParse = (text: string, setValue: (name: any, value: any) => void) => {
     try {
       if (!text) return;
       
@@ -32,11 +32,9 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
       if (parsedDate && parsedDate.isValid()) {
         const date = parsedDate.toDate();
         
-        // Update the form with the parsed date
-        onChange({
-          date: date,
-          startTime: format(date, "HH:mm")
-        });
+        // Update the form values using setValue from react-hook-form
+        setValue("date", date);
+        setValue("startTime", format(date, "HH:mm"));
         
         toast.success(`Start time set to ${format(date, "PPP 'at' h:mm a")}`);
       }
@@ -46,8 +44,8 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
     }
   };
   
-  // Effect to handle end date natural language parsing
-  const handleEndDateParse = (text: string, startDate: Date | undefined, onChange: (value: string) => void) => {
+  // Function to handle end date natural language parsing
+  const handleEndDateParse = (text: string, startDate: Date | undefined, setValue: (name: any, value: any) => void) => {
     try {
       if (!text || !startDate) return;
       
@@ -63,7 +61,7 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
         }
         
         // If it's the same day, just extract the time
-        onChange(format(date, "HH:mm"));
+        setValue("endTime", format(date, "HH:mm"));
         toast.success(`End time set to ${format(date, "h:mm a")}`);
       }
     } catch (error) {
@@ -87,14 +85,12 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
                   placeholder="e.g., tomorrow at 2pm, next Monday at 10am" 
                   value={startDateText}
                   onChange={(e) => setStartDateText(e.target.value)}
-                  onBlur={() => handleStartDateParse(startDateText, (value) => {
-                    if (value.date) field.onChange(value.date);
-                    if (value.startTime) {
-                      const startTimeField = control._formValues.startTime;
-                      control._formState.dirtyFields.startTime = true;
-                      control._fields.startTime?._f.onChange(value.startTime);
-                    }
-                  })}
+                  onBlur={() => handleStartDateParse(
+                    startDateText, 
+                    control._formState.defaultValues ? 
+                      (name, value) => control.setValue(name, value) : 
+                      () => {}
+                  )}
                   className="flex-1"
                 />
               </div>
@@ -126,7 +122,13 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
                   onBlur={() => {
                     const date = control._formValues.date;
                     if (date) {
-                      handleEndDateParse(endDateText, date, field.onChange);
+                      handleEndDateParse(
+                        endDateText, 
+                        date, 
+                        control._formState.defaultValues ? 
+                          (name, value) => control.setValue(name, value) : 
+                          () => {}
+                      );
                     } else {
                       toast.error("Please set a start date first");
                     }
