@@ -1,10 +1,18 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import * as z from "zod";
 
+import { AdditionalInfoSection } from "@/components/booking/AdditionalInfoSection";
+import { FormData, formSchema } from "@/components/booking/BookingFormSchema";
+import { BookingInfoSection } from "@/components/booking/BookingInfoSection";
+import { CateringSection } from "@/components/booking/CateringSection";
+import { ContactInfoSection } from "@/components/booking/ContactInfoSection";
+import { DateTimeSection } from "@/components/booking/DateTimeSection";
+import { EventSupportSection } from "@/components/booking/EventSupportSection";
+import { MembershipSection } from "@/components/booking/MembershipSection";
+import { RoomSelectionSection } from "@/components/booking/RoomSelectionSection";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -21,18 +29,9 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/toast-utils";
 import { useAuth } from "@/context/AuthContext";
 import { useBooking } from "@/context/BookingContext";
-import { rooms } from "@/data/mockData";
-import { Room } from "@/types";
+import { rooms } from "@/data/rooms";
 import { useDraftBooking } from "@/hooks/useDraftBooking";
-import { formSchema, FormData } from "@/components/booking/BookingFormSchema";
-import { BookingInfoSection } from "@/components/booking/BookingInfoSection";
-import { DateTimeSection } from "@/components/booking/DateTimeSection";
-import { RoomSelectionSection } from "@/components/booking/RoomSelectionSection";
-import { CateringSection } from "@/components/booking/CateringSection";
-import { EventSupportSection } from "@/components/booking/EventSupportSection";
-import { MembershipSection } from "@/components/booking/MembershipSection";
-import { AdditionalInfoSection } from "@/components/booking/AdditionalInfoSection";
-import { ContactInfoSection } from "@/components/booking/ContactInfoSection";
+import { Room } from "@/types";
 
 const NewBookingPage = () => {
   const navigate = useNavigate();
@@ -54,11 +53,11 @@ const NewBookingPage = () => {
     defaultValues: {
       title: "",
       description: "",
-      roomId: "",
+      roomId: selectedRoomId || "",
       setupOption: "",
       requiresAdditionalSpace: false,
-      startTime: "",
-      endTime: "",
+      startDate: undefined,
+      endDate: undefined,
       email: defaultEmail,
       name: "",
       cateringOptions: [],
@@ -99,7 +98,7 @@ const NewBookingPage = () => {
       if (!shouldAutoSave.current) {
         return;
       }
-      
+
       // Debounce the auto-save to prevent too many saves
       if (autoSaveTimerId) {
         clearTimeout(autoSaveTimerId);
@@ -133,15 +132,8 @@ const NewBookingPage = () => {
         (room) => room.id === data.roomId,
       ) as Room;
 
-      // Create start and end time Date objects
-      const [startHour, startMinute] = data.startTime.split(":").map(Number);
-      const [endHour, endMinute] = data.endTime.split(":").map(Number);
-
-      const startDate = new Date(data.date);
-      startDate.setHours(startHour, startMinute);
-
-      const endDate = new Date(data.date);
-      endDate.setHours(endHour, endMinute);
+      const startDate = new Date(data.startDate);
+      const endDate = new Date(data.endDate);
 
       // Create booking with correct type structure
       const bookingId = await createBooking({
@@ -159,7 +151,10 @@ const NewBookingPage = () => {
         selectedSetup: data.setupOption,
         requiresAdditionalSpace: data.requiresAdditionalSpace,
         additionalComments: data.additionalComments,
-        isPublicEvent: data.isPublicEvent
+        isPublicEvent: data.isPublicEvent,
+        // Add new fields
+        organizer: data.organizer,
+        estimatedAttendees: data.estimatedAttendees
       });
 
       // Clear the draft data after successful submission
@@ -167,7 +162,7 @@ const NewBookingPage = () => {
 
       // Updated message to remove reference to email verification
       toast.success(
-        "Booking request submitted! It will be reviewed by an administrator."
+        "Booking request submitted! It will be viewed by an administrator."
       );
       navigate(`/bookings/${bookingId}`);
     } catch (error) {
@@ -181,10 +176,10 @@ const NewBookingPage = () => {
   const handleClearDraft = async () => {
     // Prevent auto-saving during form reset
     shouldAutoSave.current = false;
-    
+
     // Clear the draft data
     await clearDraft();
-    
+
     // Reset form to default values
     form.reset({
       title: "",
@@ -192,28 +187,27 @@ const NewBookingPage = () => {
       roomId: "",
       setupOption: "",
       requiresAdditionalSpace: false,
-      date: undefined,
-      startTime: "",
-      endTime: "",
+      startDate: undefined,
+      endDate: undefined,
       email: defaultEmail,
       name: "",
       cateringOptions: [],
       cateringComments: "",
       eventSupportOptions: [],
+      isPublicEvent: false,
       membershipStatus: "",
       additionalComments: "",
-      isPublicEvent: false,
     });
-    
+
     // Reset UI state
     setSelectedRoomId(null);
     setDraftLoaded(false);
-    
+
     // Allow auto-saving again after a short delay (to prevent immediate re-save of empty form)
     setTimeout(() => {
       shouldAutoSave.current = true;
     }, 500);
-    
+
     toast.success("Draft cleared");
   };
 
@@ -249,7 +243,7 @@ const NewBookingPage = () => {
 
               <Separator />
 
-              <RoomSelectionSection 
+              <RoomSelectionSection
                 control={form.control}
                 rooms={enhancedRooms}
                 selectedRoomId={selectedRoomId}
@@ -266,15 +260,14 @@ const NewBookingPage = () => {
 
               <Separator />
 
+
+              <ContactInfoSection control={form.control} />
               <MembershipSection control={form.control} />
 
               <Separator />
-
               <AdditionalInfoSection control={form.control} />
 
-              <Separator />
 
-              <ContactInfoSection control={form.control} />
             </CardContent>
 
             <CardFooter className="flex justify-between">

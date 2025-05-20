@@ -4,15 +4,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Control } from "react-hook-form";
 import { z } from "zod";
 import { formSchema } from "./BookingFormSchema";
+import { eventSupportOptions } from "@/data/supportOptions";
 
 type FormData = z.infer<typeof formSchema>;
-
-// Event support options
-export const eventSupportOptions = [
-  { id: "logistics", name: "Interested in full logistic support during the day (AV and tech support | help with setup)" },
-  { id: "facilitation", name: "Interested in facilitation support and conference design" },
-];
-
 interface EventSupportSectionProps {
   control: Control<FormData>;
 }
@@ -66,6 +60,31 @@ export const EventSupportSection = ({ control }: EventSupportSectionProps) => {
                 ))}
               </div>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+      <div className="space-y-4">
+
+        <FormField
+          control={control}
+          name="isPublicEvent"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  Public event (we will publish through our channels as well)
+                </FormLabel>
+                <p className="text-sm text-muted-foreground">
+                  Check this box if you want your event to be promoted on our public channels.
+                </p>
+              </div>
             </FormItem>
           )}
         />

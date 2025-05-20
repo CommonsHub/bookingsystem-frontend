@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { toast } from "@/components/ui/toast-utils";
 import { generateMockBookings } from "@/data/mockData";
@@ -42,7 +41,6 @@ export const useBookingData = () => {
         }
 
         // Fetch profiles for creators
-        const uniqueEmails = [...new Set(bookingsData.map(booking => booking.created_by_email))];
         const { data: profilesData, error: profilesError } = await supabase
           .from("profiles")
           .select("*");
@@ -54,10 +52,12 @@ export const useBookingData = () => {
         // Create a map of email to profile
         const emailToProfileMap: Record<string, Profile> = {};
         if (profilesData) {
-          profilesData.forEach(profile => {
+          profilesData.forEach((profile) => {
             // We need to find the corresponding email
-            const bookingWithEmail = bookingsData.find(booking => 
-              booking.created_by_email && profile.id === booking.created_by_email.split('@')[0]
+            const bookingWithEmail = bookingsData.find(
+              (booking) =>
+                booking.created_by_email &&
+                profile.id === booking.created_by_email.split("@")[0],
             );
             if (bookingWithEmail) {
               emailToProfileMap[bookingWithEmail.created_by_email] = profile;
@@ -68,7 +68,7 @@ export const useBookingData = () => {
         // Group comments by booking_id
         const commentsByBookingId: Record<string, any[]> = {};
         if (commentsData) {
-          commentsData.forEach(comment => {
+          commentsData.forEach((comment) => {
             if (!commentsByBookingId[comment.booking_id]) {
               commentsByBookingId[comment.booking_id] = [];
             }
@@ -79,7 +79,7 @@ export const useBookingData = () => {
         const transformedBookings: Booking[] = bookingsData.map((booking) => {
           // Transform comments for this booking
           const bookingComments = commentsByBookingId[booking.id] || [];
-          const transformedComments = bookingComments.map(comment => ({
+          const transformedComments = bookingComments.map((comment) => ({
             id: comment.id,
             bookingId: comment.booking_id,
             content: comment.content,
@@ -93,16 +93,10 @@ export const useBookingData = () => {
             status: comment.status,
           }));
 
-          // Extract setup options from draft_data safely
-          const draftData = booking.draft_data || {};
-          const selectedSetup = typeof draftData === 'object' ? 
-            (draftData as any)?.selectedSetup : undefined;
-          const requiresAdditionalSpace = typeof draftData === 'object' ? 
-            (draftData as any)?.requiresAdditionalSpace : undefined;
-
           // Get profile name if available
           const profile = emailToProfileMap[booking.created_by_email];
-          const creatorName = profile?.full_name || booking.created_by_name || "";
+          const creatorName =
+            profile?.full_name || booking.created_by_name || "";
 
           return {
             id: booking.id,
@@ -134,12 +128,12 @@ export const useBookingData = () => {
                 }
               : undefined,
             approvedAt: booking.approved_at,
-            // Use dedicated columns instead of draft_data
+            // Use dedicated columns
             additionalComments: booking.additional_comments,
             isPublicEvent: booking.is_public_event,
-            // Still use draft_data for these fields for backward compatibility
-            selectedSetup,
-            requiresAdditionalSpace,
+            // Add new fields
+            organizer: booking.organizer,
+            estimatedAttendees: booking.estimated_attendees,
             // Add cancellation fields
             cancelledAt: booking.cancelled_at,
             cancelledBy: booking.cancelled_by_email

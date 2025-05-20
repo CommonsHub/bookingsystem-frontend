@@ -1,8 +1,6 @@
-
-import { useState, useEffect } from "react";
-import { toast } from "@/components/ui/toast-utils";
-import { v4 as uuidv4 } from "uuid";
 import { useAuth } from "@/context/AuthContext";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export type DraftBookingData = Record<string, any>;
 
@@ -35,14 +33,14 @@ export const useDraftBooking = () => {
 
     try {
       setIsLoading(true);
-      
+
       // Save to localStorage with timestamp
       const dataWithTimestamp = {
         ...data,
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
       };
       localStorage.setItem(draftKey, JSON.stringify(dataWithTimestamp));
-      
+
       console.log("Draft saved successfully:", data);
     } catch (error) {
       console.error("Error saving draft:", error);
@@ -54,22 +52,22 @@ export const useDraftBooking = () => {
   // Load draft data from localStorage
   const loadDraft = async (): Promise<DraftBookingData | null> => {
     if (!draftKey) return null;
-    
+
     setIsLoading(true);
     try {
       // Load from localStorage
       const localData = localStorage.getItem(draftKey);
-      
+
       if (!localData) return null;
-      
+
       // Parse the data
       const parsedData = JSON.parse(localData) as DraftBookingData;
-      
+
       // Ensure date field is properly loaded as a Date object if it exists
-      if (parsedData.date && typeof parsedData.date === 'string') {
+      if (parsedData.date && typeof parsedData.date === "string") {
         parsedData.date = new Date(parsedData.date);
       }
-      
+
       return parsedData;
     } catch (error) {
       console.error("Error loading draft:", error);
@@ -82,7 +80,7 @@ export const useDraftBooking = () => {
   // Clear draft data from localStorage
   const clearDraft = async (): Promise<void> => {
     if (!draftKey) return;
-    
+
     try {
       // Clear from localStorage
       localStorage.removeItem(draftKey);
@@ -97,6 +95,6 @@ export const useDraftBooking = () => {
     loadDraft,
     clearDraft,
     isLoading,
-    draftKey
+    draftKey,
   };
 };
