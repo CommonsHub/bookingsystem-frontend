@@ -44,7 +44,7 @@ export const rooms: Room[] = [
     id: "room-003",
     name: "Angel Room",
     capacity: "12",
-    location: "2rd Floor",
+    location: "2nd Floor",
     description: "Perfect for small meetings",
     setupOptions: [],
   },
@@ -56,8 +56,8 @@ export const rooms: Room[] = [
   },
   {
     id: "room-005",
-    name: "Mediation Room",
-    capacity: "10",
+    name: "Somatic Studio",
+    capacity: "2-4",
     location: "1th Floor",
   },
 ];
