@@ -36,11 +36,10 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
       });
 
       if (parseResult && parseResult.length > 0) {
-        const date = parseResult[0].date()
+        const date = parseResult[0].date();
 
         // Update the form values using setValue from react-hook-form
-        setValue("date", date);
-        setValue("startTime", format(date, "HH:mm"));
+        setValue("startDate", date);
 
         toast.success(`Start time set to ${format(date, "PPP 'at' h:mm a")}`);
       }
@@ -56,14 +55,14 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
       if (!text || !startDate) return;
 
       const parseResult = Chrono.parse(text, {
-        instant: now,
+        instant: startDate, // Use start date as reference
         timezone: "CET"
       }, {
         forwardDate: true,
       });
 
       if (parseResult && parseResult.length > 0) {
-        const date = parseResult[0].date()
+        const date = parseResult[0].date();
 
         // Ensure end date is after start date
         if (date < startDate) {
@@ -71,8 +70,8 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
           return;
         }
 
-        // If it's the same day, just extract the time
-        setValue("endTime", format(date, "HH:mm"));
+        // Set the end date
+        setValue("endDate", date);
         toast.success(`End time set to ${format(date, "h:mm a")}`);
       }
     } catch (error) {
@@ -85,7 +84,7 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
     <div className="space-y-4">
       <FormField
         control={control}
-        name="date"
+        name="startDate"
         render={({ field }) => (
           <FormItem className="flex flex-col">
             <FormLabel>Start Date & Time</FormLabel>
@@ -103,8 +102,7 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
             </FormControl>
             {field.value && (
               <p className="text-sm text-muted-foreground mt-1">
-                {format(field.value, "PPP")}
-                {getValues("startTime") && ` at ${getValues("startTime")}`}
+                {format(field.value, "PPP 'at' h:mm a")}
               </p>
             )}
             <FormMessage />
@@ -114,7 +112,7 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
 
       <FormField
         control={control}
-        name="endTime"
+        name="endDate"
         render={({ field }) => (
           <FormItem>
             <FormLabel>End Time</FormLabel>
@@ -126,9 +124,9 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
                   value={endDateText}
                   onChange={(e) => setEndDateText(e.target.value)}
                   onBlur={() => {
-                    const date = getValues("date");
-                    if (date) {
-                      handleEndDateParse(endDateText, date);
+                    const startDate = getValues("startDate");
+                    if (startDate) {
+                      handleEndDateParse(endDateText, startDate);
                     } else {
                       toast.error("Please set a start date first");
                     }
@@ -137,9 +135,9 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
                 />
               </div>
             </FormControl>
-            {field.value && getValues("date") && (
+            {field.value && (
               <p className="text-sm text-muted-foreground mt-1">
-                {format(getValues("date"), "PPP")} at {field.value}
+                {format(field.value, "PPP 'at' h:mm a")}
               </p>
             )}
             <FormMessage />
