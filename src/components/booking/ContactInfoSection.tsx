@@ -50,8 +50,7 @@ export const ContactInfoSection = ({ control }: ContactInfoSectionProps) => {
         />
       </div>
       <p className="text-sm text-muted-foreground mt-2">
-        A confirmation link will be sent to this email to verify your
-        booking request.
+        A confirmation with the booking data will be sent to this email.
       </p>
     </div>
   );

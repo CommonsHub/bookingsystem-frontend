@@ -53,7 +53,7 @@ const NewBookingPage = () => {
     defaultValues: {
       title: "",
       description: "",
-      roomId: "",
+      roomId: selectedRoomId || "",
       setupOption: "",
       requiresAdditionalSpace: false,
       startDate: undefined,
@@ -260,12 +260,14 @@ const NewBookingPage = () => {
 
               <Separator />
 
-              <AdditionalInfoSection control={form.control} />
-
-              <Separator />
 
               <ContactInfoSection control={form.control} />
               <MembershipSection control={form.control} />
+
+              <Separator />
+              <AdditionalInfoSection control={form.control} />
+
+
             </CardContent>
 
             <CardFooter className="flex justify-between">

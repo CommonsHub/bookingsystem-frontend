@@ -21,6 +21,7 @@ const Header = () => {
           <span className="font-semibold text-xl">
             Commons Hub Brussels Bookings
           </span>
+          <div>{window.location.origin}</div>
         </Link>
         <div className="flex items-center space-x-2">
           <Button asChild variant="default">

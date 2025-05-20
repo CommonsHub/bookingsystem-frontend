@@ -4,7 +4,7 @@ export const rooms: Room[] = [
   {
     id: "room-001",
     name: "Elinor Ostrom room ",
-    capacity: "17 - 100",
+    capacity: "17-100",
     location: "2st Floor",
     description: "Large conference space",
     setupOptions: [
@@ -34,7 +34,7 @@ export const rooms: Room[] = [
   {
     id: "room-002",
     name: "Satoshi room",
-    capacity: "10 - 17",
+    capacity: "10-17",
     location: "2nd Floor",
     description: "Medium-sized conference room",
     setupOptions: [],

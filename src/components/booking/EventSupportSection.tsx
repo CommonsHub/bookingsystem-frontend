@@ -63,6 +63,8 @@ export const EventSupportSection = ({ control }: EventSupportSectionProps) => {
             </FormItem>
           )}
         />
+      </div>
+      <div className="space-y-4">
 
         <FormField
           control={control}
@@ -75,7 +77,7 @@ export const EventSupportSection = ({ control }: EventSupportSectionProps) => {
                   onCheckedChange={field.onChange}
                 />
               </FormControl>
-              <div>
+              <div className="space-y-1 leading-none">
                 <FormLabel>
                   Public event (we will publish through our channels as well)
                 </FormLabel>
