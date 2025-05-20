@@ -32,29 +32,6 @@ export const AdditionalInfoSection = ({ control }: AdditionalInfoSectionProps) =
           </FormItem>
         )}
       />
-
-      <FormField
-        control={control}
-        name="isPublicEvent"
-        render={({ field }) => (
-          <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
-            <FormControl>
-              <Checkbox
-                checked={field.value}
-                onCheckedChange={field.onChange}
-              />
-            </FormControl>
-            <div>
-              <FormLabel>
-                Public event (we will publish through our channels as well)
-              </FormLabel>
-              <p className="text-sm text-muted-foreground">
-                Check this box if you want your event to be promoted on our public channels.
-              </p>
-            </div>
-          </FormItem>
-        )}
-      />
     </div>
   );
 };

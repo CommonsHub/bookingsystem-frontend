@@ -1,4 +1,3 @@
-
 import * as z from "zod";
 
 export const formSchema = z.object({
@@ -9,11 +8,8 @@ export const formSchema = z.object({
   roomId: z.string({ required_error: "Please select a room" }),
   setupOption: z.string().optional(),
   requiresAdditionalSpace: z.boolean().default(false),
-  date: z.date({ required_error: "Please enter a valid start date and time" }),
-  startTime: z.string({ required_error: "Please enter a valid start time" }),
-  endTime: z
-    .string({ required_error: "Please enter a valid end time" })
-    .refine((time) => time !== "", { message: "Please enter a valid end time" }),
+  startDate: z.date({ required_error: "Please enter a valid start time" }),
+  endDate: z.date({ required_error: "Please enter a valid end time" }),
   email: z.string().email({ message: "Please enter a valid email address" }),
   name: z.string().min(2, { message: "Please enter your name" }),
   // New fields
