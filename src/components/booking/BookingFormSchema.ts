@@ -13,12 +13,14 @@ export const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
   name: z.string().min(2, { message: "Please enter your name" }),
   // New fields
+  organizer: z.string().optional(),
+  estimatedAttendees: z.coerce.number().optional(),
   cateringOptions: z.array(z.string()).optional(),
   cateringComments: z.string().optional(),
   eventSupportOptions: z.array(z.string()).optional(),
   membershipStatus: z.string().optional(),
   additionalComments: z.string().optional(),
-  // Add the public event field
+  // Public event field
   isPublicEvent: z.boolean().default(false),
 });
 

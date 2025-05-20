@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Booking } from "@/types";
-import { CalendarDays, Clock, MapPin, Users } from "lucide-react";
+import { CalendarDays, Clock, MapPin, Users, User, Hash } from "lucide-react";
 import { formatDate, formatTime } from "@/lib/utils";
 
 interface BookingDetailsCardProps {
@@ -58,12 +58,32 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
           <div className="flex items-start gap-2">
             <Users className="h-5 w-5 text-muted-foreground mt-0.5" />
             <div>
-              <h4 className="font-medium">Capacity</h4>
+              <h4 className="font-medium">Room Capacity</h4>
               <p className="text-muted-foreground">
                 {booking.room.capacity} people
               </p>
             </div>
           </div>
+
+          {booking.organizer && (
+            <div className="flex items-start gap-2">
+              <User className="h-5 w-5 text-muted-foreground mt-0.5" />
+              <div>
+                <h4 className="font-medium">Event Organizer</h4>
+                <p className="text-muted-foreground">{booking.organizer}</p>
+              </div>
+            </div>
+          )}
+
+          {booking.estimatedAttendees && (
+            <div className="flex items-start gap-2">
+              <Hash className="h-5 w-5 text-muted-foreground mt-0.5" />
+              <div>
+                <h4 className="font-medium">Estimated Attendees</h4>
+                <p className="text-muted-foreground">{booking.estimatedAttendees} people</p>
+              </div>
+            </div>
+          )}
         </div>
 
         {booking.selectedSetup && (

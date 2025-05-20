@@ -151,7 +151,10 @@ const NewBookingPage = () => {
         selectedSetup: data.setupOption,
         requiresAdditionalSpace: data.requiresAdditionalSpace,
         additionalComments: data.additionalComments,
-        isPublicEvent: data.isPublicEvent
+        isPublicEvent: data.isPublicEvent,
+        // Add new fields
+        organizer: data.organizer,
+        estimatedAttendees: data.estimatedAttendees
       });
 
       // Clear the draft data after successful submission

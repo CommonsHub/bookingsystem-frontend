@@ -128,11 +128,12 @@ export const useBookingData = () => {
                 }
               : undefined,
             approvedAt: booking.approved_at,
-            // Use dedicated columns instead of draft_data
+            // Use dedicated columns
             additionalComments: booking.additional_comments,
             isPublicEvent: booking.is_public_event,
-            // selectedSetup: booking.setup_option,
-            // requiresAdditionalSpace: booking.requires_additional_space,
+            // Add new fields
+            organizer: booking.organizer,
+            estimatedAttendees: booking.estimated_attendees,
             // Add cancellation fields
             cancelledAt: booking.cancelled_at,
             cancelledBy: booking.cancelled_by_email

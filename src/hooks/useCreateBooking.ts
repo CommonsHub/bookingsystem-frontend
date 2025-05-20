@@ -1,3 +1,4 @@
+
 import { toast } from "@/components/ui/toast-utils";
 import { supabase } from "@/integrations/supabase/client";
 import { Database } from "@/integrations/supabase/types";
@@ -31,6 +32,8 @@ export const useCreateBooking = (
         created_by_name: bookingData.createdBy.name,
         additional_comments: bookingData.additionalComments,
         is_public_event: bookingData.isPublicEvent,
+        organizer: bookingData.organizer,
+        estimated_attendees: bookingData.estimatedAttendees,
       };
 
       const { error } = await supabase.from("bookings").insert(row);
@@ -52,7 +55,7 @@ export const useCreateBooking = (
             ...bookingData,
             id,
             createdAt: new Date().toISOString(),
-            status: "pending" as const, // Changed from "draft" to "pending"
+            status: "pending" as const,
             comments: [],
             createdBy: bookingData.createdBy,
           };

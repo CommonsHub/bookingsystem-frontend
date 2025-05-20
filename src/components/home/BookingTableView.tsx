@@ -2,7 +2,7 @@
 import { Booking, User } from "@/types";
 import { formatDateTime } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import { MessageSquare, Trash2, Users } from "lucide-react";
+import { MessageSquare, Trash2, Users, Hash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "./StatusBadge";
 import {
@@ -43,7 +43,7 @@ export const BookingTableView = ({
             <TableHead>Title</TableHead>
             <TableHead>Room</TableHead>
             <TableHead>Date</TableHead>
-            <TableHead>Capacity</TableHead>
+            <TableHead>Attendees</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Created by</TableHead>
             <TableHead>Comments</TableHead>
@@ -64,8 +64,8 @@ export const BookingTableView = ({
               <TableCell>{formatDateTime(booking.startTime)}</TableCell>
               <TableCell>
                 <div className="flex items-center gap-1">
-                  <Users className="h-3 w-3" />
-                  <span>{booking.room.capacity}</span>
+                  <Hash className="h-3 w-3" />
+                  <span>{booking.estimatedAttendees || "N/A"}</span>
                 </div>
               </TableCell>
               <TableCell><StatusBadge status={booking.status} /></TableCell>

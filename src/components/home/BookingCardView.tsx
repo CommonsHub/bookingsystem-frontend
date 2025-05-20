@@ -1,7 +1,7 @@
 
 import { Booking, User } from "@/types";
 import { formatDateTime } from "@/lib/utils";
-import { CalendarDays, MessageSquare, Trash2, Users } from "lucide-react";
+import { CalendarDays, MessageSquare, Trash2, Hash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { StatusBadge } from "./StatusBadge";
@@ -40,8 +40,8 @@ export const BookingCardView = ({
               </div>
 
               <div className="flex items-center gap-2">
-                <Users className="h-3.5 w-3.5 flex-shrink-0" />
-                <span>{booking.room.name} ({booking.room.capacity})</span>
+                <Hash className="h-3.5 w-3.5 flex-shrink-0" />
+                <span>Attendees: {booking.estimatedAttendees || "N/A"}</span>
               </div>
             </div>
           </CardContent>
