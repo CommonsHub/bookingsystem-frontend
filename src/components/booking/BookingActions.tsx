@@ -22,6 +22,8 @@ interface BookingActionsProps {
   canCancelBooking: boolean;
   onApprove: () => void;
   onCancel: () => void;
+  isAdmin: boolean;
+  
 }
 
 export const BookingActions = ({
@@ -30,6 +32,7 @@ export const BookingActions = ({
   canCancelBooking,
   onApprove,
   onCancel,
+  isAdmin,
 }: BookingActionsProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -39,26 +42,29 @@ export const BookingActions = ({
         <CardTitle>Actions</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* Approve Button */}
-        {canApproveBooking ? (
-          <Button onClick={onApprove} className="w-full gap-2">
-            <CheckCircle2 className="h-4 w-4" />
-            Approve Booking
-          </Button>
-        ) : (
-          <Button
-            disabled
-            className="w-full gap-2"
-            title={
-              booking.status !== "pending"
-                ? "This booking is not pending approval"
-                : "You need to be verified or have a commonshub.brussels email to approve bookings"
-            }
-          >
-            <CheckCircle2 className="h-4 w-4" />
-            Approve Booking
-          </Button>
+        {/* Approve Button (Admin Only) */}
+        {isAdmin && (
+          canApproveBooking ? (
+            <Button onClick={onApprove} className="w-full gap-2">
+              <CheckCircle2 className="h-4 w-4" />
+              Approve Booking
+            </Button>
+          ) : (
+            <Button
+              disabled
+              className="w-full gap-2"
+              title={
+                booking.status !== "pending"
+                  ? "This booking is not pending approval"
+                  : "You need to be verified or have a commonshub.brussels email to approve bookings"
+              }
+            >
+              <CheckCircle2 className="h-4 w-4" />
+              Approve Booking
+            </Button>
+          )
         )}
+        
 
         {booking.status === "approved" && (
           <div className="text-center text-sm text-muted-foreground">
