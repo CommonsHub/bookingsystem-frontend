@@ -4,11 +4,6 @@ import { useEffect, useState } from "react";
 import { User } from "@/types";
 import { User as SupabaseUser } from "@supabase/supabase-js";
 
-if (!import.meta.env.VITE_EMAIL_REDIRECT_URL) {
-  throw new Error(
-    "VITE_EMAIL_REDIRECT_URL environment variable is required for authentication"
-  );
-}
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
