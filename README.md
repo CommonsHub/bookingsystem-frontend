@@ -60,6 +60,33 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Environment Variables
+
+Please refer to `.env.example` for a complete list of environment variables used in this project.
+
+
+### Development Setup
+
+For local development, create a `.env.development` file with:
+
+```sh
+# Development authentication redirect URL (localhost)
+VITE_EMAIL_REDIRECT_URL=http://localhost:8080/auth/callback
+```
+
+The development server runs on port 8080 by default.
+
+### Production Setup
+
+For production, use `.env` with your production URL:
+
+```sh
+# Production authentication redirect URL
+VITE_EMAIL_REDIRECT_URL=https://your-domain.com/auth/callback
+```
+
+You can copy `.env.example` as a template for either environment.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/c2ee2edd-0504-44d7-85c3-c1ca867262a8) and click on Share -> Publish.

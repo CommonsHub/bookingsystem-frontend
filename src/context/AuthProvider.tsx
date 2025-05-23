@@ -1,9 +1,9 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { AuthContext } from "./AuthContext";
 import { useEffect, useState } from "react";
 import { User } from "@/types";
 import { User as SupabaseUser } from "@supabase/supabase-js";
+
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -31,7 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${import.meta.env.VITE_DEPLOY_URL || window.location.origin}/auth/callback`,
       },
     });
     if (error) throw error;
