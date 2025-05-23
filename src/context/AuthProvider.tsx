@@ -31,7 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${import.meta.env.DEPLOY_PRIME_URL || import.meta.env.URL || window.location.origin}/atuh/callback`,
+        emailRedirectTo: `${import.meta.env.DEPLOY_PRIME_URL || import.meta.env.BASE_URL || window.location.origin}/auth/callback`,
       },
     });
     if (error) throw error;
