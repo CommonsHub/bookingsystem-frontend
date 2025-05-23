@@ -18,11 +18,11 @@ interface RoomSelectionSectionProps {
   setSelectedRoomId: (id: string | null) => void;
 }
 
-export const RoomSelectionSection = ({ 
-  control, 
-  rooms, 
-  selectedRoomId, 
-  setSelectedRoomId 
+export const RoomSelectionSection = ({
+  control,
+  rooms,
+  selectedRoomId,
+  setSelectedRoomId
 }: RoomSelectionSectionProps) => {
   const selectedRoom = rooms.find(room => room.id === selectedRoomId);
 
@@ -71,30 +71,28 @@ export const RoomSelectionSection = ({
           )}
         />
 
-        <div className="mt-4 pl-7">
-          <FormField
-            control={control}
-            name="requiresAdditionalSpace"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div>
-                  <FormLabel>
-                    We need all of it + additional space
-                  </FormLabel>
-                  <p className="text-sm text-muted-foreground">
-                    We can offer additional space on the first floor if needed.
-                  </p>
-                </div>
-              </FormItem>
-            )}
-          />
-        </div>
+        <FormField
+          control={control}
+          name="requiresAdditionalSpace"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div>
+                <FormLabel>
+                  We need all of it + additional space
+                </FormLabel>
+                <p className="text-sm text-muted-foreground">
+                  We can offer additional space on the first floor if needed.
+                </p>
+              </div>
+            </FormItem>
+          )}
+        />
 
         {selectedRoom?.setupOptions?.length > 0 && (
           <div className="mt-4 pl-7">

@@ -10,7 +10,7 @@ type FormData = z.infer<typeof formSchema>;
 
 // Catering options data
 export const cateringOptions = [
-  { id: "simple-lunch", name: "Simple lunch: sandwiches", price: 7, description: "€7/per person", emoji: "🥪" },
+  { id: "simple-lunch", name: "Simple lunch: sandwiches", price: 8.5, description: "€8,50/per person", emoji: "🥪" },
   { id: "awesome-lunch", name: "Awesome lunch: salads/sandwiches from organic caterer", price: 25, description: "€25 (<25) or €22", emoji: "🥗" },
   { id: "after-event-drinks", name: "After event drinks (wine and juice)", price: 8, description: "€8/person", emoji: "🍷" },
   { id: "after-event-snacks", name: "After event snacks", price: 4, description: "€4/person", emoji: "🍿" },

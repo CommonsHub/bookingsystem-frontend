@@ -43,6 +43,9 @@ export interface Booking {
   isPublicEvent?: boolean;
   cancelledAt?: string;
   cancelledBy?: User;
+  // New fields
+  organizer?: string;
+  estimatedAttendees?: number;
 }
 
 export interface Comment {
@@ -64,7 +67,12 @@ export interface Profile {
   updated_at: string;
 }
 
-export type BookingStatus = "draft" | "pending" | "approved" | "rejected" | "cancelled";
+export type BookingStatus =
+  | "draft"
+  | "pending"
+  | "approved"
+  | "rejected"
+  | "cancelled";
 export type CommentStatus = "draft" | "published";
 
 export interface CateringOption {
@@ -102,10 +110,11 @@ export interface BookingDatabaseFields {
   created_by_name?: string;
   approved_by_email?: string;
   approved_at?: string;
-  draft_data?: any;
-  draft_key?: string;
   additional_comments?: string;
   is_public_event?: boolean;
   cancelled_at?: string;
   cancelled_by_email?: string;
+  // New fields
+  organizer?: string;
+  estimated_attendees?: number;
 }

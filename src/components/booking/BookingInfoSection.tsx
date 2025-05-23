@@ -49,6 +49,45 @@ export const BookingInfoSection = ({ control }: BookingInfoSectionProps) => {
           </FormItem>
         )}
       />
+
+      <FormField
+        control={control}
+        name="organizer"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Event Organizer</FormLabel>
+            <FormControl>
+              <Input
+                placeholder="Name of the person or organization running the event"
+                {...field}
+                value={field.value || ""}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={control}
+        name="estimatedAttendees"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Estimated Number of Attendees</FormLabel>
+            <FormControl>
+              <Input
+                type="number"
+                placeholder="Expected number of participants"
+                {...field}
+                value={field.value === undefined ? "" : field.value}
+                onChange={(e) => field.onChange(e.target.valueAsNumber || undefined)}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
     </div>
   );
 };
