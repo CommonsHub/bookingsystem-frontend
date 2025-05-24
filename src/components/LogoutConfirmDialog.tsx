@@ -10,6 +10,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useTranslation } from "react-i18next";
+import { buttonVariants } from "@/components/ui/button";
 
 interface LogoutConfirmDialogProps {
   isOpen: boolean;
@@ -38,7 +39,7 @@ export const LogoutConfirmDialog = ({
           <AlertDialogCancel onClick={onClose}>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => onConfirm(false)}
-            variant="destructive"
+            className={buttonVariants({ variant: "destructive" })}
           >
             Clear Drafts & Logout
           </AlertDialogAction>
