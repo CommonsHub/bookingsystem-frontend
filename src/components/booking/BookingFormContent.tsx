@@ -10,6 +10,7 @@ import { DateTimeSection } from "./DateTimeSection";
 import { EventSupportSection } from "./EventSupportSection";
 import { MembershipSection } from "./MembershipSection";
 import { RoomSelectionSection } from "./RoomSelectionSection";
+import { PricingQuoteSection } from "./PricingQuoteSection";
 import { FormData } from "./BookingFormSchema";
 import { Room } from "@/types";
 
@@ -59,6 +60,8 @@ export const BookingFormContent = ({
       <Separator />
 
       <AdditionalInfoSection control={control} />
+
+      <PricingQuoteSection rooms={rooms} />
     </CardContent>
   );
 };
