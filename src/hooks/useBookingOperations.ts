@@ -1,5 +1,5 @@
 
-import { Booking, User } from "@/types";
+import { Booking } from "@/types";
 import { useCreateBooking } from "./useCreateBooking";
 import { useCommentOperations } from "./useCommentOperations";
 import { useApprovalOperations } from "./useApprovalOperations";
