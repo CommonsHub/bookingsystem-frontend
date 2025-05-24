@@ -63,15 +63,16 @@ export const useBookingWizard = () => {
     setCompletedSections(newCompletedSections);
   }, [title, description, startDate, endDate, roomId, email, name, membershipStatus]);
 
-  // Auto-advance current section based on scroll or completion
+  // Auto-advance current section based on scroll
   useEffect(() => {
     const handleScroll = () => {
+      const headerHeight = 120; // Account for fixed header
       const sections = document.querySelectorAll('[data-wizard-section]');
       const viewportMiddle = window.scrollY + window.innerHeight / 2;
 
       sections.forEach((section, index) => {
         const element = section as HTMLElement;
-        const sectionTop = element.offsetTop;
+        const sectionTop = element.offsetTop - headerHeight;
         const sectionBottom = sectionTop + element.offsetHeight;
 
         if (viewportMiddle >= sectionTop && viewportMiddle <= sectionBottom) {
@@ -80,8 +81,12 @@ export const useBookingWizard = () => {
       });
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const throttledHandleScroll = () => {
+      requestAnimationFrame(handleScroll);
+    };
+
+    window.addEventListener('scroll', throttledHandleScroll);
+    return () => window.removeEventListener('scroll', throttledHandleScroll);
   }, []);
 
   return {

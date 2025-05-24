@@ -16,6 +16,20 @@ export const BookingWizardProgress = ({
 }: BookingWizardProgressProps) => {
   const progressPercentage = (completedSections.size / sections.length) * 100;
 
+  const scrollToSection = (sectionIndex: number) => {
+    const sectionElement = document.querySelector(`[data-wizard-section="${sectionIndex}"]`);
+    if (sectionElement) {
+      const headerHeight = 120; // Account for fixed header height
+      const elementTop = sectionElement.getBoundingClientRect().top + window.scrollY;
+      const scrollPosition = elementTop - headerHeight;
+      
+      window.scrollTo({
+        top: scrollPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <Card className="fixed top-20 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-2xl mx-auto bg-white/95 backdrop-blur-sm border shadow-lg">
       <div className="p-4">
@@ -30,14 +44,15 @@ export const BookingWizardProgress = ({
         
         <div className="flex flex-wrap gap-2">
           {sections.map((section, index) => (
-            <div
+            <button
               key={index}
-              className={`flex items-center gap-1 text-xs px-2 py-1 rounded-full ${
+              onClick={() => scrollToSection(index)}
+              className={`flex items-center gap-1 text-xs px-2 py-1 rounded-full transition-colors cursor-pointer hover:opacity-80 ${
                 completedSections.has(index)
-                  ? 'bg-green-100 text-green-700'
+                  ? 'bg-green-100 text-green-700 hover:bg-green-200'
                   : currentSection === index
-                  ? 'bg-blue-100 text-blue-700'
-                  : 'bg-gray-100 text-gray-500'
+                  ? 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
               }`}
             >
               {completedSections.has(index) ? (
@@ -46,7 +61,7 @@ export const BookingWizardProgress = ({
                 <Circle className="h-3 w-3" />
               )}
               <span>{section}</span>
-            </div>
+            </button>
           ))}
         </div>
       </div>
