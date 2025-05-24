@@ -30,6 +30,42 @@
     "roomBookingDetails": "Room Booking Details",
     "enterDetails": "Enter the details of your booking request"
   },
+  "form": {
+    "sections": {
+      "basicInfo": {
+        "title": "Basic Information",
+        "description": "Tell us about your event"
+      },
+      "dateTime": {
+        "title": "Date & Time",
+        "description": "When will your event take place?"
+      },
+      "roomSelection": {
+        "title": "Room Selection",
+        "description": "Choose the perfect space for your event"
+      },
+      "catering": {
+        "title": "Catering Options",
+        "description": "Add food and beverages to your event (optional)"
+      },
+      "eventSupport": {
+        "title": "Event Support",
+        "description": "Additional services for your event (optional)"
+      },
+      "contactMembership": {
+        "title": "Contact & Membership",
+        "description": "Your contact information and membership details"
+      },
+      "additionalInfo": {
+        "title": "Additional Information",
+        "description": "Any other details you'd like to share (optional)"
+      },
+      "pricing": {
+        "title": "Pricing Estimate",
+        "description": "Review the estimated costs for your booking"
+      }
+    }
+  },
   "booking": {
     "room": "Room",
     "date": "Date",

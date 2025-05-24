@@ -1,22 +1,24 @@
 
 import { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { FormData } from "@/components/booking/BookingFormSchema";
 
 export const useBookingWizard = () => {
+  const { t } = useTranslation();
   const { watch } = useFormContext<FormData>();
   const [currentSection, setCurrentSection] = useState(0);
   const [completedSections, setCompletedSections] = useState<Set<number>>(new Set());
 
   const sections = [
-    "Basic Info",
-    "Date & Time", 
-    "Room Selection",
-    "Catering",
-    "Event Support",
-    "Contact & Membership",
-    "Additional Info",
-    "Pricing"
+    t('form.sections.basicInfo.title'),
+    t('form.sections.dateTime.title'), 
+    t('form.sections.roomSelection.title'),
+    t('form.sections.catering.title'),
+    t('form.sections.eventSupport.title'),
+    t('form.sections.contactMembership.title'),
+    t('form.sections.additionalInfo.title'),
+    t('form.sections.pricing.title')
   ];
 
   // Watch form values to determine completion
@@ -73,8 +75,8 @@ export const useBookingWizard = () => {
   useEffect(() => {
     const handleScroll = () => {
       const headerHeight = 80; // Main header
-      const progressHeight = 50; // Progress card (actual height)
-      const totalOffset = headerHeight + progressHeight + 8; // Minimal padding
+      const progressHeight = 60; // Fixed progress card height
+      const totalOffset = headerHeight + progressHeight;
       const viewportMiddle = window.scrollY + window.innerHeight / 2;
 
       const sections = document.querySelectorAll('[data-wizard-section]');

@@ -2,6 +2,7 @@
 import { Control } from "react-hook-form";
 import { CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useTranslation } from "react-i18next";
 import { AdditionalInfoSection } from "./AdditionalInfoSection";
 import { BookingInfoSection } from "./BookingInfoSection";
 import { CateringSection } from "./CateringSection";
@@ -27,12 +28,14 @@ export const BookingFormContent = ({
   selectedRoomId,
   setSelectedRoomId
 }: BookingFormContentProps) => {
+  const { t } = useTranslation();
+
   return (
-    <CardContent className="space-y-12 pb-8">
+    <CardContent className="space-y-12 pb-8" style={{ paddingTop: '60px' }}>
       <div data-wizard-section="0" className="scroll-mt-24 py-8">
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Basic Information</h2>
-          <p className="text-muted-foreground text-sm">Tell us about your event</p>
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.basicInfo.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.basicInfo.description')}</p>
         </div>
         <BookingInfoSection control={control} />
       </div>
@@ -41,8 +44,8 @@ export const BookingFormContent = ({
 
       <div data-wizard-section="1" className="scroll-mt-24 py-8">
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Date & Time</h2>
-          <p className="text-muted-foreground text-sm">When will your event take place?</p>
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.dateTime.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.dateTime.description')}</p>
         </div>
         <DateTimeSection control={control} />
       </div>
@@ -51,8 +54,8 @@ export const BookingFormContent = ({
 
       <div data-wizard-section="2" className="scroll-mt-24 py-8">
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Room Selection</h2>
-          <p className="text-muted-foreground text-sm">Choose the perfect space for your event</p>
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.roomSelection.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.roomSelection.description')}</p>
         </div>
         <RoomSelectionSection
           control={control}
@@ -66,8 +69,8 @@ export const BookingFormContent = ({
 
       <div data-wizard-section="3" className="scroll-mt-24 py-8">
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Catering Options</h2>
-          <p className="text-muted-foreground text-sm">Add food and beverages to your event (optional)</p>
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.catering.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.catering.description')}</p>
         </div>
         <CateringSection control={control} />
       </div>
@@ -76,8 +79,8 @@ export const BookingFormContent = ({
 
       <div data-wizard-section="4" className="scroll-mt-24 py-8">
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Event Support</h2>
-          <p className="text-muted-foreground text-sm">Additional services for your event (optional)</p>
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.eventSupport.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.eventSupport.description')}</p>
         </div>
         <EventSupportSection control={control} />
       </div>
@@ -86,8 +89,8 @@ export const BookingFormContent = ({
 
       <div data-wizard-section="5" className="scroll-mt-24 py-8">
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Contact & Membership</h2>
-          <p className="text-muted-foreground text-sm">Your contact information and membership details</p>
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.contactMembership.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.contactMembership.description')}</p>
         </div>
         <div className="space-y-6">
           <ContactInfoSection control={control} isReadOnly={false} />
@@ -99,8 +102,8 @@ export const BookingFormContent = ({
 
       <div data-wizard-section="6" className="scroll-mt-24 py-8">
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Additional Information</h2>
-          <p className="text-muted-foreground text-sm">Any other details you'd like to share (optional)</p>
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.additionalInfo.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.additionalInfo.description')}</p>
         </div>
         <AdditionalInfoSection control={control} />
       </div>
@@ -109,8 +112,8 @@ export const BookingFormContent = ({
 
       <div data-wizard-section="7" className="scroll-mt-24 py-8">
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Pricing Estimate</h2>
-          <p className="text-muted-foreground text-sm">Review the estimated costs for your booking</p>
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.pricing.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.pricing.description')}</p>
         </div>
         <PricingQuoteSection rooms={rooms} />
       </div>
