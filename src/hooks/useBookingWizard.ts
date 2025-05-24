@@ -73,8 +73,8 @@ export const useBookingWizard = () => {
   useEffect(() => {
     const handleScroll = () => {
       const headerHeight = 80; // Main header
-      const progressHeight = 100; // Progress card
-      const totalOffset = headerHeight + progressHeight + 20; // Extra padding
+      const progressHeight = 80; // Progress card (reduced)
+      const totalOffset = headerHeight + progressHeight + 16; // Reduced padding
       const viewportMiddle = window.scrollY + window.innerHeight / 2;
 
       const sections = document.querySelectorAll('[data-wizard-section]');
