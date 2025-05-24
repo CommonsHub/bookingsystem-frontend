@@ -54,7 +54,7 @@ export const BookingFormContent = ({
 
       <Separator />
 
-      <ContactInfoSection control={control} />
+      <ContactInfoSection control={control} isReadOnly={false} />
       <MembershipSection control={control} />
 
       <Separator />

@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Booking } from "@/types";
-import { CalendarDays, Clock, MapPin, Users, User, Hash, Link } from "lucide-react";
+import { CalendarDays, Clock, MapPin, Users, User, Hash, Link, Mail } from "lucide-react";
 import { formatDate, formatTime } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 
@@ -65,6 +65,22 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
               <p className="text-muted-foreground">
                 {booking.room.capacity} {t('booking.people')}
               </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-2">
+            <User className="h-5 w-5 text-muted-foreground mt-0.5" />
+            <div>
+              <h4 className="font-medium">Contact Name</h4>
+              <p className="text-muted-foreground">{booking.createdBy.name}</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-2">
+            <Mail className="h-5 w-5 text-muted-foreground mt-0.5" />
+            <div>
+              <h4 className="font-medium">Contact Email</h4>
+              <p className="text-muted-foreground">{booking.createdBy.email}</p>
             </div>
           </div>
 

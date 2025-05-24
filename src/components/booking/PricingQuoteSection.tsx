@@ -53,6 +53,7 @@ export const PricingQuoteSection = ({ rooms }: PricingQuoteSectionProps) => {
   const endDate = watch("endDate");
   const estimatedAttendees = watch("estimatedAttendees") || 0;
   const selectedCatering = watch("cateringOptions") || [];
+  const membershipStatus = watch("membershipStatus");
 
   const quote = useMemo(() => {
     if (!roomId || !startDate || !endDate) {
@@ -119,6 +120,12 @@ export const PricingQuoteSection = ({ rooms }: PricingQuoteSectionProps) => {
       roomPrice += pricing.weekendSurcharge;
     }
 
+    // Calculate member discount
+    const isMember = membershipStatus === "yes";
+    const memberDiscount = isMember ? 0.3 : 0; // 30% discount
+    const originalRoomPrice = roomPrice;
+    const discountedRoomPrice = isMember ? Math.round(roomPrice * (1 - memberDiscount)) : roomPrice;
+
     // Calculate catering costs
     let cateringPrice = 0;
     const cateringItems: string[] = [];
@@ -132,11 +139,12 @@ export const PricingQuoteSection = ({ rooms }: PricingQuoteSectionProps) => {
       }
     });
 
-    const totalPrice = roomPrice + cateringPrice;
+    const totalPrice = discountedRoomPrice + cateringPrice;
 
     return {
       room: room.name,
-      roomPrice,
+      originalRoomPrice,
+      roomPrice: discountedRoomPrice,
       pricingType,
       isWeekend,
       weekendSurcharge: isWeekend ? pricing.weekendSurcharge : 0,
@@ -144,9 +152,12 @@ export const PricingQuoteSection = ({ rooms }: PricingQuoteSectionProps) => {
       cateringItems,
       totalPrice,
       attendees: estimatedAttendees,
-      duration: durationHours
+      duration: durationHours,
+      isMember,
+      memberDiscount: memberDiscount * 100,
+      discountAmount: originalRoomPrice - discountedRoomPrice
     };
-  }, [roomId, startDate, endDate, estimatedAttendees, selectedCatering, rooms]);
+  }, [roomId, startDate, endDate, estimatedAttendees, selectedCatering, rooms, membershipStatus]);
 
   if (!quote) {
     return null;
@@ -161,9 +172,23 @@ export const PricingQuoteSection = ({ rooms }: PricingQuoteSectionProps) => {
         <div>
           <div className="flex justify-between items-center">
             <span className="font-medium">{quote.room}</span>
-            <span className="font-semibold">€{quote.roomPrice}</span>
+            <div className="flex items-center gap-2">
+              {quote.isMember && quote.discountAmount > 0 && (
+                <span className="text-sm text-muted-foreground line-through">
+                  €{quote.originalRoomPrice}
+                </span>
+              )}
+              <span className={`font-semibold ${quote.isMember && quote.discountAmount > 0 ? 'text-green-600' : ''}`}>
+                €{quote.roomPrice}
+              </span>
+            </div>
           </div>
           <p className="text-sm text-muted-foreground">{quote.pricingType}</p>
+          {quote.isMember && quote.discountAmount > 0 && (
+            <p className="text-sm text-green-600 font-medium">
+              Member discount (30%): -€{quote.discountAmount}
+            </p>
+          )}
           {quote.isWeekend && quote.weekendSurcharge > 0 && (
             <p className="text-sm text-muted-foreground">
               Weekend surcharge: €{quote.weekendSurcharge}
