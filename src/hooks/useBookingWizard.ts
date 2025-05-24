@@ -72,13 +72,16 @@ export const useBookingWizard = () => {
   // Auto-advance current section based on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const headerHeight = 120; // Account for header + progress component
-      const sections = document.querySelectorAll('[data-wizard-section]');
+      const headerHeight = 80; // Main header
+      const progressHeight = 100; // Progress card
+      const totalOffset = headerHeight + progressHeight + 20; // Extra padding
       const viewportMiddle = window.scrollY + window.innerHeight / 2;
 
+      const sections = document.querySelectorAll('[data-wizard-section]');
+      
       sections.forEach((section, index) => {
         const element = section as HTMLElement;
-        const sectionTop = element.offsetTop - headerHeight;
+        const sectionTop = element.offsetTop - totalOffset;
         const sectionBottom = sectionTop + element.offsetHeight;
 
         if (viewportMiddle >= sectionTop && viewportMiddle <= sectionBottom) {
