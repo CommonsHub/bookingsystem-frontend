@@ -2,8 +2,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
 import { FormData, formSchema } from "./BookingFormSchema";
 import { BookingFormHeader } from "./BookingFormHeader";
@@ -13,13 +11,15 @@ import { Card } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { useFormDraftManager } from "@/hooks/useFormDraftManager";
 import { Room } from "@/types";
+import { createDefaultFormValues } from "@/utils/formDefaults";
+import { useAuth } from "@/context/AuthContext";
 
 interface BookingFormProps {
   isEdit?: boolean;
   bookingId?: string;
   rooms: Room[];
   defaultValues: FormData;
-  onSubmit: (data: FormData) => Promise<void>;
+  onSubmit: (data: FormData, clearDraft?: () => Promise<void>) => Promise<void>;
   onCancel: () => void;
 }
 
@@ -31,8 +31,7 @@ export const BookingForm = ({
   onSubmit,
   onCancel
 }: BookingFormProps) => {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
+  const { user } = useAuth();
   const [submitting, setSubmitting] = useState(false);
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(
     defaultValues.roomId || null
@@ -47,7 +46,8 @@ export const BookingForm = ({
     isLoading,
     draftLoaded,
     handleClearDraft,
-    handleStartNewDraft
+    handleStartNewDraft,
+    clearDraft
   } = useFormDraftManager({
     form,
     bookingId,
@@ -58,7 +58,7 @@ export const BookingForm = ({
   const handleSubmit = async (data: FormData) => {
     setSubmitting(true);
     try {
-      await onSubmit(data);
+      await onSubmit(data, isEdit ? undefined : clearDraft);
     } catch (error) {
       console.error("Form submission error:", error);
     } finally {
@@ -67,8 +67,11 @@ export const BookingForm = ({
   };
 
   const handleClearDraftClick = () => {
-    handleClearDraft(defaultValues);
-    setSelectedRoomId(defaultValues.roomId || null);
+    const resetValues = createDefaultFormValues(user?.email || "", {
+      roomId: isEdit ? defaultValues.roomId : "",
+    });
+    handleClearDraft(resetValues);
+    setSelectedRoomId(isEdit ? defaultValues.roomId || null : null);
   };
 
   return (
