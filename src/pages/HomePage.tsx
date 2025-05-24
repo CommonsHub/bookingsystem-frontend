@@ -33,12 +33,16 @@ const HomePage = () => {
       return false;
     }
 
-    // Then filter by date if not showing all bookings
+    // Then filter by date and cancelled status
     if (!showAllBookings) {
-      // Only show bookings with start dates in the future
+      // For upcoming bookings: hide cancelled bookings and only show future bookings
+      if (booking.status === "cancelled") {
+        return false;
+      }
       return new Date(booking.startTime) >= new Date();
     }
 
+    // For all bookings: show everything (including cancelled)
     return true;
   });
 
