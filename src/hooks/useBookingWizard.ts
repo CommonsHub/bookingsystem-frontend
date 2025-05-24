@@ -15,7 +15,8 @@ export const useBookingWizard = () => {
     "Catering",
     "Event Support",
     "Contact & Membership",
-    "Additional Info"
+    "Additional Info",
+    "Pricing"
   ];
 
   // Watch form values to determine completion
@@ -60,13 +61,18 @@ export const useBookingWizard = () => {
     // Section 6: Additional Info (always considered complete since it's optional)
     newCompletedSections.add(6);
 
+    // Section 7: Pricing (complete if we have room and dates for pricing calculation)
+    if (roomId && startDate && endDate) {
+      newCompletedSections.add(7);
+    }
+
     setCompletedSections(newCompletedSections);
   }, [title, description, startDate, endDate, roomId, email, name, membershipStatus]);
 
   // Auto-advance current section based on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const headerHeight = 120; // Account for fixed header
+      const headerHeight = 140; // Account for fixed header
       const sections = document.querySelectorAll('[data-wizard-section]');
       const viewportMiddle = window.scrollY + window.innerHeight / 2;
 
