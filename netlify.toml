@@ -1,2 +1,2 @@
-[build.command]
-  command = "VITE_DEPLOY_URL=$URL npm run build"
+[build]
+command = "VITE_DEPLOY_URL=$URL npm run build"
