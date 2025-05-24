@@ -1,4 +1,3 @@
-
 export interface Room {
   id: string;
   name: string;
@@ -49,6 +48,8 @@ export interface Booking {
   lumaEventUrl?: string;
   calendarUrl?: string;
   publicUri?: string;
+  // New room notes field
+  roomNotes?: string;
 }
 
 export interface Comment {

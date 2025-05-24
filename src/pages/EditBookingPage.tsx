@@ -65,6 +65,7 @@ const EditBookingPage = () => {
       lumaEventUrl: "",
       calendarUrl: "",
       publicUri: "",
+      roomNotes: "",
     },
   });
 
@@ -106,6 +107,8 @@ const EditBookingPage = () => {
         lumaEventUrl: booking.lumaEventUrl || "",
         calendarUrl: booking.calendarUrl || "",
         publicUri: booking.publicUri || "",
+        // New room notes field
+        roomNotes: booking.roomNotes || "",
       });
       
       setLoading(false);
@@ -140,7 +143,8 @@ const EditBookingPage = () => {
         estimatedAttendees: data.estimatedAttendees,
         lumaEventUrl: data.lumaEventUrl,
         calendarUrl: data.calendarUrl, 
-        publicUri: data.publicUri
+        publicUri: data.publicUri,
+        roomNotes: data.roomNotes,
       });
 
       toast.success("Booking updated successfully!");

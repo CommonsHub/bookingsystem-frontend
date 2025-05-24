@@ -27,6 +27,8 @@ export const formSchema = z.object({
   lumaEventUrl: z.string().url({ message: "Please enter a valid URL" }).optional().or(z.literal('')),
   calendarUrl: z.string().url({ message: "Please enter a valid URL" }).optional().or(z.literal('')),
   publicUri: z.string().optional(),
+  // Additional room notes field
+  roomNotes: z.string().optional(),
 });
 
 export type FormData = z.infer<typeof formSchema>;
