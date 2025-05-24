@@ -30,6 +30,7 @@ export const PricingDisplay = ({ quote, vatMessage }: PricingDisplayProps) => {
             </div>
           </div>
           <p className="text-sm text-muted-foreground">{quote.pricingType}</p>
+          {/* Only show member discount if user selected "yes" for membership */}
           {quote.isMember && quote.discountAmount > 0 && (
             <p className="text-sm text-green-600 font-medium">
               Member discount (30%): -€{quote.discountAmount}

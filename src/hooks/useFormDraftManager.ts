@@ -37,6 +37,14 @@ export const useFormDraftManager = ({
       try {
         const draftData = await loadDraft();
         if (draftData && !draftLoaded) {
+          // Ensure dates are properly converted to Date objects
+          if (draftData.startDate && typeof draftData.startDate === 'string') {
+            draftData.startDate = new Date(draftData.startDate);
+          }
+          if (draftData.endDate && typeof draftData.endDate === 'string') {
+            draftData.endDate = new Date(draftData.endDate);
+          }
+          
           form.reset(draftData);
           if (draftData.roomId && onDraftLoaded) {
             onDraftLoaded(draftData.roomId);

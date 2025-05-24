@@ -110,6 +110,7 @@ export const calculateRoomPrice = (
 };
 
 export const calculateMemberDiscount = (roomPrice: number, isMember: boolean) => {
+  // Only apply discount if explicitly a member (not for "interested" status)
   const memberDiscount = isMember ? 0.3 : 0; // 30% discount
   const originalRoomPrice = roomPrice;
   const discountedRoomPrice = isMember ? Math.round(roomPrice * (1 - memberDiscount)) : roomPrice;

@@ -1,5 +1,5 @@
 
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 
@@ -7,9 +7,11 @@ import { FormData, formSchema } from "./BookingFormSchema";
 import { BookingFormHeader } from "./BookingFormHeader";
 import { BookingFormContent } from "./BookingFormContent";
 import { BookingFormFooter } from "./BookingFormFooter";
+import { BookingWizardProgress } from "./BookingWizardProgress";
 import { Card } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { useFormDraftManager } from "@/hooks/useFormDraftManager";
+import { useBookingWizard } from "@/hooks/useBookingWizard";
 import { Room } from "@/types";
 import { createDefaultFormValues } from "@/utils/formDefaults";
 import { useAuth } from "@/context/AuthContext";
@@ -78,7 +80,50 @@ export const BookingForm = ({
   };
 
   return (
+    <FormProvider {...form}>
+      <WizardFormContent
+        isEdit={isEdit}
+        isLoading={isLoading}
+        draftLoaded={draftLoaded}
+        submitting={submitting}
+        rooms={rooms}
+        selectedRoomId={selectedRoomId}
+        setSelectedRoomId={setSelectedRoomId}
+        onSubmit={handleSubmit}
+        onCancel={onCancel}
+        onClearDraft={handleClearDraftClick}
+        onStartNewDraft={handleStartNewDraft}
+        form={form}
+      />
+    </FormProvider>
+  );
+};
+
+// Separate component to use the wizard hook inside FormProvider
+const WizardFormContent = ({
+  isEdit,
+  isLoading,
+  draftLoaded,
+  submitting,
+  rooms,
+  selectedRoomId,
+  setSelectedRoomId,
+  onSubmit,
+  onCancel,
+  onClearDraft,
+  onStartNewDraft,
+  form
+}: any) => {
+  const { currentSection, completedSections, sections } = useBookingWizard();
+
+  return (
     <div className="max-w-2xl mx-auto">
+      <BookingWizardProgress
+        currentSection={currentSection}
+        completedSections={completedSections}
+        sections={sections}
+      />
+
       <BookingFormHeader
         isEdit={isEdit}
         isLoading={isLoading}
@@ -86,7 +131,7 @@ export const BookingForm = ({
       />
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <Card>
             <BookingFormContent
               control={form.control}
@@ -99,8 +144,8 @@ export const BookingForm = ({
               isEdit={isEdit}
               submitting={submitting}
               onCancel={onCancel}
-              onClearDraft={handleClearDraftClick}
-              onStartNewDraft={handleStartNewDraft}
+              onClearDraft={onClearDraft}
+              onStartNewDraft={onStartNewDraft}
             />
           </Card>
         </form>

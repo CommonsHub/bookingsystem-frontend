@@ -28,38 +28,52 @@ export const BookingFormContent = ({
   setSelectedRoomId
 }: BookingFormContentProps) => {
   return (
-    <CardContent className="space-y-6">
-      <BookingInfoSection control={control} />
+    <CardContent className="space-y-6 mt-20">
+      <div data-wizard-section="0" className="scroll-mt-32">
+        <BookingInfoSection control={control} />
+      </div>
 
       <Separator />
 
-      <DateTimeSection control={control} />
+      <div data-wizard-section="1" className="scroll-mt-32">
+        <DateTimeSection control={control} />
+      </div>
 
       <Separator />
 
-      <RoomSelectionSection
-        control={control}
-        rooms={rooms}
-        selectedRoomId={selectedRoomId}
-        setSelectedRoomId={setSelectedRoomId}
-      />
+      <div data-wizard-section="2" className="scroll-mt-32">
+        <RoomSelectionSection
+          control={control}
+          rooms={rooms}
+          selectedRoomId={selectedRoomId}
+          setSelectedRoomId={setSelectedRoomId}
+        />
+      </div>
 
       <Separator />
 
-      <CateringSection control={control} />
+      <div data-wizard-section="3" className="scroll-mt-32">
+        <CateringSection control={control} />
+      </div>
 
       <Separator />
 
-      <EventSupportSection control={control} />
+      <div data-wizard-section="4" className="scroll-mt-32">
+        <EventSupportSection control={control} />
+      </div>
 
       <Separator />
 
-      <ContactInfoSection control={control} isReadOnly={false} />
-      <MembershipSection control={control} />
+      <div data-wizard-section="5" className="scroll-mt-32">
+        <ContactInfoSection control={control} isReadOnly={false} />
+        <MembershipSection control={control} />
+      </div>
 
       <Separator />
 
-      <AdditionalInfoSection control={control} />
+      <div data-wizard-section="6" className="scroll-mt-32">
+        <AdditionalInfoSection control={control} />
+      </div>
 
       <PricingQuoteSection rooms={rooms} />
     </CardContent>
