@@ -1,4 +1,6 @@
-# Booking System for the Commons
+# Booking System for the Commons Hub Brussels
+
+![Commons Hub Brussels](public/ogimage.jpg)
 
 ## Contributing
 
@@ -11,7 +13,7 @@ Request to become a member of supabase, remix the existing Lovable projects, e.g
 
 If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+The only requirement is having Node.js & pnpm or npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
 Follow these steps:
 
@@ -23,9 +25,13 @@ git clone git@github.com:CommonsHub/bookingsystem-frontend.git
 cd bookingsystem-frontend
 
 # Step 3: Install the necessary dependencies.
+pnpm i
+#or
 npm i
 
 # Step 4: Start the development server with auto-reloading and an instant preview.
+pnpm dev
+# or
 npm run dev
 ```
 
