@@ -1,4 +1,3 @@
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -41,10 +40,9 @@ const NewBookingPage = () => {
   const [submitting, setSubmitting] = useState(false);
   const { user } = useAuth();
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
-  const { saveDraft, loadDraft, clearDraft, isLoading } = useDraftBooking();
+  const { saveDraft, loadDraft, clearDraft, resetClearedFlag, isLoading, isDraftCleared } = useDraftBooking();
   const [draftLoaded, setDraftLoaded] = useState(false);
   const [autoSaveTimerId, setAutoSaveTimerId] = useState<NodeJS.Timeout | null>(null);
-  const shouldAutoSave = useRef<boolean>(true);
 
   const defaultEmail = user?.email || "";
 
@@ -82,7 +80,7 @@ const NewBookingPage = () => {
             setSelectedRoomId(draftData.roomId);
           }
           setDraftLoaded(true);
-          toast.success("Draft booking loaded");
+          toast.success(t('messages.draftLoaded'));
         }
       } catch (error) {
         console.error("Error loading draft:", error);
@@ -90,24 +88,22 @@ const NewBookingPage = () => {
     };
 
     fetchDraft();
-  }, [form, loadDraft, draftLoaded]);
+  }, [form, loadDraft, draftLoaded, t]);
 
   // Auto-save form values when they change
   useEffect(() => {
+    // Don't auto-save if draft was cleared
+    if (isDraftCleared) return;
+
     // Watch for form changes
     const subscription = form.watch((formValues) => {
-      // Don't auto-save if we just cleared the draft
-      if (!shouldAutoSave.current) {
-        return;
-      }
-
       // Debounce the auto-save to prevent too many saves
       if (autoSaveTimerId) {
         clearTimeout(autoSaveTimerId);
       }
 
-      // Only save if there are actual values
-      if (formValues.title || formValues.description || formValues.roomId) {
+      // Only save if there are actual values and draft wasn't cleared
+      if ((formValues.title || formValues.description || formValues.roomId) && !isDraftCleared) {
         const timerId = setTimeout(() => {
           // Add timestamp to detect which version is newer
           const dataToSave = {
@@ -124,7 +120,7 @@ const NewBookingPage = () => {
 
     // Cleanup subscription
     return () => subscription.unsubscribe();
-  }, [form, saveDraft]);
+  }, [form, saveDraft, isDraftCleared, autoSaveTimerId, enhancedRooms]);
 
   const onSubmit = async (data: FormData) => {
     setSubmitting(true);
@@ -164,11 +160,11 @@ const NewBookingPage = () => {
 
       // Updated message to remove reference to email verification
       toast.success(
-        "Booking request submitted! It will be viewed by an administrator."
+        t('messages.bookingSubmitted')
       );
       navigate(`/bookings/${bookingId}`);
     } catch (error) {
-      toast.error("There was an error creating your booking request.");
+      toast.error(t('messages.bookingError'));
       console.error(error);
     } finally {
       setSubmitting(false);
@@ -176,9 +172,6 @@ const NewBookingPage = () => {
   };
 
   const handleClearDraft = async () => {
-    // Prevent auto-saving during form reset
-    shouldAutoSave.current = false;
-
     // Clear the draft data
     await clearDraft();
 
@@ -205,12 +198,11 @@ const NewBookingPage = () => {
     setSelectedRoomId(null);
     setDraftLoaded(false);
 
-    // Allow auto-saving again after a short delay (to prevent immediate re-save of empty form)
-    setTimeout(() => {
-      shouldAutoSave.current = true;
-    }, 500);
+    toast.success(t('messages.draftCleared'));
+  };
 
-    toast.success("Draft cleared");
+  const handleStartNewDraft = () => {
+    resetClearedFlag();
   };
 
   return (
@@ -287,7 +279,7 @@ const NewBookingPage = () => {
                   {t('buttons.clearDraft')}
                 </Button>
               </div>
-              <Button type="submit" disabled={submitting}>
+              <Button type="submit" disabled={submitting} onClick={handleStartNewDraft}>
                 {submitting ? t('buttons.submitting') : t('buttons.submit')}
               </Button>
             </CardFooter>

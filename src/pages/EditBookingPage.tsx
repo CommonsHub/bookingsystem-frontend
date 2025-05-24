@@ -30,6 +30,7 @@ import { toast } from "@/components/ui/toast-utils";
 import { useAuth } from "@/context/AuthContext";
 import { useBooking } from "@/context/BookingContext";
 import { rooms } from "@/data/rooms";
+import { useDraftBooking } from "@/hooks/useDraftBooking";
 import { Room } from "@/types";
 
 const EditBookingPage = () => {
@@ -41,6 +42,10 @@ const EditBookingPage = () => {
   const { user: authUser } = useAuth();
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [autoSaveTimerId, setAutoSaveTimerId] = useState<NodeJS.Timeout | null>(null);
+  
+  // Initialize draft functionality for editing
+  const { saveDraft, loadDraft, clearDraft, isLoading: isDraftLoading, isDraftCleared } = useDraftBooking(id);
 
   // Get the booking data
   const booking = id ? getBookingById(id) : undefined;
@@ -85,8 +90,7 @@ const EditBookingPage = () => {
       const startDate = new Date(booking.startTime);
       const endDate = new Date(booking.endTime);
       
-      // Reset form with booking data
-      form.reset({
+      const bookingFormData = {
         title: booking.title,
         description: booking.description,
         roomId: booking.room.id,
@@ -111,11 +115,60 @@ const EditBookingPage = () => {
         publicUri: booking.publicUri || "",
         // New room notes field
         roomNotes: booking.roomNotes || "",
+      };
+
+      // Check if there's a draft with more recent changes
+      loadDraft().then(draftData => {
+        if (draftData && draftData.updatedAt) {
+          const draftTime = new Date(draftData.updatedAt);
+          const bookingTime = new Date(booking.updatedAt || booking.createdAt);
+          
+          // If draft is newer, use draft data and notify user
+          if (draftTime > bookingTime) {
+            form.reset(draftData);
+            if (draftData.roomId) {
+              setSelectedRoomId(draftData.roomId);
+            }
+            toast.success(t('messages.draftLoaded'));
+          } else {
+            // Use original booking data
+            form.reset(bookingFormData);
+          }
+        } else {
+          // No draft, use original booking data
+          form.reset(bookingFormData);
+        }
+        setLoading(false);
       });
-      
-      setLoading(false);
     }
-  }, [booking, form]);
+  }, [booking, form, loadDraft, t]);
+
+  // Auto-save form changes as draft
+  useEffect(() => {
+    if (loading || isDraftCleared) return;
+
+    const subscription = form.watch((formValues) => {
+      // Debounce the auto-save
+      if (autoSaveTimerId) {
+        clearTimeout(autoSaveTimerId);
+      }
+
+      // Only save if there are actual values and form is not loading
+      if (!loading && (formValues.title || formValues.description)) {
+        const timerId = setTimeout(() => {
+          const dataToSave = {
+            ...formValues,
+            updatedAt: new Date().toISOString(),
+          };
+          saveDraft(dataToSave);
+        }, 2000); // Save after 2 seconds of inactivity
+
+        setAutoSaveTimerId(timerId);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form, saveDraft, loading, isDraftCleared, autoSaveTimerId]);
 
   const onSubmit = async (data: FormData) => {
     if (!id) return;
@@ -149,10 +202,13 @@ const EditBookingPage = () => {
         roomNotes: data.roomNotes,
       });
 
-      toast.success("Booking updated successfully!");
+      // Clear draft after successful update
+      await clearDraft();
+
+      toast.success(t('messages.bookingUpdated'));
       navigate(`/bookings/${id}`);
     } catch (error) {
-      toast.error("Failed to update booking");
+      toast.error(t('messages.bookingUpdateError'));
       console.error(error);
     } finally {
       setSubmitting(false);
@@ -175,6 +231,7 @@ const EditBookingPage = () => {
         </h1>
         <p className="text-muted-foreground mt-1">
           {t('bookings.editDescription')}
+          {isDraftLoading && ` (${t('messages.savingDraft')})`}
         </p>
       </div>
 

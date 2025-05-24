@@ -91,7 +91,12 @@
     "bookingNotFound": "Booking not found",
     "bookingIdMissing": "Booking ID is missing",
     "savingDraft": "Saving draft...",
-    "draftLoaded": "Draft loaded"
+    "draftLoaded": "Draft loaded",
+    "draftCleared": "Draft cleared",
+    "bookingSubmitted": "Booking request submitted! It will be viewed by an administrator.",
+    "bookingError": "There was an error creating your booking request.",
+    "bookingUpdated": "Booking updated successfully!",
+    "bookingUpdateError": "Failed to update booking"
   },
   "greeting": "Hi {{name}}!",
   "footer": {

@@ -1,35 +1,46 @@
+
 import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export type DraftBookingData = Record<string, any>;
 
-export const useDraftBooking = () => {
+export const useDraftBooking = (bookingId?: string) => {
   const { user } = useAuth();
   const [draftKey, setDraftKey] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDraftCleared, setIsDraftCleared] = useState(false);
 
   // Generate a consistent draft key for the current user
   useEffect(() => {
-    if (user?.email) {
-      const userDraftKey = `booking-draft-${user.email}`;
-      setDraftKey(userDraftKey);
+    if (bookingId) {
+      // For editing existing bookings
+      const editDraftKey = user?.email 
+        ? `booking-edit-draft-${user.email}-${bookingId}`
+        : `booking-edit-draft-anonymous-${bookingId}`;
+      setDraftKey(editDraftKey);
     } else {
-      // For anonymous users, generate a random key and store it
-      const storedKey = localStorage.getItem("anonymous-booking-draft-key");
-      if (storedKey) {
-        setDraftKey(storedKey);
+      // For new bookings
+      if (user?.email) {
+        const userDraftKey = `booking-draft-${user.email}`;
+        setDraftKey(userDraftKey);
       } else {
-        const newKey = `booking-draft-anonymous-${uuidv4()}`;
-        localStorage.setItem("anonymous-booking-draft-key", newKey);
-        setDraftKey(newKey);
+        // For anonymous users, generate a random key and store it
+        const storedKey = localStorage.getItem("anonymous-booking-draft-key");
+        if (storedKey) {
+          setDraftKey(storedKey);
+        } else {
+          const newKey = `booking-draft-anonymous-${uuidv4()}`;
+          localStorage.setItem("anonymous-booking-draft-key", newKey);
+          setDraftKey(newKey);
+        }
       }
     }
-  }, [user?.email]);
+  }, [user?.email, bookingId]);
 
   // Save draft data to localStorage only
   const saveDraft = async (data: DraftBookingData): Promise<void> => {
-    if (!draftKey) return;
+    if (!draftKey || isDraftCleared) return;
 
     try {
       setIsLoading(true);
@@ -51,7 +62,7 @@ export const useDraftBooking = () => {
 
   // Load draft data from localStorage
   const loadDraft = async (): Promise<DraftBookingData | null> => {
-    if (!draftKey) return null;
+    if (!draftKey || isDraftCleared) return null;
 
     setIsLoading(true);
     try {
@@ -82,6 +93,9 @@ export const useDraftBooking = () => {
     if (!draftKey) return;
 
     try {
+      // Set the cleared flag to prevent auto-save
+      setIsDraftCleared(true);
+      
       // Clear from localStorage
       localStorage.removeItem(draftKey);
       console.log("Draft cleared successfully");
@@ -90,11 +104,18 @@ export const useDraftBooking = () => {
     }
   };
 
+  // Reset the cleared flag (useful when starting a new draft)
+  const resetClearedFlag = () => {
+    setIsDraftCleared(false);
+  };
+
   return {
     saveDraft,
     loadDraft,
     clearDraft,
+    resetClearedFlag,
     isLoading,
     draftKey,
+    isDraftCleared,
   };
 };
