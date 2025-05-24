@@ -12,6 +12,7 @@ import { BookingControls } from "@/components/home/BookingControls";
 import { BookingTableView } from "@/components/home/BookingTableView";
 import { BookingCardView } from "@/components/home/BookingCardView";
 import { CancelBookingDialog } from "@/components/home/CancelBookingDialog";
+import { BookingLoadingState } from "@/components/home/BookingLoadingState";
 import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
@@ -65,12 +66,11 @@ const HomePage = () => {
         onConfirm={() => bookingToCancel && handleCancelBooking(bookingToCancel)}
       />
 
-      {visibleBookings.length === 0 ? (
-        <BookingEmptyState 
-          showAllBookings={showAllBookings} 
-          onShowAllBookings={() => setShowAllBookings(true)} 
-        />
-      ) : (
+      <BookingLoadingState 
+        visibleBookings={visibleBookings}
+        showAllBookings={showAllBookings}
+        onShowAllBookings={() => setShowAllBookings(true)}
+      >
         <div>
           <BookingControls
             viewMode={viewMode}
@@ -96,7 +96,7 @@ const HomePage = () => {
             />
           )}
         </div>
-      )}
+      </BookingLoadingState>
     </div>
   );
 };

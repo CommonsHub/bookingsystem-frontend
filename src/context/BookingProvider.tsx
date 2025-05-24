@@ -43,6 +43,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     user,
     canUserApproveBookings,
     canUserCancelBooking,
+    loading,
   };
 
   return <BookingContext.Provider value={value}>{children}</BookingContext.Provider>;
