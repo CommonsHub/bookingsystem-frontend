@@ -20,9 +20,9 @@ export const BookingWizardProgress = ({
     const sectionElement = document.querySelector(`[data-wizard-section="${sectionIndex}"]`);
     if (sectionElement) {
       const headerHeight = 80; // Account for main header height
-      const progressHeight = 80; // Account for progress card height (reduced)
+      const progressHeight = 60; // Account for progress card height (compact)
       const elementTop = sectionElement.getBoundingClientRect().top + window.scrollY;
-      const scrollPosition = elementTop - headerHeight - progressHeight - 16; // Reduced padding
+      const scrollPosition = elementTop - headerHeight - progressHeight - 12; // Minimal padding
       
       window.scrollTo({
         top: scrollPosition,
@@ -32,17 +32,17 @@ export const BookingWizardProgress = ({
   };
 
   return (
-    <div className="sticky top-20 z-40 mb-4 sm:top-16 sm:mb-6">
+    <div className="sticky top-16 z-40 mb-3 sm:top-20 sm:mb-4">
       <Card className="w-full bg-white/95 backdrop-blur-sm border shadow-sm">
-        <div className="p-2 sm:p-3">
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xs sm:text-sm font-semibold">Progress</h2>
+        <div className="p-1.5 sm:p-2">
+          <div className="flex items-center justify-between mb-1.5">
+            <h2 className="text-xs font-semibold">Progress</h2>
             <span className="text-xs text-muted-foreground">
               {completedSections.size}/{sections.length}
             </span>
           </div>
           
-          <Progress value={progressPercentage} className="mb-2 h-1.5 sm:h-2" />
+          <Progress value={progressPercentage} className="mb-1.5 h-1" />
           
           <div className="flex flex-wrap gap-1">
             {sections.map((section, index) => {
@@ -53,7 +53,7 @@ export const BookingWizardProgress = ({
                 <button
                   key={index}
                   onClick={() => scrollToSection(index)}
-                  className={`flex items-center gap-1 text-xs px-2 py-1 rounded-full transition-colors cursor-pointer hover:opacity-80 ${
+                  className={`flex items-center gap-1 text-xs px-1.5 py-0.5 rounded-full transition-colors cursor-pointer hover:opacity-80 ${
                     isCurrent && !isCompleted
                       ? 'bg-blue-100 text-blue-700 hover:bg-blue-200 ring-1 ring-blue-300'
                       : isCompleted
@@ -62,9 +62,9 @@ export const BookingWizardProgress = ({
                   }`}
                 >
                   {isCompleted ? (
-                    <CheckCircle className="h-3 w-3" />
+                    <CheckCircle className="h-2.5 w-2.5" />
                   ) : (
-                    <Circle className="h-3 w-3" />
+                    <Circle className="h-2.5 w-2.5" />
                   )}
                   <span className="hidden sm:inline text-xs">{section}</span>
                   <span className="sm:hidden">{index + 1}</span>
