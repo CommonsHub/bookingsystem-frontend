@@ -21,6 +21,7 @@ interface BookingFormProps {
   defaultValues: FormData;
   onSubmit: (data: FormData, clearDraft?: () => Promise<void>) => Promise<void>;
   onCancel: () => void;
+  skipDraftLoading?: boolean;
 }
 
 export const BookingForm = ({
@@ -29,7 +30,8 @@ export const BookingForm = ({
   rooms,
   defaultValues,
   onSubmit,
-  onCancel
+  onCancel,
+  skipDraftLoading = false
 }: BookingFormProps) => {
   const { user } = useAuth();
   const [submitting, setSubmitting] = useState(false);
@@ -52,7 +54,8 @@ export const BookingForm = ({
     form,
     bookingId,
     rooms,
-    onDraftLoaded: (roomId: string) => setSelectedRoomId(roomId)
+    onDraftLoaded: (roomId: string) => setSelectedRoomId(roomId),
+    skipDraftLoading
   });
 
   const handleSubmit = async (data: FormData) => {

@@ -67,6 +67,7 @@ const NewBookingPage = () => {
       defaultValues={defaultValues}
       onSubmit={onSubmit}
       onCancel={handleCancel}
+      skipDraftLoading={!!copyFromId}
     />
   );
 };

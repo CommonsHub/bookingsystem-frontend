@@ -12,21 +12,27 @@ interface UseFormDraftManagerProps {
   bookingId?: string;
   rooms: Room[];
   onDraftLoaded?: (roomId: string) => void;
+  skipDraftLoading?: boolean;
 }
 
 export const useFormDraftManager = ({ 
   form, 
   bookingId, 
   rooms,
-  onDraftLoaded 
+  onDraftLoaded,
+  skipDraftLoading = false
 }: UseFormDraftManagerProps) => {
   const { t } = useTranslation();
   const { saveDraft, loadDraft, clearDraft, resetClearedFlag, isLoading, isDraftCleared } = useDraftBooking(bookingId);
   const [draftLoaded, setDraftLoaded] = useState(false);
   const [autoSaveTimerId, setAutoSaveTimerId] = useState<NodeJS.Timeout | null>(null);
 
-  // Load saved draft on initial render
+  // Load saved draft on initial render (only if not skipping draft loading)
   useEffect(() => {
+    if (skipDraftLoading) {
+      return;
+    }
+
     const fetchDraft = async () => {
       try {
         const draftData = await loadDraft();
@@ -44,12 +50,12 @@ export const useFormDraftManager = ({
     };
 
     fetchDraft();
-  }, [form, loadDraft, draftLoaded, t, onDraftLoaded]);
+  }, [form, loadDraft, draftLoaded, t, onDraftLoaded, skipDraftLoading]);
 
-  // Auto-save form values when they change
+  // Auto-save form values when they change (only if not skipping draft loading)
   useEffect(() => {
-    // Don't auto-save if draft was cleared
-    if (isDraftCleared) return;
+    // Don't auto-save if draft was cleared or if we're skipping draft loading
+    if (isDraftCleared || skipDraftLoading) return;
 
     // Watch for form changes
     const subscription = form.watch((formValues) => {
@@ -76,7 +82,7 @@ export const useFormDraftManager = ({
 
     // Cleanup subscription
     return () => subscription.unsubscribe();
-  }, [form, saveDraft, isDraftCleared, autoSaveTimerId, rooms]);
+  }, [form, saveDraft, isDraftCleared, autoSaveTimerId, rooms, skipDraftLoading]);
 
   const handleClearDraft = async (resetValues: FormData) => {
     // Clear the draft data
@@ -98,7 +104,7 @@ export const useFormDraftManager = ({
   return {
     isLoading,
     isDraftCleared,
-    draftLoaded,
+    draftLoaded: skipDraftLoading ? false : draftLoaded,
     handleClearDraft,
     handleStartNewDraft,
     clearDraft
