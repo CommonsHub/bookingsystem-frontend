@@ -1,18 +1,11 @@
-# Welcome to your Lovable project
+# Booking System for the Commons
 
-## Project info
+## Contributing
 
-**URL**: https://lovable.dev/projects/c2ee2edd-0504-44d7-85c3-c1ca867262a8
-
-## How can I edit this code?
-
-There are several ways of editing your application.
+There are several ways.
 
 **Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/c2ee2edd-0504-44d7-85c3-c1ca867262a8) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
+Request to become a member of supabase, remix the existing Lovable projects, e.g. [First Start](https://lovable.dev/projects/c2ee2edd-0504-44d7-85c3-c1ca867262a8) and start prompting. Then send pull requests from your lovable project to this repo.
 
 **Use your preferred IDE**
 
@@ -24,10 +17,10 @@ Follow these steps:
 
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+git clone git@github.com:CommonsHub/bookingsystem-frontend.git
 
 # Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+cd bookingsystem-frontend
 
 # Step 3: Install the necessary dependencies.
 npm i
@@ -64,14 +57,13 @@ This project is built with:
 
 Please refer to `.env.example` for a complete list of environment variables used in this project.
 
-
 ### Development Setup
 
 For local development, create a `.env.development` file with:
 
 ```sh
 # Development authentication redirect URL (localhost)
-VITE_EMAIL_REDIRECT_URL=http://localhost:8080/auth/callback
+VITE_DEPLOY_URL=http://localhost:8080
 ```
 
 The development server runs on port 8080 by default.
@@ -82,19 +74,11 @@ For production, use `.env` with your production URL:
 
 ```sh
 # Production authentication redirect URL
-VITE_EMAIL_REDIRECT_URL=https://your-domain.com/auth/callback
+VITE_DEPLOY_URL=https://booking.commonshub.brussels
 ```
 
 You can copy `.env.example` as a template for either environment.
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/c2ee2edd-0504-44d7-85c3-c1ca867262a8) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+The project is hosted on netlify. Everyone can host a clone of this repo.
