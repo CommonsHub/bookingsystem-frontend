@@ -1,0 +1,52 @@
+
+{
+  "app": {
+    "title": "Commons Hub Brussel Boekingen"
+  },
+  "auth": {
+    "login": "Inloggen",
+    "logout": "Uitloggen"
+  },
+  "bookings": {
+    "title": "Zaalreserveringen",
+    "subtitle": "Bekijk alle zaalreserveringsaanvragen en hun status",
+    "new": "Nieuwe boeking",
+    "upcoming": "Geen aankomende boekingsaanvragen",
+    "none": "Er zijn nog geen boekingen in het systeem.",
+    "noneUpcoming": "Er zijn geen aankomende boekingen. U kunt er een maken of eerdere boekingen bekijken.",
+    "create": "Nieuwe boekingsaanvraag",
+    "viewAll": "Alle boekingen bekijken",
+    "showUpcoming": "Alleen aankomende tonen",
+    "showAll": "Alle boekingen tonen",
+    "tableView": "Tabel",
+    "cardView": "Kaarten",
+    "caption": "Een lijst van zaalreserveringsaanvragen.",
+    "captionUpcoming": "Een lijst van aankomende zaalreserveringsaanvragen."
+  },
+  "booking": {
+    "room": "Zaal",
+    "date": "Datum",
+    "attendees": "Deelnemers",
+    "status": "Status",
+    "createdBy": "Gemaakt door",
+    "comments": "Opmerkingen",
+    "actions": "Acties"
+  },
+  "status": {
+    "draft": "Concept",
+    "pending": "In behandeling",
+    "approved": "Goedgekeurd",
+    "rejected": "Afgewezen",
+    "cancelled": "Geannuleerd"
+  },
+  "nav": {
+    "profile": "Profiel"
+  },
+  "greeting": "Hallo {{name}}!",
+  "footer": {
+    "copyright": "Commons Hub Brussel. Alle rechten voorbehouden."
+  },
+  "language": {
+    "select": "Selecteer taal"
+  }
+}

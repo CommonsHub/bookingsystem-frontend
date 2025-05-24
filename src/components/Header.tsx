@@ -9,9 +9,12 @@ import {
 import { useAuth } from "@/context/AuthContext";
 import { CalendarDays, PlusCircle, UserIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const Header = () => {
   const { user, signOut, getDisplayName } = useAuth();
+  const { t } = useTranslation();
 
   return (
     <header className="w-full border-b bg-card">
@@ -19,16 +22,19 @@ const Header = () => {
         <Link to="/" className="flex items-center space-x-2">
           <CalendarDays className="h-6 w-6 text-brand-600" />
           <span className="font-semibold text-xl">
-            Commons Hub Brussels Bookings
+            {t('app.title')}
           </span>
         </Link>
         <div className="flex items-center space-x-2">
+          <LanguageSwitcher />
+          
           <Button asChild variant="default">
             <Link to="/bookings/new" className="flex items-center space-x-2">
               <PlusCircle className="h-4 w-4" />
-              <span className="hidden md:block">New Booking</span>
+              <span className="hidden md:block">{t('bookings.new')}</span>
             </Link>
           </Button>
+          
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -38,16 +44,16 @@ const Header = () => {
                 >
                   <UserIcon className="h-4 w-4" />
                   <span className="hidden md:block">
-                    Hi {getDisplayName()}!
+                    {t('greeting', { name: getDisplayName() })}
                   </span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem asChild>
-                  <Link to="/profile">Profile</Link>
+                  <Link to="/profile">{t('nav.profile')}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => signOut()}>
-                  Logout
+                  {t('auth.logout')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -55,7 +61,7 @@ const Header = () => {
             <Button asChild variant="outline">
               <Link to="/login" className="flex items-center space-x-2">
                 <UserIcon className="h-4 w-4" />
-                <span className="hidden md:block">Login</span>
+                <span className="hidden md:block">{t('auth.login')}</span>
               </Link>
             </Button>
           )}

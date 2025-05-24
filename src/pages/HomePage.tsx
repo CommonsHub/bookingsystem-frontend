@@ -12,8 +12,10 @@ import { BookingControls } from "@/components/home/BookingControls";
 import { BookingTableView } from "@/components/home/BookingTableView";
 import { BookingCardView } from "@/components/home/BookingCardView";
 import { CancelBookingDialog } from "@/components/home/CancelBookingDialog";
+import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
+  const { t } = useTranslation();
   const { bookings, user, canUserCancelBooking, cancelBookingRequest } = useBooking();
   const isMobile = useIsMobile();
   const [viewMode, setViewMode] = useState<'list' | 'grid'>(isMobile ? 'grid' : 'list');
@@ -44,9 +46,9 @@ const HomePage = () => {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Room Bookings</h1>
+          <h1 className="text-3xl font-bold tracking-tight">{t('bookings.title')}</h1>
           <p className="text-muted-foreground mt-1">
-            View all room booking requests and their status
+            {t('bookings.subtitle')}
           </p>
         </div>
       </div>

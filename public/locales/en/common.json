@@ -1,0 +1,52 @@
+
+{
+  "app": {
+    "title": "Commons Hub Brussels Bookings"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "bookings": {
+    "title": "Room Bookings",
+    "subtitle": "View all room booking requests and their status",
+    "new": "New Booking",
+    "upcoming": "No booking requests upcoming",
+    "none": "There are no bookings in the system yet.",
+    "noneUpcoming": "There are no upcoming bookings. You can create one or view past bookings.",
+    "create": "New Booking Request",
+    "viewAll": "View All Bookings",
+    "showUpcoming": "Show upcoming only",
+    "showAll": "Show all bookings",
+    "tableView": "Table",
+    "cardView": "Cards",
+    "caption": "A list of room booking requests.",
+    "captionUpcoming": "A list of upcoming room booking requests."
+  },
+  "booking": {
+    "room": "Room",
+    "date": "Date",
+    "attendees": "Attendees",
+    "status": "Status",
+    "createdBy": "Created by",
+    "comments": "Comments",
+    "actions": "Actions"
+  },
+  "status": {
+    "draft": "Draft",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "cancelled": "Cancelled"
+  },
+  "nav": {
+    "profile": "Profile"
+  },
+  "greeting": "Hi {{name}}!",
+  "footer": {
+    "copyright": "Commons Hub Brussels. All rights reserved."
+  },
+  "language": {
+    "select": "Select language"
+  }
+}
