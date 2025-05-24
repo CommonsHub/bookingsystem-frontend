@@ -98,7 +98,7 @@ const BookingDetail = () => {
   const canCancelBooking = (booking.status === "pending" || booking.status === "approved") && 
     canUserCancelBooking(booking, user);
     
-  const canEditBooking = canUserCancelBooking(booking, user);
+  const canEditBooking = booking.status !== "cancelled" && canUserCancelBooking(booking, user);
   const canCopyBooking = booking.status === "cancelled";
 
   const handleSubmitComment = async (commentData: {
