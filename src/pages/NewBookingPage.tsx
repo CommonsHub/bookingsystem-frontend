@@ -1,36 +1,21 @@
+
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { AdditionalInfoSection } from "@/components/booking/AdditionalInfoSection";
 import { FormData, formSchema } from "@/components/booking/BookingFormSchema";
-import { BookingInfoSection } from "@/components/booking/BookingInfoSection";
-import { CateringSection } from "@/components/booking/CateringSection";
-import { ContactInfoSection } from "@/components/booking/ContactInfoSection";
-import { DateTimeSection } from "@/components/booking/DateTimeSection";
-import { EventSupportSection } from "@/components/booking/EventSupportSection";
-import { MembershipSection } from "@/components/booking/MembershipSection";
-import { RoomSelectionSection } from "@/components/booking/RoomSelectionSection";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Form,
-} from "@/components/ui/form";
-import { Separator } from "@/components/ui/separator";
+import { BookingFormContent } from "@/components/booking/BookingFormContent";
+import { BookingFormFooter } from "@/components/booking/BookingFormFooter";
+import { BookingFormHeader } from "@/components/booking/BookingFormHeader";
+import { Card } from "@/components/ui/card";
+import { Form } from "@/components/ui/form";
 import { toast } from "@/components/ui/toast-utils";
 import { useAuth } from "@/context/AuthContext";
 import { useBooking } from "@/context/BookingContext";
 import { rooms } from "@/data/rooms";
-import { useDraftBooking } from "@/hooks/useDraftBooking";
+import { useFormDraftManager } from "@/hooks/useFormDraftManager";
 import { Room } from "@/types";
 
 const NewBookingPage = () => {
@@ -40,12 +25,8 @@ const NewBookingPage = () => {
   const [submitting, setSubmitting] = useState(false);
   const { user } = useAuth();
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
-  const { saveDraft, loadDraft, clearDraft, resetClearedFlag, isLoading, isDraftCleared } = useDraftBooking();
-  const [draftLoaded, setDraftLoaded] = useState(false);
-  const [autoSaveTimerId, setAutoSaveTimerId] = useState<NodeJS.Timeout | null>(null);
 
   const defaultEmail = user?.email || "";
-
   const enhancedRooms = rooms;
 
   const form = useForm<FormData>({
@@ -69,58 +50,18 @@ const NewBookingPage = () => {
     },
   });
 
-  // Load saved draft on initial render
-  useEffect(() => {
-    const fetchDraft = async () => {
-      try {
-        const draftData = await loadDraft();
-        if (draftData && !draftLoaded) {
-          form.reset(draftData);
-          if (draftData.roomId) {
-            setSelectedRoomId(draftData.roomId);
-          }
-          setDraftLoaded(true);
-          toast.success(t('messages.draftLoaded'));
-        }
-      } catch (error) {
-        console.error("Error loading draft:", error);
-      }
-    };
-
-    fetchDraft();
-  }, [form, loadDraft, draftLoaded, t]);
-
-  // Auto-save form values when they change
-  useEffect(() => {
-    // Don't auto-save if draft was cleared
-    if (isDraftCleared) return;
-
-    // Watch for form changes
-    const subscription = form.watch((formValues) => {
-      // Debounce the auto-save to prevent too many saves
-      if (autoSaveTimerId) {
-        clearTimeout(autoSaveTimerId);
-      }
-
-      // Only save if there are actual values and draft wasn't cleared
-      if ((formValues.title || formValues.description || formValues.roomId) && !isDraftCleared) {
-        const timerId = setTimeout(() => {
-          // Add timestamp to detect which version is newer
-          const dataToSave = {
-            ...formValues,
-            updatedAt: new Date().toISOString(),
-            selectedRoom: enhancedRooms.find(r => r.id === formValues.roomId)
-          };
-          saveDraft(dataToSave);
-        }, 2000); // Save after 2 seconds of inactivity
-
-        setAutoSaveTimerId(timerId);
-      }
-    });
-
-    // Cleanup subscription
-    return () => subscription.unsubscribe();
-  }, [form, saveDraft, isDraftCleared, autoSaveTimerId, enhancedRooms]);
+  const {
+    isLoading,
+    isDraftCleared,
+    draftLoaded,
+    handleClearDraft,
+    handleStartNewDraft,
+    clearDraft
+  } = useFormDraftManager({
+    form,
+    rooms: enhancedRooms,
+    onDraftLoaded: setSelectedRoomId
+  });
 
   const onSubmit = async (data: FormData) => {
     setSubmitting(true);
@@ -150,7 +91,6 @@ const NewBookingPage = () => {
         requiresAdditionalSpace: data.requiresAdditionalSpace,
         additionalComments: data.additionalComments,
         isPublicEvent: data.isPublicEvent,
-        // Add new fields
         organizer: data.organizer,
         estimatedAttendees: data.estimatedAttendees
       });
@@ -158,10 +98,7 @@ const NewBookingPage = () => {
       // Clear the draft data after successful submission
       await clearDraft();
 
-      // Updated message to remove reference to email verification
-      toast.success(
-        t('messages.bookingSubmitted')
-      );
+      toast.success(t('messages.bookingSubmitted'));
       navigate(`/bookings/${bookingId}`);
     } catch (error) {
       toast.error(t('messages.bookingError'));
@@ -171,12 +108,8 @@ const NewBookingPage = () => {
     }
   };
 
-  const handleClearDraft = async () => {
-    // Clear the draft data
-    await clearDraft();
-
-    // Reset form to default values
-    form.reset({
+  const handleClearDraftWrapper = () => {
+    const resetValues: FormData = {
       title: "",
       description: "",
       roomId: "",
@@ -192,97 +125,37 @@ const NewBookingPage = () => {
       isPublicEvent: false,
       membershipStatus: "",
       additionalComments: "",
-    });
+    };
 
-    // Reset UI state
+    handleClearDraft(resetValues);
     setSelectedRoomId(null);
-    setDraftLoaded(false);
-
-    toast.success(t('messages.draftCleared'));
-  };
-
-  const handleStartNewDraft = () => {
-    resetClearedFlag();
   };
 
   return (
     <div className="max-w-2xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">
-          {t('bookings.newTitle')}
-        </h1>
-        <p className="text-muted-foreground mt-1">
-          {t('bookings.newDescription')}
-          {isLoading && ` (${t('messages.savingDraft')})`}
-          {!isLoading && draftLoaded && ` (${t('messages.draftLoaded')})`}
-        </p>
-      </div>
-
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Card>
-            <CardHeader>
-              <CardTitle>{t('bookings.roomBookingDetails')}</CardTitle>
-              <CardDescription>
-                {t('bookings.enterDetails')}
-              </CardDescription>
-            </CardHeader>
+            <BookingFormHeader 
+              isEdit={false}
+              isLoading={isLoading}
+              draftLoaded={draftLoaded}
+            />
 
-            <CardContent className="space-y-6">
-              <BookingInfoSection control={form.control} />
+            <BookingFormContent
+              control={form.control}
+              rooms={enhancedRooms}
+              selectedRoomId={selectedRoomId}
+              setSelectedRoomId={setSelectedRoomId}
+            />
 
-              <Separator />
-
-              <DateTimeSection control={form.control} />
-
-              <Separator />
-
-              <RoomSelectionSection
-                control={form.control}
-                rooms={enhancedRooms}
-                selectedRoomId={selectedRoomId}
-                setSelectedRoomId={setSelectedRoomId}
-              />
-
-              <Separator />
-
-              <CateringSection control={form.control} />
-
-              <Separator />
-
-              <EventSupportSection control={form.control} />
-
-              <Separator />
-
-              <ContactInfoSection control={form.control} />
-              <MembershipSection control={form.control} />
-
-              <Separator />
-              <AdditionalInfoSection control={form.control} />
-
-            </CardContent>
-
-            <CardFooter className="flex justify-between">
-              <div className="flex gap-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => navigate("/")}
-                >
-                  {t('buttons.cancel')}
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={handleClearDraft}
-                >
-                  {t('buttons.clearDraft')}
-                </Button>
-              </div>
-              <Button type="submit" disabled={submitting} onClick={handleStartNewDraft}>
-                {submitting ? t('buttons.submitting') : t('buttons.submit')}
-              </Button>
-            </CardFooter>
+            <BookingFormFooter
+              isEdit={false}
+              submitting={submitting}
+              onCancel={() => navigate("/")}
+              onClearDraft={handleClearDraftWrapper}
+              onStartNewDraft={handleStartNewDraft}
+            />
           </Card>
         </form>
       </Form>

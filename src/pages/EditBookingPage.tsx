@@ -14,7 +14,6 @@ import { DateTimeSection } from "@/components/booking/DateTimeSection";
 import { EventSupportSection } from "@/components/booking/EventSupportSection";
 import { MembershipSection } from "@/components/booking/MembershipSection";
 import { RoomSelectionSection } from "@/components/booking/RoomSelectionSection";
-import { UrlFieldsSection } from "@/components/booking/UrlFieldsSection";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -36,129 +35,127 @@ import { Room } from "@/types";
 const EditBookingPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
-  const { getBookingById, updateBooking, user } = useBooking();
+  const { bookingId } = useParams<{ bookingId: string }>();
+  const { bookings, updateBooking } = useBooking();
   const [submitting, setSubmitting] = useState(false);
-  const { user: authUser } = useAuth();
-  const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [autoSaveTimerId, setAutoSaveTimerId] = useState<NodeJS.Timeout | null>(null);
+  const { user } = useAuth();
+  const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
   
-  // Initialize draft functionality for editing
-  const { saveDraft, loadDraft, clearDraft, isLoading: isDraftLoading, isDraftCleared } = useDraftBooking(id);
+  // Use draft booking hook for edit mode
+  const { saveDraft, loadDraft, clearDraft, resetClearedFlag, isLoading, isDraftCleared } = useDraftBooking(bookingId);
+  const [draftLoaded, setDraftLoaded] = useState(false);
+  const [autoSaveTimerId, setAutoSaveTimerId] = useState<NodeJS.Timeout | null>(null);
 
-  // Get the booking data
-  const booking = id ? getBookingById(id) : undefined;
+  const defaultEmail = user?.email || "";
 
-  // Setup form with zodResolver
+  const enhancedRooms = rooms;
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
       description: "",
-      roomId: "",
+      roomId: selectedRoomId || "",
       setupOption: "",
       requiresAdditionalSpace: false,
       startDate: undefined,
       endDate: undefined,
-      email: authUser?.email || "",
-      name: authUser?.name || "",
+      email: defaultEmail,
+      name: "",
       cateringOptions: [],
       cateringComments: "",
       eventSupportOptions: [],
       membershipStatus: "",
       additionalComments: "",
       isPublicEvent: false,
-      lumaEventUrl: "",
-      calendarUrl: "",
-      publicUri: "",
-      roomNotes: "",
     },
   });
 
-  // Load booking data into form
-  useEffect(() => {
-    if (booking) {
-      // Find the room in our rooms data
-      const selectedRoom = rooms.find(room => room.id === booking.room.id);
-      
-      if (selectedRoom) {
-        setSelectedRoomId(selectedRoom.id);
-      }
-      
-      // Convert string dates to Date objects
-      const startDate = new Date(booking.startTime);
-      const endDate = new Date(booking.endTime);
-      
-      const bookingFormData = {
-        title: booking.title,
-        description: booking.description,
-        roomId: booking.room.id,
-        setupOption: booking.selectedSetup || "",
-        requiresAdditionalSpace: booking.requiresAdditionalSpace || false,
-        startDate: startDate,
-        endDate: endDate,
-        email: booking.createdBy.email,
-        name: booking.createdBy.name || "",
-        additionalComments: booking.additionalComments || "",
-        isPublicEvent: booking.isPublicEvent || false,
-        organizer: booking.organizer || "",
-        estimatedAttendees: booking.estimatedAttendees,
-        // We're not handling these fields as they might not be stored
-        cateringOptions: [],
-        cateringComments: "",
-        eventSupportOptions: [],
-        membershipStatus: "",
-        // New URL fields
-        lumaEventUrl: booking.lumaEventUrl || "",
-        calendarUrl: booking.calendarUrl || "",
-        publicUri: booking.publicUri || "",
-        // New room notes field
-        roomNotes: booking.roomNotes || "",
-      };
+  // Find the booking to edit
+  const booking = bookings.find((b) => b.id === bookingId);
 
-      // Check if there's a draft with more recent changes
-      loadDraft().then(draftData => {
-        if (draftData && draftData.updatedAt) {
-          const draftTime = new Date(draftData.updatedAt);
-          const bookingTime = new Date(booking.updatedAt || booking.createdAt);
-          
-          // If draft is newer, use draft data and notify user
-          if (draftTime > bookingTime) {
-            form.reset(draftData);
-            if (draftData.roomId) {
-              setSelectedRoomId(draftData.roomId);
-            }
-            toast.success(t('messages.draftLoaded'));
-          } else {
-            // Use original booking data
-            form.reset(bookingFormData);
-          }
-        } else {
-          // No draft, use original booking data
-          form.reset(bookingFormData);
-        }
-        setLoading(false);
-      });
+  useEffect(() => {
+    if (!bookingId) {
+      toast.error(t('messages.bookingIdMissing'));
+      navigate("/");
+      return;
     }
-  }, [booking, form, loadDraft, t]);
 
-  // Auto-save form changes as draft
+    if (!booking) {
+      toast.error(t('messages.bookingNotFound'));
+      navigate("/");
+      return;
+    }
+
+    // Load existing booking data or draft
+    const loadBookingData = async () => {
+      try {
+        // First try to load any saved draft
+        const draftData = await loadDraft();
+        
+        if (draftData && !draftLoaded) {
+          // Use draft data if available
+          form.reset(draftData);
+          if (draftData.roomId) {
+            setSelectedRoomId(draftData.roomId);
+          }
+          setDraftLoaded(true);
+          toast.success(t('messages.draftLoaded'));
+        } else {
+          // Use existing booking data
+          const formData: FormData = {
+            title: booking.title,
+            description: booking.description,
+            roomId: booking.room.id,
+            setupOption: booking.selectedSetup || "",
+            requiresAdditionalSpace: booking.requiresAdditionalSpace || false,
+            startDate: new Date(booking.startTime),
+            endDate: new Date(booking.endTime),
+            email: booking.createdBy.email,
+            name: booking.createdBy.name,
+            cateringOptions: [],
+            cateringComments: "",
+            eventSupportOptions: [],
+            membershipStatus: "",
+            additionalComments: booking.additionalComments || "",
+            isPublicEvent: booking.isPublicEvent || false,
+            organizer: booking.organizer,
+            estimatedAttendees: booking.estimatedAttendees,
+          };
+
+          form.reset(formData);
+          setSelectedRoomId(booking.room.id);
+        }
+      } catch (error) {
+        console.error("Error loading booking data:", error);
+        toast.error("Error loading booking data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadBookingData();
+  }, [bookingId, booking, form, loadDraft, draftLoaded, navigate, t]);
+
+  // Auto-save form values when they change
   useEffect(() => {
-    if (loading || isDraftCleared) return;
+    // Don't auto-save if draft was cleared or still loading
+    if (isDraftCleared || loading) return;
 
+    // Watch for form changes
     const subscription = form.watch((formValues) => {
-      // Debounce the auto-save
+      // Debounce the auto-save to prevent too many saves
       if (autoSaveTimerId) {
         clearTimeout(autoSaveTimerId);
       }
 
-      // Only save if there are actual values and form is not loading
-      if (!loading && (formValues.title || formValues.description)) {
+      // Only save if there are actual values and draft wasn't cleared
+      if ((formValues.title || formValues.description || formValues.roomId) && !isDraftCleared) {
         const timerId = setTimeout(() => {
           const dataToSave = {
             ...formValues,
-            updatedAt: new Date().toISOString(),
+            selectedRoom: enhancedRooms.find(r => r.id === formValues.roomId)
           };
           saveDraft(dataToSave);
         }, 2000); // Save after 2 seconds of inactivity
@@ -167,24 +164,25 @@ const EditBookingPage = () => {
       }
     });
 
+    // Cleanup subscription
     return () => subscription.unsubscribe();
-  }, [form, saveDraft, loading, isDraftCleared, autoSaveTimerId]);
+  }, [form, saveDraft, isDraftCleared, autoSaveTimerId, enhancedRooms, loading]);
 
   const onSubmit = async (data: FormData) => {
-    if (!id) return;
-    
+    if (!booking) return;
+
     setSubmitting(true);
     try {
       // Find the selected room
-      const selectedRoom = rooms.find(
+      const selectedRoom = enhancedRooms.find(
         (room) => room.id === data.roomId,
       ) as Room;
 
       const startDate = new Date(data.startDate);
       const endDate = new Date(data.endDate);
 
-      // Update booking
-      await updateBooking(id, {
+      // Update booking with correct type structure
+      await updateBooking(booking.id, {
         title: data.title,
         description: data.description,
         room: selectedRoom,
@@ -195,18 +193,14 @@ const EditBookingPage = () => {
         additionalComments: data.additionalComments,
         isPublicEvent: data.isPublicEvent,
         organizer: data.organizer,
-        estimatedAttendees: data.estimatedAttendees,
-        lumaEventUrl: data.lumaEventUrl,
-        calendarUrl: data.calendarUrl, 
-        publicUri: data.publicUri,
-        roomNotes: data.roomNotes,
+        estimatedAttendees: data.estimatedAttendees
       });
 
-      // Clear draft after successful update
+      // Clear the draft data after successful submission
       await clearDraft();
 
       toast.success(t('messages.bookingUpdated'));
-      navigate(`/bookings/${id}`);
+      navigate(`/bookings/${booking.id}`);
     } catch (error) {
       toast.error(t('messages.bookingUpdateError'));
       console.error(error);
@@ -215,23 +209,74 @@ const EditBookingPage = () => {
     }
   };
 
+  const handleClearDraft = async () => {
+    if (!booking) return;
+
+    // Clear the draft data
+    await clearDraft();
+
+    // Reset form to original booking data
+    const formData: FormData = {
+      title: booking.title,
+      description: booking.description,
+      roomId: booking.room.id,
+      setupOption: booking.selectedSetup || "",
+      requiresAdditionalSpace: booking.requiresAdditionalSpace || false,
+      startDate: new Date(booking.startTime),
+      endDate: new Date(booking.endTime),
+      email: booking.createdBy.email,
+      name: booking.createdBy.name,
+      cateringOptions: [],
+      cateringComments: "",
+      eventSupportOptions: [],
+      membershipStatus: "",
+      additionalComments: booking.additionalComments || "",
+      isPublicEvent: booking.isPublicEvent || false,
+      organizer: booking.organizer,
+      estimatedAttendees: booking.estimatedAttendees,
+    };
+
+    form.reset(formData);
+    setSelectedRoomId(booking.room.id);
+    setDraftLoaded(false);
+
+    toast.success(t('messages.draftCleared'));
+  };
+
+  const handleStartNewDraft = () => {
+    resetClearedFlag();
+  };
+
   if (loading) {
-    return <div>{t('messages.loadingBooking')}</div>;
+    return (
+      <div className="max-w-2xl mx-auto">
+        <div className="text-center py-8">
+          <p>{t('messages.loadingBooking')}</p>
+        </div>
+      </div>
+    );
   }
 
   if (!booking) {
-    return <div>{t('messages.bookingNotFound')}</div>;
+    return (
+      <div className="max-w-2xl mx-auto">
+        <div className="text-center py-8">
+          <p>{t('messages.bookingNotFound')}</p>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">
-          {t('bookings.edit')}
+          {t('bookings.editTitle')}
         </h1>
         <p className="text-muted-foreground mt-1">
           {t('bookings.editDescription')}
-          {isDraftLoading && ` (${t('messages.savingDraft')})`}
+          {isLoading && ` (${t('messages.savingDraft')})`}
+          {!isLoading && draftLoaded && ` (${t('messages.draftLoaded')})`}
         </p>
       </div>
 
@@ -239,9 +284,9 @@ const EditBookingPage = () => {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Card>
             <CardHeader>
-              <CardTitle>{t('bookings.editTitle')}</CardTitle>
+              <CardTitle>{t('bookings.roomBookingDetails')}</CardTitle>
               <CardDescription>
-                {t('bookings.editDescription')}
+                {t('bookings.enterDetails')}
               </CardDescription>
             </CardHeader>
 
@@ -256,33 +301,47 @@ const EditBookingPage = () => {
 
               <RoomSelectionSection
                 control={form.control}
-                rooms={rooms}
+                rooms={enhancedRooms}
                 selectedRoomId={selectedRoomId}
                 setSelectedRoomId={setSelectedRoomId}
               />
 
               <Separator />
 
-              <UrlFieldsSection control={form.control} />
+              <CateringSection control={form.control} />
+
+              <Separator />
+
+              <EventSupportSection control={form.control} />
 
               <Separator />
 
               <ContactInfoSection control={form.control} />
+              <MembershipSection control={form.control} />
 
               <Separator />
-
               <AdditionalInfoSection control={form.control} />
+
             </CardContent>
 
             <CardFooter className="flex justify-between">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => navigate(`/bookings/${id}`)}
-              >
-                {t('buttons.cancel')}
-              </Button>
-              <Button type="submit" disabled={submitting}>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => navigate(`/bookings/${booking.id}`)}
+                >
+                  {t('buttons.cancel')}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleClearDraft}
+                >
+                  {t('buttons.clearDraft')}
+                </Button>
+              </div>
+              <Button type="submit" disabled={submitting} onClick={handleStartNewDraft}>
                 {submitting ? t('buttons.updating') : t('buttons.update')}
               </Button>
             </CardFooter>
