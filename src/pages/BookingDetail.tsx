@@ -10,7 +10,7 @@ import { RoomInfoCard } from "@/components/booking/RoomInfoCard";
 import { CommentSection } from "@/components/booking/CommentSection";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Edit } from "lucide-react";
+import { Edit, Copy } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import "../styles/BookingDetail.css";
 
@@ -100,6 +100,7 @@ const BookingDetail = () => {
     canUserCancelBooking(booking, user);
     
   const canEditBooking = canUserCancelBooking(booking, user);
+  const canCopyBooking = booking.status === "cancelled";
 
   const handleSubmitComment = async (commentData: {
     content: string;
@@ -136,17 +137,30 @@ const BookingDetail = () => {
     navigate(`/bookings/${id}/edit`);
   };
 
+  const handleCopyBooking = () => {
+    navigate(`/bookings/${id}/copy`);
+  };
+
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <BookingHeader booking={booking} />
         
-        {canEditBooking && (
-          <Button onClick={handleEditBooking} className="gap-2">
-            <Edit className="h-4 w-4" />
-            {t('buttons.editBooking')}
-          </Button>
-        )}
+        <div className="flex gap-2">
+          {canEditBooking && (
+            <Button onClick={handleEditBooking} className="gap-2">
+              <Edit className="h-4 w-4" />
+              {t('buttons.editBooking')}
+            </Button>
+          )}
+          
+          {canCopyBooking && (
+            <Button onClick={handleCopyBooking} variant="outline" className="gap-2">
+              <Copy className="h-4 w-4" />
+              Copy Booking
+            </Button>
+          )}
+        </div>
       </div>
       
       <div className="booking-detail-grid">

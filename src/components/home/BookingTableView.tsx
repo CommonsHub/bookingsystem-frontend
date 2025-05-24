@@ -2,7 +2,7 @@
 import { Booking, User } from "@/types";
 import { formatDateTime } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import { MessageSquare, Trash2, Users, Hash } from "lucide-react";
+import { MessageSquare, Trash2, Users, Hash, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "./StatusBadge";
 import { useTranslation } from "react-i18next";
@@ -35,6 +35,11 @@ export const BookingTableView = ({
   
   const stopPropagation = (e: React.MouseEvent) => {
     e.stopPropagation();
+  };
+
+  const handleCopyBooking = (e: React.MouseEvent, bookingId: string) => {
+    e.stopPropagation();
+    window.location.href = `/bookings/${bookingId}/copy`;
   };
 
   return (
@@ -86,21 +91,35 @@ export const BookingTableView = ({
                 </div>
               </TableCell>
               <TableCell onClick={stopPropagation}>
-                {(booking.status === "pending" || booking.status === "approved") && 
-                  canUserCancelBooking(booking, user) && (
+                <div className="flex items-center gap-1">
+                  {(booking.status === "pending" || booking.status === "approved") && 
+                    canUserCancelBooking(booking, user) && (
+                      <Button 
+                        variant="ghost" 
+                        size="icon"
+                        className="h-8 w-8 text-destructive" 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onCancelBooking(booking.id);
+                        }}
+                        title="Cancel booking"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                  )}
+                  
+                  {booking.status === "cancelled" && (
                     <Button 
                       variant="ghost" 
                       size="icon"
-                      className="h-8 w-8 text-destructive" 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onCancelBooking(booking.id);
-                      }}
-                      title="Cancel booking"
+                      className="h-8 w-8 text-blue-600" 
+                      onClick={(e) => handleCopyBooking(e, booking.id)}
+                      title="Copy booking"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Copy className="h-4 w-4" />
                     </Button>
-                )}
+                  )}
+                </div>
               </TableCell>
             </TableRow>
           ))}
