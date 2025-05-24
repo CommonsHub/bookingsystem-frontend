@@ -39,7 +39,7 @@ export const BookingTableView = ({
 
   const handleCopyBooking = (e: React.MouseEvent, bookingId: string) => {
     e.stopPropagation();
-    window.location.href = `/bookings/${bookingId}/copy`;
+    window.location.href = `/bookings/new?copy=${bookingId}`;
   };
 
   return (

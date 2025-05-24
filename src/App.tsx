@@ -14,7 +14,6 @@ import LoginPage from "./pages/LoginPage";
 import NotFound from "./pages/NotFound";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import EditBookingPage from "./pages/EditBookingPage";
-import CopyBookingPage from "./pages/CopyBookingPage";
 
 const App: React.FC = () => {
   return (
@@ -28,7 +27,6 @@ const App: React.FC = () => {
                 <Route path="/bookings/new" element={<NewBookingPage />} />
                 <Route path="/bookings/:id" element={<BookingDetail />} />
                 <Route path="/bookings/:id/edit" element={<EditBookingPage />} />
-                <Route path="/bookings/:id/copy" element={<CopyBookingPage />} />
                 <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
                 <Route path="/auth/callback" element={<AuthCallback />} />
                 <Route path="/login" element={<LoginPage />} />

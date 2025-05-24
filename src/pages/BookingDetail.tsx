@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useBooking } from "@/context/BookingContext";
@@ -138,7 +137,7 @@ const BookingDetail = () => {
   };
 
   const handleCopyBooking = () => {
-    navigate(`/bookings/${id}/copy`);
+    navigate(`/bookings/new?copy=${id}`);
   };
 
   return (
