@@ -1,4 +1,3 @@
-
 export interface Room {
   id: string;
   name: string;
@@ -43,9 +42,14 @@ export interface Booking {
   isPublicEvent?: boolean;
   cancelledAt?: string;
   cancelledBy?: User;
-  // New fields
   organizer?: string;
   estimatedAttendees?: number;
+  // New URL fields
+  lumaEventUrl?: string;
+  calendarUrl?: string;
+  publicUri?: string;
+  // New room notes field
+  roomNotes?: string;
 }
 
 export interface Comment {
@@ -114,7 +118,10 @@ export interface BookingDatabaseFields {
   is_public_event?: boolean;
   cancelled_at?: string;
   cancelled_by_email?: string;
-  // New fields
   organizer?: string;
   estimated_attendees?: number;
+  // New URL fields
+  luma_event_url?: string;
+  calendar_url?: string;
+  public_uri?: string;
 }

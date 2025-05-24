@@ -1,0 +1,52 @@
+
+{
+  "app": {
+    "title": "Réservations Commons Hub Bruxelles"
+  },
+  "auth": {
+    "login": "Connexion",
+    "logout": "Déconnexion"
+  },
+  "bookings": {
+    "title": "Réservations de salles",
+    "subtitle": "Consultez toutes les demandes de réservation de salles et leur statut",
+    "new": "Nouvelle réservation",
+    "upcoming": "Aucune demande de réservation à venir",
+    "none": "Il n'y a pas encore de réservations dans le système.",
+    "noneUpcoming": "Il n'y a pas de réservations à venir. Vous pouvez en créer une ou consulter les réservations passées.",
+    "create": "Nouvelle demande de réservation",
+    "viewAll": "Voir toutes les réservations",
+    "showUpcoming": "Afficher uniquement les réservations à venir",
+    "showAll": "Afficher toutes les réservations",
+    "tableView": "Tableau",
+    "cardView": "Cartes",
+    "caption": "Une liste des demandes de réservation de salles.",
+    "captionUpcoming": "Une liste des demandes de réservation de salles à venir."
+  },
+  "booking": {
+    "room": "Salle",
+    "date": "Date",
+    "attendees": "Participants",
+    "status": "Statut",
+    "createdBy": "Créé par",
+    "comments": "Commentaires",
+    "actions": "Actions"
+  },
+  "status": {
+    "draft": "Brouillon",
+    "pending": "En attente",
+    "approved": "Approuvé",
+    "rejected": "Rejeté",
+    "cancelled": "Annulé"
+  },
+  "nav": {
+    "profile": "Profil"
+  },
+  "greeting": "Bonjour {{name}} !",
+  "footer": {
+    "copyright": "Commons Hub Bruxelles. Tous droits réservés."
+  },
+  "language": {
+    "select": "Sélectionner la langue"
+  }
+}

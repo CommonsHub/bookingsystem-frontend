@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Booking } from "@/types";
-import { CalendarDays, Clock, MapPin, Users, User, Hash } from "lucide-react";
+import { CalendarDays, Clock, MapPin, Users, User, Hash, Link } from "lucide-react";
 import { formatDate, formatTime } from "@/lib/utils";
 
 interface BookingDetailsCardProps {
@@ -81,6 +81,50 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
               <div>
                 <h4 className="font-medium">Estimated Attendees</h4>
                 <p className="text-muted-foreground">{booking.estimatedAttendees} people</p>
+              </div>
+            </div>
+          )}
+          
+          {booking.lumaEventUrl && (
+            <div className="flex items-start gap-2">
+              <Link className="h-5 w-5 text-muted-foreground mt-0.5" />
+              <div>
+                <h4 className="font-medium">Luma Event</h4>
+                <a 
+                  href={booking.lumaEventUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline"
+                >
+                  Open event page
+                </a>
+              </div>
+            </div>
+          )}
+          
+          {booking.calendarUrl && (
+            <div className="flex items-start gap-2">
+              <CalendarDays className="h-5 w-5 text-muted-foreground mt-0.5" />
+              <div>
+                <h4 className="font-medium">Calendar Event</h4>
+                <a 
+                  href={booking.calendarUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline"
+                >
+                  Open calendar event
+                </a>
+              </div>
+            </div>
+          )}
+          
+          {booking.publicUri && (
+            <div className="flex items-start gap-2">
+              <Link className="h-5 w-5 text-muted-foreground mt-0.5" />
+              <div>
+                <h4 className="font-medium">Public URI</h4>
+                <p className="text-muted-foreground">{booking.publicUri}</p>
               </div>
             </div>
           )}

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { MessageSquare, Trash2, Users, Hash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "./StatusBadge";
+import { useTranslation } from "react-i18next";
 import {
   Table,
   TableBody,
@@ -30,6 +31,8 @@ export const BookingTableView = ({
   user,
   onCancelBooking,
 }: BookingTableViewProps) => {
+  const { t } = useTranslation();
+  
   const stopPropagation = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
@@ -37,17 +40,19 @@ export const BookingTableView = ({
   return (
     <div className="rounded-md border overflow-x-auto">
       <Table>
-        <TableCaption>A list of {!showAllBookings && "upcoming"} room booking requests.</TableCaption>
+        <TableCaption>
+          {showAllBookings ? t('bookings.caption') : t('bookings.captionUpcoming')}
+        </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Title</TableHead>
-            <TableHead>Room</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Attendees</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Created by</TableHead>
-            <TableHead>Comments</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead>{t('booking.room')}</TableHead>
+            <TableHead>{t('booking.room')}</TableHead>
+            <TableHead>{t('booking.date')}</TableHead>
+            <TableHead>{t('booking.attendees')}</TableHead>
+            <TableHead>{t('booking.status')}</TableHead>
+            <TableHead>{t('booking.createdBy')}</TableHead>
+            <TableHead>{t('booking.comments')}</TableHead>
+            <TableHead>{t('booking.actions')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

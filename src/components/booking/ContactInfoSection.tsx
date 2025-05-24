@@ -25,6 +25,8 @@ export const ContactInfoSection = ({ control }: ContactInfoSectionProps) => {
                 <Input
                   placeholder="Your name"
                   {...field}
+                  readOnly
+                  className="bg-gray-100"
                 />
               </FormControl>
               <FormMessage />
@@ -42,6 +44,8 @@ export const ContactInfoSection = ({ control }: ContactInfoSectionProps) => {
                 <Input
                   placeholder="Your email address"
                   {...field}
+                  readOnly
+                  className="bg-gray-100"
                 />
               </FormControl>
               <FormMessage />

@@ -2,11 +2,11 @@
 import { FormField, FormItem, FormControl, FormLabel, FormMessage } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 import { Music, Theater, Mic, Users } from "lucide-react";
 import { Control } from "react-hook-form";
 import { z } from "zod";
 import { Room } from "@/types";
-import { useState } from "react";
 import { formSchema } from "./BookingFormSchema";
 
 type FormData = z.infer<typeof formSchema>;
@@ -60,11 +60,74 @@ export const RoomSelectionSection = ({
                             <Users className="h-4 w-4 text-red-500 mr-2" />
                             <span>{room.capacity} people: {room.name}</span>
                           </div>
+                          
+                          {/* Show setup options only for this room if it's selected */}
+                          {selectedRoomId === room.id && room.setupOptions?.length > 0 && (
+                            <div className="mt-4 pl-2">
+                              <h4 className="text-muted-foreground mb-2">Possible setup:</h4>
+                              <FormField
+                                control={control}
+                                name="setupOption"
+                                render={({ field }) => (
+                                  <FormItem className="space-y-3">
+                                    <FormControl>
+                                      <RadioGroup
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                        className="space-y-1"
+                                      >
+                                        {room.setupOptions.map((option) => (
+                                          <FormItem key={option.type} className="flex items-start space-x-3 space-y-0">
+                                            <FormControl>
+                                              <RadioGroupItem value={option.type} />
+                                            </FormControl>
+                                            <div className="flex items-center">
+                                              {option.icon === "music" ?
+                                                <Music className="h-4 w-4 text-amber-600 mr-2" />
+                                                : option.icon === "theater" ?
+                                                  <Theater className="h-4 w-4 text-amber-600 mr-2" />
+                                                  : option.icon === "mic" ?
+                                                    <Mic className="h-4 w-4 text-amber-600 mr-2" />
+                                                    : <Users className="h-4 w-4 text-amber-600 mr-2" />
+                                              }
+
+                                              <span>{option.minCapacity}-{option.maxCapacity}, {option.description}</span>
+                                            </div>
+                                          </FormItem>
+                                        ))}
+                                      </RadioGroup>
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </div>
+                          )}
                         </div>
                       </FormItem>
                     ))}
                   </div>
                 </RadioGroup>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Free-form field for room notes */}
+        <FormField
+          control={control}
+          name="roomNotes"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Additional Room Notes</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Any specific requirements for room setup or features you need"
+                  rows={3}
+                  {...field}
+                  value={field.value || ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -93,48 +156,6 @@ export const RoomSelectionSection = ({
             </FormItem>
           )}
         />
-
-        {selectedRoom?.setupOptions?.length > 0 && (
-          <div className="mt-4 pl-7">
-            <h4 className="text-muted-foreground mb-2">Possible setup:</h4>
-            <FormField
-              control={control}
-              name="setupOption"
-              render={({ field }) => (
-                <FormItem className="space-y-3">
-                  <FormControl>
-                    <RadioGroup
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      className="space-y-1"
-                    >
-                      {selectedRoom.setupOptions.map((option) => (
-                        <FormItem key={option.type} className="flex items-start space-x-3 space-y-0">
-                          <FormControl>
-                            <RadioGroupItem value={option.type} />
-                          </FormControl>
-                          <div className="flex items-center">
-                            {option.icon === "music" ?
-                              <Music className="h-4 w-4 text-amber-600 mr-2" />
-                              : option.icon === "theater" ?
-                                <Theater className="h-4 w-4 text-amber-600 mr-2" />
-                                : option.icon === "mic" ?
-                                  <Mic className="h-4 w-4 text-amber-600 mr-2" />
-                                  : <Users className="h-4 w-4 text-amber-600 mr-2" />
-                            }
-
-                            <span>{option.minCapacity}-{option.maxCapacity}, {option.description}</span>
-                          </div>
-                        </FormItem>
-                      ))}
-                    </RadioGroup>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        )}
       </div>
     </div>
   );
