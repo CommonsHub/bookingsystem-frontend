@@ -72,7 +72,7 @@ export const useBookingWizard = () => {
   // Auto-advance current section based on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const headerHeight = 140; // Account for fixed header
+      const headerHeight = 120; // Account for header + progress component
       const sections = document.querySelectorAll('[data-wizard-section]');
       const viewportMiddle = window.scrollY + window.innerHeight / 2;
 

@@ -118,16 +118,16 @@ const WizardFormContent = ({
 
   return (
     <div className="max-w-2xl mx-auto">
-      <BookingWizardProgress
-        currentSection={currentSection}
-        completedSections={completedSections}
-        sections={sections}
-      />
-
       <BookingFormHeader
         isEdit={isEdit}
         isLoading={isLoading}
         draftLoaded={draftLoaded}
+      />
+
+      <BookingWizardProgress
+        currentSection={currentSection}
+        completedSections={completedSections}
+        sections={sections}
       />
 
       <Form {...form}>

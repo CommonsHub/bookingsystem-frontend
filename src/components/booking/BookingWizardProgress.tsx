@@ -19,7 +19,7 @@ export const BookingWizardProgress = ({
   const scrollToSection = (sectionIndex: number) => {
     const sectionElement = document.querySelector(`[data-wizard-section="${sectionIndex}"]`);
     if (sectionElement) {
-      const headerHeight = 140; // Account for fixed header height + some buffer
+      const headerHeight = 80; // Account for main header height
       const elementTop = sectionElement.getBoundingClientRect().top + window.scrollY;
       const scrollPosition = elementTop - headerHeight;
       
@@ -31,16 +31,16 @@ export const BookingWizardProgress = ({
   };
 
   return (
-    <Card className="fixed top-4 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-4xl mx-auto bg-white/95 backdrop-blur-sm border shadow-lg">
-      <div className="p-4">
-        <div className="flex items-center justify-between mb-3">
+    <Card className="w-full bg-white border shadow-sm mb-8">
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold">Booking Progress</h2>
           <span className="text-sm text-muted-foreground">
             {completedSections.size} of {sections.length} sections completed
           </span>
         </div>
         
-        <Progress value={progressPercentage} className="mb-3" />
+        <Progress value={progressPercentage} className="mb-4" />
         
         <div className="flex flex-wrap gap-2">
           {sections.map((section, index) => {
@@ -51,7 +51,7 @@ export const BookingWizardProgress = ({
               <button
                 key={index}
                 onClick={() => scrollToSection(index)}
-                className={`flex items-center gap-1 text-xs px-3 py-2 rounded-full transition-colors cursor-pointer hover:opacity-80 ${
+                className={`flex items-center gap-2 text-sm px-4 py-2 rounded-full transition-colors cursor-pointer hover:opacity-80 ${
                   isCompleted
                     ? 'bg-green-100 text-green-700 hover:bg-green-200'
                     : isCurrent
@@ -60,9 +60,9 @@ export const BookingWizardProgress = ({
                 }`}
               >
                 {isCompleted ? (
-                  <CheckCircle className="h-3 w-3" />
+                  <CheckCircle className="h-4 w-4" />
                 ) : (
-                  <Circle className="h-3 w-3" />
+                  <Circle className="h-4 w-4" />
                 )}
                 <span>{section}</span>
               </button>
