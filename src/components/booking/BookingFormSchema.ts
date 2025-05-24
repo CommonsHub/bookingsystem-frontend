@@ -1,3 +1,4 @@
+
 import * as z from "zod";
 
 export const formSchema = z.object({
@@ -22,6 +23,10 @@ export const formSchema = z.object({
   additionalComments: z.string().optional(),
   // Public event field
   isPublicEvent: z.boolean().default(false),
+  // New URL fields
+  lumaEventUrl: z.string().url({ message: "Please enter a valid URL" }).optional().or(z.literal('')),
+  calendarUrl: z.string().url({ message: "Please enter a valid URL" }).optional().or(z.literal('')),
+  publicUri: z.string().optional(),
 });
 
 export type FormData = z.infer<typeof formSchema>;

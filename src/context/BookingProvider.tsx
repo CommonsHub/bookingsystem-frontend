@@ -1,41 +1,35 @@
 
-import React from "react";
-import { BookingContext } from "./BookingContext";
+import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
+import { BookingContext } from "./BookingContext";
 import { useBookingData } from "@/hooks/useBookingData";
 import { useBookingOperations } from "@/hooks/useBookingOperations";
-import { canUserApproveBookings, canUserCancelBooking, getBookingById } from "@/utils/bookingHelpers";
+import { Booking, User } from "@/types";
+import { canUserApproveBookings, canUserCancelBooking } from "@/utils/bookingHelpers";
 
-export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const { bookings, setBookings, isLoading } = useBookingData();
+export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useAuth();
-
-  const { createBooking, addCommentToBooking, approveBookingRequest, cancelBookingRequest } =
+  const { bookings, setBookings } = useBookingData();
+  const { createBooking, addCommentToBooking, approveBookingRequest, cancelBookingRequest, updateBooking } =
     useBookingOperations(bookings, setBookings);
 
-  const getUserEmail = (): string | null => {
-    return user?.email || null;
+  // Get booking by ID
+  const getBookingById = (id: string): Booking | undefined => {
+    return bookings.find((booking) => booking.id === id);
   };
 
-  return (
-    <BookingContext.Provider
-      value={{
-        bookings,
-        user,
-        isLoading,
-        createBooking,
-        addCommentToBooking,
-        getBookingById: (id: string) => getBookingById(bookings, id),
-        approveBookingRequest: (id: string) => approveBookingRequest(id, user!),
-        cancelBookingRequest: (id: string) => cancelBookingRequest(id, user!),
-        getUserEmail,
-        canUserApproveBookings,
-        canUserCancelBooking,
-      }}
-    >
-      {children}
-    </BookingContext.Provider>
-  );
+  const value = {
+    bookings,
+    getBookingById,
+    createBooking,
+    updateBooking,
+    addCommentToBooking,
+    approveBookingRequest,
+    cancelBookingRequest,
+    user,
+    canUserApproveBookings,
+    canUserCancelBooking,
+  };
+
+  return <BookingContext.Provider value={value}>{children}</BookingContext.Provider>;
 };

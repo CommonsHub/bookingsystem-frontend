@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useBooking } from "@/context/BookingContext";
 import { toast } from "@/components/ui/toast-utils";
 import { BookingHeader } from "@/components/booking/BookingHeader";
@@ -8,10 +8,13 @@ import { BookingDetailsCard } from "@/components/booking/BookingDetailsCard";
 import { BookingActions } from "@/components/booking/BookingActions";
 import { RoomInfoCard } from "@/components/booking/RoomInfoCard";
 import { CommentSection } from "@/components/booking/CommentSection";
+import { Button } from "@/components/ui/button";
+import { Edit } from "lucide-react";
 import "../styles/BookingDetail.css";
 
 const BookingDetail = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const { 
     getBookingById, 
     addCommentToBooking, 
@@ -34,6 +37,9 @@ const BookingDetail = () => {
   // Check if user can cancel this booking
   const canCancelBooking = (booking.status === "pending" || booking.status === "approved") && 
     canUserCancelBooking(booking, user);
+    
+  // Check if user can edit this booking
+  const canEditBooking = canUserCancelBooking(booking, user);
 
   const handleSubmitComment = async (commentData: {
     content: string;
@@ -65,10 +71,23 @@ const BookingDetail = () => {
   const handleCancelBooking = () => {
     cancelBookingRequest(id);
   };
+  
+  const handleEditBooking = () => {
+    navigate(`/bookings/${id}/edit`);
+  };
 
   return (
     <div className="space-y-8">
-      <BookingHeader booking={booking} />
+      <div className="flex justify-between items-center">
+        <BookingHeader booking={booking} />
+        
+        {canEditBooking && (
+          <Button onClick={handleEditBooking} className="gap-2">
+            <Edit className="h-4 w-4" />
+            Edit Booking
+          </Button>
+        )}
+      </div>
       
       <div className="booking-detail-grid">
         <div className="space-y-6">

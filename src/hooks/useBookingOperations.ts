@@ -4,6 +4,7 @@ import { useCreateBooking } from "./useCreateBooking";
 import { useCommentOperations } from "./useCommentOperations";
 import { useApprovalOperations } from "./useApprovalOperations";
 import { useCancellationOperations } from "./useCancellationOperations";
+import { useUpdateBooking } from "./useUpdateBooking";
 
 export const useBookingOperations = (
   bookings: Booking[],
@@ -13,11 +14,13 @@ export const useBookingOperations = (
   const { addCommentToBooking } = useCommentOperations(setBookings);
   const { approveBookingRequest } = useApprovalOperations(setBookings);
   const { cancelBookingRequest } = useCancellationOperations(setBookings);
+  const { updateBooking } = useUpdateBooking(setBookings);
 
   return {
     createBooking,
     addCommentToBooking,
     approveBookingRequest,
     cancelBookingRequest,
+    updateBooking,
   };
 };
