@@ -20,9 +20,9 @@ export const BookingWizardProgress = ({
     const sectionElement = document.querySelector(`[data-wizard-section="${sectionIndex}"]`);
     if (sectionElement) {
       const headerHeight = 80; // Account for main header height
-      const progressHeight = 60; // Account for progress card height (compact)
+      const progressHeight = 50; // Account for actual progress card height
       const elementTop = sectionElement.getBoundingClientRect().top + window.scrollY;
-      const scrollPosition = elementTop - headerHeight - progressHeight - 12; // Minimal padding
+      const scrollPosition = elementTop - headerHeight - progressHeight - 8; // Minimal padding
       
       window.scrollTo({
         top: scrollPosition,
@@ -32,17 +32,17 @@ export const BookingWizardProgress = ({
   };
 
   return (
-    <div className="sticky top-16 z-40 mb-3 sm:top-20 sm:mb-4">
+    <div className="sticky top-20 z-40 mb-2">
       <Card className="w-full bg-white/95 backdrop-blur-sm border shadow-sm">
-        <div className="p-1.5 sm:p-2">
-          <div className="flex items-center justify-between mb-1.5">
+        <div className="p-1.5">
+          <div className="flex items-center justify-between mb-1">
             <h2 className="text-xs font-semibold">Progress</h2>
             <span className="text-xs text-muted-foreground">
               {completedSections.size}/{sections.length}
             </span>
           </div>
           
-          <Progress value={progressPercentage} className="mb-1.5 h-1" />
+          <Progress value={progressPercentage} className="mb-1 h-1" />
           
           <div className="flex flex-wrap gap-1">
             {sections.map((section, index) => {
