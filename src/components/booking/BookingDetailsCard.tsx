@@ -4,20 +4,23 @@ import { Separator } from "@/components/ui/separator";
 import { Booking } from "@/types";
 import { CalendarDays, Clock, MapPin, Users, User, Hash, Link } from "lucide-react";
 import { formatDate, formatTime } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface BookingDetailsCardProps {
   booking: Booking;
 }
 
 export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
+  const { t } = useTranslation();
+  
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Booking Details</CardTitle>
+        <CardTitle>{t('booking.details')}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
-          <h3 className="font-medium">Description</h3>
+          <h3 className="font-medium">{t('booking.description')}</h3>
           <p className="text-muted-foreground">{booking.description}</p>
         </div>
 
@@ -27,7 +30,7 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
           <div className="flex items-start gap-2">
             <CalendarDays className="h-5 w-5 text-muted-foreground mt-0.5" />
             <div>
-              <h4 className="font-medium">Date</h4>
+              <h4 className="font-medium">{t('booking.date')}</h4>
               <p className="text-muted-foreground">
                 {formatDate(booking.startTime)}
               </p>
@@ -37,7 +40,7 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
           <div className="flex items-start gap-2">
             <Clock className="h-5 w-5 text-muted-foreground mt-0.5" />
             <div>
-              <h4 className="font-medium">Time</h4>
+              <h4 className="font-medium">{t('booking.time')}</h4>
               <p className="text-muted-foreground">
                 {formatTime(booking.startTime)} -{" "}
                 {formatTime(booking.endTime)}
@@ -48,7 +51,7 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
           <div className="flex items-start gap-2">
             <MapPin className="h-5 w-5 text-muted-foreground mt-0.5" />
             <div>
-              <h4 className="font-medium">Room</h4>
+              <h4 className="font-medium">{t('booking.room')}</h4>
               <p className="text-muted-foreground">
                 {booking.room.name} ({booking.room.location})
               </p>
@@ -58,9 +61,9 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
           <div className="flex items-start gap-2">
             <Users className="h-5 w-5 text-muted-foreground mt-0.5" />
             <div>
-              <h4 className="font-medium">Room Capacity</h4>
+              <h4 className="font-medium">{t('booking.roomCapacity')}</h4>
               <p className="text-muted-foreground">
-                {booking.room.capacity} people
+                {booking.room.capacity} {t('booking.people')}
               </p>
             </div>
           </div>
@@ -69,7 +72,7 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
             <div className="flex items-start gap-2">
               <User className="h-5 w-5 text-muted-foreground mt-0.5" />
               <div>
-                <h4 className="font-medium">Event Organizer</h4>
+                <h4 className="font-medium">{t('booking.eventOrganizer')}</h4>
                 <p className="text-muted-foreground">{booking.organizer}</p>
               </div>
             </div>
@@ -79,8 +82,8 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
             <div className="flex items-start gap-2">
               <Hash className="h-5 w-5 text-muted-foreground mt-0.5" />
               <div>
-                <h4 className="font-medium">Estimated Attendees</h4>
-                <p className="text-muted-foreground">{booking.estimatedAttendees} people</p>
+                <h4 className="font-medium">{t('booking.estimatedAttendees')}</h4>
+                <p className="text-muted-foreground">{booking.estimatedAttendees} {t('booking.people')}</p>
               </div>
             </div>
           )}
@@ -89,14 +92,14 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
             <div className="flex items-start gap-2">
               <Link className="h-5 w-5 text-muted-foreground mt-0.5" />
               <div>
-                <h4 className="font-medium">Luma Event</h4>
+                <h4 className="font-medium">{t('booking.lumaEvent')}</h4>
                 <a 
                   href={booking.lumaEventUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-blue-500 hover:underline"
                 >
-                  Open event page
+                  {t('booking.openEventPage')}
                 </a>
               </div>
             </div>
@@ -106,14 +109,14 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
             <div className="flex items-start gap-2">
               <CalendarDays className="h-5 w-5 text-muted-foreground mt-0.5" />
               <div>
-                <h4 className="font-medium">Calendar Event</h4>
+                <h4 className="font-medium">{t('booking.calendarEvent')}</h4>
                 <a 
                   href={booking.calendarUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-blue-500 hover:underline"
                 >
-                  Open calendar event
+                  {t('booking.openCalendarEvent')}
                 </a>
               </div>
             </div>
@@ -123,7 +126,7 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
             <div className="flex items-start gap-2">
               <Link className="h-5 w-5 text-muted-foreground mt-0.5" />
               <div>
-                <h4 className="font-medium">Public URI</h4>
+                <h4 className="font-medium">{t('booking.publicUri')}</h4>
                 <p className="text-muted-foreground">{booking.publicUri}</p>
               </div>
             </div>
@@ -132,28 +135,28 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
 
         {booking.selectedSetup && (
           <div className="space-y-2">
-            <h3 className="font-medium">Room Setup</h3>
+            <h3 className="font-medium">{t('booking.roomSetup')}</h3>
             <p className="text-muted-foreground">{booking.selectedSetup}</p>
           </div>
         )}
 
         {booking.requiresAdditionalSpace && (
           <div className="space-y-2">
-            <h3 className="font-medium">Additional Space</h3>
-            <p className="text-muted-foreground">Additional space required</p>
+            <h3 className="font-medium">{t('booking.additionalSpace')}</h3>
+            <p className="text-muted-foreground">{t('booking.additionalSpaceRequired')}</p>
           </div>
         )}
 
         {booking.isPublicEvent && (
           <div className="space-y-2">
-            <h3 className="font-medium">Event Type</h3>
-            <p className="text-muted-foreground">Public event</p>
+            <h3 className="font-medium">{t('booking.eventType')}</h3>
+            <p className="text-muted-foreground">{t('booking.publicEvent')}</p>
           </div>
         )}
 
         {booking.additionalComments && (
           <div className="space-y-2">
-            <h3 className="font-medium">Additional Comments</h3>
+            <h3 className="font-medium">{t('booking.additionalComments')}</h3>
             <p className="text-muted-foreground">{booking.additionalComments}</p>
           </div>
         )}

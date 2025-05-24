@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { AdditionalInfoSection } from "@/components/booking/AdditionalInfoSection";
 import { FormData, formSchema } from "@/components/booking/BookingFormSchema";
@@ -32,6 +33,7 @@ import { rooms } from "@/data/rooms";
 import { Room } from "@/types";
 
 const EditBookingPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { getBookingById, updateBooking, user } = useBooking();
@@ -158,21 +160,21 @@ const EditBookingPage = () => {
   };
 
   if (loading) {
-    return <div>Loading booking details...</div>;
+    return <div>{t('messages.loadingBooking')}</div>;
   }
 
   if (!booking) {
-    return <div>Booking not found</div>;
+    return <div>{t('messages.bookingNotFound')}</div>;
   }
 
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">
-          Edit Booking
+          {t('bookings.edit')}
         </h1>
         <p className="text-muted-foreground mt-1">
-          Update the booking request details
+          {t('bookings.editDescription')}
         </p>
       </div>
 
@@ -180,9 +182,9 @@ const EditBookingPage = () => {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Card>
             <CardHeader>
-              <CardTitle>Edit Booking Details</CardTitle>
+              <CardTitle>{t('bookings.editTitle')}</CardTitle>
               <CardDescription>
-                Update the details of your booking request
+                {t('bookings.editDescription')}
               </CardDescription>
             </CardHeader>
 
@@ -221,10 +223,10 @@ const EditBookingPage = () => {
                 variant="outline"
                 onClick={() => navigate(`/bookings/${id}`)}
               >
-                Cancel
+                {t('buttons.cancel')}
               </Button>
               <Button type="submit" disabled={submitting}>
-                {submitting ? "Updating..." : "Update Booking"}
+                {submitting ? t('buttons.updating') : t('buttons.update')}
               </Button>
             </CardFooter>
           </Card>

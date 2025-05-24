@@ -21,7 +21,14 @@
     "tableView": "Tableau",
     "cardView": "Cartes",
     "caption": "Une liste des demandes de réservation de salles.",
-    "captionUpcoming": "Une liste des demandes de réservation de salles à venir."
+    "captionUpcoming": "Une liste des demandes de réservation de salles à venir.",
+    "edit": "Modifier la réservation",
+    "editTitle": "Modifier les détails de la réservation",
+    "editDescription": "Mettre à jour les détails de votre demande de réservation",
+    "newTitle": "Nouvelle demande de réservation",
+    "newDescription": "Remplissez le formulaire ci-dessous pour demander une réservation de salle",
+    "roomBookingDetails": "Détails de la réservation de salle",
+    "enterDetails": "Saisissez les détails de votre demande de réservation"
   },
   "booking": {
     "room": "Salle",
@@ -30,7 +37,25 @@
     "status": "Statut",
     "createdBy": "Créé par",
     "comments": "Commentaires",
-    "actions": "Actions"
+    "actions": "Actions",
+    "details": "Détails de la réservation",
+    "description": "Description",
+    "time": "Heure",
+    "roomCapacity": "Capacité de la salle",
+    "eventOrganizer": "Organisateur de l'événement",
+    "estimatedAttendees": "Participants estimés",
+    "lumaEvent": "Événement Luma",
+    "calendarEvent": "Événement du calendrier",
+    "publicUri": "URI publique",
+    "roomSetup": "Configuration de la salle",
+    "additionalSpace": "Espace supplémentaire",
+    "additionalSpaceRequired": "Espace supplémentaire requis",
+    "eventType": "Type d'événement",
+    "publicEvent": "Événement public",
+    "additionalComments": "Commentaires supplémentaires",
+    "people": "personnes",
+    "openEventPage": "Ouvrir la page de l'événement",
+    "openCalendarEvent": "Ouvrir l'événement du calendrier"
   },
   "status": {
     "draft": "Brouillon",
@@ -40,7 +65,33 @@
     "cancelled": "Annulé"
   },
   "nav": {
-    "profile": "Profil"
+    "profile": "Profil",
+    "backToBookings": "Retour aux réservations"
+  },
+  "alerts": {
+    "awaitingApproval": "En attente d'approbation",
+    "awaitingApprovalDesc": "Cette demande de réservation attend l'approbation de l'administrateur.",
+    "bookingApproved": "Réservation approuvée",
+    "bookingCancelled": "Réservation annulée",
+    "approvedBy": "Approuvé par",
+    "cancelledBy": "Annulé par",
+    "on": "le"
+  },
+  "buttons": {
+    "cancel": "Annuler",
+    "update": "Mettre à jour la réservation",
+    "updating": "Mise à jour...",
+    "submit": "Soumettre la demande de réservation",
+    "submitting": "Soumission...",
+    "clearDraft": "Effacer le brouillon",
+    "editBooking": "Modifier la réservation"
+  },
+  "messages": {
+    "loadingBooking": "Chargement des détails de la réservation...",
+    "bookingNotFound": "Réservation non trouvée",
+    "bookingIdMissing": "ID de réservation manquant",
+    "savingDraft": "Sauvegarde du brouillon...",
+    "draftLoaded": "Brouillon chargé"
   },
   "greeting": "Bonjour {{name}} !",
   "footer": {

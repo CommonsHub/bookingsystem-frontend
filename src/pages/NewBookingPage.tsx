@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { AdditionalInfoSection } from "@/components/booking/AdditionalInfoSection";
 import { FormData, formSchema } from "@/components/booking/BookingFormSchema";
@@ -34,6 +35,7 @@ import { useDraftBooking } from "@/hooks/useDraftBooking";
 import { Room } from "@/types";
 
 const NewBookingPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { createBooking } = useBooking();
   const [submitting, setSubmitting] = useState(false);
@@ -215,12 +217,12 @@ const NewBookingPage = () => {
     <div className="max-w-2xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">
-          New Booking Request
+          {t('bookings.newTitle')}
         </h1>
         <p className="text-muted-foreground mt-1">
-          Fill out the form below to request a room booking
-          {isLoading && " (Saving draft...)"}
-          {!isLoading && draftLoaded && " (Draft loaded)"}
+          {t('bookings.newDescription')}
+          {isLoading && ` (${t('messages.savingDraft')})`}
+          {!isLoading && draftLoaded && ` (${t('messages.draftLoaded')})`}
         </p>
       </div>
 
@@ -228,9 +230,9 @@ const NewBookingPage = () => {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Card>
             <CardHeader>
-              <CardTitle>Room Booking Details</CardTitle>
+              <CardTitle>{t('bookings.roomBookingDetails')}</CardTitle>
               <CardDescription>
-                Enter the details of your booking request
+                {t('bookings.enterDetails')}
               </CardDescription>
             </CardHeader>
 
@@ -260,13 +262,11 @@ const NewBookingPage = () => {
 
               <Separator />
 
-
               <ContactInfoSection control={form.control} />
               <MembershipSection control={form.control} />
 
               <Separator />
               <AdditionalInfoSection control={form.control} />
-
 
             </CardContent>
 
@@ -277,18 +277,18 @@ const NewBookingPage = () => {
                   variant="outline"
                   onClick={() => navigate("/")}
                 >
-                  Cancel
+                  {t('buttons.cancel')}
                 </Button>
                 <Button
                   type="button"
                   variant="outline"
                   onClick={handleClearDraft}
                 >
-                  Clear Draft
+                  {t('buttons.clearDraft')}
                 </Button>
               </div>
               <Button type="submit" disabled={submitting}>
-                {submitting ? "Submitting..." : "Submit Booking Request"}
+                {submitting ? t('buttons.submitting') : t('buttons.submit')}
               </Button>
             </CardFooter>
           </Card>
