@@ -1,6 +1,7 @@
+
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthProvider";
 import { BookingProvider } from "./context/BookingProvider";
 import Layout from "./components/Layout";
 import HomePage from "./pages/HomePage";
@@ -10,7 +11,7 @@ import ProfilePage from "./pages/ProfilePage";
 import AuthCallback from "./pages/AuthCallback";
 import LoginPage from "./pages/LoginPage";
 import NotFound from "./pages/NotFound";
-import ProtectedRoute from "./components/ProtectedRoute";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import EditBookingPage from "./pages/EditBookingPage";
 
 const App: React.FC = () => {

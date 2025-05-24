@@ -10,12 +10,19 @@ import { canUserApproveBookings, canUserCancelBooking } from "@/utils/bookingHel
 export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useAuth();
   const { bookings, setBookings } = useBookingData();
-  const { createBooking, addCommentToBooking, approveBookingRequest, cancelBookingRequest, updateBooking } =
+  const { createBooking, addCommentToBooking, approveBookingRequest: approveBooking, cancelBookingRequest, updateBooking } =
     useBookingOperations(bookings, setBookings);
 
   // Get booking by ID
   const getBookingById = (id: string): Booking | undefined => {
     return bookings.find((booking) => booking.id === id);
+  };
+
+  // Wrapper for approveBookingRequest that matches the interface
+  const approveBookingRequest = (id: string): void => {
+    if (user) {
+      approveBooking(id, user);
+    }
   };
 
   const value = {
