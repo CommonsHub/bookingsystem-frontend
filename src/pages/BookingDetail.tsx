@@ -10,9 +10,11 @@ import { RoomInfoCard } from "@/components/booking/RoomInfoCard";
 import { CommentSection } from "@/components/booking/CommentSection";
 import { Button } from "@/components/ui/button";
 import { Edit } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import "../styles/BookingDetail.css";
 
 const BookingDetail = () => {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { 
@@ -26,10 +28,10 @@ const BookingDetail = () => {
   } = useBooking();
   const [submitting, setSubmitting] = useState(false);
 
-  if (!id) return <div>Booking ID is missing</div>;
+  if (!id) return <div>{t('messages.bookingIdMissing')}</div>;
 
   const booking = getBookingById(id);
-  if (!booking) return <div>Booking not found</div>;
+  if (!booking) return <div>{t('messages.bookingNotFound')}</div>;
 
   // Check if user can approve bookings
   const canApproveBooking = booking.status === "pending" && canUserApproveBookings(user);
@@ -84,7 +86,7 @@ const BookingDetail = () => {
         {canEditBooking && (
           <Button onClick={handleEditBooking} className="gap-2">
             <Edit className="h-4 w-4" />
-            Edit Booking
+            {t('buttons.editBooking')}
           </Button>
         )}
       </div>

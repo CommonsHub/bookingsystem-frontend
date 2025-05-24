@@ -21,7 +21,14 @@
     "tableView": "Tabel",
     "cardView": "Kaarten",
     "caption": "Een lijst van zaalreserveringsaanvragen.",
-    "captionUpcoming": "Een lijst van aankomende zaalreserveringsaanvragen."
+    "captionUpcoming": "Een lijst van aankomende zaalreserveringsaanvragen.",
+    "edit": "Boeking bewerken",
+    "editTitle": "Boekingsdetails bewerken",
+    "editDescription": "Werk de details van uw boekingsaanvraag bij",
+    "newTitle": "Nieuwe boekingsaanvraag",
+    "newDescription": "Vul het onderstaande formulier in om een zaalreservering aan te vragen",
+    "roomBookingDetails": "Zaalreserveringsdetails",
+    "enterDetails": "Voer de details van uw boekingsaanvraag in"
   },
   "booking": {
     "room": "Zaal",
@@ -30,7 +37,25 @@
     "status": "Status",
     "createdBy": "Gemaakt door",
     "comments": "Opmerkingen",
-    "actions": "Acties"
+    "actions": "Acties",
+    "details": "Boekingsdetails",
+    "description": "Beschrijving",
+    "time": "Tijd",
+    "roomCapacity": "Zaalcapaciteit",
+    "eventOrganizer": "Evenementorganisator",
+    "estimatedAttendees": "Geschatte deelnemers",
+    "lumaEvent": "Luma evenement",
+    "calendarEvent": "Kalender evenement",
+    "publicUri": "Publieke URI",
+    "roomSetup": "Zaalopstelling",
+    "additionalSpace": "Extra ruimte",
+    "additionalSpaceRequired": "Extra ruimte vereist",
+    "eventType": "Evenementtype",
+    "publicEvent": "Openbaar evenement",
+    "additionalComments": "Aanvullende opmerkingen",
+    "people": "personen",
+    "openEventPage": "Evenementpagina openen",
+    "openCalendarEvent": "Kalender evenement openen"
   },
   "status": {
     "draft": "Concept",
@@ -40,7 +65,33 @@
     "cancelled": "Geannuleerd"
   },
   "nav": {
-    "profile": "Profiel"
+    "profile": "Profiel",
+    "backToBookings": "Terug naar boekingen"
+  },
+  "alerts": {
+    "awaitingApproval": "Wacht op goedkeuring",
+    "awaitingApprovalDesc": "Deze boekingsaanvraag wacht op goedkeuring van de beheerder.",
+    "bookingApproved": "Boeking goedgekeurd",
+    "bookingCancelled": "Boeking geannuleerd",
+    "approvedBy": "Goedgekeurd door",
+    "cancelledBy": "Geannuleerd door",
+    "on": "op"
+  },
+  "buttons": {
+    "cancel": "Annuleren",
+    "update": "Boeking bijwerken",
+    "updating": "Bijwerken...",
+    "submit": "Boekingsaanvraag indienen",
+    "submitting": "Indienen...",
+    "clearDraft": "Concept wissen",
+    "editBooking": "Boeking bewerken"
+  },
+  "messages": {
+    "loadingBooking": "Boekingsdetails laden...",
+    "bookingNotFound": "Boeking niet gevonden",
+    "bookingIdMissing": "Boeking-ID ontbreekt",
+    "savingDraft": "Concept opslaan...",
+    "draftLoaded": "Concept geladen"
   },
   "greeting": "Hallo {{name}}!",
   "footer": {

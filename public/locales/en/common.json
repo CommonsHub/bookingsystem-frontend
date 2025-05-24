@@ -21,7 +21,14 @@
     "tableView": "Table",
     "cardView": "Cards",
     "caption": "A list of room booking requests.",
-    "captionUpcoming": "A list of upcoming room booking requests."
+    "captionUpcoming": "A list of upcoming room booking requests.",
+    "edit": "Edit Booking",
+    "editTitle": "Edit Booking Details",
+    "editDescription": "Update the details of your booking request",
+    "newTitle": "New Booking Request",
+    "newDescription": "Fill out the form below to request a room booking",
+    "roomBookingDetails": "Room Booking Details",
+    "enterDetails": "Enter the details of your booking request"
   },
   "booking": {
     "room": "Room",
@@ -30,7 +37,25 @@
     "status": "Status",
     "createdBy": "Created by",
     "comments": "Comments",
-    "actions": "Actions"
+    "actions": "Actions",
+    "details": "Booking Details",
+    "description": "Description",
+    "time": "Time",
+    "roomCapacity": "Room Capacity",
+    "eventOrganizer": "Event Organizer",
+    "estimatedAttendees": "Estimated Attendees",
+    "lumaEvent": "Luma Event",
+    "calendarEvent": "Calendar Event",
+    "publicUri": "Public URI",
+    "roomSetup": "Room Setup",
+    "additionalSpace": "Additional Space",
+    "additionalSpaceRequired": "Additional space required",
+    "eventType": "Event Type",
+    "publicEvent": "Public event",
+    "additionalComments": "Additional Comments",
+    "people": "people",
+    "openEventPage": "Open event page",
+    "openCalendarEvent": "Open calendar event"
   },
   "status": {
     "draft": "Draft",
@@ -40,7 +65,33 @@
     "cancelled": "Cancelled"
   },
   "nav": {
-    "profile": "Profile"
+    "profile": "Profile",
+    "backToBookings": "Back to bookings"
+  },
+  "alerts": {
+    "awaitingApproval": "Awaiting Approval",
+    "awaitingApprovalDesc": "This booking request is waiting for administrator approval.",
+    "bookingApproved": "Booking Approved",
+    "bookingCancelled": "Booking Cancelled",
+    "approvedBy": "Approved by",
+    "cancelledBy": "Cancelled by",
+    "on": "on"
+  },
+  "buttons": {
+    "cancel": "Cancel",
+    "update": "Update Booking",
+    "updating": "Updating...",
+    "submit": "Submit Booking Request",
+    "submitting": "Submitting...",
+    "clearDraft": "Clear Draft",
+    "editBooking": "Edit Booking"
+  },
+  "messages": {
+    "loadingBooking": "Loading booking details...",
+    "bookingNotFound": "Booking not found",
+    "bookingIdMissing": "Booking ID is missing",
+    "savingDraft": "Saving draft...",
+    "draftLoaded": "Draft loaded"
   },
   "greeting": "Hi {{name}}!",
   "footer": {
