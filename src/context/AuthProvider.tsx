@@ -8,6 +8,7 @@ import { User as SupabaseUser } from "@supabase/supabase-js";
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const baseUrl = import.meta.env.VITE_DEPLOY_URL || window.location.origin
 
   useEffect(() => {
     // Check active sessions and sets the user
@@ -28,10 +29,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signInWithMagicLink = async (email: string) => {
+    console.log("signInWithMagicLink baseUrl", baseUrl);
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${import.meta.env.VITE_DEPLOY_URL || window.location.origin}/auth/callback`,
+        emailRedirectTo: `${baseUrl}/auth/callback`,
       },
     });
     if (error) throw error;

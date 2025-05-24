@@ -1,2 +1,5 @@
-[build.environment]
-  VITE_DEPLOY_URL = "$URL"
+[context.production]
+command = "VITE_DEPLOY_URL=$URL npm run build"
+
+[context.deploy-preview]
+command = "VITE_DEPLOY_URL=$DEPLOY_PRIME_URL npm run build"
