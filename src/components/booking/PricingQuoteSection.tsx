@@ -56,7 +56,8 @@ export const PricingQuoteSection = ({ rooms }: PricingQuoteSectionProps) => {
   const membershipStatus = watch("membershipStatus");
 
   const quote = useMemo(() => {
-    if (!roomId || !startDate || !endDate) {
+    // Early return if required data is missing or invalid
+    if (!roomId || !startDate || !endDate || !(startDate instanceof Date) || !(endDate instanceof Date)) {
       return null;
     }
 
@@ -70,6 +71,11 @@ export const PricingQuoteSection = ({ rooms }: PricingQuoteSectionProps) => {
     // Calculate duration in hours
     const durationMs = endDate.getTime() - startDate.getTime();
     const durationHours = durationMs / (1000 * 60 * 60);
+    
+    // Validate duration
+    if (durationHours <= 0) {
+      return null;
+    }
     
     // Check if weekend (Saturday = 6, Sunday = 0)
     const isWeekend = startDate.getDay() === 0 || startDate.getDay() === 6 || 
