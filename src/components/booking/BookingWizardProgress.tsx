@@ -49,7 +49,12 @@ export const BookingWizardProgress = ({
               </span>
             </div>
             
-            <Progress value={progressPercentage} className="mb-1 h-1" />
+            <div className="relative h-1 w-full overflow-hidden rounded-full bg-gray-200 mb-1">
+              <div 
+                className="h-full transition-all bg-green-500"
+                style={{ width: `${progressPercentage}%` }}
+              />
+            </div>
             
             <div className="flex flex-wrap gap-1">
               {sections.map((section, index) => {
