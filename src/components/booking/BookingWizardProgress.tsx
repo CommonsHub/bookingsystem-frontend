@@ -33,10 +33,8 @@ export const BookingWizardProgress = ({
 
   return (
     <div 
-      className="fixed top-20 left-0 right-0 z-50 px-4 sm:px-6"
+      className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6"
       style={{ 
-        position: '-webkit-sticky',
-        position: 'sticky',
         WebkitBackfaceVisibility: 'hidden',
         backfaceVisibility: 'hidden'
       }}
