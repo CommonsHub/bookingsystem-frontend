@@ -102,6 +102,11 @@ export const useBookingData = () => {
               calendarUrl: booking.calendar_url,
               publicUri: booking.public_uri,
               language: booking.language || 'en', // Add language field with fallback
+              // Add placeholder catering and event support fields
+              // These would need to be properly mapped from database fields when those are added
+              cateringOptions: [], // This will be populated when the database fields are added
+              cateringComments: undefined,
+              eventSupportOptions: [], // This will be populated when the database fields are added
             };
           }
         );

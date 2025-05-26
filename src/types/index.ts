@@ -1,4 +1,3 @@
-
 export interface Room {
   id: string;
   name: string;
@@ -53,6 +52,10 @@ export interface Booking {
   roomNotes?: string;
   // Add language field
   language?: string;
+  // Add catering and event support fields
+  cateringOptions?: string[];
+  cateringComments?: string;
+  eventSupportOptions?: string[];
 }
 
 export interface Comment {

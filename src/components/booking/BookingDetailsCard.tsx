@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Booking } from "@/types";
-import { CalendarDays, Clock, MapPin, Users, User, Hash, Link, Mail } from "lucide-react";
+import { CalendarDays, Clock, MapPin, Users, User, Hash, Link, Mail, Utensils, Headphones } from "lucide-react";
 import { formatDate, formatTime } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 
@@ -61,9 +61,9 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
           <div className="flex items-start gap-2">
             <Users className="h-5 w-5 text-muted-foreground mt-0.5" />
             <div>
-              <h4 className="font-medium">{t('booking.roomCapacity')}</h4>
+              <h4 className="font-medium">{t('booking.estimatedAttendees')}</h4>
               <p className="text-muted-foreground">
-                {booking.room.capacity} {t('booking.people')}
+                {booking.estimatedAttendees || "Not specified"} {booking.estimatedAttendees ? t('booking.people') : ""}
               </p>
             </div>
           </div>
@@ -90,16 +90,6 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
               <div>
                 <h4 className="font-medium">{t('booking.eventOrganizer')}</h4>
                 <p className="text-muted-foreground">{booking.organizer}</p>
-              </div>
-            </div>
-          )}
-
-          {booking.estimatedAttendees && (
-            <div className="flex items-start gap-2">
-              <Hash className="h-5 w-5 text-muted-foreground mt-0.5" />
-              <div>
-                <h4 className="font-medium">{t('booking.estimatedAttendees')}</h4>
-                <p className="text-muted-foreground">{booking.estimatedAttendees} {t('booking.people')}</p>
               </div>
             </div>
           )}
@@ -167,6 +157,42 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
           <div className="space-y-2">
             <h3 className="font-medium">{t('booking.eventType')}</h3>
             <p className="text-muted-foreground">{t('booking.publicEvent')}</p>
+          </div>
+        )}
+
+        {/* Catering Services Section */}
+        {booking.cateringOptions && booking.cateringOptions.length > 0 && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Utensils className="h-5 w-5 text-muted-foreground" />
+              <h3 className="font-medium">Catering Services</h3>
+            </div>
+            <ul className="text-muted-foreground space-y-1 ml-7">
+              {booking.cateringOptions.map((option, index) => (
+                <li key={index}>• {option}</li>
+              ))}
+            </ul>
+            {booking.cateringComments && (
+              <div className="ml-7">
+                <p className="text-sm text-muted-foreground font-medium">Additional Notes:</p>
+                <p className="text-muted-foreground">{booking.cateringComments}</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Additional Services Section */}
+        {booking.eventSupportOptions && booking.eventSupportOptions.length > 0 && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Headphones className="h-5 w-5 text-muted-foreground" />
+              <h3 className="font-medium">Additional Services</h3>
+            </div>
+            <ul className="text-muted-foreground space-y-1 ml-7">
+              {booking.eventSupportOptions.map((option, index) => (
+                <li key={index}>• {option}</li>
+              ))}
+            </ul>
           </div>
         )}
 
