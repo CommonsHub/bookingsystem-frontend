@@ -9,7 +9,7 @@ export const useUpdateBooking = (
 ) => {
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const updateBooking = async (bookingId: string, updatedBooking: Booking) => {
+  const updateBooking = async (bookingId: string, updatedBooking: Booking): Promise<void> => {
     setIsUpdating(true);
     try {
       console.log("Updating booking:", bookingId, "with data:", updatedBooking);
@@ -54,7 +54,6 @@ export const useUpdateBooking = (
       );
 
       toast.success("Booking updated successfully!");
-      return data;
     } catch (error: any) {
       console.error("Failed to update booking:", error);
       toast.error("Failed to update booking: " + error.message);
