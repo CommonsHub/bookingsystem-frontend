@@ -107,6 +107,15 @@
       "email": "E-mail",
       "emailPlaceholder": "uw.email@example.com",
       "confirmationNote": "We sturen boekingsbevestigingen naar dit e-mailadres"
+    },
+    "dateTime": {
+      "endDate": "Einddatum",
+      "startDate": "Startdatum",
+      "pickDate": "Pickdatum",
+      "naturalLanguagePlaceholder": "Voer datum in natuurlijke taal in: aanstaande vrijdag om 10.00 uur, 10 juli om 14.00 uur, ..",
+      "pickEndDate": "Kies einddatum",
+      "endNaturalLanguagePlaceholder": "Voer de datum in natuurlijke taal in: na 2H, om 17:00 uur, ..",
+      "endTimeError": "Kies eerst de startdatum"
     }
   },
   "profile": {

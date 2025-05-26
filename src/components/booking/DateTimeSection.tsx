@@ -1,13 +1,13 @@
 
-import { useState } from "react";
 import { FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { toast } from "@/components/ui/toast-utils";
+import { format } from "date-fns";
+import { useState } from "react";
 import { Control, useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { z } from "zod";
 import { formSchema } from "./BookingFormSchema";
-import { toast } from "@/components/ui/toast-utils";
 import { DateTimePicker } from "./DateTimePicker";
-import { format } from "date-fns";
-import { useTranslation } from "react-i18next";
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -20,7 +20,7 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
   const [startDateText, setStartDateText] = useState("");
   const [endDateText, setEndDateText] = useState("");
   const { getValues, watch } = useFormContext<FormData>();
-  
+
   // Watch for date changes
   const startDate = watch("startDate");
   const endDate = watch("endDate");
@@ -33,7 +33,7 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
         render={({ field }) => (
           <FormItem className="flex flex-col">
             <FormLabel>{t('form.dateTime.startDate')}</FormLabel>
-            <DateTimePicker 
+            <DateTimePicker
               label={t('form.dateTime.startDate')}
               value={field.value}
               onChange={field.onChange}
@@ -51,7 +51,7 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
         render={({ field }) => (
           <FormItem>
             <FormLabel>{t('form.dateTime.endDate')}</FormLabel>
-            <DateTimePicker 
+            <DateTimePicker
               label={t('form.dateTime.endDate')}
               value={field.value}
               onChange={field.onChange}
@@ -63,7 +63,7 @@ export const DateTimeSection = ({ control }: DateTimeSectionProps) => {
               naturalLanguagePlaceholder={t('form.dateTime.endNaturalLanguagePlaceholder')}
               onBlur={() => {
                 if (!endDate || !startDate) return;
-                
+
                 // Validate that end date is after start date
                 if (endDate <= startDate) {
                   toast.error(t('form.dateTime.endTimeError'));

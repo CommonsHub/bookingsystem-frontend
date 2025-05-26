@@ -94,28 +94,16 @@ export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
   // Monitor scroll to show/hide footer
   useEffect(() => {
     const handleScroll = () => {
-      console.log('Scroll event triggered, scrollY:', window.scrollY);
 
       const pricingSection = document.querySelector('[data-wizard-section="7"]');
       const formFooter = document.querySelector('[data-form-footer]');
 
-      console.log('Pricing section found:', !!pricingSection);
-      console.log('Form footer found:', !!formFooter);
-
       if (pricingSection && formFooter) {
         const pricingSectionRect = pricingSection.getBoundingClientRect();
-        const formFooterRect = formFooter.getBoundingClientRect();
-
-        console.log('Pricing section top:', pricingSectionRect.top);
-        console.log('Form footer top:', formFooterRect.top);
-        console.log('Window height:', window.innerHeight);
 
         const pricingSectionNotYetVisible = pricingSectionRect.top > window.innerHeight;
 
         const shouldShow = pricingSectionNotYetVisible;
-
-        console.log('Should show sticky footer:', shouldShow);
-        console.log('Pricing scrolled past:', pricingSectionNotYetVisible);
 
         setIsVisible(shouldShow);
       } else {
@@ -132,8 +120,6 @@ export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
 
     return () => window.removeEventListener('scroll', throttledHandleScroll);
   }, []);
-
-  console.log('Sticky footer - isVisible:', isVisible, 'quote exists:', !!quote);
 
   if (!quote || !isVisible) {
     return null;

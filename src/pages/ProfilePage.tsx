@@ -75,8 +75,6 @@ export default function ProfilePage() {
 
   // Show loading state only when both auth and profile are loading
   const isLoading = authLoading || (user && profileLoading);
-  console.log("Loading state:", isLoading, "Auth loading:", authLoading, "Profile loading:", profileLoading);
-
   if (isLoading) {
     return (
       <div className="flex justify-center items-center p-8">

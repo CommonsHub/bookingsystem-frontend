@@ -107,6 +107,15 @@
       "emailPlaceholder": "your.email@example.com",
       "namePlaceholder": "Votre nom complet",
       "name": "Nom"
+    },
+    "dateTime": {
+      "endDate": "Date de fin",
+      "startDate": "Date de début",
+      "pickDate": "Choisir la date",
+      "naturalLanguagePlaceholder": "Entrez la date du langage naturel: vendredi prochain à 10h, 10 juillet à 14h00, ..",
+      "pickEndDate": "Choisissez la date de fin",
+      "endNaturalLanguagePlaceholder": "Entrez la date du langage naturel: après 2h, à 17h00, ..",
+      "endTimeError": "Choisissez d'abord la date de début"
     }
   },
   "booking": {

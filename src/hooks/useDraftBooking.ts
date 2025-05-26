@@ -1,4 +1,3 @@
-
 import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -15,7 +14,7 @@ export const useDraftBooking = (bookingId?: string) => {
   useEffect(() => {
     if (bookingId) {
       // For editing existing bookings
-      const editDraftKey = user?.email 
+      const editDraftKey = user?.email
         ? `booking-edit-draft-${user.email}-${bookingId}`
         : `booking-edit-draft-anonymous-${bookingId}`;
       setDraftKey(editDraftKey);
@@ -51,8 +50,6 @@ export const useDraftBooking = (bookingId?: string) => {
         updatedAt: new Date().toISOString(),
       };
       localStorage.setItem(draftKey, JSON.stringify(dataWithTimestamp));
-
-      console.log("Draft saved successfully:", data);
     } catch (error) {
       console.error("Error saving draft:", error);
     } finally {
@@ -95,7 +92,7 @@ export const useDraftBooking = (bookingId?: string) => {
     try {
       // Set the cleared flag to prevent auto-save
       setIsDraftCleared(true);
-      
+
       // Clear from localStorage
       localStorage.removeItem(draftKey);
       console.log("Draft cleared successfully");

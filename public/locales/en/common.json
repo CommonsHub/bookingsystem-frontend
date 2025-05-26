@@ -107,6 +107,15 @@
       "email": "Email",
       "emailPlaceholder": "your.email@example.com",
       "confirmationNote": "We will send booking confirmations to this email address"
+    },
+    "dateTime": {
+      "endDate": "End date",
+      "endTimeError": "Choose start date first",
+      "pickDate": "Pick date",
+      "startDate": "Start date",
+      "pickEndDate": "Choose end date",
+      "naturalLanguagePlaceholder": "Enter date in natural language: next Friday at 10am, 10th July at 14:00, ..",
+      "endNaturalLanguagePlaceholder": "Enter date in natural language: after 2h, at 17:00,.."
     }
   },
   "profile": {
