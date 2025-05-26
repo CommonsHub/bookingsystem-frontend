@@ -20,9 +20,9 @@ export const BookingWizardProgress = ({
     const sectionElement = document.querySelector(`[data-wizard-section="${sectionIndex}"]`);
     if (sectionElement) {
       const headerHeight = 80; // Account for main header height
-      const progressHeight = 50; // Account for actual progress card height
+      const progressHeight = 60; // Account for progress card height
       const elementTop = sectionElement.getBoundingClientRect().top + window.scrollY;
-      const scrollPosition = elementTop - headerHeight - progressHeight - 8; // Minimal padding
+      const scrollPosition = elementTop - headerHeight - progressHeight - 16; // Add some padding
       
       window.scrollTo({
         top: scrollPosition,
@@ -33,30 +33,30 @@ export const BookingWizardProgress = ({
 
   return (
     <div 
-      className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6"
+      className="sticky top-20 z-40 px-4 sm:px-6 mb-6"
       style={{ 
         WebkitBackfaceVisibility: 'hidden',
         backfaceVisibility: 'hidden'
       }}
     >
       <div className="max-w-2xl mx-auto">
-        <Card className="w-full bg-white/95 backdrop-blur-sm border shadow-sm">
-          <div className="p-1.5">
-            <div className="flex items-center justify-between mb-1">
-              <h2 className="text-xs font-semibold">Progress</h2>
-              <span className="text-xs text-muted-foreground">
+        <Card className="w-full bg-white/95 backdrop-blur-sm border shadow-lg">
+          <div className="p-3">
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="text-sm font-semibold">Progress</h2>
+              <span className="text-sm text-muted-foreground">
                 {completedSections.size}/{sections.length}
               </span>
             </div>
             
-            <div className="relative h-1 w-full overflow-hidden rounded-full bg-gray-200 mb-1">
+            <div className="relative h-2 w-full overflow-hidden rounded-full bg-gray-200 mb-3">
               <div 
                 className="h-full transition-all bg-green-500"
                 style={{ width: `${progressPercentage}%` }}
               />
             </div>
             
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-2">
               {sections.map((section, index) => {
                 const isCompleted = completedSections.has(index);
                 const isCurrent = currentSection === index;
@@ -65,7 +65,7 @@ export const BookingWizardProgress = ({
                   <button
                     key={index}
                     onClick={() => scrollToSection(index)}
-                    className={`flex items-center gap-1 text-xs px-1.5 py-0.5 rounded-full transition-colors cursor-pointer hover:opacity-80 ${
+                    className={`flex items-center gap-1.5 text-xs px-2 py-1 rounded-full transition-colors cursor-pointer hover:opacity-80 ${
                       isCurrent && !isCompleted
                         ? 'bg-blue-100 text-blue-700 hover:bg-blue-200 ring-1 ring-blue-300'
                         : isCompleted
@@ -74,9 +74,9 @@ export const BookingWizardProgress = ({
                     }`}
                   >
                     {isCompleted ? (
-                      <CheckCircle className="h-2.5 w-2.5" />
+                      <CheckCircle className="h-3 w-3" />
                     ) : (
-                      <Circle className="h-2.5 w-2.5" />
+                      <Circle className="h-3 w-3" />
                     )}
                     <span className="hidden sm:inline text-xs">{section}</span>
                     <span className="sm:hidden">{index + 1}</span>
