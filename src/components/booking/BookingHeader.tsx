@@ -11,9 +11,10 @@ import { useTranslation } from "react-i18next";
 
 interface BookingHeaderProps {
   booking: Booking;
+  actionButtons?: React.ReactNode;
 }
 
-export const BookingHeader = ({ booking }: BookingHeaderProps) => {
+export const BookingHeader = ({ booking, actionButtons }: BookingHeaderProps) => {
   const { t } = useTranslation();
   
   const statusColor = (status: string) => {
@@ -59,6 +60,12 @@ export const BookingHeader = ({ booking }: BookingHeaderProps) => {
             </Badge>
           )}
         </div>
+        
+        {actionButtons && (
+          <div className="flex gap-2">
+            {actionButtons}
+          </div>
+        )}
       </div>
 
       <div className="space-y-6">

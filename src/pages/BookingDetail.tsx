@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useBooking } from "@/context/BookingContext";
@@ -141,27 +140,28 @@ const BookingDetail = () => {
     navigate(`/bookings/new?copy=${id}`);
   };
 
+  // Create action buttons
+  const actionButtons = (
+    <>
+      {canEditBooking && (
+        <Button onClick={handleEditBooking} className="gap-2">
+          <Edit className="h-4 w-4" />
+          {t('buttons.editBooking')}
+        </Button>
+      )}
+      
+      {canCopyBooking && (
+        <Button onClick={handleCopyBooking} variant="outline" className="gap-2">
+          <Copy className="h-4 w-4" />
+          Copy Booking
+        </Button>
+      )}
+    </>
+  );
+
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-start">
-        <BookingHeader booking={booking} />
-        
-        <div className="flex gap-2">
-          {canEditBooking && (
-            <Button onClick={handleEditBooking} className="gap-2">
-              <Edit className="h-4 w-4" />
-              {t('buttons.editBooking')}
-            </Button>
-          )}
-          
-          {canCopyBooking && (
-            <Button onClick={handleCopyBooking} variant="outline" className="gap-2">
-              <Copy className="h-4 w-4" />
-              Copy Booking
-            </Button>
-          )}
-        </div>
-      </div>
+      <BookingHeader booking={booking} actionButtons={actionButtons} />
       
       <div className="booking-detail-grid">
         <div className="space-y-6">
