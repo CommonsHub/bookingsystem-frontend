@@ -33,6 +33,8 @@ export const useBookingFormOperations = () => {
       lumaEventUrl: data.lumaEventUrl,
       calendarUrl: data.calendarUrl,
       publicUri: data.publicUri,
+      price: data.price,
+      currency: data.currency,
     };
   };
 

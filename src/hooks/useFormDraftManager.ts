@@ -30,6 +30,7 @@ export const useFormDraftManager = ({
   // Load saved draft on initial render (only if not skipping draft loading)
   useEffect(() => {
     if (skipDraftLoading) {
+      console.log("Skipping draft loading for edit form - performance optimization");
       return;
     }
 
@@ -110,7 +111,7 @@ export const useFormDraftManager = ({
   };
 
   return {
-    isLoading,
+    isLoading: skipDraftLoading ? false : isLoading,
     isDraftCleared,
     draftLoaded: skipDraftLoading ? false : draftLoaded,
     handleClearDraft,

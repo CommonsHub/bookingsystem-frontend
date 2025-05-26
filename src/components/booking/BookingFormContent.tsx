@@ -12,6 +12,7 @@ import { EventSupportSection } from "./EventSupportSection";
 import { MembershipSection } from "./MembershipSection";
 import { RoomSelectionSection } from "./RoomSelectionSection";
 import { PricingQuoteSection } from "./PricingQuoteSection";
+import { PriceSection } from "./PriceSection";
 import { FormData } from "./BookingFormSchema";
 import { Room } from "@/types";
 import { useFormContext } from "react-hook-form";
@@ -24,13 +25,15 @@ interface BookingFormContentProps {
   rooms: Room[];
   selectedRoomId: string | null;
   setSelectedRoomId: (id: string | null) => void;
+  isEdit?: boolean;
 }
 
 export const BookingFormContent = ({
   control,
   rooms,
   selectedRoomId,
-  setSelectedRoomId
+  setSelectedRoomId,
+  isEdit = false
 }: BookingFormContentProps) => {
   const { t } = useTranslation();
   const { watch } = useFormContext<FormData>();
@@ -38,7 +41,7 @@ export const BookingFormContent = ({
   // Watch for the bookingId to determine if this is an edit form
   const bookingId = watch("bookingId");
   const language = watch("language");
-  const isEdit = !!bookingId;
+  const isEditForm = isEdit || !!bookingId;
 
   const getLanguageDisplay = (languageCode?: string) => {
     if (!languageCode) return t('form.language.notSet');
@@ -56,7 +59,7 @@ export const BookingFormContent = ({
         <BookingInfoSection control={control} />
         
         {/* Show language field for existing bookings (read-only) */}
-        {isEdit && (
+        {isEditForm && (
           <div className="mt-4">
             <Label>{t('form.language.label')}</Label>
             <Input
@@ -139,9 +142,23 @@ export const BookingFormContent = ({
         <AdditionalInfoSection control={control} />
       </div>
 
+      {/* Price section - only show for edit forms */}
+      {isEditForm && (
+        <>
+          <Separator className="my-12" />
+          <div data-wizard-section="7" className="scroll-mt-24 py-8">
+            <div className="mb-8">
+              <h2 className="text-xl font-semibold mb-2">{t('form.sections.price.title')}</h2>
+              <p className="text-muted-foreground text-sm">{t('form.sections.price.description')}</p>
+            </div>
+            <PriceSection control={control} />
+          </div>
+        </>
+      )}
+
       <Separator className="my-12" />
 
-      <div data-wizard-section="7" className="scroll-mt-24 py-8">
+      <div data-wizard-section={isEditForm ? "8" : "7"} className="scroll-mt-24 py-8">
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">{t('form.sections.pricing.title')}</h2>
           <p className="text-muted-foreground text-sm">{t('form.sections.pricing.description')}</p>

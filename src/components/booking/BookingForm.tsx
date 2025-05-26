@@ -58,7 +58,7 @@ export const BookingForm = ({
     bookingId,
     rooms,
     onDraftLoaded: (roomId: string) => setSelectedRoomId(roomId),
-    skipDraftLoading
+    skipDraftLoading: skipDraftLoading || isEdit // Skip draft loading for edit forms
   });
 
   const handleSubmit = async (data: FormData) => {
@@ -140,6 +140,7 @@ const WizardFormContent = ({
               rooms={rooms}
               selectedRoomId={selectedRoomId}
               setSelectedRoomId={setSelectedRoomId}
+              isEdit={isEdit}
             />
 
             <BookingFormFooter

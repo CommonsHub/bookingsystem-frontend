@@ -10,7 +10,6 @@ import { toast } from "@/components/ui/toast-utils";
 import { useAuth } from "@/context/AuthContext";
 import { useBooking } from "@/context/BookingContext";
 import { rooms } from "@/data/rooms";
-import { useDraftBooking } from "@/hooks/useDraftBooking";
 import { useBookingFormOperations } from "@/hooks/useBookingFormOperations";
 import { createDefaultFormValues, transformBookingToFormData } from "@/utils/formDefaults";
 
@@ -21,7 +20,6 @@ const EditBookingPage = () => {
   const { bookings, loading: bookingsLoading } = useBooking();
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
-  const { loadDraft } = useDraftBooking(bookingId);
   const { handleUpdateBooking } = useBookingFormOperations();
 
   const defaultEmail = user?.email || "";
@@ -49,26 +47,12 @@ const EditBookingPage = () => {
       return;
     }
 
-    const loadBookingData = async () => {
-      try {
-        const draftData = await loadDraft();
-        
-        if (draftData) {
-          setDefaultValues(draftData);
-        } else {
-          const formData = transformBookingToFormData(booking);
-          setDefaultValues(formData);
-        }
-      } catch (error) {
-        console.error("Error loading booking data:", error);
-        toast.error("Error loading booking data");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadBookingData();
-  }, [bookingId, booking, bookingsLoading, loadDraft, navigate, t]);
+    // For edit forms, we directly use the booking data without loading drafts
+    // This significantly improves performance
+    const formData = transformBookingToFormData(booking);
+    setDefaultValues(formData);
+    setLoading(false);
+  }, [bookingId, booking, bookingsLoading, navigate, t]);
 
   const handleSubmit = async (data: FormData) => {
     if (!booking) return;
@@ -147,6 +131,7 @@ const EditBookingPage = () => {
       defaultValues={defaultValues}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
+      skipDraftLoading={true}
     />
   );
 };
