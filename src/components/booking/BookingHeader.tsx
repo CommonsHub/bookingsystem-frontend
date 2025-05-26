@@ -38,17 +38,15 @@ export const BookingHeader = ({ booking }: BookingHeaderProps) => {
 
   return (
     <>
-      <div className="flex items-center mb-6">
-        <Button variant="ghost" size="sm" asChild className="gap-1">
-          <Link to="/">
-            <ChevronLeft className="h-4 w-4" />
-            {t('nav.backToBookings')}
-          </Link>
-        </Button>
-      </div>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="sm" asChild className="gap-1">
+            <Link to="/">
+              <ChevronLeft className="h-4 w-4" />
+              {t('nav.backToBookings')}
+            </Link>
+          </Button>
 
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
           <Badge
             className={`${statusColor(booking.status)} text-md px-3 py-1`}
           >
@@ -61,7 +59,9 @@ export const BookingHeader = ({ booking }: BookingHeaderProps) => {
             </Badge>
           )}
         </div>
+      </div>
 
+      <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
             {booking.title}

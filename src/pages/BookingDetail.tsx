@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useBooking } from "@/context/BookingContext";
@@ -142,7 +143,7 @@ const BookingDetail = () => {
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-start">
         <BookingHeader booking={booking} />
         
         <div className="flex gap-2">
