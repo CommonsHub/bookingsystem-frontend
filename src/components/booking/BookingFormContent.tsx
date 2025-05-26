@@ -37,7 +37,7 @@ export const BookingFormContent = ({
 }: BookingFormContentProps) => {
   const { t } = useTranslation();
   const { watch } = useFormContext<FormData>();
-  
+
   // Watch for the bookingId to determine if this is an edit form
   const bookingId = watch("bookingId");
   const language = watch("language");
@@ -57,7 +57,7 @@ export const BookingFormContent = ({
           <p className="text-muted-foreground text-sm">{t('form.sections.basicInfo.description')}</p>
         </div>
         <BookingInfoSection control={control} />
-        
+
         {/* Show language field for existing bookings (read-only) */}
         {isEditForm && (
           <div className="mt-4">
@@ -155,16 +155,19 @@ export const BookingFormContent = ({
           </div>
         </>
       )}
+      {!isEditForm && (
+        <>
+          <Separator className="my-12" />
 
-      <Separator className="my-12" />
-
-      <div data-wizard-section={isEditForm ? "8" : "7"} className="scroll-mt-24 py-8">
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">{t('form.sections.pricing.title')}</h2>
-          <p className="text-muted-foreground text-sm">{t('form.sections.pricing.description')}</p>
-        </div>
-        <PricingQuoteSection rooms={rooms} />
-      </div>
+          <div data-wizard-section={isEditForm ? "8" : "7"} className="scroll-mt-24 py-8">
+            <div className="mb-8">
+              <h2 className="text-xl font-semibold mb-2">{t('form.sections.pricing.title')}</h2>
+              <p className="text-muted-foreground text-sm">{t('form.sections.pricing.description')}</p>
+            </div>
+            <PricingQuoteSection rooms={rooms} />
+          </div>
+        </>
+      )}
     </CardContent>
   );
 };

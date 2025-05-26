@@ -15,10 +15,7 @@ interface PriceSectionProps {
 
 const currencies = [
   { value: "EUR", label: "EUR (€)" },
-  { value: "USD", label: "USD ($)" },
-  { value: "GBP", label: "GBP (£)" },
-  { value: "JPY", label: "JPY (¥)" },
-  { value: "CHF", label: "CHF" },
+  { value: "CHT", label: "CHT" },
 ];
 
 export const PriceSection = ({ control }: PriceSectionProps) => {
