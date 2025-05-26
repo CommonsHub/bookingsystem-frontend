@@ -1,3 +1,4 @@
+
 {
   "app": {
     "title": "Commons Hub Brussel Boekingen"
@@ -27,7 +28,8 @@
     "newTitle": "Nieuwe boekingsaanvraag",
     "newDescription": "Vul het onderstaande formulier in om een zaalreservering aan te vragen",
     "roomBookingDetails": "Zaalreserveringsdetails",
-    "enterDetails": "Voer de details van uw boekingsaanvraag in"
+    "enterDetails": "Voer de details van uw boekingsaanvraag in",
+    "price": "Prijs"
   },
   "form": {
     "sections": {
@@ -64,6 +66,10 @@
       "additionalInfo": {
         "title": "Aanvullende informatie",
         "description": "Eventuele andere details die u wilt delen (optioneel)"
+      },
+      "price": {
+        "title": "Prijsinformatie",
+        "description": "Stel de prijs voor uw evenement in (optioneel)"
       },
       "pricing": {
         "title": "Prijsschatting",
@@ -116,6 +122,17 @@
       "pickEndDate": "Kies einddatum",
       "endNaturalLanguagePlaceholder": "Voer de datum in natuurlijke taal in: na 2H, om 17:00 uur, ..",
       "endTimeError": "Kies eerst de startdatum"
+    },
+    "price": {
+      "price": "Prijs",
+      "pricePlaceholder": "Voer prijs in",
+      "currency": "Valuta",
+      "selectCurrency": "Selecteer valuta"
+    },
+    "language": {
+      "label": "Taal",
+      "notSet": "Niet ingesteld",
+      "readOnlyNote": "Taal kan niet worden gewijzigd na het aanmaken van de boeking"
     }
   },
   "profile": {
@@ -165,7 +182,8 @@
     "openCalendarEvent": "Kalender evenement openen",
     "copyBooking": "Boeking kopiëren",
     "language": "Taal",
-    "notSpecified": "Niet gespecificeerd"
+    "notSpecified": "Niet gespecificeerd",
+    "price": "Prijs"
   },
   "roomInfo": {
     "title": "Zaalinformatie",

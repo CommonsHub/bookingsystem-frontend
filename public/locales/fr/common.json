@@ -1,6 +1,7 @@
+
 {
   "app": {
-    "title": "Réservations Commons Hub Bruxelles"
+    "title": "Commons Hub Bruxelles Réservations"
   },
   "auth": {
     "login": "Connexion",
@@ -8,14 +9,14 @@
   },
   "bookings": {
     "title": "Réservations de salles",
-    "subtitle": "Consultez toutes les demandes de réservation de salles et leur statut",
+    "subtitle": "Voir toutes les demandes de réservation de salles et leur statut",
     "new": "Nouvelle réservation",
     "upcoming": "Aucune demande de réservation à venir",
     "none": "Il n'y a pas encore de réservations dans le système.",
-    "noneUpcoming": "Il n'y a pas de réservations à venir. Vous pouvez en créer une ou consulter les réservations passées.",
+    "noneUpcoming": "Il n'y a pas de réservations à venir. Vous pouvez en créer une ou voir les réservations passées.",
     "create": "Nouvelle demande de réservation",
     "viewAll": "Voir toutes les réservations",
-    "showUpcoming": "Afficher uniquement les réservations à venir",
+    "showUpcoming": "Afficher seulement les prochaines",
     "showAll": "Afficher toutes les réservations",
     "tableView": "Tableau",
     "cardView": "Cartes",
@@ -27,7 +28,8 @@
     "newTitle": "Nouvelle demande de réservation",
     "newDescription": "Remplissez le formulaire ci-dessous pour demander une réservation de salle",
     "roomBookingDetails": "Détails de la réservation de salle",
-    "enterDetails": "Saisissez les détails de votre demande de réservation"
+    "enterDetails": "Entrez les détails de votre demande de réservation",
+    "price": "Prix"
   },
   "form": {
     "sections": {
@@ -45,15 +47,15 @@
       },
       "catering": {
         "title": "Options de restauration",
-        "description": "Ajoutez nourriture et boissons à votre événement (optionnel)"
+        "description": "Ajoutez de la nourriture et des boissons à votre événement (optionnel)"
       },
       "eventSupport": {
         "title": "Support d'événement",
         "description": "Services supplémentaires pour votre événement (optionnel)",
         "professionalTitle": "Nous avons plusieurs organisateurs d'événements professionnels et facilitateurs/concepteurs de conférences disponibles pour une expérience optimale",
-        "professionalDescription": "Si vous êtes intéressé par un support supplémentaire, vous pouvez l'ajouter ici.",
+        "professionalDescription": "Si vous êtes intéressé par un soutien supplémentaire, vous pouvez l'ajouter ici.",
         "publicEventLabel": "Événement public (nous publierons également via nos canaux)",
-        "publicEventDescription": "Cochez cette case si vous souhaitez que votre événement soit promu sur nos canaux publics et ouvert à la communauté. Pour les événements privés, nous offrons un service personnalisé haut de gamme et l'utilisation exclusive des Commons avec un support dédié—cette expérience premium inclut un supplément de 30% pour s'assurer que votre rassemblement reçoive toute notre attention et maintienne l'atmosphère intime que vous méritez.",
+        "publicEventDescription": "Cochez cette case si vous souhaitez que votre événement soit promu sur nos canaux publics et ouvert à la communauté. Pour les événements privés, nous offrons un service personnalisé de haute qualité et l'utilisation exclusive des Commons avec un support dédié—cette expérience premium comprend un supplément de 30% pour garantir que votre rassemblement reçoive toute notre attention et maintienne l'atmosphère intime que vous méritez.",
         "logisticsSupport": "Intéressé par un support logistique complet pendant la journée (support AV et technique | aide à l'installation)",
         "facilitationSupport": "Intéressé par le support de facilitation et la conception de conférences"
       },
@@ -63,20 +65,24 @@
       },
       "additionalInfo": {
         "title": "Informations supplémentaires",
-        "description": "Tout autre détail que vous souhaitez partager (optionnel)"
+        "description": "Tous autres détails que vous aimeriez partager (optionnel)"
+      },
+      "price": {
+        "title": "Informations sur le prix",
+        "description": "Définissez le prix pour votre événement (optionnel)"
       },
       "pricing": {
-        "title": "Estimation des prix",
-        "description": "Consultez les coûts estimés pour votre réservation"
+        "title": "Estimation de prix",
+        "description": "Examiner les coûts estimés pour votre réservation"
       }
     },
     "basicInfo": {
       "title": "Titre",
       "titlePlaceholder": "Brève description de votre réunion",
       "description": "Description",
-      "descriptionPlaceholder": "Fournissez des détails sur l'objectif de la réservation",
-      "organizer": "Organisateur de l'événement",
-      "organizerPlaceholder": "Nom de la personne ou de l'organisation qui organise l'événement",
+      "descriptionPlaceholder": "Fournissez des détails sur le but de la réservation",
+      "organizer": "Organisateur d'événement",
+      "organizerPlaceholder": "Nom de la personne ou organisation qui organise l'événement",
       "estimatedAttendees": "Nombre estimé de participants",
       "attendeesPlaceholder": "Nombre attendu de participants"
     },
@@ -90,33 +96,62 @@
       "calendarUrl": "URL du calendrier",
       "calendarUrlPlaceholder": "https://calendar.google.com/event...",
       "publicUri": "URI publique",
-      "publicUriPlaceholder": "slug-de-votre-evenement"
+      "publicUriPlaceholder": "votre-evenement-slug"
     },
     "roomSelection": {
-      "whichSpace": "Quel espace souhaitez-vous réserver ?",
+      "whichSpace": "Quel espace aimeriez-vous réserver ?",
       "capacity": "Capacité",
-      "possibleSetup": "Configuration possible",
+      "possibleSetup": "Installation possible",
       "additionalNotes": "Notes supplémentaires sur la salle",
-      "additionalNotesPlaceholder": "Exigences spécifiques pour la configuration de la salle ou les fonctionnalités dont vous avez besoin",
+      "additionalNotesPlaceholder": "Exigences spécifiques pour l'installation de la salle ou fonctionnalités dont vous avez besoin",
       "additionalSpaceLabel": "Nous avons besoin de tout + espace supplémentaire",
       "additionalSpaceDescription": "Nous pouvons offrir un espace supplémentaire au premier étage si nécessaire."
     },
     "contact": {
-      "confirmationNote": "Nous enverrons des confirmations de réservation à cette adresse e-mail",
-      "email": "E-mail",
-      "emailPlaceholder": "your.email@example.com",
+      "name": "Nom",
       "namePlaceholder": "Votre nom complet",
-      "name": "Nom"
+      "email": "E-mail",
+      "emailPlaceholder": "votre.email@example.com",
+      "confirmationNote": "Nous enverrons les confirmations de réservation à cette adresse e-mail"
     },
     "dateTime": {
       "endDate": "Date de fin",
       "startDate": "Date de début",
       "pickDate": "Choisir la date",
-      "naturalLanguagePlaceholder": "Entrez la date du langage naturel: vendredi prochain à 10h, 10 juillet à 14h00, ..",
-      "pickEndDate": "Choisissez la date de fin",
-      "endNaturalLanguagePlaceholder": "Entrez la date du langage naturel: après 2h, à 17h00, ..",
+      "naturalLanguagePlaceholder": "Entrez la date en langage naturel : vendredi prochain à 10h, 10 juillet à 14h00, ..",
+      "pickEndDate": "Choisir la date de fin",
+      "endNaturalLanguagePlaceholder": "Entrez la date en langage naturel : après 2h, à 17h00, ..",
       "endTimeError": "Choisissez d'abord la date de début"
+    },
+    "price": {
+      "price": "Prix",
+      "pricePlaceholder": "Entrer le prix",
+      "currency": "Devise",
+      "selectCurrency": "Sélectionner la devise"
+    },
+    "language": {
+      "label": "Langue",
+      "notSet": "Non défini",
+      "readOnlyNote": "La langue ne peut pas être modifiée après la création de la réservation"
     }
+  },
+  "profile": {
+    "title": "Votre profil",
+    "description": "Mettre à jour vos informations personnelles et détails d'entreprise",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "Votre nom complet",
+    "address": "Adresse",
+    "addressPlaceholder": "Votre adresse",
+    "hasBusiness": "J'ai une entreprise",
+    "hasBusinessDescription": "Cochez ceci si vous devez fournir des informations de TVA",
+    "vatNumber": "Numéro de TVA",
+    "vatNumberPlaceholder": "Votre numéro de TVA",
+    "saveChanges": "Sauvegarder les modifications",
+    "improvementsTitle": "Améliorations pour les utilisateurs avancés",
+    "improvementsDescription": "Paramètres avancés pour améliorer votre expérience de réservation",
+    "stickyHeader": "Afficher l'en-tête de progression collant",
+    "stickyHeaderDescription": "Afficher un indicateur de progression flottant qui reste visible lors du défilement à travers le formulaire de réservation",
+    "loading": "Chargement..."
   },
   "booking": {
     "title": "Titre",
@@ -131,12 +166,12 @@
     "description": "Description",
     "time": "Heure",
     "roomCapacity": "Capacité de la salle",
-    "eventOrganizer": "Organisateur de l'événement",
+    "eventOrganizer": "Organisateur d'événement",
     "estimatedAttendees": "Participants estimés",
     "lumaEvent": "Événement Luma",
     "calendarEvent": "Événement du calendrier",
     "publicUri": "URI publique",
-    "roomSetup": "Configuration de la salle",
+    "roomSetup": "Installation de la salle",
     "additionalSpace": "Espace supplémentaire",
     "additionalSpaceRequired": "Espace supplémentaire requis",
     "eventType": "Type d'événement",
@@ -146,18 +181,19 @@
     "openEventPage": "Ouvrir la page de l'événement",
     "openCalendarEvent": "Ouvrir l'événement du calendrier",
     "copyBooking": "Copier la réservation",
+    "language": "Langue",
     "notSpecified": "Non spécifié",
-    "language": "Langue"
+    "price": "Prix"
   },
   "roomInfo": {
     "title": "Informations sur la salle",
     "location": "Emplacement",
     "capacity": "Capacité",
-    "amenities": "Équipements",
+    "amenities": "Commodités",
     "projector": "Projecteur",
     "whiteboards": "Tableaux blancs",
     "videoConferencing": "Visioconférence",
-    "coffeeStation": "Station café"
+    "coffeeStation": "Station de café"
   },
   "pricing": {
     "totalEstimate": "Estimation totale",
@@ -212,29 +248,11 @@
     "bookingUpdated": "Réservation mise à jour avec succès !",
     "bookingUpdateError": "Échec de la mise à jour de la réservation"
   },
-  "greeting": "Bonjour {{name}} !",
+  "greeting": "Salut {{name}} !",
   "footer": {
     "copyright": "Commons Hub Bruxelles. Tous droits réservés."
   },
   "language": {
     "select": "Sélectionner la langue"
-  },
-  "profile": {
-    "address": "Adresse",
-    "addressPlaceholder": "Votre adresse",
-    "description": "Mettez à jour vos informations personnelles et vos détails d'entreprise",
-    "fullName": "Nom et prénom",
-    "fullNamePlaceholder": "Votre nom complet",
-    "hasBusiness": "J'ai une entreprise",
-    "hasBusinessDescription": "Cochez ceci si vous avez besoin de fournir des informations TVA",
-    "improvementsDescription": "Paramètres avancés pour améliorer votre expérience de réservation",
-    "improvementsTitle": "Améliorations pour les utilisateurs de puissance",
-    "loading": "Chargement...",
-    "saveChanges": "Enregistrer les modifications",
-    "stickyHeader": "Afficher l'en-tête de progrès collant",
-    "stickyHeaderDescription": "Affichez un indicateur de progrès flottant qui reste visible tout en faisant défiler le formulaire de réservation",
-    "title": "Votre profil",
-    "vatNumber": "Numéro de TVA",
-    "vatNumberPlaceholder": "Votre numéro de cuve"
   }
 }

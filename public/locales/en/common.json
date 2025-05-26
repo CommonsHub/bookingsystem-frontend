@@ -1,3 +1,4 @@
+
 {
   "app": {
     "title": "Commons Hub Brussels Bookings"
@@ -27,7 +28,8 @@
     "newTitle": "New Booking Request",
     "newDescription": "Fill out the form below to request a room booking",
     "roomBookingDetails": "Room Booking Details",
-    "enterDetails": "Enter the details of your booking request"
+    "enterDetails": "Enter the details of your booking request",
+    "price": "Price"
   },
   "form": {
     "sections": {
@@ -64,6 +66,10 @@
       "additionalInfo": {
         "title": "Additional Information",
         "description": "Any other details you'd like to share (optional)"
+      },
+      "price": {
+        "title": "Price Information",
+        "description": "Set the price for your event (optional)"
       },
       "pricing": {
         "title": "Pricing Estimate",
@@ -116,6 +122,17 @@
       "pickEndDate": "Choose end date",
       "naturalLanguagePlaceholder": "Enter date in natural language: next Friday at 10am, 10th July at 14:00, ..",
       "endNaturalLanguagePlaceholder": "Enter date in natural language: after 2h, at 17:00,.."
+    },
+    "price": {
+      "price": "Price",
+      "pricePlaceholder": "Enter price",
+      "currency": "Currency",
+      "selectCurrency": "Select currency"
+    },
+    "language": {
+      "label": "Language",
+      "notSet": "Not set",
+      "readOnlyNote": "Language cannot be changed after booking creation"
     }
   },
   "profile": {
@@ -165,7 +182,8 @@
     "openCalendarEvent": "Open calendar event",
     "copyBooking": "Copy booking",
     "language": "Language",
-    "notSpecified": "Not specified"
+    "notSpecified": "Not specified",
+    "price": "Price"
   },
   "roomInfo": {
     "title": "Room Information",

@@ -12,7 +12,6 @@ import { EventSupportSection } from "./EventSupportSection";
 import { MembershipSection } from "./MembershipSection";
 import { RoomSelectionSection } from "./RoomSelectionSection";
 import { PricingQuoteSection } from "./PricingQuoteSection";
-import { PriceSection } from "./PriceSection";
 import { FormData } from "./BookingFormSchema";
 import { Room } from "@/types";
 import { useFormContext } from "react-hook-form";
@@ -143,16 +142,6 @@ export const BookingFormContent = ({
       <Separator className="my-12" />
 
       <div data-wizard-section="7" className="scroll-mt-24 py-8">
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">{t('form.sections.price.title')}</h2>
-          <p className="text-muted-foreground text-sm">{t('form.sections.price.description')}</p>
-        </div>
-        <PriceSection control={control} />
-      </div>
-
-      <Separator className="my-12" />
-
-      <div data-wizard-section="8" className="scroll-mt-24 py-8">
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">{t('form.sections.pricing.title')}</h2>
           <p className="text-muted-foreground text-sm">{t('form.sections.pricing.description')}</p>
