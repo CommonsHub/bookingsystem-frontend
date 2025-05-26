@@ -2,6 +2,7 @@
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, Circle } from "lucide-react";
+import { useState, useEffect } from "react";
 
 interface BookingWizardProgressProps {
   currentSection: number;
@@ -14,14 +15,34 @@ export const BookingWizardProgress = ({
   completedSections, 
   sections 
 }: BookingWizardProgressProps) => {
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const progressPercentage = (completedSections.size / sections.length) * 100;
+
+  // Monitor main header visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      const headerHeight = 80; // Main header height
+      const scrolled = window.scrollY > headerHeight;
+      setIsHeaderVisible(!scrolled);
+    };
+
+    const throttledHandleScroll = () => {
+      requestAnimationFrame(handleScroll);
+    };
+
+    window.addEventListener('scroll', throttledHandleScroll);
+    handleScroll(); // Call once on mount
+    
+    return () => window.removeEventListener('scroll', throttledHandleScroll);
+  }, []);
 
   const scrollToSection = (sectionIndex: number) => {
     const sectionElement = document.querySelector(`[data-wizard-section="${sectionIndex}"]`);
     if (sectionElement) {
-      const headerHeight = 80; // Account for main header height
+      const headerHeight = isHeaderVisible ? 80 : 0; // Adjust based on header visibility
+      const progressHeight = 80; // Account for progress card height
       const elementTop = sectionElement.getBoundingClientRect().top + window.scrollY;
-      const scrollPosition = elementTop - headerHeight - 16; // Add some padding
+      const scrollPosition = elementTop - headerHeight - progressHeight - 16; // Add some padding
       
       window.scrollTo({
         top: scrollPosition,
@@ -32,7 +53,9 @@ export const BookingWizardProgress = ({
 
   return (
     <div 
-      className="sticky top-20 z-40 px-4 sm:px-6"
+      className={`sticky z-40 px-4 sm:px-6 transition-all duration-200 ${
+        isHeaderVisible ? 'top-20' : 'top-0'
+      }`}
       style={{ 
         WebkitBackfaceVisibility: 'hidden',
         backfaceVisibility: 'hidden'

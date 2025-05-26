@@ -75,8 +75,10 @@ export const useBookingWizard = () => {
   useEffect(() => {
     const handleScroll = () => {
       const headerHeight = 80; // Main header height
-      const viewportMiddle = window.scrollY + window.innerHeight / 2;
-
+      const progressHeight = 80; // Progress card height
+      const isHeaderVisible = window.scrollY <= headerHeight;
+      const effectiveTopOffset = isHeaderVisible ? headerHeight + progressHeight : progressHeight;
+      
       const sections = document.querySelectorAll('[data-wizard-section]');
       
       sections.forEach((section, index) => {
@@ -85,8 +87,11 @@ export const useBookingWizard = () => {
         const sectionTop = rect.top + window.scrollY;
         const sectionBottom = sectionTop + rect.height;
 
-        // Check if the middle of the viewport is within this section
-        if (viewportMiddle >= sectionTop - headerHeight && viewportMiddle <= sectionBottom) {
+        // Check if the section is currently visible in the viewport considering the sticky header
+        const viewportTop = window.scrollY + effectiveTopOffset;
+        const viewportMiddle = window.scrollY + window.innerHeight / 2;
+
+        if (viewportMiddle >= sectionTop && viewportMiddle <= sectionBottom) {
           setCurrentSection(index);
         }
       });
