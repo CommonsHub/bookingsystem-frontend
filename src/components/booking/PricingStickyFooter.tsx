@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { useFormContext } from "react-hook-form";
 import { FormData } from "./BookingFormSchema";
@@ -109,13 +108,14 @@ export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
         console.log('Window height:', window.innerHeight);
         
         // Show sticky footer when pricing section is scrolled past but form footer is not yet visible
-        const pricingSectionOutOfView = pricingSectionRect.bottom < window.innerHeight * 0.3;
+        // Fixed logic: when pricing section is scrolled past, its bottom will be above the viewport
+        const pricingSectionScrolledPast = pricingSectionRect.bottom < window.innerHeight * 0.8;
         const formFooterNotYetVisible = formFooterRect.top > window.innerHeight;
         
-        const shouldShow = pricingSectionOutOfView && formFooterNotYetVisible;
+        const shouldShow = pricingSectionScrolledPast && formFooterNotYetVisible;
         
         console.log('Should show sticky footer:', shouldShow);
-        console.log('Pricing out of view:', pricingSectionOutOfView);
+        console.log('Pricing scrolled past:', pricingSectionScrolledPast);
         console.log('Form footer not visible:', formFooterNotYetVisible);
         
         setIsVisible(shouldShow);
