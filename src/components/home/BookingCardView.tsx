@@ -1,7 +1,7 @@
 
 import { Booking, User } from "@/types";
 import { formatDateTime } from "@/lib/utils";
-import { CalendarDays, MessageSquare, Trash2, Hash, Copy, Globe, CreditCard } from "lucide-react";
+import { CalendarDays, MessageSquare, Trash2, Hash, Copy, Globe, CreditCard, ExternalLink, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { StatusBadge } from "./StatusBadge";
@@ -90,6 +90,40 @@ export const BookingCardView = ({
                 <span>Language: {getLanguageDisplay(booking.language)}</span>
               </div>
             </div>
+
+            {/* Event Links */}
+            {(booking.lumaEventUrl || booking.calendarUrl) && (
+              <div className="flex items-center gap-2 mt-3" onClick={(e) => e.stopPropagation()}>
+                {booking.lumaEventUrl && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0 text-blue-600"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(booking.lumaEventUrl, '_blank');
+                    }}
+                    title="Open Luma event"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                  </Button>
+                )}
+                {booking.calendarUrl && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0 text-green-600"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(booking.calendarUrl, '_blank');
+                    }}
+                    title="Open calendar event"
+                  >
+                    <Calendar className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+            )}
           </CardContent>
 
           <CardFooter className="border-t pt-4 flex justify-between">

@@ -2,7 +2,7 @@
 import { Booking, User } from "@/types";
 import { formatDateTime } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import { MessageSquare, Trash2, Users, Hash, Copy, Globe, Calendar, Clock, MapPin, CreditCard } from "lucide-react";
+import { MessageSquare, Trash2, Users, Hash, Copy, Globe, Calendar, Clock, MapPin, CreditCard, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "./StatusBadge";
 import { useTranslation } from "react-i18next";
@@ -134,6 +134,40 @@ export const BookingTableView = ({
               </div>
             </div>
 
+            {/* Event Links for mobile */}
+            {(booking.lumaEventUrl || booking.calendarUrl) && (
+              <div className="flex items-center gap-2 mt-3 pt-2 border-t" onClick={stopPropagation}>
+                {booking.lumaEventUrl && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-6 w-6 p-0 text-blue-600"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(booking.lumaEventUrl, '_blank');
+                    }}
+                    title="Open Luma event"
+                  >
+                    <ExternalLink className="h-3 w-3" />
+                  </Button>
+                )}
+                {booking.calendarUrl && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-6 w-6 p-0 text-green-600"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(booking.calendarUrl, '_blank');
+                    }}
+                    title="Open calendar event"
+                  >
+                    <Calendar className="h-3 w-3" />
+                  </Button>
+                )}
+              </div>
+            )}
+
             <div className="flex items-center justify-between mt-3 pt-3 border-t">
               <div className="flex items-center gap-1 text-xs text-muted-foreground">
                 <span className="truncate">
@@ -208,6 +242,7 @@ export const BookingTableView = ({
               <TableHead className="font-semibold">{t('booking.attendees')}</TableHead>
               <TableHead className="font-semibold">{t('booking.status')}</TableHead>
               <TableHead className="font-semibold">{t('booking.language')}</TableHead>
+              <TableHead className="font-semibold">Links</TableHead>
               <TableHead className="font-semibold">{t('booking.createdBy')}</TableHead>
               <TableHead className="font-semibold">{t('booking.comments')}</TableHead>
               <TableHead className="font-semibold text-center">{t('booking.actions')}</TableHead>
@@ -255,6 +290,38 @@ export const BookingTableView = ({
                     <span className="text-xs text-muted-foreground">
                       {booking.language?.toUpperCase() || 'EN'}
                     </span>
+                  </div>
+                </TableCell>
+                <TableCell onClick={stopPropagation}>
+                  <div className="flex items-center gap-1">
+                    {booking.lumaEventUrl && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 w-8 p-0 text-blue-600 hover:bg-blue-50"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(booking.lumaEventUrl, '_blank');
+                        }}
+                        title="Open Luma event"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                      </Button>
+                    )}
+                    {booking.calendarUrl && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 w-8 p-0 text-green-600 hover:bg-green-50"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(booking.calendarUrl, '_blank');
+                        }}
+                        title="Open calendar event"
+                      >
+                        <Calendar className="h-4 w-4" />
+                      </Button>
+                    )}
                   </div>
                 </TableCell>
                 <TableCell className="max-w-[150px]">

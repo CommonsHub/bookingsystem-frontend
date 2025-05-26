@@ -13,6 +13,7 @@ import { MembershipSection } from "./MembershipSection";
 import { RoomSelectionSection } from "./RoomSelectionSection";
 import { PricingQuoteSection } from "./PricingQuoteSection";
 import { PriceSection } from "./PriceSection";
+import { UrlFieldsSection } from "./UrlFieldsSection";
 import { FormData } from "./BookingFormSchema";
 import { Room } from "@/types";
 import { useFormContext } from "react-hook-form";
@@ -142,11 +143,25 @@ export const BookingFormContent = ({
         <AdditionalInfoSection control={control} />
       </div>
 
-      {/* Price section - only show for edit forms */}
+      {/* URL section - only show for edit forms */}
       {isEditForm && (
         <>
           <Separator className="my-12" />
           <div data-wizard-section="7" className="scroll-mt-24 py-8">
+            <div className="mb-8">
+              <h2 className="text-xl font-semibold mb-2">Event URLs</h2>
+              <p className="text-muted-foreground text-sm">Links related to your event</p>
+            </div>
+            <UrlFieldsSection control={control} />
+          </div>
+        </>
+      )}
+
+      {/* Price section - only show for edit forms */}
+      {isEditForm && (
+        <>
+          <Separator className="my-12" />
+          <div data-wizard-section="8" className="scroll-mt-24 py-8">
             <div className="mb-8">
               <h2 className="text-xl font-semibold mb-2">{t('form.sections.price.title')}</h2>
               <p className="text-muted-foreground text-sm">{t('form.sections.price.description')}</p>
@@ -159,7 +174,7 @@ export const BookingFormContent = ({
         <>
           <Separator className="my-12" />
 
-          <div data-wizard-section={isEditForm ? "8" : "7"} className="scroll-mt-24 py-8">
+          <div data-wizard-section="7" className="scroll-mt-24 py-8">
             <div className="mb-8">
               <h2 className="text-xl font-semibold mb-2">{t('form.sections.pricing.title')}</h2>
               <p className="text-muted-foreground text-sm">{t('form.sections.pricing.description')}</p>
