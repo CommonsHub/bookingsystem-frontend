@@ -1,11 +1,16 @@
 
 import { Booking, User } from "@/types";
 import { formatDateTime } from "@/lib/utils";
-import { CalendarDays, MessageSquare, Trash2, Hash, Copy, Globe } from "lucide-react";
+import { CalendarDays, MessageSquare, Trash2, Hash, Copy, Globe, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { StatusBadge } from "./StatusBadge";
 import { languages } from "@/i18n/i18n";
+import { useAuth } from "@/context/AuthContext";
+import { useBooking } from "@/context/BookingContext";
+import { canUserApproveBookings } from "@/utils/bookingHelpers";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface BookingCardViewProps {
   bookings: Booking[];
@@ -20,15 +25,39 @@ export const BookingCardView = ({
   user,
   onCancelBooking,
 }: BookingCardViewProps) => {
+  const { t } = useTranslation();
+  const { updateBooking } = useBooking();
+  const [updatingBookings, setUpdatingBookings] = useState<Set<string>>(new Set());
+
   const handleCopyBooking = (e: React.MouseEvent, bookingId: string) => {
     e.stopPropagation();
     window.location.href = `/bookings/new?copy=${bookingId}`;
+  };
+
+  const handleMarkAsPaid = async (e: React.MouseEvent, booking: Booking) => {
+    e.stopPropagation();
+    setUpdatingBookings(prev => new Set(prev).add(booking.id));
+    try {
+      await updateBooking(booking.id, { ...booking, status: "paid" });
+    } catch (error) {
+      console.error("Error marking booking as paid:", error);
+    } finally {
+      setUpdatingBookings(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(booking.id);
+        return newSet;
+      });
+    }
   };
 
   const getLanguageDisplay = (languageCode?: string) => {
     if (!languageCode) return 'EN';
     const language = languages[languageCode as keyof typeof languages];
     return language ? language.flag : languageCode.toUpperCase();
+  };
+
+  const canMarkAsPaid = (booking: Booking) => {
+    return user && canUserApproveBookings(user) && booking.status === "approved";
   };
 
   return (
@@ -72,6 +101,19 @@ export const BookingCardView = ({
                 <span>{booking.comments.length}</span>
                 <MessageSquare className="h-3 w-3" />
               </div>
+              
+              {canMarkAsPaid(booking) && (
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  className="h-8 w-8 text-green-600" 
+                  onClick={(e) => handleMarkAsPaid(e, booking)}
+                  title={t('booking.markAsPaid')}
+                  disabled={updatingBookings.has(booking.id)}
+                >
+                  <CreditCard className="h-4 w-4" />
+                </Button>
+              )}
               
               {(booking.status === "pending" || booking.status === "approved") && 
                 canUserCancelBooking(booking, user) && (

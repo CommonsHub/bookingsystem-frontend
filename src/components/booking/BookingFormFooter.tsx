@@ -3,10 +3,6 @@ import { CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Loader2, Trash2, FileText } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useFormContext } from "react-hook-form";
-import { FormData } from "./BookingFormSchema";
-import { MarkAsPaidButton } from "./MarkAsPaidButton";
-import { useBooking } from "@/context/BookingContext";
 
 interface BookingFormFooterProps {
   isEdit?: boolean;
@@ -24,21 +20,9 @@ export const BookingFormFooter = ({
   onStartNewDraft,
 }: BookingFormFooterProps) => {
   const { t } = useTranslation();
-  const { watch } = useFormContext<FormData>();
-  const { bookings } = useBooking();
-  
-  const bookingId = watch("bookingId");
-  const booking = bookings.find(b => b.id === bookingId);
 
   return (
     <CardFooter className="flex flex-col gap-3 pt-6">
-      {/* Mark as paid button for admins (only in edit mode) */}
-      {isEdit && booking && (
-        <div className="w-full flex justify-center">
-          <MarkAsPaidButton booking={booking} />
-        </div>
-      )}
-      
       <div className="flex flex-col sm:flex-row gap-3 w-full">
         <Button
           type="submit"
