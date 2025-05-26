@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useBooking } from "@/context/BookingContext";
@@ -9,7 +8,8 @@ import { BookingActions } from "@/components/booking/BookingActions";
 import { RoomInfoCard } from "@/components/booking/RoomInfoCard";
 import { CommentSection } from "@/components/booking/CommentSection";
 import { Button } from "@/components/ui/button";
-import { Edit } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Edit, Copy } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import "../styles/BookingDetail.css";
 
@@ -24,11 +24,70 @@ const BookingDetail = () => {
     cancelBookingRequest, 
     user,
     canUserApproveBookings,
-    canUserCancelBooking 
+    canUserCancelBooking,
+    loading
   } = useBooking();
   const [submitting, setSubmitting] = useState(false);
 
   if (!id) return <div>{t('messages.bookingIdMissing')}</div>;
+
+  if (loading) {
+    return (
+      <div className="space-y-8">
+        <div className="flex justify-between items-center">
+          <div className="space-y-2">
+            <Skeleton className="h-8 w-64" />
+            <Skeleton className="h-4 w-48" />
+          </div>
+          <Skeleton className="h-10 w-32" />
+        </div>
+        
+        <div className="booking-detail-grid">
+          <div className="space-y-6">
+            <div className="border rounded-lg p-6 space-y-4">
+              <Skeleton className="h-6 w-32" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-3/4" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <Skeleton className="h-4 w-20" />
+                    <Skeleton className="h-4 w-32" />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="border rounded-lg p-6 space-y-4">
+              <Skeleton className="h-6 w-24" />
+              <div className="space-y-3">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-3 w-24" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          <div className="booking-sidebar space-y-6">
+            <div className="border rounded-lg p-6 space-y-4">
+              <Skeleton className="h-6 w-24" />
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+            <div className="border rounded-lg p-6 space-y-4">
+              <Skeleton className="h-6 w-24" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-3/4" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const booking = getBookingById(id);
   if (!booking) return <div>{t('messages.bookingNotFound')}</div>;
@@ -36,12 +95,11 @@ const BookingDetail = () => {
   // Check if user can approve bookings
   const canApproveBooking = booking.status === "pending" && canUserApproveBookings(user);
   
-  // Check if user can cancel this booking
   const canCancelBooking = (booking.status === "pending" || booking.status === "approved") && 
     canUserCancelBooking(booking, user);
     
-  // Check if user can edit this booking
-  const canEditBooking = canUserCancelBooking(booking, user);
+  const canEditBooking = booking.status !== "cancelled" && canUserCancelBooking(booking, user);
+  const canCopyBooking = booking.status === "cancelled";
 
   const handleSubmitComment = async (commentData: {
     content: string;
@@ -78,17 +136,30 @@ const BookingDetail = () => {
     navigate(`/bookings/${id}/edit`);
   };
 
+  const handleCopyBooking = () => {
+    navigate(`/bookings/new?copy=${id}`);
+  };
+
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <BookingHeader booking={booking} />
         
-        {canEditBooking && (
-          <Button onClick={handleEditBooking} className="gap-2">
-            <Edit className="h-4 w-4" />
-            {t('buttons.editBooking')}
-          </Button>
-        )}
+        <div className="flex gap-2">
+          {canEditBooking && (
+            <Button onClick={handleEditBooking} className="gap-2">
+              <Edit className="h-4 w-4" />
+              {t('buttons.editBooking')}
+            </Button>
+          )}
+          
+          {canCopyBooking && (
+            <Button onClick={handleCopyBooking} variant="outline" className="gap-2">
+              <Copy className="h-4 w-4" />
+              Copy Booking
+            </Button>
+          )}
+        </div>
       </div>
       
       <div className="booking-detail-grid">

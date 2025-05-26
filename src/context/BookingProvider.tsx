@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "./AuthContext";
 import { BookingContext } from "./BookingContext";
 import { useBookingData } from "@/hooks/useBookingData";
@@ -9,7 +9,7 @@ import { canUserApproveBookings, canUserCancelBooking } from "@/utils/bookingHel
 
 export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useAuth();
-  const { bookings, setBookings } = useBookingData();
+  const { bookings, setBookings, loading } = useBookingData();
   const { createBooking, addCommentToBooking, approveBookingRequest: approveBooking, cancelBookingRequest: cancelBooking, updateBooking } =
     useBookingOperations(bookings, setBookings);
 
@@ -43,6 +43,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     user,
     canUserApproveBookings,
     canUserCancelBooking,
+    loading,
   };
 
   return <BookingContext.Provider value={value}>{children}</BookingContext.Provider>;

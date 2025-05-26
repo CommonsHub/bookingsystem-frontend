@@ -21,7 +21,7 @@ export const BookingFormFooter = ({
   const { t } = useTranslation();
 
   return (
-    <CardFooter className="flex justify-between">
+    <CardFooter className="flex justify-between" data-form-footer>
       <div className="flex gap-2">
         <Button
           type="button"

@@ -21,10 +21,15 @@ export const generateTimeOptions = () => {
 
 // Helper to combine date and time
 export const combineDateAndTime = (date: Date | undefined, timeString: string): Date | undefined => {
-  if (!date) return undefined;
+  if (!date || !(date instanceof Date)) return undefined;
 
   const newDate = new Date(date);
   const [hours, minutes] = timeString.split(':').map(Number);
+  
+  // Validate hours and minutes
+  if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+    return undefined;
+  }
   
   newDate.setHours(hours);
   newDate.setMinutes(minutes);
@@ -34,7 +39,9 @@ export const combineDateAndTime = (date: Date | undefined, timeString: string): 
 
 // Get time string from date (HH:MM format)
 export const getTimeString = (date: Date | undefined): string => {
-  if (!date) return "09:00"; // Default to 9 AM
+  if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
+    return "09:00"; // Default to 9 AM
+  }
   const hours = date.getHours().toString().padStart(2, "0");
   const minutes = date.getMinutes().toString().padStart(2, "0");
   return `${hours}:${minutes}`;

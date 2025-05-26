@@ -30,6 +30,42 @@
     "roomBookingDetails": "Zaalreserveringsdetails",
     "enterDetails": "Voer de details van uw boekingsaanvraag in"
   },
+  "form": {
+    "sections": {
+      "basicInfo": {
+        "title": "Basisinformatie",
+        "description": "Vertel ons over uw evenement"
+      },
+      "dateTime": {
+        "title": "Datum en tijd",
+        "description": "Wanneer vindt uw evenement plaats?"
+      },
+      "roomSelection": {
+        "title": "Zaalselectie",
+        "description": "Kies de perfecte ruimte voor uw evenement"
+      },
+      "catering": {
+        "title": "Catering opties",
+        "description": "Voeg eten en drinken toe aan uw evenement (optioneel)"
+      },
+      "eventSupport": {
+        "title": "Evenement ondersteuning",
+        "description": "Extra diensten voor uw evenement (optioneel)"
+      },
+      "contactMembership": {
+        "title": "Contact en lidmaatschap",
+        "description": "Uw contactgegevens en lidmaatschapsdetails"
+      },
+      "additionalInfo": {
+        "title": "Aanvullende informatie",
+        "description": "Eventuele andere details die u wilt delen (optioneel)"
+      },
+      "pricing": {
+        "title": "Prijsschatting",
+        "description": "Bekijk de geschatte kosten voor uw boeking"
+      }
+    }
+  },
   "booking": {
     "room": "Zaal",
     "date": "Datum",

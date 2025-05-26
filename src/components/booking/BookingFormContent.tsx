@@ -2,6 +2,7 @@
 import { Control } from "react-hook-form";
 import { CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useTranslation } from "react-i18next";
 import { AdditionalInfoSection } from "./AdditionalInfoSection";
 import { BookingInfoSection } from "./BookingInfoSection";
 import { CateringSection } from "./CateringSection";
@@ -10,6 +11,7 @@ import { DateTimeSection } from "./DateTimeSection";
 import { EventSupportSection } from "./EventSupportSection";
 import { MembershipSection } from "./MembershipSection";
 import { RoomSelectionSection } from "./RoomSelectionSection";
+import { PricingQuoteSection } from "./PricingQuoteSection";
 import { FormData } from "./BookingFormSchema";
 import { Room } from "@/types";
 
@@ -26,39 +28,95 @@ export const BookingFormContent = ({
   selectedRoomId,
   setSelectedRoomId
 }: BookingFormContentProps) => {
+  const { t } = useTranslation();
+
   return (
-    <CardContent className="space-y-6">
-      <BookingInfoSection control={control} />
+    <CardContent className="space-y-12 pb-8">
+      <div data-wizard-section="0" className="scroll-mt-24 py-8">
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.basicInfo.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.basicInfo.description')}</p>
+        </div>
+        <BookingInfoSection control={control} />
+      </div>
 
-      <Separator />
+      <Separator className="my-12" />
 
-      <DateTimeSection control={control} />
+      <div data-wizard-section="1" className="scroll-mt-24 py-8">
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.dateTime.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.dateTime.description')}</p>
+        </div>
+        <DateTimeSection control={control} />
+      </div>
 
-      <Separator />
+      <Separator className="my-12" />
 
-      <RoomSelectionSection
-        control={control}
-        rooms={rooms}
-        selectedRoomId={selectedRoomId}
-        setSelectedRoomId={setSelectedRoomId}
-      />
+      <div data-wizard-section="2" className="scroll-mt-24 py-8">
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.roomSelection.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.roomSelection.description')}</p>
+        </div>
+        <RoomSelectionSection
+          control={control}
+          rooms={rooms}
+          selectedRoomId={selectedRoomId}
+          setSelectedRoomId={setSelectedRoomId}
+        />
+      </div>
 
-      <Separator />
+      <Separator className="my-12" />
 
-      <CateringSection control={control} />
+      <div data-wizard-section="3" className="scroll-mt-24 py-8">
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.catering.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.catering.description')}</p>
+        </div>
+        <CateringSection control={control} />
+      </div>
 
-      <Separator />
+      <Separator className="my-12" />
 
-      <EventSupportSection control={control} />
+      <div data-wizard-section="4" className="scroll-mt-24 py-8">
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.eventSupport.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.eventSupport.description')}</p>
+        </div>
+        <EventSupportSection control={control} />
+      </div>
 
-      <Separator />
+      <Separator className="my-12" />
 
-      <ContactInfoSection control={control} />
-      <MembershipSection control={control} />
+      <div data-wizard-section="5" className="scroll-mt-24 py-8">
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.contactMembership.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.contactMembership.description')}</p>
+        </div>
+        <div className="space-y-6">
+          <ContactInfoSection control={control} isReadOnly={false} />
+          <MembershipSection control={control} />
+        </div>
+      </div>
 
-      <Separator />
+      <Separator className="my-12" />
 
-      <AdditionalInfoSection control={control} />
+      <div data-wizard-section="6" className="scroll-mt-24 py-8">
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.additionalInfo.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.additionalInfo.description')}</p>
+        </div>
+        <AdditionalInfoSection control={control} />
+      </div>
+
+      <Separator className="my-12" />
+
+      <div data-wizard-section="7" className="scroll-mt-24 py-8">
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.pricing.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.pricing.description')}</p>
+        </div>
+        <PricingQuoteSection rooms={rooms} />
+      </div>
     </CardContent>
   );
 };

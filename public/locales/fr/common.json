@@ -30,6 +30,42 @@
     "roomBookingDetails": "Détails de la réservation de salle",
     "enterDetails": "Saisissez les détails de votre demande de réservation"
   },
+  "form": {
+    "sections": {
+      "basicInfo": {
+        "title": "Informations de base",
+        "description": "Parlez-nous de votre événement"
+      },
+      "dateTime": {
+        "title": "Date et heure",
+        "description": "Quand aura lieu votre événement ?"
+      },
+      "roomSelection": {
+        "title": "Sélection de salle",
+        "description": "Choisissez l'espace parfait pour votre événement"
+      },
+      "catering": {
+        "title": "Options de restauration",
+        "description": "Ajoutez nourriture et boissons à votre événement (optionnel)"
+      },
+      "eventSupport": {
+        "title": "Support d'événement",
+        "description": "Services supplémentaires pour votre événement (optionnel)"
+      },
+      "contactMembership": {
+        "title": "Contact et adhésion",
+        "description": "Vos informations de contact et détails d'adhésion"
+      },
+      "additionalInfo": {
+        "title": "Informations supplémentaires",
+        "description": "Tout autre détail que vous souhaitez partager (optionnel)"
+      },
+      "pricing": {
+        "title": "Estimation des prix",
+        "description": "Consultez les coûts estimés pour votre réservation"
+      }
+    }
+  },
   "booking": {
     "room": "Salle",
     "date": "Date",
@@ -91,7 +127,12 @@
     "bookingNotFound": "Réservation non trouvée",
     "bookingIdMissing": "ID de réservation manquant",
     "savingDraft": "Sauvegarde du brouillon...",
-    "draftLoaded": "Brouillon chargé"
+    "draftLoaded": "Brouillon chargé",
+    "draftCleared": "Brouillon effacé",
+    "bookingSubmitted": "Demande de réservation soumise ! Elle sera examinée par un administrateur.",
+    "bookingError": "Il y a eu une erreur lors de la création de votre demande de réservation.",
+    "bookingUpdated": "Réservation mise à jour avec succès !",
+    "bookingUpdateError": "Échec de la mise à jour de la réservation"
   },
   "greeting": "Bonjour {{name}} !",
   "footer": {

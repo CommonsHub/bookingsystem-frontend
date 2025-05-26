@@ -1,7 +1,7 @@
 
 import { Booking, User } from "@/types";
 import { formatDateTime } from "@/lib/utils";
-import { CalendarDays, MessageSquare, Trash2, Hash } from "lucide-react";
+import { CalendarDays, MessageSquare, Trash2, Hash, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { StatusBadge } from "./StatusBadge";
@@ -19,6 +19,11 @@ export const BookingCardView = ({
   user,
   onCancelBooking,
 }: BookingCardViewProps) => {
+  const handleCopyBooking = (e: React.MouseEvent, bookingId: string) => {
+    e.stopPropagation();
+    window.location.href = `/bookings/new?copy=${bookingId}`;
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {bookings.map((booking) => (
@@ -70,6 +75,18 @@ export const BookingCardView = ({
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
+              )}
+              
+              {booking.status === "cancelled" && (
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  className="h-8 w-8 text-blue-600" 
+                  onClick={(e) => handleCopyBooking(e, booking.id)}
+                  title="Copy booking"
+                >
+                  <Copy className="h-4 w-4" />
+                </Button>
               )}
             </div>
           </CardFooter>

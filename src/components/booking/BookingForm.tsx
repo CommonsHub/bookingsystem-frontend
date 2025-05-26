@@ -1,5 +1,5 @@
 
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 
@@ -7,9 +7,12 @@ import { FormData, formSchema } from "./BookingFormSchema";
 import { BookingFormHeader } from "./BookingFormHeader";
 import { BookingFormContent } from "./BookingFormContent";
 import { BookingFormFooter } from "./BookingFormFooter";
+import { BookingWizardProgress } from "./BookingWizardProgress";
+import { PricingStickyFooter } from "./PricingStickyFooter";
 import { Card } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { useFormDraftManager } from "@/hooks/useFormDraftManager";
+import { useBookingWizard } from "@/hooks/useBookingWizard";
 import { Room } from "@/types";
 import { createDefaultFormValues } from "@/utils/formDefaults";
 import { useAuth } from "@/context/AuthContext";
@@ -21,6 +24,7 @@ interface BookingFormProps {
   defaultValues: FormData;
   onSubmit: (data: FormData, clearDraft?: () => Promise<void>) => Promise<void>;
   onCancel: () => void;
+  skipDraftLoading?: boolean;
 }
 
 export const BookingForm = ({
@@ -29,7 +33,8 @@ export const BookingForm = ({
   rooms,
   defaultValues,
   onSubmit,
-  onCancel
+  onCancel,
+  skipDraftLoading = false
 }: BookingFormProps) => {
   const { user } = useAuth();
   const [submitting, setSubmitting] = useState(false);
@@ -52,7 +57,8 @@ export const BookingForm = ({
     form,
     bookingId,
     rooms,
-    onDraftLoaded: (roomId: string) => setSelectedRoomId(roomId)
+    onDraftLoaded: (roomId: string) => setSelectedRoomId(roomId),
+    skipDraftLoading
   });
 
   const handleSubmit = async (data: FormData) => {
@@ -75,6 +81,44 @@ export const BookingForm = ({
   };
 
   return (
+    <FormProvider {...form}>
+      <WizardFormContent
+        isEdit={isEdit}
+        isLoading={isLoading}
+        draftLoaded={draftLoaded}
+        submitting={submitting}
+        rooms={rooms}
+        selectedRoomId={selectedRoomId}
+        setSelectedRoomId={setSelectedRoomId}
+        onSubmit={handleSubmit}
+        onCancel={onCancel}
+        onClearDraft={handleClearDraftClick}
+        onStartNewDraft={handleStartNewDraft}
+        form={form}
+      />
+      <PricingStickyFooter rooms={rooms} />
+    </FormProvider>
+  );
+};
+
+// Separate component to use the wizard hook inside FormProvider
+const WizardFormContent = ({
+  isEdit,
+  isLoading,
+  draftLoaded,
+  submitting,
+  rooms,
+  selectedRoomId,
+  setSelectedRoomId,
+  onSubmit,
+  onCancel,
+  onClearDraft,
+  onStartNewDraft,
+  form
+}: any) => {
+  const { currentSection, completedSections, sections } = useBookingWizard();
+
+  return (
     <div className="max-w-2xl mx-auto">
       <BookingFormHeader
         isEdit={isEdit}
@@ -82,8 +126,14 @@ export const BookingForm = ({
         draftLoaded={draftLoaded}
       />
 
+      <BookingWizardProgress
+        currentSection={currentSection}
+        completedSections={completedSections}
+        sections={sections}
+      />
+
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <Card>
             <BookingFormContent
               control={form.control}
@@ -96,8 +146,8 @@ export const BookingForm = ({
               isEdit={isEdit}
               submitting={submitting}
               onCancel={onCancel}
-              onClearDraft={handleClearDraftClick}
-              onStartNewDraft={handleStartNewDraft}
+              onClearDraft={onClearDraft}
+              onStartNewDraft={onStartNewDraft}
             />
           </Card>
         </form>

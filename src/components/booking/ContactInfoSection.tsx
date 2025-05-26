@@ -9,9 +9,10 @@ type FormData = z.infer<typeof formSchema>;
 
 interface ContactInfoSectionProps {
   control: Control<FormData>;
+  isReadOnly?: boolean;
 }
 
-export const ContactInfoSection = ({ control }: ContactInfoSectionProps) => {
+export const ContactInfoSection = ({ control, isReadOnly = false }: ContactInfoSectionProps) => {
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -25,8 +26,8 @@ export const ContactInfoSection = ({ control }: ContactInfoSectionProps) => {
                 <Input
                   placeholder="Your name"
                   {...field}
-                  readOnly
-                  className="bg-gray-100"
+                  readOnly={isReadOnly}
+                  className={isReadOnly ? "bg-gray-100" : ""}
                 />
               </FormControl>
               <FormMessage />
@@ -44,8 +45,8 @@ export const ContactInfoSection = ({ control }: ContactInfoSectionProps) => {
                 <Input
                   placeholder="Your email address"
                   {...field}
-                  readOnly
-                  className="bg-gray-100"
+                  readOnly={isReadOnly}
+                  className={isReadOnly ? "bg-gray-100" : ""}
                 />
               </FormControl>
               <FormMessage />

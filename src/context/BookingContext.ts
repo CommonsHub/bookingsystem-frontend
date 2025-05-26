@@ -18,6 +18,7 @@ interface BookingContextType {
   user: User | null;
   canUserApproveBookings: (user: User | null) => boolean;
   canUserCancelBooking: (booking: Booking, user: User | null) => boolean;
+  loading: boolean;
 }
 
 export const BookingContext = createContext<BookingContextType>({
@@ -31,6 +32,7 @@ export const BookingContext = createContext<BookingContextType>({
   user: null,
   canUserApproveBookings: () => false,
   canUserCancelBooking: () => false,
+  loading: false,
 });
 
 export const useBooking = () => useContext(BookingContext);
