@@ -74,19 +74,19 @@ export const useBookingWizard = () => {
   // Auto-advance current section based on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const headerHeight = 80; // Main header
-      const progressHeight = 60; // Fixed progress card height
-      const totalOffset = headerHeight + progressHeight;
+      const headerHeight = 80; // Main header height
       const viewportMiddle = window.scrollY + window.innerHeight / 2;
 
       const sections = document.querySelectorAll('[data-wizard-section]');
       
       sections.forEach((section, index) => {
         const element = section as HTMLElement;
-        const sectionTop = element.offsetTop - totalOffset;
-        const sectionBottom = sectionTop + element.offsetHeight;
+        const rect = element.getBoundingClientRect();
+        const sectionTop = rect.top + window.scrollY;
+        const sectionBottom = sectionTop + rect.height;
 
-        if (viewportMiddle >= sectionTop && viewportMiddle <= sectionBottom) {
+        // Check if the middle of the viewport is within this section
+        if (viewportMiddle >= sectionTop - headerHeight && viewportMiddle <= sectionBottom) {
           setCurrentSection(index);
         }
       });
@@ -97,6 +97,8 @@ export const useBookingWizard = () => {
     };
 
     window.addEventListener('scroll', throttledHandleScroll);
+    handleScroll(); // Call once on mount to set initial section
+    
     return () => window.removeEventListener('scroll', throttledHandleScroll);
   }, []);
 

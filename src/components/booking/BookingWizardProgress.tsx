@@ -20,9 +20,8 @@ export const BookingWizardProgress = ({
     const sectionElement = document.querySelector(`[data-wizard-section="${sectionIndex}"]`);
     if (sectionElement) {
       const headerHeight = 80; // Account for main header height
-      const progressHeight = 60; // Account for progress card height
       const elementTop = sectionElement.getBoundingClientRect().top + window.scrollY;
-      const scrollPosition = elementTop - headerHeight - progressHeight - 16; // Add some padding
+      const scrollPosition = elementTop - headerHeight - 16; // Add some padding
       
       window.scrollTo({
         top: scrollPosition,
@@ -33,7 +32,7 @@ export const BookingWizardProgress = ({
 
   return (
     <div 
-      className="sticky top-20 z-40 px-4 sm:px-6 mb-6"
+      className="sticky top-20 z-40 px-4 sm:px-6"
       style={{ 
         WebkitBackfaceVisibility: 'hidden',
         backfaceVisibility: 'hidden'

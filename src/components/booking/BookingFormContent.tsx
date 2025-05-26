@@ -31,7 +31,7 @@ export const BookingFormContent = ({
   const { t } = useTranslation();
 
   return (
-    <CardContent className="space-y-12 pb-8" style={{ paddingTop: '60px' }}>
+    <CardContent className="space-y-12 pb-8">
       <div data-wizard-section="0" className="scroll-mt-24 py-8">
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">{t('form.sections.basicInfo.title')}</h2>
