@@ -14,7 +14,7 @@ interface ContactInfoSectionProps {
 }
 
 export const ContactInfoSection = ({ control, isReadOnly = false }: ContactInfoSectionProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('forms');
 
   return (
     <div>
@@ -24,10 +24,10 @@ export const ContactInfoSection = ({ control, isReadOnly = false }: ContactInfoS
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('form.contact.name')}</FormLabel>
+              <FormLabel>{t('contact.name')}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={t('form.contact.namePlaceholder')}
+                  placeholder={t('contact.namePlaceholder')}
                   {...field}
                   readOnly={isReadOnly}
                   className={isReadOnly ? "bg-gray-100" : ""}
@@ -43,10 +43,10 @@ export const ContactInfoSection = ({ control, isReadOnly = false }: ContactInfoS
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('form.contact.email')}</FormLabel>
+              <FormLabel>{t('contact.email')}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={t('form.contact.emailPlaceholder')}
+                  placeholder={t('contact.emailPlaceholder')}
                   {...field}
                   readOnly={isReadOnly}
                   className={isReadOnly ? "bg-gray-100" : ""}
@@ -58,7 +58,7 @@ export const ContactInfoSection = ({ control, isReadOnly = false }: ContactInfoS
         />
       </div>
       <p className="text-sm text-muted-foreground mt-2">
-        {t('form.contact.confirmationNote')}
+        {t('contact.confirmationNote')}
       </p>
     </div>
   );

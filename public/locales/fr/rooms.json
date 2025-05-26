@@ -1,0 +1,11 @@
+
+{
+  "title": "Informations sur la salle",
+  "location": "Emplacement",
+  "capacity": "Capacité",
+  "amenities": "Équipements",
+  "projector": "Projecteur",
+  "whiteboards": "Tableaux blancs",
+  "videoConferencing": "Visioconférence",
+  "coffeeStation": "Station café"
+}

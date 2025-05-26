@@ -1,0 +1,11 @@
+
+{
+  "title": "Room Information",
+  "location": "Location",
+  "capacity": "Capacity",
+  "amenities": "Amenities",
+  "projector": "Projector",
+  "whiteboards": "Whiteboards",
+  "videoConferencing": "Video conferencing",
+  "coffeeStation": "Coffee station"
+}

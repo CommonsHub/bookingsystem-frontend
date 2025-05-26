@@ -1,0 +1,10 @@
+
+{
+  "awaitingApproval": "En attente d'approbation",
+  "awaitingApprovalDesc": "Cette demande de réservation attend l'approbation de l'administrateur.",
+  "bookingApproved": "Réservation approuvée",
+  "bookingCancelled": "Réservation annulée",
+  "approvedBy": "Approuvé par",
+  "cancelledBy": "Annulé par",
+  "on": "le"
+}

@@ -40,9 +40,22 @@ i18n
       escapeValue: false, // React already safes from XSS
     },
 
-    // Default namespace
+    // Multiple namespaces for organized translations
     defaultNS: 'common',
-    ns: ['common'],
+    ns: [
+      'common',
+      'auth',
+      'bookings',
+      'booking',
+      'forms',
+      'pricing',
+      'status',
+      'navigation',
+      'alerts',
+      'buttons',
+      'messages',
+      'rooms'
+    ],
     
     // Use React's Suspense for loading translations
     react: {

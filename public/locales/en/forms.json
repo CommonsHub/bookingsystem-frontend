@@ -1,0 +1,81 @@
+
+{
+  "sections": {
+    "basicInfo": {
+      "title": "Basic Information",
+      "description": "Tell us about your event"
+    },
+    "dateTime": {
+      "title": "Date & Time",
+      "description": "When will your event take place?"
+    },
+    "roomSelection": {
+      "title": "Room Selection",
+      "description": "Choose the perfect space for your event"
+    },
+    "catering": {
+      "title": "Catering Options",
+      "description": "Add food and beverages to your event (optional)"
+    },
+    "eventSupport": {
+      "title": "Event Support",
+      "description": "Additional services for your event (optional)",
+      "professionalTitle": "We have several professional event organisers and facilitators/conference designers available for an optimal experience",
+      "professionalDescription": "If you are interested in additional support, you can add this here.",
+      "publicEventLabel": "Public event (we will publish through our channels as well)",
+      "publicEventDescription": "Check this box if you want your event to be promoted on our public channels and open to the community. For private events, we offer personalized white-glove service and exclusive use of the Commons with dedicated support—this premium experience includes a 30% surcharge to ensure your gathering receives our full attention and maintains the intimate atmosphere you deserve.",
+      "logisticsSupport": "Interested in full logistic support during the day (AV and tech support | help with setup)",
+      "facilitationSupport": "Interested in facilitation support and conference design"
+    },
+    "contactMembership": {
+      "title": "Contact & Membership",
+      "description": "Your contact information and membership details"
+    },
+    "additionalInfo": {
+      "title": "Additional Information",
+      "description": "Any other details you'd like to share (optional)"
+    },
+    "pricing": {
+      "title": "Pricing Estimate",
+      "description": "Review the estimated costs for your booking"
+    }
+  },
+  "basicInfo": {
+    "title": "Title",
+    "titlePlaceholder": "Brief description of your meeting",
+    "description": "Description",
+    "descriptionPlaceholder": "Provide details about the purpose of the booking",
+    "organizer": "Event Organizer",
+    "organizerPlaceholder": "Name of the person or organization running the event",
+    "estimatedAttendees": "Estimated Number of Attendees",
+    "attendeesPlaceholder": "Expected number of participants"
+  },
+  "contact": {
+    "name": "Name",
+    "namePlaceholder": "Your full name",
+    "email": "Email",
+    "emailPlaceholder": "your.email@example.com",
+    "confirmationNote": "We'll send booking confirmations and updates to this email address"
+  },
+  "additionalInfo": {
+    "label": "Any additional information you want to share",
+    "placeholder": "Please share any other information that might be relevant for your booking"
+  },
+  "urls": {
+    "lumaEventUrl": "Luma Event URL",
+    "lumaEventUrlPlaceholder": "https://lu.ma/your-event",
+    "calendarUrl": "Calendar URL",
+    "calendarUrlPlaceholder": "https://calendar.google.com/event...",
+    "publicUri": "Public URI",
+    "publicUriPlaceholder": "your-event-slug"
+  },
+  "roomSelection": {
+    "whichSpace": "Which space would you like to book?",
+    "capacity": "Capacity",
+    "possibleSetup": "Possible setup",
+    "additionalNotes": "Additional Room Notes",
+    "additionalNotesPlaceholder": "Any specific requirements for room setup or features you need",
+    "additionalSpaceLabel": "We need all of it + additional space",
+    "additionalSpaceDescription": "We can offer additional space on the first floor if needed."
+  }
+}
