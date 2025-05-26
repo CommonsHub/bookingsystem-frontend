@@ -92,16 +92,35 @@ export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
   // Monitor scroll to show/hide footer
   useEffect(() => {
     const handleScroll = () => {
+      console.log('Scroll event triggered, scrollY:', window.scrollY);
+      
       const pricingSection = document.querySelector('[data-wizard-section="7"]');
       const formFooter = document.querySelector('[data-form-footer]');
+      
+      console.log('Pricing section found:', !!pricingSection);
+      console.log('Form footer found:', !!formFooter);
       
       if (pricingSection && formFooter) {
         const pricingSectionRect = pricingSection.getBoundingClientRect();
         const formFooterRect = formFooter.getBoundingClientRect();
         
-        // Show sticky footer when pricing section is out of view but form footer is still visible
-        const shouldShow = pricingSectionRect.bottom < 0 && formFooterRect.top > window.innerHeight;
+        console.log('Pricing section bottom:', pricingSectionRect.bottom);
+        console.log('Form footer top:', formFooterRect.top);
+        console.log('Window height:', window.innerHeight);
+        
+        // Show sticky footer when pricing section is scrolled past but form footer is not yet visible
+        const pricingSectionOutOfView = pricingSectionRect.bottom < window.innerHeight * 0.3;
+        const formFooterNotYetVisible = formFooterRect.top > window.innerHeight;
+        
+        const shouldShow = pricingSectionOutOfView && formFooterNotYetVisible;
+        
+        console.log('Should show sticky footer:', shouldShow);
+        console.log('Pricing out of view:', pricingSectionOutOfView);
+        console.log('Form footer not visible:', formFooterNotYetVisible);
+        
         setIsVisible(shouldShow);
+      } else {
+        console.log('Missing required elements for sticky footer');
       }
     };
 
@@ -114,6 +133,8 @@ export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
     
     return () => window.removeEventListener('scroll', throttledHandleScroll);
   }, []);
+
+  console.log('Sticky footer - isVisible:', isVisible, 'quote exists:', !!quote);
 
   if (!quote || !isVisible) {
     return null;
