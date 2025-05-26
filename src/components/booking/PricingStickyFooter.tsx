@@ -107,7 +107,7 @@ export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
         console.log('Form footer top:', formFooterRect.top);
         console.log('Window height:', window.innerHeight);
 
-        const pricingSectionNotYetVisible = pricingSectionRect.bottom < window.innerHeight * 0.8;
+        const pricingSectionNotYetVisible = pricingSectionRect.top > window.innerHeight;
 
         const shouldShow = pricingSectionNotYetVisible;
 
