@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useAuth } from "@/context/AuthContext";
 import { useProfile } from "@/hooks/useProfile";
 import { useHeaderSettings } from "@/hooks/useHeaderSettings";
+import { useAppTranslation } from "@/hooks/use-translation";
 import {
   Form,
   FormControl,
@@ -32,6 +33,7 @@ export default function ProfilePage() {
   const { user, loading: authLoading } = useAuth();
   const { profile, loading: profileLoading, updateProfile } = useProfile();
   const { settings: headerSettings, updateSettings: updateHeaderSettings } = useHeaderSettings();
+  const { t } = useAppTranslation();
   
   const form = useForm<ProfileFormValues>({
     defaultValues: {
@@ -71,21 +73,29 @@ export default function ProfilePage() {
     await updateProfile(updates);
   };
 
-  if (authLoading || profileLoading) {
+  // Show loading state only when both auth and profile are loading
+  const isLoading = authLoading || (user && profileLoading);
+
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center p-8">
-        <p>Loading...</p>
+        <p>{t('profile.loading')}</p>
       </div>
     );
+  }
+
+  // Don't render anything if user is not authenticated and we're redirecting
+  if (!user) {
+    return null;
   }
 
   return (
     <div className="container mx-auto py-8 space-y-6">
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
-          <CardTitle>Your Profile</CardTitle>
+          <CardTitle>{t('profile.title')}</CardTitle>
           <CardDescription>
-            Update your personal information and business details
+            {t('profile.description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -96,9 +106,9 @@ export default function ProfilePage() {
                 name="full_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Full Name</FormLabel>
+                    <FormLabel>{t('profile.fullName')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your full name" {...field} />
+                      <Input placeholder={t('profile.fullNamePlaceholder')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -110,10 +120,10 @@ export default function ProfilePage() {
                 name="address"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Address</FormLabel>
+                    <FormLabel>{t('profile.address')}</FormLabel>
                     <FormControl>
                       <Textarea 
-                        placeholder="Your address" 
+                        placeholder={t('profile.addressPlaceholder')} 
                         className="resize-none" 
                         {...field} 
                       />
@@ -135,9 +145,9 @@ export default function ProfilePage() {
                       />
                     </FormControl>
                     <div className="space-y-1 leading-none">
-                      <FormLabel>I have a business</FormLabel>
+                      <FormLabel>{t('profile.hasBusiness')}</FormLabel>
                       <FormDescription>
-                        Check this if you need to provide VAT information
+                        {t('profile.hasBusinessDescription')}
                       </FormDescription>
                     </div>
                   </FormItem>
@@ -150,9 +160,9 @@ export default function ProfilePage() {
                   name="vat_number"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>VAT Number</FormLabel>
+                      <FormLabel>{t('profile.vatNumber')}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your VAT number" {...field} />
+                        <Input placeholder={t('profile.vatNumberPlaceholder')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -161,7 +171,7 @@ export default function ProfilePage() {
               )}
               
               <Button type="submit" className="w-full">
-                Save Changes
+                {t('profile.saveChanges')}
               </Button>
             </form>
           </Form>
@@ -170,9 +180,9 @@ export default function ProfilePage() {
 
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
-          <CardTitle>Improvements for Power Users</CardTitle>
+          <CardTitle>{t('profile.improvementsTitle')}</CardTitle>
           <CardDescription>
-            Advanced settings to enhance your booking experience
+            {t('profile.improvementsDescription')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -186,10 +196,10 @@ export default function ProfilePage() {
               />
               <div className="space-y-1 leading-none">
                 <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                  Show sticky progress header
+                  {t('profile.stickyHeader')}
                 </label>
                 <p className="text-sm text-muted-foreground">
-                  Display a floating progress indicator that stays visible while scrolling through the booking form
+                  {t('profile.stickyHeaderDescription')}
                 </p>
               </div>
             </div>

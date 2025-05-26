@@ -1,3 +1,4 @@
+
 {
   "app": {
     "title": "Commons Hub Brussels Bookings"
@@ -100,7 +101,32 @@
       "additionalNotesPlaceholder": "Any specific requirements for room setup or features you need",
       "additionalSpaceLabel": "We need all of it + additional space",
       "additionalSpaceDescription": "We can offer additional space on the first floor if needed."
+    },
+    "contact": {
+      "name": "Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "your.email@example.com",
+      "confirmationNote": "We will send booking confirmations to this email address"
     }
+  },
+  "profile": {
+    "title": "Your Profile",
+    "description": "Update your personal information and business details",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Your full name",
+    "address": "Address",
+    "addressPlaceholder": "Your address",
+    "hasBusiness": "I have a business",
+    "hasBusinessDescription": "Check this if you need to provide VAT information",
+    "vatNumber": "VAT Number",
+    "vatNumberPlaceholder": "Your VAT number",
+    "saveChanges": "Save Changes",
+    "improvementsTitle": "Improvements for Power Users",
+    "improvementsDescription": "Advanced settings to enhance your booking experience",
+    "stickyHeader": "Show sticky progress header",
+    "stickyHeaderDescription": "Display a floating progress indicator that stays visible while scrolling through the booking form",
+    "loading": "Loading..."
   },
   "booking": {
     "title": "Title",

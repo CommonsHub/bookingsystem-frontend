@@ -1,3 +1,4 @@
+
 {
   "app": {
     "title": "Commons Hub Brussel Boekingen"
@@ -100,7 +101,32 @@
       "additionalNotesPlaceholder": "Specifieke vereisten voor zaalopstelling of functies die u nodig heeft",
       "additionalSpaceLabel": "We hebben alles nodig + extra ruimte",
       "additionalSpaceDescription": "We kunnen indien nodig extra ruimte op de eerste verdieping aanbieden."
+    },
+    "contact": {
+      "name": "Naam",
+      "namePlaceholder": "Uw volledige naam",
+      "email": "E-mail",
+      "emailPlaceholder": "uw.email@example.com",
+      "confirmationNote": "We sturen boekingsbevestigingen naar dit e-mailadres"
     }
+  },
+  "profile": {
+    "title": "Uw profiel",
+    "description": "Werk uw persoonlijke informatie en bedrijfsgegevens bij",
+    "fullName": "Volledige naam",
+    "fullNamePlaceholder": "Uw volledige naam",
+    "address": "Adres",
+    "addressPlaceholder": "Uw adres",
+    "hasBusiness": "Ik heb een bedrijf",
+    "hasBusinessDescription": "Vink dit aan als u BTW-informatie moet verstrekken",
+    "vatNumber": "BTW-nummer",
+    "vatNumberPlaceholder": "Uw BTW-nummer",
+    "saveChanges": "Wijzigingen opslaan",
+    "improvementsTitle": "Verbeteringen voor ervaren gebruikers",
+    "improvementsDescription": "Geavanceerde instellingen om uw boekingservaring te verbeteren",
+    "stickyHeader": "Kleverige voortgangskoptekst tonen",
+    "stickyHeaderDescription": "Toon een zwevende voortgangsindicator die zichtbaar blijft tijdens het scrollen door het boekingsformulier",
+    "loading": "Laden..."
   },
   "booking": {
     "title": "Titel",
