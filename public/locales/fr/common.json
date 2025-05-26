@@ -128,7 +128,8 @@
     "additionalComments": "Commentaires supplémentaires",
     "people": "personnes",
     "openEventPage": "Ouvrir la page de l'événement",
-    "openCalendarEvent": "Ouvrir l'événement du calendrier"
+    "openCalendarEvent": "Ouvrir l'événement du calendrier",
+    "copyBooking": "Copier la réservation"
   },
   "roomInfo": {
     "title": "Informations sur la salle",

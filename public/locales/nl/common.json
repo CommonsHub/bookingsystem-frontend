@@ -128,7 +128,8 @@
     "additionalComments": "Aanvullende opmerkingen",
     "people": "personen",
     "openEventPage": "Evenementpagina openen",
-    "openCalendarEvent": "Kalender evenement openen"
+    "openCalendarEvent": "Kalender evenement openen",
+    "copyBooking": "Boeking kopiëren"
   },
   "roomInfo": {
     "title": "Zaalinformatie",

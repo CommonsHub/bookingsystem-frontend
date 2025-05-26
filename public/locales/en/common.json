@@ -128,7 +128,8 @@
     "additionalComments": "Additional Comments",
     "people": "people",
     "openEventPage": "Open event page",
-    "openCalendarEvent": "Open calendar event"
+    "openCalendarEvent": "Open calendar event",
+    "copyBooking": "Copy booking"
   },
   "roomInfo": {
     "title": "Room Information",
