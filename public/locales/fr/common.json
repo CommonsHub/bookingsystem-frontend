@@ -130,7 +130,7 @@
     "openEventPage": "Ouvrir la page de l'événement",
     "openCalendarEvent": "Ouvrir l'événement du calendrier",
     "copyBooking": "Copier la réservation",
-    "booking": "Réservation"
+    "notSpecified": "Non spécifié"
   },
   "roomInfo": {
     "title": "Informations sur la salle",

@@ -1,16 +1,7 @@
 
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useAuth } from "@/context/AuthContext";
-import { useProfile } from "@/hooks/useProfile";
-import { useHeaderSettings } from "@/hooks/useHeaderSettings";
-import { useAppTranslation } from "@/hooks/use-translation";
 import {
   Form,
   FormControl,
@@ -20,6 +11,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useAuth } from "@/context/AuthContext";
+import { useAppTranslation } from "@/hooks/use-translation";
+import { useHeaderSettings } from "@/hooks/useHeaderSettings";
+import { useProfile } from "@/hooks/useProfile";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 type ProfileFormValues = {
   full_name: string;
@@ -34,7 +34,7 @@ export default function ProfilePage() {
   const { profile, loading: profileLoading, updateProfile } = useProfile();
   const { settings: headerSettings, updateSettings: updateHeaderSettings } = useHeaderSettings();
   const { t } = useAppTranslation();
-  
+
   const form = useForm<ProfileFormValues>({
     defaultValues: {
       full_name: "",
@@ -69,12 +69,13 @@ export default function ProfilePage() {
       ...data,
       vat_number: data.has_business ? data.vat_number : null,
     };
-    
+
     await updateProfile(updates);
   };
 
   // Show loading state only when both auth and profile are loading
   const isLoading = authLoading || (user && profileLoading);
+  console.log("Loading state:", isLoading, "Auth loading:", authLoading, "Profile loading:", profileLoading);
 
   if (isLoading) {
     return (
@@ -114,7 +115,7 @@ export default function ProfilePage() {
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="address"
@@ -122,17 +123,17 @@ export default function ProfilePage() {
                   <FormItem>
                     <FormLabel>{t('profile.address')}</FormLabel>
                     <FormControl>
-                      <Textarea 
-                        placeholder={t('profile.addressPlaceholder')} 
-                        className="resize-none" 
-                        {...field} 
+                      <Textarea
+                        placeholder={t('profile.addressPlaceholder')}
+                        className="resize-none"
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="has_business"
@@ -153,7 +154,7 @@ export default function ProfilePage() {
                   </FormItem>
                 )}
               />
-              
+
               {form.watch("has_business") && (
                 <FormField
                   control={form.control}
@@ -169,7 +170,7 @@ export default function ProfilePage() {
                   )}
                 />
               )}
-              
+
               <Button type="submit" className="w-full">
                 {t('profile.saveChanges')}
               </Button>
@@ -190,7 +191,7 @@ export default function ProfilePage() {
             <div className="flex flex-row items-start space-x-3 space-y-0">
               <Checkbox
                 checked={headerSettings.showStickyHeader}
-                onCheckedChange={(checked) => 
+                onCheckedChange={(checked) =>
                   updateHeaderSettings({ showStickyHeader: !!checked })
                 }
               />

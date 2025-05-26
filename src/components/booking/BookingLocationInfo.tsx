@@ -9,7 +9,7 @@ interface BookingLocationInfoProps {
 
 export const BookingLocationInfo = ({ booking }: BookingLocationInfoProps) => {
   const { t } = useTranslation();
-  
+
   return (
     <>
       <div className="flex items-start gap-2">
@@ -27,7 +27,7 @@ export const BookingLocationInfo = ({ booking }: BookingLocationInfoProps) => {
         <div>
           <h4 className="font-medium">{t('booking.estimatedAttendees')}</h4>
           <p className="text-muted-foreground">
-            {booking.estimatedAttendees || "Not specified"} {booking.estimatedAttendees ? t('booking.people') : ""}
+            {booking.estimatedAttendees || t("booking.notSpecified")} {booking.estimatedAttendees ? t('booking.people') : ""}
           </p>
         </div>
       </div>

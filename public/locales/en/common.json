@@ -1,4 +1,3 @@
-
 {
   "app": {
     "title": "Commons Hub Brussels Bookings"
@@ -156,7 +155,8 @@
     "openEventPage": "Open event page",
     "openCalendarEvent": "Open calendar event",
     "copyBooking": "Copy booking",
-    "language": "Language"
+    "language": "Language",
+    "notSpecified": "Not specified"
   },
   "roomInfo": {
     "title": "Room Information",

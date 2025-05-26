@@ -1,4 +1,3 @@
-
 {
   "app": {
     "title": "Commons Hub Brussel Boekingen"
@@ -156,7 +155,8 @@
     "openEventPage": "Evenementpagina openen",
     "openCalendarEvent": "Kalender evenement openen",
     "copyBooking": "Boeking kopiëren",
-    "language": "Taal"
+    "language": "Taal",
+    "notSpecified": "Niet gespecificeerd"
   },
   "roomInfo": {
     "title": "Zaalinformatie",

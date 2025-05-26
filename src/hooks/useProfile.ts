@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Profile } from "@/types";
 import { useAuth } from "@/context/AuthContext";
@@ -9,7 +9,7 @@ export function useProfile() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -30,7 +30,7 @@ export function useProfile() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   const updateProfile = async (updates: Partial<Profile>) => {
     if (!user) return;
