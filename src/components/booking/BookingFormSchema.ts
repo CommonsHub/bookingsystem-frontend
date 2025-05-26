@@ -21,8 +21,8 @@ export const formSchema = z.object({
   eventSupportOptions: z.array(z.string()).optional(),
   membershipStatus: z.string().optional(),
   additionalComments: z.string().optional(),
-  // Public event field
-  isPublicEvent: z.boolean().default(false),
+  // Public event field - now defaults to true
+  isPublicEvent: z.boolean().default(true),
   // New URL fields
   lumaEventUrl: z.string().url({ message: "Please enter a valid URL" }).optional().or(z.literal('')),
   calendarUrl: z.string().url({ message: "Please enter a valid URL" }).optional().or(z.literal('')),

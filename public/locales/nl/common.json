@@ -64,6 +64,12 @@
         "title": "Prijsschatting",
         "description": "Bekijk de geschatte kosten voor uw boeking"
       }
+    },
+    "eventSupport": {
+      "professionalTitle": "We hebben verschillende professionele evenementorganisatoren en facilitators/conferentieontwerpers beschikbaar voor een optimale ervaring",
+      "professionalDescription": "Als u geïnteresseerd bent in extra ondersteuning, kunt u dit hier toevoegen.",
+      "publicEventLabel": "Openbaar evenement (we zullen ook via onze kanalen publiceren)",
+      "publicEventDescription": "Vink dit vakje aan als u wilt dat uw evenement wordt gepromoot op onze openbare kanalen en toegankelijk is voor de gemeenschap. Voor privé-evenementen bieden we gepersonaliseerde white-glove service en exclusief gebruik van de Commons met toegewijde ondersteuning—deze premium ervaring omvat een toeslag van 30% om ervoor te zorgen dat uw bijeenkomst onze volledige aandacht krijgt en de intieme sfeer behoudt die u verdient."
     }
   },
   "booking": {

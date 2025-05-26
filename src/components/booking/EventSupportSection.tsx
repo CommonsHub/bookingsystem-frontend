@@ -5,6 +5,7 @@ import { Control } from "react-hook-form";
 import { z } from "zod";
 import { formSchema } from "./BookingFormSchema";
 import { eventSupportOptions } from "@/data/supportOptions";
+import { useTranslation } from "react-i18next";
 
 type FormData = z.infer<typeof formSchema>;
 interface EventSupportSectionProps {
@@ -12,12 +13,14 @@ interface EventSupportSectionProps {
 }
 
 export const EventSupportSection = ({ control }: EventSupportSectionProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <h3 className="text-lg font-medium">We have several professional event organisers and facilitators/conference designers available for an optimal experience</h3>
+        <h3 className="text-lg font-medium">{t('form.eventSupport.professionalTitle')}</h3>
         <p className="text-sm text-muted-foreground">
-          If you are interested in additional support, you can add this here.
+          {t('form.eventSupport.professionalDescription')}
         </p>
 
         <FormField
@@ -65,7 +68,6 @@ export const EventSupportSection = ({ control }: EventSupportSectionProps) => {
         />
       </div>
       <div className="space-y-4">
-
         <FormField
           control={control}
           name="isPublicEvent"
@@ -79,10 +81,10 @@ export const EventSupportSection = ({ control }: EventSupportSectionProps) => {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel>
-                  Public event (we will publish through our channels as well)
+                  {t('form.eventSupport.publicEventLabel')}
                 </FormLabel>
                 <p className="text-sm text-muted-foreground">
-                  Check this box if you want your event to be promoted on our public channels and open to the community. For private events, we offer personalized white-glove service and exclusive use of the Commons with dedicated support—this premium experience includes a 30% surcharge to ensure your gathering receives our full attention and maintains the intimate atmosphere you deserve.
+                  {t('form.eventSupport.publicEventDescription')}
                 </p>
               </div>
             </FormItem>

@@ -64,6 +64,12 @@
         "title": "Estimation des prix",
         "description": "Consultez les coûts estimés pour votre réservation"
       }
+    },
+    "eventSupport": {
+      "professionalTitle": "Nous avons plusieurs organisateurs d'événements professionnels et facilitateurs/concepteurs de conférences disponibles pour une expérience optimale",
+      "professionalDescription": "Si vous êtes intéressé par un support supplémentaire, vous pouvez l'ajouter ici.",
+      "publicEventLabel": "Événement public (nous publierons également via nos canaux)",
+      "publicEventDescription": "Cochez cette case si vous souhaitez que votre événement soit promu sur nos canaux publics et ouvert à la communauté. Pour les événements privés, nous offrons un service personnalisé haut de gamme et l'utilisation exclusive des Commons avec un support dédié—cette expérience premium inclut un supplément de 30% pour s'assurer que votre rassemblement reçoive toute notre attention et maintienne l'atmosphère intime que vous méritez."
     }
   },
   "booking": {
