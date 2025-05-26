@@ -73,7 +73,7 @@ export const BookingWizardProgress = ({
             
             <div className="relative h-2 w-full overflow-hidden rounded-full bg-gray-200 mb-3">
               <div 
-                className="h-full transition-all bg-green-500"
+                className="h-full transition-all bg-blue-500"
                 style={{ width: `${progressPercentage}%` }}
               />
             </div>
@@ -91,7 +91,7 @@ export const BookingWizardProgress = ({
                       isCurrent && !isCompleted
                         ? 'bg-blue-50 text-blue-800 border-blue-400 font-bold ring-2 ring-blue-200'
                         : isCompleted
-                        ? 'bg-green-100 text-green-700 hover:bg-green-200 border-green-200 font-normal'
+                        ? 'bg-blue-50 text-blue-700 hover:bg-blue-100 border-blue-200 font-normal'
                         : 'bg-gray-100 text-gray-500 hover:bg-gray-200 border-gray-200 font-normal'
                     }`}
                   >
