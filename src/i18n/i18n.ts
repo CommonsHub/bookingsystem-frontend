@@ -54,7 +54,8 @@ i18n
       'alerts',
       'buttons',
       'messages',
-      'rooms'
+      'rooms',
+      'errors'
     ],
     
     // Use React's Suspense for loading translations
