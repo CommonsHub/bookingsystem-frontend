@@ -1,0 +1,258 @@
+
+{
+  "app": {
+    "title": "Commons Hub Brussels Bookings"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "bookings": {
+    "title": "Room Bookings",
+    "subtitle": "View all room booking requests and their status",
+    "new": "New Booking",
+    "upcoming": "No booking requests upcoming",
+    "none": "There are no bookings in the system yet.",
+    "noneUpcoming": "There are no upcoming bookings. You can create one or view past bookings.",
+    "create": "New Booking Request",
+    "viewAll": "View All Bookings",
+    "showUpcoming": "Show upcoming only",
+    "showAll": "Show all bookings",
+    "tableView": "Table",
+    "cardView": "Cards",
+    "caption": "A list of room booking requests.",
+    "captionUpcoming": "A list of upcoming room booking requests.",
+    "edit": "Edit Booking",
+    "editTitle": "Edit Booking Details",
+    "editDescription": "Update the details of your booking request",
+    "newTitle": "New Booking Request",
+    "newDescription": "Fill out the form below to request a room booking",
+    "roomBookingDetails": "Room Booking Details",
+    "enterDetails": "Enter the details of your booking request",
+    "price": "Price"
+  },
+  "form": {
+    "sections": {
+      "basicInfo": {
+        "title": "Basic Information",
+        "description": "Tell us about your event"
+      },
+      "dateTime": {
+        "title": "Date & Time",
+        "description": "When will your event take place?"
+      },
+      "roomSelection": {
+        "title": "Room Selection",
+        "description": "Choose the perfect space for your event"
+      },
+      "catering": {
+        "title": "Catering Options",
+        "description": "Add food and beverages to your event (optional)"
+      },
+      "eventSupport": {
+        "title": "Event Support",
+        "description": "Additional services for your event (optional)",
+        "professionalTitle": "We have several professional event organisers and facilitators/conference designers available for an optimal experience",
+        "professionalDescription": "If you are interested in additional support, you can add this here.",
+        "publicEventLabel": "Public event (we will publish through our channels as well)",
+        "publicEventDescription": "Check this box if you want your event to be promoted on our public channels and open to the community. For private events, we offer personalized white-glove service and exclusive use of the Commons with dedicated support—this premium experience includes a 30% surcharge to ensure your gathering receives our full attention and maintains the intimate atmosphere you deserve.",
+        "logisticsSupport": "Interested in full logistic support during the day (AV and tech support | help with setup)",
+        "facilitationSupport": "Interested in facilitation support and conference design"
+      },
+      "contactMembership": {
+        "title": "Contact & Membership",
+        "description": "Your contact information and membership details"
+      },
+      "additionalInfo": {
+        "title": "Additional Information",
+        "description": "Any other details you'd like to share (optional)"
+      },
+      "price": {
+        "title": "Price Information",
+        "description": "Set the price for your event (optional)"
+      },
+      "pricing": {
+        "title": "Pricing Estimate",
+        "description": "Review the estimated costs for your booking"
+      }
+    },
+    "basicInfo": {
+      "title": "Title",
+      "titlePlaceholder": "Brief description of your meeting",
+      "description": "Description",
+      "descriptionPlaceholder": "Provide details about the purpose of the booking",
+      "organizer": "Event Organizer",
+      "organizerPlaceholder": "Name of the person or organization running the event",
+      "estimatedAttendees": "Estimated Number of Attendees",
+      "attendeesPlaceholder": "Expected number of participants"
+    },
+    "additionalInfo": {
+      "label": "Any additional information you want to share",
+      "placeholder": "Please share any other information that might be relevant for your booking"
+    },
+    "urls": {
+      "lumaEventUrl": "Luma Event URL",
+      "lumaEventUrlPlaceholder": "https://lu.ma/your-event",
+      "calendarUrl": "Calendar URL",
+      "calendarUrlPlaceholder": "https://calendar.google.com/event...",
+      "publicUri": "Public URI",
+      "publicUriPlaceholder": "your-event-slug"
+    },
+    "roomSelection": {
+      "whichSpace": "Which space would you like to book?",
+      "capacity": "Capacity",
+      "possibleSetup": "Possible setup",
+      "additionalNotes": "Additional Room Notes",
+      "additionalNotesPlaceholder": "Any specific requirements for room setup or features you need",
+      "additionalSpaceLabel": "We need all of it + additional space",
+      "additionalSpaceDescription": "We can offer additional space on the first floor if needed."
+    },
+    "contact": {
+      "name": "Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "your.email@example.com",
+      "confirmationNote": "We will send booking confirmations to this email address"
+    },
+    "dateTime": {
+      "endDate": "End date",
+      "endTimeError": "Choose start date first",
+      "pickDate": "Pick date",
+      "startDate": "Start date",
+      "pickEndDate": "Choose end date",
+      "naturalLanguagePlaceholder": "Enter date in natural language: next Friday at 10am, 10th July at 14:00, ..",
+      "endNaturalLanguagePlaceholder": "Enter date in natural language: after 2h, at 17:00,.."
+    },
+    "price": {
+      "price": "Price",
+      "pricePlaceholder": "Enter price",
+      "currency": "Currency",
+      "selectCurrency": "Select currency"
+    },
+    "language": {
+      "label": "Language",
+      "notSet": "Not set",
+      "readOnlyNote": "Language cannot be changed after booking creation"
+    }
+  },
+  "profile": {
+    "title": "Your Profile",
+    "description": "Update your personal information and business details",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Your full name",
+    "address": "Address",
+    "addressPlaceholder": "Your address",
+    "hasBusiness": "I have a business",
+    "hasBusinessDescription": "Check this if you need to provide VAT information",
+    "vatNumber": "VAT Number",
+    "vatNumberPlaceholder": "Your VAT number",
+    "saveChanges": "Save Changes",
+    "improvementsTitle": "Improvements for Power Users",
+    "improvementsDescription": "Advanced settings to enhance your booking experience",
+    "stickyHeader": "Show sticky progress header",
+    "stickyHeaderDescription": "Display a floating progress indicator that stays visible while scrolling through the booking form",
+    "loading": "Loading..."
+  },
+  "booking": {
+    "title": "Title",
+    "room": "Room",
+    "date": "Date",
+    "attendees": "Attendees",
+    "status": "Status",
+    "createdBy": "Created by",
+    "comments": "Comments",
+    "actions": "Actions",
+    "details": "Booking Details",
+    "description": "Description",
+    "time": "Time",
+    "roomCapacity": "Room Capacity",
+    "eventOrganizer": "Event Organizer",
+    "estimatedAttendees": "Estimated Attendees",
+    "lumaEvent": "Luma Event",
+    "calendarEvent": "Calendar Event",
+    "publicUri": "Public URI",
+    "roomSetup": "Room Setup",
+    "additionalSpace": "Additional Space",
+    "additionalSpaceRequired": "Additional space required",
+    "eventType": "Event Type",
+    "publicEvent": "Public event",
+    "additionalComments": "Additional Comments",
+    "people": "people",
+    "openEventPage": "Open event page",
+    "openCalendarEvent": "Open calendar event",
+    "copyBooking": "Copy booking",
+    "language": "Language",
+    "notSpecified": "Not specified",
+    "price": "Price"
+  },
+  "roomInfo": {
+    "title": "Room Information",
+    "location": "Location",
+    "capacity": "Capacity",
+    "amenities": "Amenities",
+    "projector": "Projector",
+    "whiteboards": "Whiteboards",
+    "videoConferencing": "Video conferencing",
+    "coffeeStation": "Coffee station"
+  },
+  "pricing": {
+    "totalEstimate": "Total Estimate",
+    "tentativeQuote": "Tentative quote",
+    "tentativeDisclaimer": "* This is a tentative quote. Final pricing may vary and will be confirmed upon approval.",
+    "tentativePriceQuote": "Tentative Price Quote",
+    "selectRoomAndDates": "Please select a room and set your dates to see pricing",
+    "memberDiscount": "Member discount (30%)",
+    "weekendSurcharge": "Weekend surcharge",
+    "catering": "Catering",
+    "nonPublicSurcharge": "Non-public event surcharge (30%)",
+    "nonPublicSurchargeDescription": "Additional charge for private events not open to the public"
+  },
+  "status": {
+    "draft": "Draft",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "cancelled": "Cancelled"
+  },
+  "nav": {
+    "profile": "Profile",
+    "backToBookings": "Back to bookings"
+  },
+  "alerts": {
+    "awaitingApproval": "Awaiting Approval",
+    "awaitingApprovalDesc": "This booking request is waiting for administrator approval.",
+    "bookingApproved": "Booking Approved",
+    "bookingCancelled": "Booking Cancelled",
+    "approvedBy": "Approved by",
+    "cancelledBy": "Cancelled by",
+    "on": "on"
+  },
+  "buttons": {
+    "cancel": "Cancel",
+    "update": "Update Booking",
+    "updating": "Updating...",
+    "submit": "Submit Booking Request",
+    "submitting": "Submitting...",
+    "clearDraft": "Clear Draft",
+    "editBooking": "Edit Booking"
+  },
+  "messages": {
+    "loadingBooking": "Loading booking details...",
+    "bookingNotFound": "Booking not found",
+    "bookingIdMissing": "Booking ID is missing",
+    "savingDraft": "Saving draft...",
+    "draftLoaded": "Draft loaded",
+    "draftCleared": "Draft cleared",
+    "bookingSubmitted": "Booking request submitted! It will be viewed by an administrator.",
+    "bookingError": "There was an error creating your booking request.",
+    "bookingUpdated": "Booking updated successfully!",
+    "bookingUpdateError": "Failed to update booking"
+  },
+  "greeting": "Hi {{name}}!",
+  "footer": {
+    "copyright": "Commons Hub Brussels. All rights reserved."
+  },
+  "language": {
+    "select": "Select language"
+  }
+}

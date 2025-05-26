@@ -1,10 +1,11 @@
 
 import { Booking, User } from "@/types";
 import { formatDateTime } from "@/lib/utils";
-import { CalendarDays, MessageSquare, Trash2, Hash } from "lucide-react";
+import { CalendarDays, MessageSquare, Trash2, Hash, Copy, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { StatusBadge } from "./StatusBadge";
+import { languages } from "@/i18n/i18n";
 
 interface BookingCardViewProps {
   bookings: Booking[];
@@ -19,6 +20,17 @@ export const BookingCardView = ({
   user,
   onCancelBooking,
 }: BookingCardViewProps) => {
+  const handleCopyBooking = (e: React.MouseEvent, bookingId: string) => {
+    e.stopPropagation();
+    window.location.href = `/bookings/new?copy=${bookingId}`;
+  };
+
+  const getLanguageDisplay = (languageCode?: string) => {
+    if (!languageCode) return 'EN';
+    const language = languages[languageCode as keyof typeof languages];
+    return language ? language.flag : languageCode.toUpperCase();
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {bookings.map((booking) => (
@@ -42,6 +54,11 @@ export const BookingCardView = ({
               <div className="flex items-center gap-2">
                 <Hash className="h-3.5 w-3.5 flex-shrink-0" />
                 <span>Attendees: {booking.estimatedAttendees || "N/A"}</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Globe className="h-3.5 w-3.5 flex-shrink-0" />
+                <span>Language: {getLanguageDisplay(booking.language)}</span>
               </div>
             </div>
           </CardContent>
@@ -70,6 +87,18 @@ export const BookingCardView = ({
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
+              )}
+              
+              {booking.status === "cancelled" && (
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  className="h-8 w-8 text-blue-600" 
+                  onClick={(e) => handleCopyBooking(e, booking.id)}
+                  title="Copy booking"
+                >
+                  <Copy className="h-4 w-4" />
+                </Button>
               )}
             </div>
           </CardFooter>

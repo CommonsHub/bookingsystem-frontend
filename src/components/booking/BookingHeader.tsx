@@ -7,12 +7,16 @@ import { Booking } from "@/types";
 import { CheckCircle2, ChevronLeft, MailCheck, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { formatDate } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface BookingHeaderProps {
   booking: Booking;
+  actionButtons?: React.ReactNode;
 }
 
-export const BookingHeader = ({ booking }: BookingHeaderProps) => {
+export const BookingHeader = ({ booking, actionButtons }: BookingHeaderProps) => {
+  const { t } = useTranslation();
+  
   const statusColor = (status: string) => {
     switch (status) {
       case "draft":
@@ -35,36 +39,44 @@ export const BookingHeader = ({ booking }: BookingHeaderProps) => {
 
   return (
     <>
-      <div className="flex items-center mb-6">
-        <Button variant="ghost" size="sm" asChild className="gap-1">
-          <Link to="/">
-            <ChevronLeft className="h-4 w-4" />
-            Back to bookings
-          </Link>
-        </Button>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="sm" asChild className="gap-1">
+            <Link to="/">
+              <ChevronLeft className="h-4 w-4" />
+              {t('nav.backToBookings')}
+            </Link>
+          </Button>
+
+          <div className="flex items-center gap-2">
+            <Badge
+              className={`${statusColor(booking.status)} text-md px-3 py-1`}
+            >
+              {t(`status.${booking.status}`)}
+            </Badge>
+
+            {booking.status === "pending" && (
+              <Badge variant="outline" className="text-muted-foreground">
+                {t('alerts.awaitingApproval')}
+              </Badge>
+            )}
+          </div>
+        </div>
+        
+        {actionButtons && (
+          <div className="flex items-center gap-2">
+            {actionButtons}
+          </div>
+        )}
       </div>
 
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <Badge
-            className={`${statusColor(booking.status)} text-md px-3 py-1`}
-          >
-            {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
-          </Badge>
-
-          {booking.status === "pending" && (
-            <Badge variant="outline" className="text-muted-foreground">
-              Awaiting approval
-            </Badge>
-          )}
-        </div>
-
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
             {booking.title}
           </h1>
           <p className="text-muted-foreground mt-1">
-            Requested by {creatorName} •{" "}
+            {t('booking.createdBy')} {creatorName} •{" "}
             {getRelativeTime(booking.createdAt)}
           </p>
         </div>
@@ -72,9 +84,9 @@ export const BookingHeader = ({ booking }: BookingHeaderProps) => {
         {booking.status === "pending" && (
           <Alert>
             <MailCheck className="h-4 w-4" />
-            <AlertTitle>Awaiting Approval</AlertTitle>
+            <AlertTitle>{t('alerts.awaitingApproval')}</AlertTitle>
             <AlertDescription>
-              This booking request is waiting for administrator approval.
+              {t('alerts.awaitingApprovalDesc')}
             </AlertDescription>
           </Alert>
         )}
@@ -84,9 +96,9 @@ export const BookingHeader = ({ booking }: BookingHeaderProps) => {
           booking.approvedAt && (
             <Alert className="bg-green-50 text-green-800 border-green-200">
               <CheckCircle2 className="h-4 w-4" />
-              <AlertTitle>Booking Approved</AlertTitle>
+              <AlertTitle>{t('alerts.bookingApproved')}</AlertTitle>
               <AlertDescription>
-                Approved by {booking.approvedBy.name || booking.approvedBy.email} on{" "}
+                {t('alerts.approvedBy')} {booking.approvedBy.name || booking.approvedBy.email} {t('alerts.on')}{" "}
                 {formatDate(booking.approvedAt)}
               </AlertDescription>
             </Alert>
@@ -97,9 +109,9 @@ export const BookingHeader = ({ booking }: BookingHeaderProps) => {
           booking.cancelledAt && (
             <Alert className="bg-red-50 text-red-800 border-red-200">
               <X className="h-4 w-4" />
-              <AlertTitle>Booking Cancelled</AlertTitle>
+              <AlertTitle>{t('alerts.bookingCancelled')}</AlertTitle>
               <AlertDescription>
-                Cancelled by {booking.cancelledBy.name || booking.cancelledBy.email} on{" "}
+                {t('alerts.cancelledBy')} {booking.cancelledBy.name || booking.cancelledBy.email} {t('alerts.on')}{" "}
                 {formatDate(booking.cancelledAt)}
               </AlertDescription>
             </Alert>

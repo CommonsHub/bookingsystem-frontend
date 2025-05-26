@@ -43,9 +43,23 @@ export interface Booking {
   isPublicEvent?: boolean;
   cancelledAt?: string;
   cancelledBy?: User;
-  // New fields
   organizer?: string;
   estimatedAttendees?: number;
+  // New URL fields
+  lumaEventUrl?: string;
+  calendarUrl?: string;
+  publicUri?: string;
+  // New room notes field
+  roomNotes?: string;
+  // Add language field
+  language?: string;
+  // Add catering and event support fields
+  cateringOptions?: string[];
+  cateringComments?: string;
+  eventSupportOptions?: string[];
+  // Add price and currency fields
+  price?: number;
+  currency?: string;
 }
 
 export interface Comment {
@@ -114,7 +128,15 @@ export interface BookingDatabaseFields {
   is_public_event?: boolean;
   cancelled_at?: string;
   cancelled_by_email?: string;
-  // New fields
   organizer?: string;
   estimated_attendees?: number;
+  // New URL fields
+  luma_event_url?: string;
+  calendar_url?: string;
+  public_uri?: string;
+  // Add language field
+  language?: string;
+  // Add price and currency fields
+  price?: number;
+  currency?: string;
 }
