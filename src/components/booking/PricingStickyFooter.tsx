@@ -141,7 +141,7 @@ export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
       <div className="max-w-2xl mx-auto px-4 py-3">
         <Card className="bg-white shadow-md">
           <CardContent className="p-4">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center mb-2">
               <div>
                 <div className="font-semibold text-lg">Total Estimate</div>
                 <div className="text-sm text-muted-foreground">
@@ -153,6 +153,9 @@ export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
                 <div className="text-xs text-muted-foreground">Tentative quote</div>
               </div>
             </div>
+            <p className="text-xs text-muted-foreground mt-2">
+              * This is a tentative quote. Final pricing may vary and will be confirmed upon approval.
+            </p>
           </CardContent>
         </Card>
       </div>

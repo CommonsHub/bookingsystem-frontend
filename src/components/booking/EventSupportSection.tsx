@@ -82,7 +82,7 @@ export const EventSupportSection = ({ control }: EventSupportSectionProps) => {
                   Public event (we will publish through our channels as well)
                 </FormLabel>
                 <p className="text-sm text-muted-foreground">
-                  Check this box if you want your event to be promoted on our public channels.
+                  Check this box if you want your event to be promoted on our public channels and open to the community. For private events, we offer personalized white-glove service and exclusive use of the Commons with dedicated support—this premium experience includes a 30% surcharge to ensure your gathering receives our full attention and maintains the intimate atmosphere you deserve.
                 </p>
               </div>
             </FormItem>

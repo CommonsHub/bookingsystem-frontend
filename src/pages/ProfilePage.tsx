@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useAuth } from "@/context/AuthContext";
 import { useProfile } from "@/hooks/useProfile";
+import { useHeaderSettings } from "@/hooks/useHeaderSettings";
 import {
   Form,
   FormControl,
@@ -30,6 +31,7 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const { profile, loading: profileLoading, updateProfile } = useProfile();
+  const { settings: headerSettings, updateSettings: updateHeaderSettings } = useHeaderSettings();
   
   const form = useForm<ProfileFormValues>({
     defaultValues: {
@@ -78,7 +80,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 space-y-6">
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle>Your Profile</CardTitle>
@@ -163,6 +165,35 @@ export default function ProfilePage() {
               </Button>
             </form>
           </Form>
+        </CardContent>
+      </Card>
+
+      <Card className="max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle>Improvements for Power Users</CardTitle>
+          <CardDescription>
+            Advanced settings to enhance your booking experience
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex flex-row items-start space-x-3 space-y-0">
+              <Checkbox
+                checked={headerSettings.showStickyHeader}
+                onCheckedChange={(checked) => 
+                  updateHeaderSettings({ showStickyHeader: !!checked })
+                }
+              />
+              <div className="space-y-1 leading-none">
+                <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  Show sticky progress header
+                </label>
+                <p className="text-sm text-muted-foreground">
+                  Display a floating progress indicator that stays visible while scrolling through the booking form
+                </p>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>

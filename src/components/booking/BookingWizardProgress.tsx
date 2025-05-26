@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, Circle } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useHeaderSettings } from "@/hooks/useHeaderSettings";
 
 interface BookingWizardProgressProps {
   currentSection: number;
@@ -16,6 +17,7 @@ export const BookingWizardProgress = ({
   sections 
 }: BookingWizardProgressProps) => {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const { settings } = useHeaderSettings();
   const progressPercentage = (completedSections.size / sections.length) * 100;
 
   // Monitor main header visibility
@@ -50,6 +52,11 @@ export const BookingWizardProgress = ({
       });
     }
   };
+
+  // Don't render if sticky header is disabled in settings
+  if (!settings.showStickyHeader) {
+    return null;
+  }
 
   return (
     <div 
