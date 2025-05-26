@@ -14,6 +14,10 @@ import { RoomSelectionSection } from "./RoomSelectionSection";
 import { PricingQuoteSection } from "./PricingQuoteSection";
 import { FormData } from "./BookingFormSchema";
 import { Room } from "@/types";
+import { useFormContext } from "react-hook-form";
+import { languages } from "@/i18n/i18n";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface BookingFormContentProps {
   control: Control<FormData>;
@@ -29,6 +33,17 @@ export const BookingFormContent = ({
   setSelectedRoomId
 }: BookingFormContentProps) => {
   const { t } = useTranslation();
+  const { watch } = useFormContext<FormData>();
+  
+  // Watch for the bookingId to determine if this is an edit form
+  const bookingId = watch("bookingId");
+  const isEdit = !!bookingId;
+
+  const getLanguageDisplay = (languageCode?: string) => {
+    if (!languageCode) return t('form.language.notSet');
+    const language = languages[languageCode as keyof typeof languages];
+    return language ? `${language.flag} ${language.nativeName}` : languageCode.toUpperCase();
+  };
 
   return (
     <CardContent className="space-y-12 pb-8">
@@ -38,6 +53,21 @@ export const BookingFormContent = ({
           <p className="text-muted-foreground text-sm">{t('form.sections.basicInfo.description')}</p>
         </div>
         <BookingInfoSection control={control} />
+        
+        {/* Show language field for existing bookings (read-only) */}
+        {isEdit && (
+          <div className="mt-4">
+            <Label>{t('form.language.label')}</Label>
+            <Input
+              value={getLanguageDisplay(watch("language"))}
+              readOnly
+              className="bg-gray-100 mt-2"
+            />
+            <p className="text-sm text-muted-foreground mt-1">
+              {t('form.language.readOnlyNote')}
+            </p>
+          </div>
+        )}
       </div>
 
       <Separator className="my-12" />

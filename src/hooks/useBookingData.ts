@@ -100,7 +100,8 @@ export const useBookingData = () => {
               estimatedAttendees: booking.estimated_attendees,
               lumaEventUrl: booking.luma_event_url,
               calendarUrl: booking.calendar_url,
-              publicUri: booking.public_uri
+              publicUri: booking.public_uri,
+              language: booking.language || 'en', // Add language field with fallback
             };
           }
         );

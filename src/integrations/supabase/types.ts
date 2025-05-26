@@ -25,6 +25,7 @@ export type Database = {
           estimated_attendees: number | null
           id: string
           is_public_event: boolean | null
+          language: string | null
           luma_event_url: string | null
           organizer: string | null
           public_uri: string | null
@@ -50,6 +51,7 @@ export type Database = {
           estimated_attendees?: number | null
           id?: string
           is_public_event?: boolean | null
+          language?: string | null
           luma_event_url?: string | null
           organizer?: string | null
           public_uri?: string | null
@@ -75,6 +77,7 @@ export type Database = {
           estimated_attendees?: number | null
           id?: string
           is_public_event?: boolean | null
+          language?: string | null
           luma_event_url?: string | null
           organizer?: string | null
           public_uri?: string | null

@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Control } from "react-hook-form";
 import { z } from "zod";
 import { formSchema } from "./BookingFormSchema";
+import { useTranslation } from "react-i18next";
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -13,6 +14,8 @@ interface ContactInfoSectionProps {
 }
 
 export const ContactInfoSection = ({ control, isReadOnly = false }: ContactInfoSectionProps) => {
+  const { t } = useTranslation();
+
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -21,10 +24,10 @@ export const ContactInfoSection = ({ control, isReadOnly = false }: ContactInfoS
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>{t('form.contact.name')}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Your name"
+                  placeholder={t('form.contact.namePlaceholder')}
                   {...field}
                   readOnly={isReadOnly}
                   className={isReadOnly ? "bg-gray-100" : ""}
@@ -40,10 +43,10 @@ export const ContactInfoSection = ({ control, isReadOnly = false }: ContactInfoS
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email Address</FormLabel>
+              <FormLabel>{t('form.contact.email')}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Your email address"
+                  placeholder={t('form.contact.emailPlaceholder')}
                   {...field}
                   readOnly={isReadOnly}
                   className={isReadOnly ? "bg-gray-100" : ""}
@@ -55,7 +58,7 @@ export const ContactInfoSection = ({ control, isReadOnly = false }: ContactInfoS
         />
       </div>
       <p className="text-sm text-muted-foreground mt-2">
-        A confirmation with the booking data will be sent to this email.
+        {t('form.contact.confirmationNote')}
       </p>
     </div>
   );

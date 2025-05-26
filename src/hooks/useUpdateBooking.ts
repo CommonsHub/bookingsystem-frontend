@@ -32,6 +32,7 @@ export const useUpdateBooking = (
         luma_event_url: bookingData.lumaEventUrl,
         calendar_url: bookingData.calendarUrl,
         public_uri: bookingData.publicUri,
+        // Note: We don't update the language field in updates to preserve the original language
       };
 
       // Update booking in the database

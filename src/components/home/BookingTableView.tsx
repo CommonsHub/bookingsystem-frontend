@@ -2,7 +2,7 @@
 import { Booking, User } from "@/types";
 import { formatDateTime } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import { MessageSquare, Trash2, Users, Hash, Copy } from "lucide-react";
+import { MessageSquare, Trash2, Users, Hash, Copy, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "./StatusBadge";
 import { useTranslation } from "react-i18next";
@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { languages } from "@/i18n/i18n";
 
 interface BookingTableViewProps {
   bookings: Booking[];
@@ -42,6 +43,12 @@ export const BookingTableView = ({
     window.location.href = `/bookings/new?copy=${bookingId}`;
   };
 
+  const getLanguageDisplay = (languageCode?: string) => {
+    if (!languageCode) return 'EN';
+    const language = languages[languageCode as keyof typeof languages];
+    return language ? language.flag : languageCode.toUpperCase();
+  };
+
   return (
     <div className="rounded-md border overflow-x-auto">
       <Table>
@@ -50,11 +57,12 @@ export const BookingTableView = ({
         </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>{t('booking.room')}</TableHead>
+            <TableHead>{t('booking.title')}</TableHead>
             <TableHead>{t('booking.room')}</TableHead>
             <TableHead>{t('booking.date')}</TableHead>
             <TableHead>{t('booking.attendees')}</TableHead>
             <TableHead>{t('booking.status')}</TableHead>
+            <TableHead>{t('booking.language')}</TableHead>
             <TableHead>{t('booking.createdBy')}</TableHead>
             <TableHead>{t('booking.comments')}</TableHead>
             <TableHead>{t('booking.actions')}</TableHead>
@@ -79,6 +87,12 @@ export const BookingTableView = ({
                 </div>
               </TableCell>
               <TableCell><StatusBadge status={booking.status} /></TableCell>
+              <TableCell>
+                <div className="flex items-center gap-1">
+                  <Globe className="h-3 w-3" />
+                  <span>{getLanguageDisplay(booking.language)}</span>
+                </div>
+              </TableCell>
               <TableCell>
                 {booking.createdBy.name || booking.createdBy.email.split("@")[0]}
               </TableCell>

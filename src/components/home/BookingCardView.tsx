@@ -1,10 +1,11 @@
 
 import { Booking, User } from "@/types";
 import { formatDateTime } from "@/lib/utils";
-import { CalendarDays, MessageSquare, Trash2, Hash, Copy } from "lucide-react";
+import { CalendarDays, MessageSquare, Trash2, Hash, Copy, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { StatusBadge } from "./StatusBadge";
+import { languages } from "@/i18n/i18n";
 
 interface BookingCardViewProps {
   bookings: Booking[];
@@ -22,6 +23,12 @@ export const BookingCardView = ({
   const handleCopyBooking = (e: React.MouseEvent, bookingId: string) => {
     e.stopPropagation();
     window.location.href = `/bookings/new?copy=${bookingId}`;
+  };
+
+  const getLanguageDisplay = (languageCode?: string) => {
+    if (!languageCode) return 'EN';
+    const language = languages[languageCode as keyof typeof languages];
+    return language ? language.flag : languageCode.toUpperCase();
   };
 
   return (
@@ -47,6 +54,11 @@ export const BookingCardView = ({
               <div className="flex items-center gap-2">
                 <Hash className="h-3.5 w-3.5 flex-shrink-0" />
                 <span>Attendees: {booking.estimatedAttendees || "N/A"}</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Globe className="h-3.5 w-3.5 flex-shrink-0" />
+                <span>Language: {getLanguageDisplay(booking.language)}</span>
               </div>
             </div>
           </CardContent>

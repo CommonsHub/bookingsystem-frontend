@@ -4,10 +4,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { Database } from "@/integrations/supabase/types";
 import { Booking, BookingDatabaseFields, User } from "@/types";
 import { v4 as uuidv4 } from "uuid";
+import { useTranslation } from "react-i18next";
 
 export const useCreateBooking = (
   setBookings: React.Dispatch<React.SetStateAction<Booking[]>>,
 ) => {
+  const { i18n } = useTranslation();
+
   const createBooking = async (
     bookingData: Omit<Booking, "id" | "createdAt" | "status" | "comments">,
   ): Promise<string> => {
@@ -34,6 +37,7 @@ export const useCreateBooking = (
         is_public_event: bookingData.isPublicEvent,
         organizer: bookingData.organizer,
         estimated_attendees: bookingData.estimatedAttendees,
+        language: i18n.language, // Add current language
       };
 
       const { error } = await supabase.from("bookings").insert(row);
