@@ -100,6 +100,13 @@
       "additionalNotesPlaceholder": "Exigences spécifiques pour la configuration de la salle ou les fonctionnalités dont vous avez besoin",
       "additionalSpaceLabel": "Nous avons besoin de tout + espace supplémentaire",
       "additionalSpaceDescription": "Nous pouvons offrir un espace supplémentaire au premier étage si nécessaire."
+    },
+    "contact": {
+      "confirmationNote": "Nous enverrons des confirmations de réservation à cette adresse e-mail",
+      "email": "E-mail",
+      "emailPlaceholder": "your.email@example.com",
+      "namePlaceholder": "Votre nom complet",
+      "name": "Nom"
     }
   },
   "booking": {
@@ -130,7 +137,8 @@
     "openEventPage": "Ouvrir la page de l'événement",
     "openCalendarEvent": "Ouvrir l'événement du calendrier",
     "copyBooking": "Copier la réservation",
-    "notSpecified": "Non spécifié"
+    "notSpecified": "Non spécifié",
+    "language": "Langue"
   },
   "roomInfo": {
     "title": "Informations sur la salle",
@@ -201,5 +209,23 @@
   },
   "language": {
     "select": "Sélectionner la langue"
+  },
+  "profile": {
+    "address": "Adresse",
+    "addressPlaceholder": "Votre adresse",
+    "description": "Mettez à jour vos informations personnelles et vos détails d'entreprise",
+    "fullName": "Nom et prénom",
+    "fullNamePlaceholder": "Votre nom complet",
+    "hasBusiness": "J'ai une entreprise",
+    "hasBusinessDescription": "Cochez ceci si vous avez besoin de fournir des informations TVA",
+    "improvementsDescription": "Paramètres avancés pour améliorer votre expérience de réservation",
+    "improvementsTitle": "Améliorations pour les utilisateurs de puissance",
+    "loading": "Chargement...",
+    "saveChanges": "Enregistrer les modifications",
+    "stickyHeader": "Afficher l'en-tête de progrès collant",
+    "stickyHeaderDescription": "Affichez un indicateur de progrès flottant qui reste visible tout en faisant défiler le formulaire de réservation",
+    "title": "Votre profil",
+    "vatNumber": "Numéro de TVA",
+    "vatNumberPlaceholder": "Votre numéro de cuve"
   }
 }
