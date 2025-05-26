@@ -1,3 +1,4 @@
+
 export interface Room {
   id: string;
   name: string;
@@ -56,6 +57,9 @@ export interface Booking {
   cateringOptions?: string[];
   cateringComments?: string;
   eventSupportOptions?: string[];
+  // Add price and currency fields
+  price?: number;
+  currency?: string;
 }
 
 export interface Comment {
@@ -132,4 +136,7 @@ export interface BookingDatabaseFields {
   public_uri?: string;
   // Add language field
   language?: string;
+  // Add price and currency fields
+  price?: number;
+  currency?: string;
 }

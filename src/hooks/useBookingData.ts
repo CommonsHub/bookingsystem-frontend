@@ -102,6 +102,9 @@ export const useBookingData = () => {
               calendarUrl: booking.calendar_url,
               publicUri: booking.public_uri,
               language: booking.language || 'en', // Add language field with fallback
+              // Add price and currency fields
+              price: booking.price ? Number(booking.price) : undefined,
+              currency: booking.currency || 'EUR',
               // Add placeholder catering and event support fields
               // These would need to be properly mapped from database fields when those are added
               cateringOptions: [], // This will be populated when the database fields are added

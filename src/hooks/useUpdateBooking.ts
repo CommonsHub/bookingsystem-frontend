@@ -32,6 +32,9 @@ export const useUpdateBooking = (
         luma_event_url: bookingData.lumaEventUrl,
         calendar_url: bookingData.calendarUrl,
         public_uri: bookingData.publicUri,
+        // Add price and currency fields
+        price: bookingData.price,
+        currency: bookingData.currency,
         // Note: We don't update the language field in updates to preserve the original language
       };
 

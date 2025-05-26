@@ -32,6 +32,9 @@ export const formSchema = z.object({
   // Add the missing fields
   bookingId: z.string().optional(),
   language: z.string().optional(),
+  // Add price and currency fields
+  price: z.number().min(0, { message: "Price must be positive" }).optional(),
+  currency: z.string().default("EUR"),
 });
 
 export type FormData = z.infer<typeof formSchema>;

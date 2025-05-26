@@ -9,6 +9,7 @@ import { BookingContactInfo } from "./BookingContactInfo";
 import { BookingEventLinks } from "./BookingEventLinks";
 import { BookingServicesInfo } from "./BookingServicesInfo";
 import { BookingAdditionalInfo } from "./BookingAdditionalInfo";
+import { BookingPriceInfo } from "./BookingPriceInfo";
 
 interface BookingDetailsCardProps {
   booking: Booking;
@@ -30,6 +31,7 @@ export const BookingDetailsCard = ({ booking }: BookingDetailsCardProps) => {
           <BookingLocationInfo booking={booking} />
           <BookingContactInfo booking={booking} />
           <BookingEventLinks booking={booking} />
+          <BookingPriceInfo booking={booking} />
         </div>
 
         <BookingAdditionalInfo booking={booking} />
