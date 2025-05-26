@@ -86,7 +86,8 @@ export type BookingStatus =
   | "pending"
   | "approved"
   | "rejected"
-  | "cancelled";
+  | "cancelled"
+  | "paid";
 export type CommentStatus = "draft" | "published";
 
 export interface CateringOption {

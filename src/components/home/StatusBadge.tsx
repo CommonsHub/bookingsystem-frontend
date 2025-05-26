@@ -1,6 +1,6 @@
 
 import { Badge } from "@/components/ui/badge";
-import { Check, Clock, X } from "lucide-react";
+import { Check, Clock, X, CreditCard } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 interface StatusBadgeProps {
@@ -33,6 +33,13 @@ export const StatusBadge = ({ status }: StatusBadgeProps) => {
         <Badge variant="success" className="flex items-center gap-1">
           <Check className="h-3 w-3" />
           <span>{t('status.approved')}</span>
+        </Badge>
+      );
+    case "paid":
+      return (
+        <Badge variant="success" className="flex items-center gap-1 bg-green-600">
+          <CreditCard className="h-3 w-3" />
+          <span>{t('status.paid')}</span>
         </Badge>
       );
     case "rejected":

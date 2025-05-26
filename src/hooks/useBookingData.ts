@@ -68,7 +68,8 @@ export const useBookingData = () => {
                 | "pending"
                 | "approved"
                 | "rejected"
-                | "cancelled",
+                | "cancelled"
+                | "paid",
               createdAt: booking.created_at,
               createdBy: {
                 id: crypto.randomUUID(),
