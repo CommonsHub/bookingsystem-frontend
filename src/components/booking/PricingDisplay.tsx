@@ -58,6 +58,21 @@ export const PricingDisplay = ({ quote, vatMessage }: PricingDisplayProps) => {
           </>
         )}
 
+        {quote.nonPublicSurcharge > 0 && (
+          <>
+            <Separator />
+            <div>
+              <div className="flex justify-between items-center">
+                <span className="font-medium">Non-public event surcharge (30%)</span>
+                <span className="font-semibold">€{quote.nonPublicSurcharge}</span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Additional charge for private events not open to the public
+              </p>
+            </div>
+          </>
+        )}
+
         <Separator />
         
         <div className="flex justify-between items-center text-lg font-bold">

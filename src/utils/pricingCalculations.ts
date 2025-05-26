@@ -1,4 +1,3 @@
-
 import { Room } from "@/types";
 
 // Room pricing data based on screenshots and mock data
@@ -50,6 +49,8 @@ export interface QuoteData {
   isMember: boolean;
   memberDiscount: number;
   discountAmount: number;
+  isPublicEvent: boolean;
+  nonPublicSurcharge: number;
 }
 
 export const calculateRoomPrice = (

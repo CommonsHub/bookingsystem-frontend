@@ -28,6 +28,7 @@ export const PricingQuoteSection = ({ rooms }: PricingQuoteSectionProps) => {
   const estimatedAttendees = watch("estimatedAttendees") || 0;
   const selectedCatering = watch("cateringOptions") || [];
   const membershipStatus = watch("membershipStatus");
+  const isPublicEvent = watch("isPublicEvent");
 
   const quote = useMemo((): QuoteData | null => {
     // Early return if required data is missing or invalid
@@ -64,7 +65,10 @@ export const PricingQuoteSection = ({ rooms }: PricingQuoteSectionProps) => {
     // Calculate catering costs
     const catering = calculateCateringCosts(selectedCatering, estimatedAttendees);
 
-    const totalPrice = memberPricing.discountedRoomPrice + catering.cateringPrice;
+    // Calculate non-public event surcharge (30% on room price)
+    const nonPublicSurcharge = !isPublicEvent ? Math.round(memberPricing.discountedRoomPrice * 0.3) : 0;
+
+    const totalPrice = memberPricing.discountedRoomPrice + catering.cateringPrice + nonPublicSurcharge;
 
     return {
       room: room.name,
@@ -80,9 +84,11 @@ export const PricingQuoteSection = ({ rooms }: PricingQuoteSectionProps) => {
       duration: durationHours,
       isMember,
       memberDiscount: memberPricing.memberDiscount,
-      discountAmount: memberPricing.discountAmount
+      discountAmount: memberPricing.discountAmount,
+      isPublicEvent: !!isPublicEvent,
+      nonPublicSurcharge
     };
-  }, [roomId, startDate, endDate, estimatedAttendees, selectedCatering, rooms, membershipStatus]);
+  }, [roomId, startDate, endDate, estimatedAttendees, selectedCatering, rooms, membershipStatus, isPublicEvent]);
 
   // Show placeholder when no quote is available
   if (!quote) {
