@@ -3,10 +3,10 @@
 export const eventSupportOptions = [
   {
     id: "logistics",
-    nameKey: "form.eventSupport.logisticsSupport",
+    nameKey: "logisticsSupport",
   },
   {
     id: "facilitation",
-    nameKey: "form.eventSupport.facilitationSupport",
+    nameKey: "facilitationSupport",
   },
 ];
