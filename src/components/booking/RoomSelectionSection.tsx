@@ -8,6 +8,7 @@ import { Control } from "react-hook-form";
 import { z } from "zod";
 import { Room } from "@/types";
 import { formSchema } from "./BookingFormSchema";
+import { useTranslation } from "react-i18next";
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -24,12 +25,13 @@ export const RoomSelectionSection = ({
   selectedRoomId,
   setSelectedRoomId
 }: RoomSelectionSectionProps) => {
+  const { t } = useTranslation();
   const selectedRoom = rooms.find(room => room.id === selectedRoomId);
 
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <h3 className="text-lg font-medium">Which space would you like to book?</h3>
+        <h3 className="text-lg font-medium">{t('form.roomSelection.whichSpace')}</h3>
 
         <FormField
           control={control}
@@ -46,7 +48,7 @@ export const RoomSelectionSection = ({
                   className="space-y-1"
                 >
                   <div className="space-y-4">
-                    <div className="text-muted-foreground">Capacity:</div>
+                    <div className="text-muted-foreground">{t('form.roomSelection.capacity')}:</div>
                     {rooms.map((room) => (
                       <FormItem
                         key={room.id}
@@ -58,13 +60,13 @@ export const RoomSelectionSection = ({
                         <div className="space-y-1">
                           <div className="flex items-center">
                             <Users className="h-4 w-4 text-red-500 mr-2" />
-                            <span>{room.capacity} people: {room.name}</span>
+                            <span>{room.capacity} {t('booking.people')}: {room.name}</span>
                           </div>
                           
                           {/* Show setup options only for this room if it's selected */}
                           {selectedRoomId === room.id && room.setupOptions?.length > 0 && (
                             <div className="mt-4 pl-2">
-                              <h4 className="text-muted-foreground mb-2">Possible setup:</h4>
+                              <h4 className="text-muted-foreground mb-2">{t('form.roomSelection.possibleSetup')}:</h4>
                               <FormField
                                 control={control}
                                 name="setupOption"
@@ -120,10 +122,10 @@ export const RoomSelectionSection = ({
           name="roomNotes"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Additional Room Notes</FormLabel>
+              <FormLabel>{t('form.roomSelection.additionalNotes')}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Any specific requirements for room setup or features you need"
+                  placeholder={t('form.roomSelection.additionalNotesPlaceholder')}
                   rows={3}
                   {...field}
                   value={field.value || ""}
@@ -147,10 +149,10 @@ export const RoomSelectionSection = ({
               </FormControl>
               <div>
                 <FormLabel>
-                  We need all of it + additional space
+                  {t('form.roomSelection.additionalSpaceLabel')}
                 </FormLabel>
                 <p className="text-sm text-muted-foreground">
-                  We can offer additional space on the first floor if needed.
+                  {t('form.roomSelection.additionalSpaceDescription')}
                 </p>
               </div>
             </FormItem>

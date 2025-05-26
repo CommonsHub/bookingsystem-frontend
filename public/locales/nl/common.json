@@ -84,6 +84,23 @@
     "additionalInfo": {
       "label": "Aanvullende informatie die u wilt delen",
       "placeholder": "Deel eventuele andere informatie die relevant kan zijn voor uw boeking"
+    },
+    "urls": {
+      "lumaEventUrl": "Luma Evenement URL",
+      "lumaEventUrlPlaceholder": "https://lu.ma/uw-evenement",
+      "calendarUrl": "Kalender URL",
+      "calendarUrlPlaceholder": "https://calendar.google.com/event...",
+      "publicUri": "Publieke URI",
+      "publicUriPlaceholder": "uw-evenement-slug"
+    },
+    "roomSelection": {
+      "whichSpace": "Welke ruimte wilt u boeken?",
+      "capacity": "Capaciteit",
+      "possibleSetup": "Mogelijke opstelling",
+      "additionalNotes": "Aanvullende zaalopmerkingen",
+      "additionalNotesPlaceholder": "Specifieke vereisten voor zaalopstelling of functies die u nodig heeft",
+      "additionalSpaceLabel": "We hebben alles nodig + extra ruimte",
+      "additionalSpaceDescription": "We kunnen indien nodig extra ruimte op de eerste verdieping aanbieden."
     }
   },
   "booking": {
@@ -112,6 +129,28 @@
     "people": "personen",
     "openEventPage": "Evenementpagina openen",
     "openCalendarEvent": "Kalender evenement openen"
+  },
+  "roomInfo": {
+    "title": "Zaalinformatie",
+    "location": "Locatie",
+    "capacity": "Capaciteit",
+    "amenities": "Voorzieningen",
+    "projector": "Projector",
+    "whiteboards": "Whiteboards",
+    "videoConferencing": "Videoconferenties",
+    "coffeeStation": "Koffiestation"
+  },
+  "pricing": {
+    "totalEstimate": "Totale schatting",
+    "tentativeQuote": "Voorlopige offerte",
+    "tentativeDisclaimer": "* Dit is een voorlopige offerte. Definitieve prijzen kunnen variëren en worden bevestigd bij goedkeuring.",
+    "tentativePriceQuote": "Voorlopige prijsofferte",
+    "selectRoomAndDates": "Selecteer een zaal en stel uw datums in om prijzen te zien",
+    "memberDiscount": "Ledenkorting (30%)",
+    "weekendSurcharge": "Weekendtoeslag",
+    "catering": "Catering",
+    "nonPublicSurcharge": "Toeslag niet-openbaar evenement (30%)",
+    "nonPublicSurchargeDescription": "Extra kosten voor privé-evenementen die niet open zijn voor het publiek"
   },
   "status": {
     "draft": "Concept",

@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Control } from "react-hook-form";
 import { z } from "zod";
 import { formSchema } from "./BookingFormSchema";
+import { useTranslation } from "react-i18next";
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -12,6 +13,8 @@ interface UrlFieldsSectionProps {
 }
 
 export const UrlFieldsSection = ({ control }: UrlFieldsSectionProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-4">
       <FormField
@@ -19,10 +22,10 @@ export const UrlFieldsSection = ({ control }: UrlFieldsSectionProps) => {
         name="lumaEventUrl"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Luma Event URL</FormLabel>
+            <FormLabel>{t('form.urls.lumaEventUrl')}</FormLabel>
             <FormControl>
               <Input
-                placeholder="https://lu.ma/your-event"
+                placeholder={t('form.urls.lumaEventUrlPlaceholder')}
                 {...field}
                 value={field.value || ""}
               />
@@ -37,10 +40,10 @@ export const UrlFieldsSection = ({ control }: UrlFieldsSectionProps) => {
         name="calendarUrl"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Calendar URL</FormLabel>
+            <FormLabel>{t('form.urls.calendarUrl')}</FormLabel>
             <FormControl>
               <Input
-                placeholder="https://calendar.google.com/event..."
+                placeholder={t('form.urls.calendarUrlPlaceholder')}
                 {...field}
                 value={field.value || ""}
               />
@@ -55,10 +58,10 @@ export const UrlFieldsSection = ({ control }: UrlFieldsSectionProps) => {
         name="publicUri"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Public URI</FormLabel>
+            <FormLabel>{t('form.urls.publicUri')}</FormLabel>
             <FormControl>
               <Input
-                placeholder="your-event-slug"
+                placeholder={t('form.urls.publicUriPlaceholder')}
                 {...field}
                 value={field.value || ""}
               />

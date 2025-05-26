@@ -2,6 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { QuoteData } from "@/utils/pricingCalculations";
+import { useTranslation } from "react-i18next";
 
 interface PricingDisplayProps {
   quote: QuoteData;
@@ -9,10 +10,12 @@ interface PricingDisplayProps {
 }
 
 export const PricingDisplay = ({ quote, vatMessage }: PricingDisplayProps) => {
+  const { t } = useTranslation();
+
   return (
     <Card className="mt-6">
       <CardHeader>
-        <CardTitle className="text-lg">Tentative Price Quote</CardTitle>
+        <CardTitle className="text-lg">{t('pricing.tentativePriceQuote')}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
@@ -33,12 +36,12 @@ export const PricingDisplay = ({ quote, vatMessage }: PricingDisplayProps) => {
           {/* Only show member discount if user selected "yes" for membership */}
           {quote.isMember && quote.discountAmount > 0 && (
             <p className="text-sm text-green-600 font-medium">
-              Member discount (30%): -€{quote.discountAmount}
+              {t('pricing.memberDiscount')}: -€{quote.discountAmount}
             </p>
           )}
           {quote.isWeekend && quote.weekendSurcharge > 0 && (
             <p className="text-sm text-muted-foreground">
-              Weekend surcharge: €{quote.weekendSurcharge}
+              {t('pricing.weekendSurcharge')}: €{quote.weekendSurcharge}
             </p>
           )}
         </div>
@@ -48,7 +51,7 @@ export const PricingDisplay = ({ quote, vatMessage }: PricingDisplayProps) => {
             <Separator />
             <div>
               <div className="flex justify-between items-center mb-2">
-                <span className="font-medium">Catering ({quote.attendees} people)</span>
+                <span className="font-medium">{t('pricing.catering')} ({quote.attendees} {t('booking.people')})</span>
                 <span className="font-semibold">€{quote.cateringPrice}</span>
               </div>
               {quote.cateringItems.map((item, index) => (
@@ -63,11 +66,11 @@ export const PricingDisplay = ({ quote, vatMessage }: PricingDisplayProps) => {
             <Separator />
             <div>
               <div className="flex justify-between items-center">
-                <span className="font-medium">Non-public event surcharge (30%)</span>
+                <span className="font-medium">{t('pricing.nonPublicSurcharge')}</span>
                 <span className="font-semibold">€{quote.nonPublicSurcharge}</span>
               </div>
               <p className="text-sm text-muted-foreground">
-                Additional charge for private events not open to the public
+                {t('pricing.nonPublicSurchargeDescription')}
               </p>
             </div>
           </>
@@ -76,12 +79,12 @@ export const PricingDisplay = ({ quote, vatMessage }: PricingDisplayProps) => {
         <Separator />
         
         <div className="flex justify-between items-center text-lg font-bold">
-          <span>Total Estimate</span>
+          <span>{t('pricing.totalEstimate')}</span>
           <span>€{quote.totalPrice}</span>
         </div>
         
         <p className="text-xs text-muted-foreground">
-          * This is a tentative quote. Final pricing may vary and will be confirmed upon approval.
+          {t('pricing.tentativeDisclaimer')}
           {vatMessage && ` ${vatMessage}`}
         </p>
       </CardContent>

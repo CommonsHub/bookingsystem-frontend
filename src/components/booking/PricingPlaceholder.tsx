@@ -1,12 +1,15 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTranslation } from "react-i18next";
 
 export const PricingPlaceholder = () => {
+  const { t } = useTranslation();
+
   return (
     <Card className="mt-6">
       <CardHeader>
-        <CardTitle className="text-lg">Tentative Price Quote</CardTitle>
+        <CardTitle className="text-lg">{t('pricing.tentativePriceQuote')}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="text-center py-8">
@@ -18,7 +21,7 @@ export const PricingPlaceholder = () => {
             </div>
           </div>
           <p className="text-sm text-muted-foreground mt-4">
-            Please select a room and set your dates to see pricing
+            {t('pricing.selectRoomAndDates')}
           </p>
         </div>
       </CardContent>

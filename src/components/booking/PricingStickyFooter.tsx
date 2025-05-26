@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { useFormContext } from "react-hook-form";
 import { FormData } from "./BookingFormSchema";
@@ -11,12 +12,14 @@ import {
   QuoteData
 } from "@/utils/pricingCalculations";
 import { calculateCateringCosts } from "@/utils/cateringCalculations";
+import { useTranslation } from "react-i18next";
 
 interface PricingStickyFooterProps {
   rooms: Room[];
 }
 
 export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
+  const { t } = useTranslation();
   const { watch } = useFormContext<FormData>();
   const [isVisible, setIsVisible] = useState(false);
 
@@ -143,18 +146,18 @@ export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
           <CardContent className="p-4">
             <div className="flex justify-between items-center mb-2">
               <div>
-                <div className="font-semibold text-lg">Total Estimate</div>
+                <div className="font-semibold text-lg">{t('pricing.totalEstimate')}</div>
                 <div className="text-sm text-muted-foreground">
-                  {quote.room} • {quote.duration}h • {quote.attendees} people
+                  {quote.room} • {quote.duration}h • {quote.attendees} {t('booking.people')}
                 </div>
               </div>
               <div className="text-right">
                 <div className="text-2xl font-bold">€{quote.totalPrice}</div>
-                <div className="text-xs text-muted-foreground">Tentative quote</div>
+                <div className="text-xs text-muted-foreground">{t('pricing.tentativeQuote')}</div>
               </div>
             </div>
             <p className="text-xs text-muted-foreground mt-2">
-              * This is a tentative quote. Final pricing may vary and will be confirmed upon approval.
+              {t('pricing.tentativeDisclaimer')}
             </p>
           </CardContent>
         </Card>

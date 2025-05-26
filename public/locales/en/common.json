@@ -84,6 +84,23 @@
     "additionalInfo": {
       "label": "Any additional information you want to share",
       "placeholder": "Please share any other information that might be relevant for your booking"
+    },
+    "urls": {
+      "lumaEventUrl": "Luma Event URL",
+      "lumaEventUrlPlaceholder": "https://lu.ma/your-event",
+      "calendarUrl": "Calendar URL",
+      "calendarUrlPlaceholder": "https://calendar.google.com/event...",
+      "publicUri": "Public URI",
+      "publicUriPlaceholder": "your-event-slug"
+    },
+    "roomSelection": {
+      "whichSpace": "Which space would you like to book?",
+      "capacity": "Capacity",
+      "possibleSetup": "Possible setup",
+      "additionalNotes": "Additional Room Notes",
+      "additionalNotesPlaceholder": "Any specific requirements for room setup or features you need",
+      "additionalSpaceLabel": "We need all of it + additional space",
+      "additionalSpaceDescription": "We can offer additional space on the first floor if needed."
     }
   },
   "booking": {
@@ -112,6 +129,28 @@
     "people": "people",
     "openEventPage": "Open event page",
     "openCalendarEvent": "Open calendar event"
+  },
+  "roomInfo": {
+    "title": "Room Information",
+    "location": "Location",
+    "capacity": "Capacity",
+    "amenities": "Amenities",
+    "projector": "Projector",
+    "whiteboards": "Whiteboards",
+    "videoConferencing": "Video conferencing",
+    "coffeeStation": "Coffee station"
+  },
+  "pricing": {
+    "totalEstimate": "Total Estimate",
+    "tentativeQuote": "Tentative quote",
+    "tentativeDisclaimer": "* This is a tentative quote. Final pricing may vary and will be confirmed upon approval.",
+    "tentativePriceQuote": "Tentative Price Quote",
+    "selectRoomAndDates": "Please select a room and set your dates to see pricing",
+    "memberDiscount": "Member discount (30%)",
+    "weekendSurcharge": "Weekend surcharge",
+    "catering": "Catering",
+    "nonPublicSurcharge": "Non-public event surcharge (30%)",
+    "nonPublicSurchargeDescription": "Additional charge for private events not open to the public"
   },
   "status": {
     "draft": "Draft",
