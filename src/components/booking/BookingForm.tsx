@@ -8,6 +8,7 @@ import { BookingFormHeader } from "./BookingFormHeader";
 import { BookingFormContent } from "./BookingFormContent";
 import { BookingFormFooter } from "./BookingFormFooter";
 import { BookingWizardProgress } from "./BookingWizardProgress";
+import { PricingStickyFooter } from "./PricingStickyFooter";
 import { Card } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { useFormDraftManager } from "@/hooks/useFormDraftManager";
@@ -95,6 +96,7 @@ export const BookingForm = ({
         onStartNewDraft={handleStartNewDraft}
         form={form}
       />
+      <PricingStickyFooter rooms={rooms} />
     </FormProvider>
   );
 };
