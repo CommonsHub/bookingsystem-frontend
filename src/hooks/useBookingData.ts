@@ -100,7 +100,16 @@ export const useBookingData = () => {
               estimatedAttendees: booking.estimated_attendees,
               lumaEventUrl: booking.luma_event_url,
               calendarUrl: booking.calendar_url,
-              publicUri: booking.public_uri
+              publicUri: booking.public_uri,
+              language: booking.language || 'en', // Add language field with fallback
+              // Add price and currency fields
+              price: booking.price ? Number(booking.price) : undefined,
+              currency: booking.currency || 'EUR',
+              // Add placeholder catering and event support fields
+              // These would need to be properly mapped from database fields when those are added
+              cateringOptions: [], // This will be populated when the database fields are added
+              cateringComments: undefined,
+              eventSupportOptions: [], // This will be populated when the database fields are added
             };
           }
         );

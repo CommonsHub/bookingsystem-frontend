@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Control } from "react-hook-form";
 import { z } from "zod";
 import { formSchema } from "./BookingFormSchema";
+import { useTranslation } from "react-i18next";
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -13,6 +14,8 @@ interface BookingInfoSectionProps {
 }
 
 export const BookingInfoSection = ({ control }: BookingInfoSectionProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-4">
       <FormField
@@ -20,10 +23,10 @@ export const BookingInfoSection = ({ control }: BookingInfoSectionProps) => {
         name="title"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Title</FormLabel>
+            <FormLabel>{t('form.basicInfo.title')}</FormLabel>
             <FormControl>
               <Input
-                placeholder="Brief description of your meeting"
+                placeholder={t('form.basicInfo.titlePlaceholder')}
                 {...field}
               />
             </FormControl>
@@ -37,10 +40,10 @@ export const BookingInfoSection = ({ control }: BookingInfoSectionProps) => {
         name="description"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Description</FormLabel>
+            <FormLabel>{t('form.basicInfo.description')}</FormLabel>
             <FormControl>
               <Textarea
-                placeholder="Provide details about the purpose of the booking"
+                placeholder={t('form.basicInfo.descriptionPlaceholder')}
                 rows={4}
                 {...field}
               />
@@ -55,10 +58,10 @@ export const BookingInfoSection = ({ control }: BookingInfoSectionProps) => {
         name="organizer"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Event Organizer</FormLabel>
+            <FormLabel>{t('form.basicInfo.organizer')}</FormLabel>
             <FormControl>
               <Input
-                placeholder="Name of the person or organization running the event"
+                placeholder={t('form.basicInfo.organizerPlaceholder')}
                 {...field}
                 value={field.value || ""}
               />
@@ -73,11 +76,11 @@ export const BookingInfoSection = ({ control }: BookingInfoSectionProps) => {
         name="estimatedAttendees"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Estimated Number of Attendees</FormLabel>
+            <FormLabel>{t('form.basicInfo.estimatedAttendees')}</FormLabel>
             <FormControl>
               <Input
                 type="number"
-                placeholder="Expected number of participants"
+                placeholder={t('form.basicInfo.attendeesPlaceholder')}
                 {...field}
                 value={field.value === undefined ? "" : field.value}
                 onChange={(e) => field.onChange(e.target.valueAsNumber || undefined)}

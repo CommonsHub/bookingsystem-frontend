@@ -12,6 +12,7 @@ import { BookingControls } from "@/components/home/BookingControls";
 import { BookingTableView } from "@/components/home/BookingTableView";
 import { BookingCardView } from "@/components/home/BookingCardView";
 import { CancelBookingDialog } from "@/components/home/CancelBookingDialog";
+import { BookingLoadingState } from "@/components/home/BookingLoadingState";
 import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
@@ -33,12 +34,16 @@ const HomePage = () => {
       return false;
     }
 
-    // Then filter by date if not showing all bookings
+    // Then filter by date and cancelled status
     if (!showAllBookings) {
-      // Only show bookings with start dates in the future
+      // For upcoming bookings: hide cancelled bookings and only show future bookings
+      if (booking.status === "cancelled") {
+        return false;
+      }
       return new Date(booking.startTime) >= new Date();
     }
 
+    // For all bookings: show everything (including cancelled)
     return true;
   });
 
@@ -61,12 +66,11 @@ const HomePage = () => {
         onConfirm={() => bookingToCancel && handleCancelBooking(bookingToCancel)}
       />
 
-      {visibleBookings.length === 0 ? (
-        <BookingEmptyState 
-          showAllBookings={showAllBookings} 
-          onShowAllBookings={() => setShowAllBookings(true)} 
-        />
-      ) : (
+      <BookingLoadingState 
+        visibleBookings={visibleBookings}
+        showAllBookings={showAllBookings}
+        onShowAllBookings={() => setShowAllBookings(true)}
+      >
         <div>
           <BookingControls
             viewMode={viewMode}
@@ -92,7 +96,7 @@ const HomePage = () => {
             />
           )}
         </div>
-      )}
+      </BookingLoadingState>
     </div>
   );
 };

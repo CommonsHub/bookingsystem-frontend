@@ -4,6 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Control } from "react-hook-form";
 import { z } from "zod";
 import { formSchema } from "./BookingFormSchema";
+import { useTranslation } from "react-i18next";
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -12,6 +13,8 @@ interface AdditionalInfoSectionProps {
 }
 
 export const AdditionalInfoSection = ({ control }: AdditionalInfoSectionProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-4">
       <FormField
@@ -19,10 +22,10 @@ export const AdditionalInfoSection = ({ control }: AdditionalInfoSectionProps) =
         name="additionalComments"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Any additional information you want to share</FormLabel>
+            <FormLabel>{t('form.additionalInfo.label')}</FormLabel>
             <FormControl>
               <Textarea
-                placeholder="Please share any other information that might be relevant for your booking"
+                placeholder={t('form.additionalInfo.placeholder')}
                 rows={3}
                 {...field}
               />

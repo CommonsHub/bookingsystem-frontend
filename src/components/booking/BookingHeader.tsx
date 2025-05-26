@@ -11,9 +11,10 @@ import { useTranslation } from "react-i18next";
 
 interface BookingHeaderProps {
   booking: Booking;
+  actionButtons?: React.ReactNode;
 }
 
-export const BookingHeader = ({ booking }: BookingHeaderProps) => {
+export const BookingHeader = ({ booking, actionButtons }: BookingHeaderProps) => {
   const { t } = useTranslation();
   
   const statusColor = (status: string) => {
@@ -38,30 +39,38 @@ export const BookingHeader = ({ booking }: BookingHeaderProps) => {
 
   return (
     <>
-      <div className="flex items-center mb-6">
-        <Button variant="ghost" size="sm" asChild className="gap-1">
-          <Link to="/">
-            <ChevronLeft className="h-4 w-4" />
-            {t('nav.backToBookings')}
-          </Link>
-        </Button>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="sm" asChild className="gap-1">
+            <Link to="/">
+              <ChevronLeft className="h-4 w-4" />
+              {t('nav.backToBookings')}
+            </Link>
+          </Button>
+
+          <div className="flex items-center gap-2">
+            <Badge
+              className={`${statusColor(booking.status)} text-md px-3 py-1`}
+            >
+              {t(`status.${booking.status}`)}
+            </Badge>
+
+            {booking.status === "pending" && (
+              <Badge variant="outline" className="text-muted-foreground">
+                {t('alerts.awaitingApproval')}
+              </Badge>
+            )}
+          </div>
+        </div>
+        
+        {actionButtons && (
+          <div className="flex items-center gap-2">
+            {actionButtons}
+          </div>
+        )}
       </div>
 
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <Badge
-            className={`${statusColor(booking.status)} text-md px-3 py-1`}
-          >
-            {t(`status.${booking.status}`)}
-          </Badge>
-
-          {booking.status === "pending" && (
-            <Badge variant="outline" className="text-muted-foreground">
-              {t('alerts.awaitingApproval')}
-            </Badge>
-          )}
-        </div>
-
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
             {booking.title}

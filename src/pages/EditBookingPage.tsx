@@ -5,11 +5,11 @@ import { useTranslation } from "react-i18next";
 
 import { FormData } from "@/components/booking/BookingFormSchema";
 import { BookingForm } from "@/components/booking/BookingForm";
+import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast-utils";
 import { useAuth } from "@/context/AuthContext";
 import { useBooking } from "@/context/BookingContext";
 import { rooms } from "@/data/rooms";
-import { useDraftBooking } from "@/hooks/useDraftBooking";
 import { useBookingFormOperations } from "@/hooks/useBookingFormOperations";
 import { createDefaultFormValues, transformBookingToFormData } from "@/utils/formDefaults";
 
@@ -17,10 +17,9 @@ const EditBookingPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { bookingId } = useParams<{ bookingId: string }>();
-  const { bookings } = useBooking();
+  const { bookings, loading: bookingsLoading } = useBooking();
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
-  const { loadDraft } = useDraftBooking(bookingId);
   const { handleUpdateBooking } = useBookingFormOperations();
 
   const defaultEmail = user?.email || "";
@@ -38,32 +37,22 @@ const EditBookingPage = () => {
       return;
     }
 
+    if (bookingsLoading) {
+      return; // Wait for bookings to load
+    }
+
     if (!booking) {
       toast.error(t('messages.bookingNotFound'));
       navigate("/");
       return;
     }
 
-    const loadBookingData = async () => {
-      try {
-        const draftData = await loadDraft();
-        
-        if (draftData) {
-          setDefaultValues(draftData);
-        } else {
-          const formData = transformBookingToFormData(booking);
-          setDefaultValues(formData);
-        }
-      } catch (error) {
-        console.error("Error loading booking data:", error);
-        toast.error("Error loading booking data");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadBookingData();
-  }, [bookingId, booking, loadDraft, navigate, t]);
+    // For edit forms, we directly use the booking data without loading drafts
+    // This significantly improves performance
+    const formData = transformBookingToFormData(booking);
+    setDefaultValues(formData);
+    setLoading(false);
+  }, [bookingId, booking, bookingsLoading, navigate, t]);
 
   const handleSubmit = async (data: FormData) => {
     if (!booking) return;
@@ -78,11 +67,47 @@ const EditBookingPage = () => {
     }
   };
 
-  if (loading) {
+  if (bookingsLoading || loading) {
     return (
       <div className="max-w-2xl mx-auto">
-        <div className="text-center py-8">
-          <p>{t('messages.loadingBooking')}</p>
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <Skeleton className="h-8 w-48" />
+            <Skeleton className="h-4 w-64" />
+          </div>
+          
+          <div className="border rounded-lg p-6 space-y-6">
+            <div className="space-y-4">
+              <Skeleton className="h-4 w-20" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+            
+            <div className="space-y-4">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-20 w-full" />
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-16" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-16" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <Skeleton className="h-4 w-20" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+            
+            <div className="flex gap-3 pt-6">
+              <Skeleton className="h-10 w-24" />
+              <Skeleton className="h-10 w-20" />
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -106,6 +131,7 @@ const EditBookingPage = () => {
       defaultValues={defaultValues}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
+      skipDraftLoading={true}
     />
   );
 };
