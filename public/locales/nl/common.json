@@ -50,7 +50,13 @@
       },
       "eventSupport": {
         "title": "Evenement ondersteuning",
-        "description": "Extra diensten voor uw evenement (optioneel)"
+        "description": "Extra diensten voor uw evenement (optioneel)",
+        "professionalTitle": "We hebben verschillende professionele evenementorganisatoren en facilitators/conferentieontwerpers beschikbaar voor een optimale ervaring",
+        "professionalDescription": "Als u geïnteresseerd bent in extra ondersteuning, kunt u dit hier toevoegen.",
+        "publicEventLabel": "Openbaar evenement (we zullen ook via onze kanalen publiceren)",
+        "publicEventDescription": "Vink dit vakje aan als u wilt dat uw evenement wordt gepromoot op onze openbare kanalen en toegankelijk is voor de gemeenschap. Voor privé-evenementen bieden we gepersonaliseerde white-glove service en exclusief gebruik van de Commons met toegewijde ondersteuning—deze premium ervaring omvat een toeslag van 30% om ervoor te zorgen dat uw bijeenkomst onze volledige aandacht krijgt en de intieme sfeer behoudt die u verdient.",
+        "logisticsSupport": "Geïnteresseerd in volledige logistieke ondersteuning tijdens de dag (AV en technische ondersteuning | hulp bij opstelling)",
+        "facilitationSupport": "Geïnteresseerd in facilitatie ondersteuning en conferentieontwerp"
       },
       "contactMembership": {
         "title": "Contact en lidmaatschap",
@@ -65,11 +71,19 @@
         "description": "Bekijk de geschatte kosten voor uw boeking"
       }
     },
-    "eventSupport": {
-      "professionalTitle": "We hebben verschillende professionele evenementorganisatoren en facilitators/conferentieontwerpers beschikbaar voor een optimale ervaring",
-      "professionalDescription": "Als u geïnteresseerd bent in extra ondersteuning, kunt u dit hier toevoegen.",
-      "publicEventLabel": "Openbaar evenement (we zullen ook via onze kanalen publiceren)",
-      "publicEventDescription": "Vink dit vakje aan als u wilt dat uw evenement wordt gepromoot op onze openbare kanalen en toegankelijk is voor de gemeenschap. Voor privé-evenementen bieden we gepersonaliseerde white-glove service en exclusief gebruik van de Commons met toegewijde ondersteuning—deze premium ervaring omvat een toeslag van 30% om ervoor te zorgen dat uw bijeenkomst onze volledige aandacht krijgt en de intieme sfeer behoudt die u verdient."
+    "basicInfo": {
+      "title": "Titel",
+      "titlePlaceholder": "Korte beschrijving van uw vergadering",
+      "description": "Beschrijving",
+      "descriptionPlaceholder": "Geef details over het doel van de boeking",
+      "organizer": "Evenementorganisator",
+      "organizerPlaceholder": "Naam van de persoon of organisatie die het evenement organiseert",
+      "estimatedAttendees": "Geschat aantal deelnemers",
+      "attendeesPlaceholder": "Verwacht aantal deelnemers"
+    },
+    "additionalInfo": {
+      "label": "Aanvullende informatie die u wilt delen",
+      "placeholder": "Deel eventuele andere informatie die relevant kan zijn voor uw boeking"
     }
   },
   "booking": {

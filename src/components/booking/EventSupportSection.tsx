@@ -54,7 +54,7 @@ export const EventSupportSection = ({ control }: EventSupportSectionProps) => {
                         </FormControl>
                         <div className="space-y-1 leading-none">
                           <FormLabel>
-                            {option.name}
+                            {t(option.nameKey)}
                           </FormLabel>
                         </div>
                       </FormItem>

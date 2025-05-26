@@ -50,7 +50,13 @@
       },
       "eventSupport": {
         "title": "Support d'événement",
-        "description": "Services supplémentaires pour votre événement (optionnel)"
+        "description": "Services supplémentaires pour votre événement (optionnel)",
+        "professionalTitle": "Nous avons plusieurs organisateurs d'événements professionnels et facilitateurs/concepteurs de conférences disponibles pour une expérience optimale",
+        "professionalDescription": "Si vous êtes intéressé par un support supplémentaire, vous pouvez l'ajouter ici.",
+        "publicEventLabel": "Événement public (nous publierons également via nos canaux)",
+        "publicEventDescription": "Cochez cette case si vous souhaitez que votre événement soit promu sur nos canaux publics et ouvert à la communauté. Pour les événements privés, nous offrons un service personnalisé haut de gamme et l'utilisation exclusive des Commons avec un support dédié—cette expérience premium inclut un supplément de 30% pour s'assurer que votre rassemblement reçoive toute notre attention et maintienne l'atmosphère intime que vous méritez.",
+        "logisticsSupport": "Intéressé par un support logistique complet pendant la journée (support AV et technique | aide à l'installation)",
+        "facilitationSupport": "Intéressé par le support de facilitation et la conception de conférences"
       },
       "contactMembership": {
         "title": "Contact et adhésion",
@@ -65,11 +71,19 @@
         "description": "Consultez les coûts estimés pour votre réservation"
       }
     },
-    "eventSupport": {
-      "professionalTitle": "Nous avons plusieurs organisateurs d'événements professionnels et facilitateurs/concepteurs de conférences disponibles pour une expérience optimale",
-      "professionalDescription": "Si vous êtes intéressé par un support supplémentaire, vous pouvez l'ajouter ici.",
-      "publicEventLabel": "Événement public (nous publierons également via nos canaux)",
-      "publicEventDescription": "Cochez cette case si vous souhaitez que votre événement soit promu sur nos canaux publics et ouvert à la communauté. Pour les événements privés, nous offrons un service personnalisé haut de gamme et l'utilisation exclusive des Commons avec un support dédié—cette expérience premium inclut un supplément de 30% pour s'assurer que votre rassemblement reçoive toute notre attention et maintienne l'atmosphère intime que vous méritez."
+    "basicInfo": {
+      "title": "Titre",
+      "titlePlaceholder": "Brève description de votre réunion",
+      "description": "Description",
+      "descriptionPlaceholder": "Fournissez des détails sur l'objectif de la réservation",
+      "organizer": "Organisateur de l'événement",
+      "organizerPlaceholder": "Nom de la personne ou de l'organisation qui organise l'événement",
+      "estimatedAttendees": "Nombre estimé de participants",
+      "attendeesPlaceholder": "Nombre attendu de participants"
+    },
+    "additionalInfo": {
+      "label": "Toute information supplémentaire que vous souhaitez partager",
+      "placeholder": "Veuillez partager toute autre information qui pourrait être pertinente pour votre réservation"
     }
   },
   "booking": {

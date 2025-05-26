@@ -50,7 +50,13 @@
       },
       "eventSupport": {
         "title": "Event Support",
-        "description": "Additional services for your event (optional)"
+        "description": "Additional services for your event (optional)",
+        "professionalTitle": "We have several professional event organisers and facilitators/conference designers available for an optimal experience",
+        "professionalDescription": "If you are interested in additional support, you can add this here.",
+        "publicEventLabel": "Public event (we will publish through our channels as well)",
+        "publicEventDescription": "Check this box if you want your event to be promoted on our public channels and open to the community. For private events, we offer personalized white-glove service and exclusive use of the Commons with dedicated support—this premium experience includes a 30% surcharge to ensure your gathering receives our full attention and maintains the intimate atmosphere you deserve.",
+        "logisticsSupport": "Interested in full logistic support during the day (AV and tech support | help with setup)",
+        "facilitationSupport": "Interested in facilitation support and conference design"
       },
       "contactMembership": {
         "title": "Contact & Membership",
@@ -65,11 +71,19 @@
         "description": "Review the estimated costs for your booking"
       }
     },
-    "eventSupport": {
-      "professionalTitle": "We have several professional event organisers and facilitators/conference designers available for an optimal experience",
-      "professionalDescription": "If you are interested in additional support, you can add this here.",
-      "publicEventLabel": "Public event (we will publish through our channels as well)",
-      "publicEventDescription": "Check this box if you want your event to be promoted on our public channels and open to the community. For private events, we offer personalized white-glove service and exclusive use of the Commons with dedicated support—this premium experience includes a 30% surcharge to ensure your gathering receives our full attention and maintains the intimate atmosphere you deserve."
+    "basicInfo": {
+      "title": "Title",
+      "titlePlaceholder": "Brief description of your meeting",
+      "description": "Description",
+      "descriptionPlaceholder": "Provide details about the purpose of the booking",
+      "organizer": "Event Organizer",
+      "organizerPlaceholder": "Name of the person or organization running the event",
+      "estimatedAttendees": "Estimated Number of Attendees",
+      "attendeesPlaceholder": "Expected number of participants"
+    },
+    "additionalInfo": {
+      "label": "Any additional information you want to share",
+      "placeholder": "Please share any other information that might be relevant for your booking"
     }
   },
   "booking": {
