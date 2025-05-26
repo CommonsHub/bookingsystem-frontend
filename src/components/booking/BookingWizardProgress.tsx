@@ -87,18 +87,18 @@ export const BookingWizardProgress = ({
                   <button
                     key={index}
                     onClick={() => scrollToSection(index)}
-                    className={`flex items-center gap-1.5 text-xs px-2 py-1 rounded-full transition-colors cursor-pointer hover:opacity-80 ${
+                    className={`flex items-center gap-1.5 text-xs px-2 py-1 rounded-full transition-all cursor-pointer hover:opacity-80 border ${
                       isCurrent && !isCompleted
-                        ? 'bg-blue-100 text-blue-700 hover:bg-blue-200 ring-1 ring-blue-300'
+                        ? 'bg-blue-50 text-blue-800 border-blue-400 font-bold ring-2 ring-blue-200'
                         : isCompleted
-                        ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                        : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                        ? 'bg-green-100 text-green-700 hover:bg-green-200 border-green-200 font-normal'
+                        : 'bg-gray-100 text-gray-500 hover:bg-gray-200 border-gray-200 font-normal'
                     }`}
                   >
                     {isCompleted ? (
                       <CheckCircle className="h-3 w-3" />
                     ) : (
-                      <Circle className="h-3 w-3" />
+                      <Circle className={`h-3 w-3 ${isCurrent ? 'text-blue-600' : ''}`} />
                     )}
                     <span className="hidden sm:inline text-xs">{section}</span>
                     <span className="sm:hidden">{index + 1}</span>
