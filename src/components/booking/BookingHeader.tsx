@@ -48,21 +48,23 @@ export const BookingHeader = ({ booking, actionButtons }: BookingHeaderProps) =>
             </Link>
           </Button>
 
-          <Badge
-            className={`${statusColor(booking.status)} text-md px-3 py-1`}
-          >
-            {t(`status.${booking.status}`)}
-          </Badge>
-
-          {booking.status === "pending" && (
-            <Badge variant="outline" className="text-muted-foreground">
-              {t('alerts.awaitingApproval')}
+          <div className="flex items-center gap-2">
+            <Badge
+              className={`${statusColor(booking.status)} text-md px-3 py-1`}
+            >
+              {t(`status.${booking.status}`)}
             </Badge>
-          )}
+
+            {booking.status === "pending" && (
+              <Badge variant="outline" className="text-muted-foreground">
+                {t('alerts.awaitingApproval')}
+              </Badge>
+            )}
+          </div>
         </div>
         
         {actionButtons && (
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
             {actionButtons}
           </div>
         )}
