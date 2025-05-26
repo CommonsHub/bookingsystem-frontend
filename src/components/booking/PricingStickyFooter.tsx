@@ -3,12 +3,12 @@ import { useFormContext } from "react-hook-form";
 import { FormData } from "./BookingFormSchema";
 import { Room } from "@/types";
 import { useMemo, useState, useEffect } from "react";
-import { 
-  calculateRoomPrice, 
-  calculateMemberDiscount, 
-  isWeekendDate, 
+import {
+  calculateRoomPrice,
+  calculateMemberDiscount,
+  isWeekendDate,
   calculateDurationHours,
-  QuoteData 
+  QuoteData
 } from "@/utils/pricingCalculations";
 import { calculateCateringCosts } from "@/utils/cateringCalculations";
 
@@ -19,7 +19,7 @@ interface PricingStickyFooterProps {
 export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
   const { watch } = useFormContext<FormData>();
   const [isVisible, setIsVisible] = useState(false);
-  
+
   const roomId = watch("roomId");
   const startDate = watch("startDate");
   const endDate = watch("endDate");
@@ -41,12 +41,12 @@ export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
 
     // Calculate duration in hours
     const durationHours = calculateDurationHours(startDate, endDate);
-    
+
     // Validate duration
     if (durationHours <= 0) {
       return null;
     }
-    
+
     // Check if weekend
     const isWeekend = isWeekendDate(startDate, endDate);
 
@@ -92,32 +92,28 @@ export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
   useEffect(() => {
     const handleScroll = () => {
       console.log('Scroll event triggered, scrollY:', window.scrollY);
-      
+
       const pricingSection = document.querySelector('[data-wizard-section="7"]');
       const formFooter = document.querySelector('[data-form-footer]');
-      
+
       console.log('Pricing section found:', !!pricingSection);
       console.log('Form footer found:', !!formFooter);
-      
+
       if (pricingSection && formFooter) {
         const pricingSectionRect = pricingSection.getBoundingClientRect();
         const formFooterRect = formFooter.getBoundingClientRect();
-        
-        console.log('Pricing section bottom:', pricingSectionRect.bottom);
+
+        console.log('Pricing section top:', pricingSectionRect.top);
         console.log('Form footer top:', formFooterRect.top);
         console.log('Window height:', window.innerHeight);
-        
-        // Show sticky footer when pricing section is scrolled past but form footer is not yet visible
-        // Fixed logic: when pricing section is scrolled past, its bottom will be above the viewport
-        const pricingSectionScrolledPast = pricingSectionRect.bottom < window.innerHeight * 0.8;
-        const formFooterNotYetVisible = formFooterRect.top > window.innerHeight;
-        
-        const shouldShow = pricingSectionScrolledPast && formFooterNotYetVisible;
-        
+
+        const pricingSectionNotYetVisible = pricingSectionRect.bottom < window.innerHeight * 0.8;
+
+        const shouldShow = pricingSectionNotYetVisible;
+
         console.log('Should show sticky footer:', shouldShow);
-        console.log('Pricing scrolled past:', pricingSectionScrolledPast);
-        console.log('Form footer not visible:', formFooterNotYetVisible);
-        
+        console.log('Pricing scrolled past:', pricingSectionNotYetVisible);
+
         setIsVisible(shouldShow);
       } else {
         console.log('Missing required elements for sticky footer');
@@ -130,7 +126,7 @@ export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
 
     window.addEventListener('scroll', throttledHandleScroll);
     handleScroll(); // Call once on mount
-    
+
     return () => window.removeEventListener('scroll', throttledHandleScroll);
   }, []);
 
