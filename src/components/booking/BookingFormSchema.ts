@@ -29,6 +29,9 @@ export const formSchema = z.object({
   publicUri: z.string().optional(),
   // Additional room notes field
   roomNotes: z.string().optional(),
+  // Add the missing fields
+  bookingId: z.string().optional(),
+  language: z.string().optional(),
 });
 
 export type FormData = z.infer<typeof formSchema>;

@@ -37,6 +37,7 @@ export const BookingFormContent = ({
   
   // Watch for the bookingId to determine if this is an edit form
   const bookingId = watch("bookingId");
+  const language = watch("language");
   const isEdit = !!bookingId;
 
   const getLanguageDisplay = (languageCode?: string) => {
@@ -59,7 +60,7 @@ export const BookingFormContent = ({
           <div className="mt-4">
             <Label>{t('form.language.label')}</Label>
             <Input
-              value={getLanguageDisplay(watch("language"))}
+              value={getLanguageDisplay(language)}
               readOnly
               className="bg-gray-100 mt-2"
             />
