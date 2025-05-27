@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import {
   Booking,
@@ -101,11 +102,11 @@ export const useBookingData = () => {
             language: booking.language || "en",
             price: booking.price ? Number(booking.price) : undefined,
             currency: booking.currency || "EUR",
-            // Initialize catering, membership and event support fields (these will be properly stored when database fields are added)
-            cateringOptions: [],
-            cateringComments: undefined,
-            eventSupportOptions: [],
-            membershipStatus: undefined,
+            // Map the new database fields properly
+            cateringOptions: booking.catering_options || [],
+            cateringComments: booking.catering_comments,
+            eventSupportOptions: booking.event_support_options || [],
+            membershipStatus: booking.membership_status,
           };
         });
 

@@ -35,6 +35,11 @@ export const useUpdateBooking = (
           language: updatedBooking.language,
           price: updatedBooking.price,
           currency: updatedBooking.currency,
+          // Add the new fields
+          catering_options: updatedBooking.cateringOptions,
+          catering_comments: updatedBooking.cateringComments,
+          event_support_options: updatedBooking.eventSupportOptions,
+          membership_status: updatedBooking.membershipStatus,
         })
         .eq("id", bookingId)
         .select();

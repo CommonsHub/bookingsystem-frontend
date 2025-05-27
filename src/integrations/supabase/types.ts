@@ -17,6 +17,8 @@ export type Database = {
           calendar_url: string | null
           cancelled_at: string | null
           cancelled_by_email: string | null
+          catering_comments: string | null
+          catering_options: string[] | null
           created_at: string | null
           created_by_email: string
           created_by_name: string | null
@@ -24,10 +26,12 @@ export type Database = {
           description: string | null
           end_time: string
           estimated_attendees: number | null
+          event_support_options: string[] | null
           id: string
           is_public_event: boolean | null
           language: string | null
           luma_event_url: string | null
+          membership_status: string | null
           organizer: string | null
           price: number | null
           public_uri: string | null
@@ -45,6 +49,8 @@ export type Database = {
           calendar_url?: string | null
           cancelled_at?: string | null
           cancelled_by_email?: string | null
+          catering_comments?: string | null
+          catering_options?: string[] | null
           created_at?: string | null
           created_by_email: string
           created_by_name?: string | null
@@ -52,10 +58,12 @@ export type Database = {
           description?: string | null
           end_time: string
           estimated_attendees?: number | null
+          event_support_options?: string[] | null
           id?: string
           is_public_event?: boolean | null
           language?: string | null
           luma_event_url?: string | null
+          membership_status?: string | null
           organizer?: string | null
           price?: number | null
           public_uri?: string | null
@@ -73,6 +81,8 @@ export type Database = {
           calendar_url?: string | null
           cancelled_at?: string | null
           cancelled_by_email?: string | null
+          catering_comments?: string | null
+          catering_options?: string[] | null
           created_at?: string | null
           created_by_email?: string
           created_by_name?: string | null
@@ -80,10 +90,12 @@ export type Database = {
           description?: string | null
           end_time?: string
           estimated_attendees?: number | null
+          event_support_options?: string[] | null
           id?: string
           is_public_event?: boolean | null
           language?: string | null
           luma_event_url?: string | null
+          membership_status?: string | null
           organizer?: string | null
           price?: number | null
           public_uri?: string | null

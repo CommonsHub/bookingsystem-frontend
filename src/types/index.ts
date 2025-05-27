@@ -1,3 +1,4 @@
+
 export interface Room {
   id: string;
   name: string;
@@ -139,4 +140,9 @@ export interface BookingDatabaseFields {
   // Add price and currency fields
   price?: number;
   currency?: string;
+  // Add the new database fields
+  catering_options?: string[];
+  catering_comments?: string;
+  event_support_options?: string[];
+  membership_status?: string;
 }
