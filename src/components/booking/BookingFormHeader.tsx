@@ -8,10 +8,10 @@ interface BookingFormHeaderProps {
   draftLoaded?: boolean;
 }
 
-export const BookingFormHeader = ({ 
-  isEdit = false, 
-  isLoading = false, 
-  draftLoaded = false 
+export const BookingFormHeader = ({
+  isEdit = false,
+  isLoading = false,
+  draftLoaded = false
 }: BookingFormHeaderProps) => {
   const { t } = useTranslation();
 
@@ -27,13 +27,6 @@ export const BookingFormHeader = ({
           {!isLoading && draftLoaded && ` (${t('messages.draftLoaded')})`}
         </p>
       </div>
-
-      <CardHeader>
-        <CardTitle>{t('bookings.roomBookingDetails')}</CardTitle>
-        <CardDescription>
-          {t('bookings.enterDetails')}
-        </CardDescription>
-      </CardHeader>
     </>
   );
 };

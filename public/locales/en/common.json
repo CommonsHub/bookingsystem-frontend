@@ -29,7 +29,9 @@
     "newDescription": "Fill out the form below to request a room booking",
     "roomBookingDetails": "Room Booking Details",
     "enterDetails": "Enter the details of your booking request",
-    "price": "Price"
+    "price": "Price",
+    "markAsPaid": "Mark as Paid",
+    "markingAsPaid": "Marking as Paid..."
   },
   "form": {
     "sections": {
@@ -133,6 +135,15 @@
       "label": "Language",
       "notSet": "Not set",
       "readOnlyNote": "Language cannot be changed after booking creation"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "update": "Update Booking",
+      "updating": "Updating...",
+      "submit": "Submit Booking Request",
+      "submitting": "Submitting...",
+      "clearDraft": "Clear Draft",
+      "startNew": "Start New"
     }
   },
   "profile": {
@@ -183,7 +194,9 @@
     "copyBooking": "Copy booking",
     "language": "Language",
     "notSpecified": "Not specified",
-    "price": "Price"
+    "price": "Price",
+    "markAsPaid": "Mark as Paid",
+    "markingAsPaid": "Marking as Paid..."
   },
   "roomInfo": {
     "title": "Room Information",
@@ -212,7 +225,8 @@
     "pending": "Pending",
     "approved": "Approved",
     "rejected": "Rejected",
-    "cancelled": "Cancelled"
+    "cancelled": "Cancelled",
+    "paid": "Paid"
   },
   "nav": {
     "profile": "Profile",
@@ -234,7 +248,8 @@
     "submit": "Submit Booking Request",
     "submitting": "Submitting...",
     "clearDraft": "Clear Draft",
-    "editBooking": "Edit Booking"
+    "editBooking": "Edit Booking",
+    "approve": "Approve"
   },
   "messages": {
     "loadingBooking": "Loading booking details...",

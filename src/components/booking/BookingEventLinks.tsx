@@ -1,7 +1,8 @@
 
-import { Link, CalendarDays, User } from "lucide-react";
 import { Booking } from "@/types";
 import { useTranslation } from "react-i18next";
+import { ExternalLink, Calendar } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface BookingEventLinksProps {
   booking: Booking;
@@ -9,62 +10,55 @@ interface BookingEventLinksProps {
 
 export const BookingEventLinks = ({ booking }: BookingEventLinksProps) => {
   const { t } = useTranslation();
-  
+
+  const hasEventLinks = booking.lumaEventUrl || booking.calendarUrl || booking.publicUri;
+
+  if (!hasEventLinks) {
+    return null;
+  }
+
   return (
-    <>
-      {booking.organizer && (
-        <div className="flex items-start gap-2">
-          <User className="h-5 w-5 text-muted-foreground mt-0.5" />
-          <div>
-            <h4 className="font-medium">{t('booking.eventOrganizer')}</h4>
-            <p className="text-muted-foreground">{booking.organizer}</p>
-          </div>
-        </div>
-      )}
-      
-      {booking.lumaEventUrl && (
-        <div className="flex items-start gap-2">
-          <Link className="h-5 w-5 text-muted-foreground mt-0.5" />
-          <div>
-            <h4 className="font-medium">{t('booking.lumaEvent')}</h4>
-            <a 
-              href={booking.lumaEventUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:underline"
+    <div className="space-y-3">
+      <h4 className="font-medium text-sm text-muted-foreground">Event Links</h4>
+      <div className="space-y-2">
+        {booking.lumaEventUrl && (
+          <div className="flex items-center gap-2">
+            <ExternalLink className="h-4 w-4 text-muted-foreground" />
+            <Button
+              variant="link"
+              size="sm"
+              className="h-auto p-0 text-blue-600 hover:text-blue-800"
+              onClick={() => window.open(booking.lumaEventUrl, '_blank')}
             >
-              {t('booking.openEventPage')}
-            </a>
+              {t('booking.lumaEvent')}
+            </Button>
           </div>
-        </div>
-      )}
-      
-      {booking.calendarUrl && (
-        <div className="flex items-start gap-2">
-          <CalendarDays className="h-5 w-5 text-muted-foreground mt-0.5" />
-          <div>
-            <h4 className="font-medium">{t('booking.calendarEvent')}</h4>
-            <a 
-              href={booking.calendarUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:underline"
+        )}
+        
+        {booking.calendarUrl && (
+          <div className="flex items-center gap-2">
+            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <Button
+              variant="link"
+              size="sm"
+              className="h-auto p-0 text-blue-600 hover:text-blue-800"
+              onClick={() => window.open(booking.calendarUrl, '_blank')}
             >
-              {t('booking.openCalendarEvent')}
-            </a>
+              {t('booking.calendarEvent')}
+            </Button>
           </div>
-        </div>
-      )}
-      
-      {booking.publicUri && (
-        <div className="flex items-start gap-2">
-          <Link className="h-5 w-5 text-muted-foreground mt-0.5" />
-          <div>
-            <h4 className="font-medium">{t('booking.publicUri')}</h4>
-            <p className="text-muted-foreground">{booking.publicUri}</p>
+        )}
+        
+        {booking.publicUri && (
+          <div className="flex items-center gap-2">
+            <ExternalLink className="h-4 w-4 text-muted-foreground" />
+            <span className="text-sm">
+              <span className="text-muted-foreground">{t('booking.publicUri')}: </span>
+              <span className="font-mono text-xs">{booking.publicUri}</span>
+            </span>
           </div>
-        </div>
-      )}
-    </>
+        )}
+      </div>
+    </div>
   );
 };

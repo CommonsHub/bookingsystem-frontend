@@ -6,6 +6,8 @@ import { Control } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
 import { formSchema } from "./BookingFormSchema";
+import { useAuth } from "@/context/AuthContext";
+import { canUserApproveBookings } from "@/utils/bookingHelpers";
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -15,14 +17,13 @@ interface PriceSectionProps {
 
 const currencies = [
   { value: "EUR", label: "EUR (€)" },
-  { value: "USD", label: "USD ($)" },
-  { value: "GBP", label: "GBP (£)" },
-  { value: "JPY", label: "JPY (¥)" },
-  { value: "CHF", label: "CHF" },
+  { value: "CHT", label: "CHT" },
 ];
 
 export const PriceSection = ({ control }: PriceSectionProps) => {
   const { t } = useTranslation();
+  const { user } = useAuth();
+  const canUserChangePrice = canUserApproveBookings(user);
 
   return (
     <div className="space-y-4">
@@ -38,6 +39,7 @@ export const PriceSection = ({ control }: PriceSectionProps) => {
                 step="0.00000001"
                 min="0"
                 placeholder={t('form.price.pricePlaceholder')}
+                disabled={!canUserChangePrice}
                 {...field}
                 onChange={(e) => field.onChange(e.target.value ? parseFloat(e.target.value) : undefined)}
                 value={field.value || ''}
@@ -53,7 +55,8 @@ export const PriceSection = ({ control }: PriceSectionProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t('form.price.currency')}</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value || 'EUR'}>
+              <Select onValueChange={field.onChange} value={field.value || 'EUR'}
+                disabled={!canUserChangePrice}>
                 <SelectTrigger>
                   <SelectValue placeholder={t('form.price.selectCurrency')} />
                 </SelectTrigger>

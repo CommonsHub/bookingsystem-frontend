@@ -64,6 +64,5 @@ const supabaseUserToUser = (user: SupabaseUser | null): User | null => {
     id: user.id,
     email: user.email || "",
     name: user.user_metadata.full_name || "",
-    verified: user.user_metadata.email_verified || false,
   };
 };

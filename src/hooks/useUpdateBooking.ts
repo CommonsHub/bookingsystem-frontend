@@ -1,73 +1,72 @@
 
 import { useState } from "react";
-import { toast } from "@/components/ui/toast-utils";
 import { supabase } from "@/integrations/supabase/client";
-import { Booking, Room } from "@/types";
+import { Booking } from "@/types";
+import { toast } from "@/components/ui/toast-utils";
 
 export const useUpdateBooking = (
   setBookings: React.Dispatch<React.SetStateAction<Booking[]>>
 ) => {
-  const [loading, setLoading] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
-  const updateBooking = async (id: string, bookingData: Partial<Booking>): Promise<void> => {
+  const updateBooking = async (bookingId: string, updatedBooking: Partial<Booking>): Promise<void> => {
+    setIsUpdating(true);
     try {
-      setLoading(true);
-
-      // Extract the room object to get room_id and room_name
-      const room = bookingData.room as Room;
+      console.log("Updating booking:", bookingId, "with data:", updatedBooking);
       
-      // Format the data for Supabase (snake_case for column names)
-      const updateData = {
-        title: bookingData.title,
-        description: bookingData.description,
-        room_id: room?.id,
-        room_name: room?.name,
-        room_capacity: room?.capacity,
-        start_time: bookingData.startTime,
-        end_time: bookingData.endTime,
-        additional_comments: bookingData.additionalComments,
-        is_public_event: bookingData.isPublicEvent,
-        organizer: bookingData.organizer,
-        estimated_attendees: bookingData.estimatedAttendees,
-        luma_event_url: bookingData.lumaEventUrl,
-        calendar_url: bookingData.calendarUrl,
-        public_uri: bookingData.publicUri,
-        // Add price and currency fields
-        price: bookingData.price,
-        currency: bookingData.currency,
-        // Note: We don't update the language field in updates to preserve the original language
-      };
-
-      // Update booking in the database
-      const { error } = await supabase
-        .from('bookings')
-        .update(updateData)
-        .eq('id', id);
+      const { data, error } = await supabase
+        .from("bookings")
+        .update({
+          title: updatedBooking.title,
+          description: updatedBooking.description,
+          room_id: updatedBooking.room?.id,
+          room_name: updatedBooking.room?.name,
+          room_capacity: updatedBooking.room?.capacity,
+          start_time: updatedBooking.startTime,
+          end_time: updatedBooking.endTime,
+          status: updatedBooking.status,
+          organizer: updatedBooking.organizer,
+          estimated_attendees: updatedBooking.estimatedAttendees,
+          additional_comments: updatedBooking.additionalComments,
+          is_public_event: updatedBooking.isPublicEvent,
+          luma_event_url: updatedBooking.lumaEventUrl,
+          calendar_url: updatedBooking.calendarUrl,
+          public_uri: updatedBooking.publicUri,
+          language: updatedBooking.language,
+          price: updatedBooking.price,
+          currency: updatedBooking.currency,
+          // Add the new fields
+          catering_options: updatedBooking.cateringOptions,
+          catering_comments: updatedBooking.cateringComments,
+          event_support_options: updatedBooking.eventSupportOptions,
+          membership_status: updatedBooking.membershipStatus,
+        })
+        .eq("id", bookingId)
+        .select();
 
       if (error) {
-        console.error('Error updating booking:', error);
-        toast.error('Failed to update booking');
+        console.error("Error updating booking:", error);
         throw error;
       }
 
-      // Update the local state
+      console.log("Booking updated successfully:", data);
+
+      // Update local state properly - merge the updated data with existing booking
       setBookings((prevBookings) =>
         prevBookings.map((booking) =>
-          booking.id === id
-            ? { ...booking, ...bookingData }
-            : booking
+          booking.id === bookingId ? { ...booking, ...updatedBooking } : booking
         )
       );
 
-      toast.success('Booking updated successfully');
-    } catch (error) {
-      console.error('Error in updateBooking:', error);
-      toast.error('Failed to update booking');
+      toast.success("Booking updated successfully!");
+    } catch (error: any) {
+      console.error("Failed to update booking:", error);
+      toast.error("Failed to update booking: " + error.message);
       throw error;
     } finally {
-      setLoading(false);
+      setIsUpdating(false);
     }
   };
 
-  return { updateBooking, loading };
+  return { updateBooking, isUpdating };
 };

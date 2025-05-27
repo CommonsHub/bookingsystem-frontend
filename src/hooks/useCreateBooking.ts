@@ -38,6 +38,13 @@ export const useCreateBooking = (
         organizer: bookingData.organizer,
         estimated_attendees: bookingData.estimatedAttendees,
         language: i18n.language, // Add current language
+        price: bookingData.price,
+        currency: bookingData.currency,
+        // Add the new fields
+        catering_options: bookingData.cateringOptions,
+        catering_comments: bookingData.cateringComments,
+        event_support_options: bookingData.eventSupportOptions,
+        membership_status: bookingData.membershipStatus,
       };
 
       const { error } = await supabase.from("bookings").insert(row);

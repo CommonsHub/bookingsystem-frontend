@@ -36,11 +36,21 @@ const HomePage = () => {
 
     // Then filter by date and cancelled status
     if (!showAllBookings) {
-      // For upcoming bookings: hide cancelled bookings and only show future bookings
+      // For upcoming bookings: hide cancelled bookings and only show future bookings OR approved/pending bookings from the past
       if (booking.status === "cancelled") {
         return false;
       }
-      return new Date(booking.startTime) >= new Date();
+      
+      const bookingDate = new Date(booking.startTime);
+      const now = new Date();
+      
+      // Show future bookings regardless of status (except cancelled)
+      if (bookingDate >= now) {
+        return true;
+      }
+      
+      // For past bookings, hide paid bookings and only show approved or pending ones
+      return booking.status === "approved" || booking.status === "pending";
     }
 
     // For all bookings: show everything (including cancelled)

@@ -96,9 +96,8 @@ export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
     const handleScroll = () => {
 
       const pricingSection = document.querySelector('[data-wizard-section="7"]');
-      const formFooter = document.querySelector('[data-form-footer]');
 
-      if (pricingSection && formFooter) {
+      if (pricingSection) {
         const pricingSectionRect = pricingSection.getBoundingClientRect();
 
         const pricingSectionNotYetVisible = pricingSectionRect.top > window.innerHeight;
@@ -107,7 +106,7 @@ export const PricingStickyFooter = ({ rooms }: PricingStickyFooterProps) => {
 
         setIsVisible(shouldShow);
       } else {
-        console.log('Missing required elements for sticky footer');
+        console.log('Missing required elements for sticky footer', { pricingSection });
       }
     };
 
