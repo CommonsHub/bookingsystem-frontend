@@ -1,4 +1,3 @@
-
 import { Booking, User } from "@/types";
 import { formatDateTime } from "@/lib/utils";
 import { CalendarDays, MessageSquare, Trash2, Hash, Copy, Globe, CreditCard, ExternalLink, Calendar, Euro } from "lucide-react";
@@ -65,18 +64,20 @@ export const BookingCardView = ({
       {bookings.map((booking) => (
         <Card
           key={booking.id}
+          role="article"
+          aria-label={`Booking: ${booking.title}`}
           className="cursor-pointer hover:shadow-md transition-shadow"
           onClick={() => (window.location.href = `/bookings/${booking.id}`)}
         >
           <CardContent className="pt-6">
             <div className="flex justify-between items-start mb-2">
               <h3 className="font-medium text-lg line-clamp-2">{booking.title}</h3>
-              <StatusBadge status={booking.status} />
+              <StatusBadge status={booking.status} aria-label={`Status: ${booking.status}`} />
             </div>
 
             <div className="text-sm text-muted-foreground space-y-2 mt-3">
               <div className="flex items-center gap-2">
-                <CalendarDays className="h-3.5 w-3.5 flex-shrink-0" />
+                <CalendarDays className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
                 <span>{formatDateTime(booking.startTime)}</span>
               </div>
 
@@ -110,6 +111,7 @@ export const BookingCardView = ({
                       e.stopPropagation();
                       window.open(booking.lumaEventUrl, '_blank');
                     }}
+                    aria-label="Open Luma event in new tab"
                     title="Open Luma event"
                   >
                     <ExternalLink className="h-4 w-4" />
@@ -144,11 +146,12 @@ export const BookingCardView = ({
               </div>
               
               {canMarkAsPaid(booking) && (
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="sm"
-                  className="h-8 px-3 text-green-600" 
+                  className="h-8 px-3 text-green-600"
                   onClick={(e) => handleMarkAsPaid(e, booking)}
+                  aria-label={`Mark booking ${booking.title} as paid`}
                   title={t('booking.markAsPaid')}
                   disabled={updatingBookings.has(booking.id)}
                 >
@@ -159,14 +162,15 @@ export const BookingCardView = ({
               
               {(booking.status === "pending" || booking.status === "approved") && 
                 canUserCancelBooking(booking, user) && (
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     size="sm"
-                    className="h-8 px-3 text-destructive" 
+                    className="h-8 px-3 text-destructive"
                     onClick={(e) => {
                       e.stopPropagation();
                       onCancelBooking(booking.id);
                     }}
+                    aria-label={`Cancel booking ${booking.title}`}
                     title="Cancel booking"
                   >
                     <Trash2 className="h-4 w-4 mr-1" />
@@ -180,6 +184,7 @@ export const BookingCardView = ({
                   size="sm"
                   className="h-8 px-3 text-blue-600" 
                   onClick={(e) => handleCopyBooking(e, booking.id)}
+                  aria-label={`Copy booking ${booking.title}`}
                   title="Copy booking"
                 >
                   <Copy className="h-4 w-4 mr-1" />
