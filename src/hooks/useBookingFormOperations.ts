@@ -35,6 +35,12 @@ export const useBookingFormOperations = () => {
       publicUri: data.publicUri,
       price: data.price,
       currency: data.currency,
+      language: data.language,
+      // Include catering and membership data
+      cateringOptions: data.cateringOptions || [],
+      cateringComments: data.cateringComments,
+      membershipStatus: data.membershipStatus,
+      eventSupportOptions: data.eventSupportOptions || [],
     };
   };
 
@@ -67,7 +73,11 @@ export const useBookingFormOperations = () => {
       const bookingData = transformFormDataToBooking(data, rooms);
       await updateBooking(bookingId, bookingData);
       toast.success(t('messages.bookingUpdated'));
-      navigate(`/bookings/${bookingId}`);
+      
+      // Add a small delay to ensure the booking is updated in the context before navigation
+      setTimeout(() => {
+        navigate(`/bookings/${bookingId}`);
+      }, 100);
     } catch (error) {
       toast.error(t('messages.bookingUpdateError'));
       console.error(error);

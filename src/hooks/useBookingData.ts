@@ -102,15 +102,14 @@ export const useBookingData = () => {
               lumaEventUrl: booking.luma_event_url,
               calendarUrl: booking.calendar_url,
               publicUri: booking.public_uri,
-              language: booking.language || 'en', // Add language field with fallback
-              // Add price and currency fields
+              language: booking.language || 'en',
               price: booking.price ? Number(booking.price) : undefined,
               currency: booking.currency || 'EUR',
-              // Add placeholder catering and event support fields
-              // These would need to be properly mapped from database fields when those are added
-              cateringOptions: [], // This will be populated when the database fields are added
+              // Initialize catering and membership fields (these will be properly stored when database fields are added)
+              cateringOptions: [],
               cateringComments: undefined,
-              eventSupportOptions: [], // This will be populated when the database fields are added
+              eventSupportOptions: [],
+              membershipStatus: undefined,
             };
           }
         );

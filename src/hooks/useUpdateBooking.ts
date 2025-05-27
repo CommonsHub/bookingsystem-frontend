@@ -9,7 +9,7 @@ export const useUpdateBooking = (
 ) => {
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const updateBooking = async (bookingId: string, updatedBooking: Booking): Promise<void> => {
+  const updateBooking = async (bookingId: string, updatedBooking: Partial<Booking>): Promise<void> => {
     setIsUpdating(true);
     try {
       console.log("Updating booking:", bookingId, "with data:", updatedBooking);
@@ -19,9 +19,9 @@ export const useUpdateBooking = (
         .update({
           title: updatedBooking.title,
           description: updatedBooking.description,
-          room_id: updatedBooking.room.id,
-          room_name: updatedBooking.room.name,
-          room_capacity: updatedBooking.room.capacity,
+          room_id: updatedBooking.room?.id,
+          room_name: updatedBooking.room?.name,
+          room_capacity: updatedBooking.room?.capacity,
           start_time: updatedBooking.startTime,
           end_time: updatedBooking.endTime,
           status: updatedBooking.status,
@@ -46,10 +46,10 @@ export const useUpdateBooking = (
 
       console.log("Booking updated successfully:", data);
 
-      // Update local state
+      // Update local state properly - merge the updated data with existing booking
       setBookings((prevBookings) =>
         prevBookings.map((booking) =>
-          booking.id === bookingId ? updatedBooking : booking
+          booking.id === bookingId ? { ...booking, ...updatedBooking } : booking
         )
       );
 
