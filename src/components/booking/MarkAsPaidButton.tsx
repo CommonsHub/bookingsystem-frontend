@@ -14,14 +14,8 @@ interface MarkAsPaidButtonProps {
 
 export const MarkAsPaidButton = ({ booking }: MarkAsPaidButtonProps) => {
   const { t } = useTranslation();
-  const { user } = useAuth();
   const { updateBooking } = useBooking();
   const [isUpdating, setIsUpdating] = useState(false);
-
-  // Only show for admins and only if booking is approved
-  if (!user || !canUserApproveBookings(user) || booking.status !== "approved") {
-    return null;
-  }
 
   const handleMarkAsPaid = async () => {
     setIsUpdating(true);
@@ -40,7 +34,7 @@ export const MarkAsPaidButton = ({ booking }: MarkAsPaidButtonProps) => {
       disabled={isUpdating}
       variant="default"
       size="default"
-      className="bg-green-600 hover:bg-green-700 text-white min-w-[120px]"
+      className="bg-green-600 hover:bg-green-700 text-white w-full"
     >
       {isUpdating ? (
         <Loader2 className="h-4 w-4 animate-spin mr-2" />

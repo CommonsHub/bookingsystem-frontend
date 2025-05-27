@@ -12,6 +12,8 @@ import { useBooking } from "@/context/BookingContext";
 import { rooms } from "@/data/rooms";
 import { useBookingFormOperations } from "@/hooks/useBookingFormOperations";
 import { createDefaultFormValues, transformBookingToFormData } from "@/utils/formDefaults";
+import { BookingHeader } from "@/components/booking/BookingHeader";
+import { BookingHeaderNavigation } from "@/components/booking/BookingHeaderNavigation";
 
 const EditBookingPage = () => {
   const { t } = useTranslation();
@@ -75,18 +77,18 @@ const EditBookingPage = () => {
             <Skeleton className="h-8 w-48" />
             <Skeleton className="h-4 w-64" />
           </div>
-          
+
           <div className="border rounded-lg p-6 space-y-6">
             <div className="space-y-4">
               <Skeleton className="h-4 w-20" />
               <Skeleton className="h-10 w-full" />
             </div>
-            
+
             <div className="space-y-4">
               <Skeleton className="h-4 w-24" />
               <Skeleton className="h-20 w-full" />
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Skeleton className="h-4 w-16" />
@@ -97,12 +99,12 @@ const EditBookingPage = () => {
                 <Skeleton className="h-10 w-full" />
               </div>
             </div>
-            
+
             <div className="space-y-4">
               <Skeleton className="h-4 w-20" />
               <Skeleton className="h-10 w-full" />
             </div>
-            
+
             <div className="flex gap-3 pt-6">
               <Skeleton className="h-10 w-24" />
               <Skeleton className="h-10 w-20" />
@@ -124,15 +126,19 @@ const EditBookingPage = () => {
   }
 
   return (
-    <BookingForm
-      isEdit={true}
-      bookingId={bookingId}
-      rooms={enhancedRooms}
-      defaultValues={defaultValues}
-      onSubmit={handleSubmit}
-      onCancel={handleCancel}
-      skipDraftLoading={true}
-    />
+    <>
+      <BookingHeaderNavigation booking={booking} />
+
+      <BookingForm
+        isEdit={true}
+        bookingId={bookingId}
+        rooms={enhancedRooms}
+        defaultValues={defaultValues}
+        onSubmit={handleSubmit}
+        onCancel={handleCancel}
+        skipDraftLoading={true}
+      />
+    </>
   );
 };
 

@@ -5,11 +5,13 @@ import { CheckCircle, X } from "lucide-react";
 import { Booking } from "@/types";
 import { useTranslation } from "react-i18next";
 import { MarkAsPaidButton } from "./MarkAsPaidButton";
+import { canUserApproveBookings } from "@/utils/bookingHelpers";
 
 interface BookingActionsProps {
   booking: Booking;
   canApproveBooking: boolean;
   canCancelBooking: boolean;
+  canMarkAsPaid: boolean;
   onApprove: () => void;
   onCancel: () => void;
 }
@@ -18,15 +20,16 @@ export const BookingActions = ({
   booking,
   canApproveBooking,
   canCancelBooking,
+  canMarkAsPaid,
   onApprove,
   onCancel,
 }: BookingActionsProps) => {
   const { t } = useTranslation();
-
   // Don't show the card if no actions are available
-  if (!canApproveBooking && !canCancelBooking && booking.status !== "approved") {
+  if (!canApproveBooking && !canCancelBooking && !canMarkAsPaid) {
     return null;
   }
+  console.log('BookingActions rendered', { booking, canApproveBooking, canCancelBooking, canMarkAsPaid });
 
   return (
     <Card>
@@ -44,7 +47,9 @@ export const BookingActions = ({
           </Button>
         )}
 
-        <MarkAsPaidButton booking={booking} />
+        {canMarkAsPaid &&
+          < MarkAsPaidButton booking={booking} />
+        }
 
         {canCancelBooking && (
           <Button

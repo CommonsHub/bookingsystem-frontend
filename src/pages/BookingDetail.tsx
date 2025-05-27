@@ -17,11 +17,11 @@ const BookingDetail = () => {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { 
-    getBookingById, 
-    addCommentToBooking, 
+  const {
+    getBookingById,
+    addCommentToBooking,
     approveBookingRequest,
-    cancelBookingRequest, 
+    cancelBookingRequest,
     user,
     canUserApproveBookings,
     canUserCancelBooking,
@@ -41,7 +41,7 @@ const BookingDetail = () => {
           </div>
           <Skeleton className="h-10 w-32" />
         </div>
-        
+
         <div className="booking-detail-grid">
           <div className="space-y-6">
             <div className="border rounded-lg p-6 space-y-4">
@@ -69,7 +69,7 @@ const BookingDetail = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="booking-sidebar space-y-6">
             <div className="border rounded-lg p-6 space-y-4">
               <Skeleton className="h-6 w-24" />
@@ -94,12 +94,16 @@ const BookingDetail = () => {
 
   // Check if user can approve bookings
   const canApproveBooking = booking.status === "pending" && canUserApproveBookings(user);
-  
-  const canCancelBooking = (booking.status === "pending" || booking.status === "approved") && 
+  const canMarkAsPaid = booking.status === "approved" && canUserApproveBookings(user);
+
+  const canCancelBooking = (booking.status === "pending" || booking.status === "approved") &&
     canUserCancelBooking(booking, user);
-    
+
   const canEditBooking = booking.status !== "cancelled" && canUserCancelBooking(booking, user);
   const canCopyBooking = booking.status === "cancelled";
+
+  console.log("status", canApproveBooking, canMarkAsPaid, canCancelBooking, canEditBooking, canCopyBooking);
+  console.log("user", user, canUserApproveBookings(user));
 
   const handleSubmitComment = async (commentData: {
     content: string;
@@ -131,7 +135,7 @@ const BookingDetail = () => {
   const handleCancelBooking = () => {
     cancelBookingRequest(id);
   };
-  
+
   const handleEditBooking = () => {
     navigate(`/bookings/${id}/edit`);
   };
@@ -149,7 +153,7 @@ const BookingDetail = () => {
           {t('buttons.editBooking')}
         </Button>
       )}
-      
+
       {canCopyBooking && (
         <Button onClick={handleCopyBooking} variant="outline" className="gap-2">
           <Copy className="h-4 w-4" />
@@ -162,22 +166,23 @@ const BookingDetail = () => {
   return (
     <div className="space-y-8">
       <BookingHeader booking={booking} actionButtons={actionButtons} />
-      
+
       <div className="booking-detail-grid">
         <div className="space-y-6">
           <BookingDetailsCard booking={booking} />
-          <CommentSection 
-            comments={booking.comments} 
-            onSubmitComment={handleSubmitComment} 
-            isSubmitting={submitting} 
+          <CommentSection
+            comments={booking.comments}
+            onSubmitComment={handleSubmitComment}
+            isSubmitting={submitting}
           />
         </div>
-        
+
         <div className="booking-sidebar">
-          <BookingActions 
-            booking={booking} 
+          <BookingActions
+            booking={booking}
             canApproveBooking={canApproveBooking}
             canCancelBooking={canCancelBooking}
+            canMarkAsPaid={canMarkAsPaid}
             onApprove={handleApproveBooking}
             onCancel={handleCancelBooking}
           />

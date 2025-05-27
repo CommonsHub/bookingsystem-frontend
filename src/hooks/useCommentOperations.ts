@@ -1,11 +1,10 @@
-
 import { toast } from "@/components/ui/toast-utils";
 import { supabase } from "@/integrations/supabase/client";
 import { Booking, Comment } from "@/types";
 import { v4 as uuidv4 } from "uuid";
 
 export const useCommentOperations = (
-  setBookings: React.Dispatch<React.SetStateAction<Booking[]>>
+  setBookings: React.Dispatch<React.SetStateAction<Booking[]>>,
 ) => {
   const addCommentToBooking = async (
     bookingId: string,
@@ -22,7 +21,7 @@ export const useCommentOperations = (
           content,
           created_by_email: email,
           created_by_name: name,
-          status: "published"  // Changed from "draft" to "published"
+          status: "published", // Changed from "draft" to "published"
         })
         .select()
         .single();
@@ -38,13 +37,12 @@ export const useCommentOperations = (
         bookingId,
         content,
         createdAt: data.created_at,
-        createdBy: { 
+        createdBy: {
           id: uuidv4(), // Generate a temporary ID for the user
-          email, 
+          email,
           name: name || "",
-          verified: false 
         },
-        status: "published",  // Changed from "draft" to "published"
+        status: "published", // Changed from "draft" to "published"
       };
 
       // Update local state

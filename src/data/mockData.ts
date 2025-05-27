@@ -3,12 +3,12 @@ import { rooms } from "./rooms";
 
 // Demo users with more variety
 const demoUsers: User[] = [
-  { id: "user-001", email: "john.doe@example.com", verified: true },
-  { id: "user-002", email: "sarah.smith@example.com", verified: true },
-  { id: "user-003", email: "tech.lead@example.com", verified: true },
-  { id: "user-004", email: "product.manager@example.com", verified: true },
-  { id: "user-005", email: "dev.team@example.com", verified: true },
-  { id: "user-006", email: "marketing@example.com", verified: true },
+  { id: "user-001", email: "john.doe@example.com" },
+  { id: "user-002", email: "sarah.smith@example.com" },
+  { id: "user-003", email: "tech.lead@example.com" },
+  { id: "user-004", email: "product.manager@example.com" },
+  { id: "user-005", email: "dev.team@example.com" },
+  { id: "user-006", email: "marketing@example.com" },
 ];
 
 // Create sample comments with more variety

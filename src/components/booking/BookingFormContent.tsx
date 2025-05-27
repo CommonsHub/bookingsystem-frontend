@@ -120,34 +120,11 @@ export const BookingFormContent = ({
         <EventSupportSection control={control} />
       </div>
 
-      <Separator className="my-12" />
-
-      <div data-wizard-section="5" className="scroll-mt-24 py-8">
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">{t('form.sections.contactMembership.title')}</h2>
-          <p className="text-muted-foreground text-sm">{t('form.sections.contactMembership.description')}</p>
-        </div>
-        <div className="space-y-6">
-          <ContactInfoSection control={control} isReadOnly={false} />
-          <MembershipSection control={control} />
-        </div>
-      </div>
-
-      <Separator className="my-12" />
-
-      <div data-wizard-section="6" className="scroll-mt-24 py-8">
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">{t('form.sections.additionalInfo.title')}</h2>
-          <p className="text-muted-foreground text-sm">{t('form.sections.additionalInfo.description')}</p>
-        </div>
-        <AdditionalInfoSection control={control} />
-      </div>
-
       {/* URL section - only show for edit forms */}
       {isEditForm && (
         <>
           <Separator className="my-12" />
-          <div data-wizard-section="7" className="scroll-mt-24 py-8">
+          <div data-wizard-section="5" className="scroll-mt-24 py-8">
             <div className="mb-8">
               <h2 className="text-xl font-semibold mb-2">Event URLs</h2>
               <p className="text-muted-foreground text-sm">Links related to your event</p>
@@ -161,7 +138,7 @@ export const BookingFormContent = ({
       {isEditForm && (
         <>
           <Separator className="my-12" />
-          <div data-wizard-section="8" className="scroll-mt-24 py-8">
+          <div data-wizard-section="6" className="scroll-mt-24 py-8">
             <div className="mb-8">
               <h2 className="text-xl font-semibold mb-2">{t('form.sections.price.title')}</h2>
               <p className="text-muted-foreground text-sm">{t('form.sections.price.description')}</p>
@@ -170,6 +147,30 @@ export const BookingFormContent = ({
           </div>
         </>
       )}
+
+      <Separator className="my-12" />
+
+      <div data-wizard-section={isEdit ? 7 : 5} className="scroll-mt-24 py-8">
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.contactMembership.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.contactMembership.description')}</p>
+        </div>
+        <div className="space-y-6">
+          <ContactInfoSection control={control} isReadOnly={false} />
+          <MembershipSection control={control} />
+        </div>
+      </div>
+
+      <Separator className="my-12" />
+
+      <div data-wizard-section={isEdit ? 8 : 6} className="scroll-mt-24 py-8">
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">{t('form.sections.additionalInfo.title')}</h2>
+          <p className="text-muted-foreground text-sm">{t('form.sections.additionalInfo.description')}</p>
+        </div>
+        <AdditionalInfoSection control={control} />
+      </div>
+
       {!isEditForm && (
         <>
           <Separator className="my-12" />
