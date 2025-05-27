@@ -105,7 +105,7 @@ export const useBookingData = () => {
               language: booking.language || 'en',
               price: booking.price ? Number(booking.price) : undefined,
               currency: booking.currency || 'EUR',
-              // Initialize catering and membership fields (these will be properly stored when database fields are added)
+              // Initialize catering, membership and event support fields (these will be properly stored when database fields are added)
               cateringOptions: [],
               cateringComments: undefined,
               eventSupportOptions: [],
