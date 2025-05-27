@@ -39,7 +39,8 @@ export const MarkAsPaidButton = ({ booking }: MarkAsPaidButtonProps) => {
       onClick={handleMarkAsPaid}
       disabled={isUpdating}
       variant="default"
-      className="bg-green-600 hover:bg-green-700 text-white"
+      size="default"
+      className="bg-green-600 hover:bg-green-700 text-white min-w-[120px]"
     >
       {isUpdating ? (
         <Loader2 className="h-4 w-4 animate-spin mr-2" />

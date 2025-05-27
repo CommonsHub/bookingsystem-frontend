@@ -1,7 +1,7 @@
 
 import { Booking, User } from "@/types";
 import { formatDateTime } from "@/lib/utils";
-import { CalendarDays, MessageSquare, Trash2, Hash, Copy, Globe, CreditCard, ExternalLink, Calendar } from "lucide-react";
+import { CalendarDays, MessageSquare, Trash2, Hash, Copy, Globe, CreditCard, ExternalLink, Calendar, Euro } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { StatusBadge } from "./StatusBadge";
@@ -89,6 +89,13 @@ export const BookingCardView = ({
                 <Globe className="h-3.5 w-3.5 flex-shrink-0" />
                 <span>Language: {getLanguageDisplay(booking.language)}</span>
               </div>
+
+              {booking.price && (
+                <div className="flex items-center gap-2">
+                  <Euro className="h-3.5 w-3.5 flex-shrink-0" />
+                  <span>Price: €{booking.price.toLocaleString()}</span>
+                </div>
+              )}
             </div>
 
             {/* Event Links */}
@@ -139,13 +146,14 @@ export const BookingCardView = ({
               {canMarkAsPaid(booking) && (
                 <Button 
                   variant="ghost" 
-                  size="icon"
-                  className="h-8 w-8 text-green-600" 
+                  size="sm"
+                  className="h-8 px-3 text-green-600" 
                   onClick={(e) => handleMarkAsPaid(e, booking)}
                   title={t('booking.markAsPaid')}
                   disabled={updatingBookings.has(booking.id)}
                 >
-                  <CreditCard className="h-4 w-4" />
+                  <CreditCard className="h-4 w-4 mr-1" />
+                  Pay
                 </Button>
               )}
               
@@ -153,27 +161,29 @@ export const BookingCardView = ({
                 canUserCancelBooking(booking, user) && (
                   <Button 
                     variant="ghost" 
-                    size="icon"
-                    className="h-8 w-8 text-destructive" 
+                    size="sm"
+                    className="h-8 px-3 text-destructive" 
                     onClick={(e) => {
                       e.stopPropagation();
                       onCancelBooking(booking.id);
                     }}
                     title="Cancel booking"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="h-4 w-4 mr-1" />
+                    Cancel
                   </Button>
               )}
               
               {booking.status === "cancelled" && (
                 <Button 
                   variant="ghost" 
-                  size="icon"
-                  className="h-8 w-8 text-blue-600" 
+                  size="sm"
+                  className="h-8 px-3 text-blue-600" 
                   onClick={(e) => handleCopyBooking(e, booking.id)}
                   title="Copy booking"
                 >
-                  <Copy className="h-4 w-4" />
+                  <Copy className="h-4 w-4 mr-1" />
+                  Copy
                 </Button>
               )}
             </div>

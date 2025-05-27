@@ -6,6 +6,13 @@ import { useAuth } from "@/context/AuthContext";
 import { useBooking } from "@/context/BookingContext";
 import { FormData } from "@/components/booking/BookingFormSchema";
 import { Room } from "@/types";
+import { 
+  calculateRoomPrice, 
+  calculateMemberDiscount, 
+  isWeekendDate, 
+  calculateDurationHours 
+} from "@/utils/pricingCalculations";
+import { calculateCateringCosts } from "@/utils/cateringCalculations";
 
 export const useBookingFormOperations = () => {
   const { t } = useTranslation();
@@ -13,10 +20,33 @@ export const useBookingFormOperations = () => {
   const { user } = useAuth();
   const { createBooking, updateBooking } = useBooking();
 
+  const calculateTotalPrice = (data: FormData, rooms: Room[]) => {
+    const room = rooms.find(r => r.id === data.roomId);
+    if (!room || !data.startDate || !data.endDate) return null;
+
+    const durationHours = calculateDurationHours(data.startDate, data.endDate);
+    if (durationHours <= 0) return null;
+
+    const isWeekend = isWeekendDate(data.startDate, data.endDate);
+    const roomPricing = calculateRoomPrice(data.roomId, durationHours, data.estimatedAttendees || 0, isWeekend);
+    if (!roomPricing) return null;
+
+    const isMember = data.membershipStatus === "yes";
+    const memberPricing = calculateMemberDiscount(roomPricing.roomPrice, isMember);
+    
+    const catering = calculateCateringCosts(data.cateringOptions || [], data.estimatedAttendees || 0);
+    const nonPublicSurcharge = !data.isPublicEvent ? Math.round(memberPricing.discountedRoomPrice * 0.3) : 0;
+    
+    return memberPricing.discountedRoomPrice + catering.cateringPrice + nonPublicSurcharge;
+  };
+
   const transformFormDataToBooking = (data: FormData, rooms: Room[]) => {
     const selectedRoom = rooms.find(room => room.id === data.roomId) as Room;
     const startDate = new Date(data.startDate);
     const endDate = new Date(data.endDate);
+    
+    // Calculate the total price
+    const calculatedPrice = calculateTotalPrice(data, rooms);
 
     return {
       title: data.title,
@@ -33,8 +63,8 @@ export const useBookingFormOperations = () => {
       lumaEventUrl: data.lumaEventUrl,
       calendarUrl: data.calendarUrl,
       publicUri: data.publicUri,
-      price: data.price,
-      currency: data.currency,
+      price: calculatedPrice,
+      currency: "EUR",
       language: data.language,
       // Include catering and membership data
       cateringOptions: data.cateringOptions || [],
