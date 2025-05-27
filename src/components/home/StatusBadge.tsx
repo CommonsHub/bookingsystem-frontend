@@ -1,12 +1,15 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Check, Clock, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface StatusBadgeProps {
   status: string;
 }
 
 export const StatusBadge = ({ status }: StatusBadgeProps) => {
+  const { t } = useTranslation();
+  
   switch (status) {
     case "draft":
       return (
@@ -15,35 +18,35 @@ export const StatusBadge = ({ status }: StatusBadgeProps) => {
           className="flex items-center gap-1 text-muted-foreground"
         >
           <Clock className="h-3 w-3" />
-          <span>Draft</span>
+          <span>{t('status.draft')}</span>
         </Badge>
       );
     case "pending":
       return (
         <Badge variant="warning" className="flex items-center gap-1">
           <Clock className="h-3 w-3" />
-          <span>Pending</span>
+          <span>{t('status.pending')}</span>
         </Badge>
       );
     case "approved":
       return (
         <Badge variant="success" className="flex items-center gap-1">
           <Check className="h-3 w-3" />
-          <span>Approved</span>
+          <span>{t('status.approved')}</span>
         </Badge>
       );
     case "rejected":
       return (
         <Badge variant="destructive" className="flex items-center gap-1">
           <X className="h-3 w-3" />
-          <span>Rejected</span>
+          <span>{t('status.rejected')}</span>
         </Badge>
       );
     case "cancelled":
       return (
         <Badge variant="secondary" className="flex items-center gap-1">
           <X className="h-3 w-3" />
-          <span>Cancelled</span>
+          <span>{t('status.cancelled')}</span>
         </Badge>
       );
     default:

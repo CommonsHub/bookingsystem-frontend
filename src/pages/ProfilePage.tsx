@@ -1,14 +1,7 @@
 
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useAuth } from "@/context/AuthContext";
-import { useProfile } from "@/hooks/useProfile";
 import {
   Form,
   FormControl,
@@ -18,6 +11,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useAuth } from "@/context/AuthContext";
+import { useAppTranslation } from "@/hooks/use-translation";
+import { useHeaderSettings } from "@/hooks/useHeaderSettings";
+import { useProfile } from "@/hooks/useProfile";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 type ProfileFormValues = {
   full_name: string;
@@ -30,7 +32,9 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const { profile, loading: profileLoading, updateProfile } = useProfile();
-  
+  const { settings: headerSettings, updateSettings: updateHeaderSettings } = useHeaderSettings();
+  const { t } = useAppTranslation();
+
   const form = useForm<ProfileFormValues>({
     defaultValues: {
       full_name: "",
@@ -65,25 +69,32 @@ export default function ProfilePage() {
       ...data,
       vat_number: data.has_business ? data.vat_number : null,
     };
-    
+
     await updateProfile(updates);
   };
 
-  if (authLoading || profileLoading) {
+  // Show loading state only when both auth and profile are loading
+  const isLoading = authLoading || (user && profileLoading);
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center p-8">
-        <p>Loading...</p>
+        <p>{t('profile.loading')}</p>
       </div>
     );
   }
 
+  // Don't render anything if user is not authenticated and we're redirecting
+  if (!user) {
+    return null;
+  }
+
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 space-y-6">
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
-          <CardTitle>Your Profile</CardTitle>
+          <CardTitle>{t('profile.title')}</CardTitle>
           <CardDescription>
-            Update your personal information and business details
+            {t('profile.description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -94,33 +105,33 @@ export default function ProfilePage() {
                 name="full_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Full Name</FormLabel>
+                    <FormLabel>{t('profile.fullName')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your full name" {...field} />
+                      <Input placeholder={t('profile.fullNamePlaceholder')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="address"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Address</FormLabel>
+                    <FormLabel>{t('profile.address')}</FormLabel>
                     <FormControl>
-                      <Textarea 
-                        placeholder="Your address" 
-                        className="resize-none" 
-                        {...field} 
+                      <Textarea
+                        placeholder={t('profile.addressPlaceholder')}
+                        className="resize-none"
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="has_business"
@@ -133,36 +144,65 @@ export default function ProfilePage() {
                       />
                     </FormControl>
                     <div className="space-y-1 leading-none">
-                      <FormLabel>I have a business</FormLabel>
+                      <FormLabel>{t('profile.hasBusiness')}</FormLabel>
                       <FormDescription>
-                        Check this if you need to provide VAT information
+                        {t('profile.hasBusinessDescription')}
                       </FormDescription>
                     </div>
                   </FormItem>
                 )}
               />
-              
+
               {form.watch("has_business") && (
                 <FormField
                   control={form.control}
                   name="vat_number"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>VAT Number</FormLabel>
+                      <FormLabel>{t('profile.vatNumber')}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your VAT number" {...field} />
+                        <Input placeholder={t('profile.vatNumberPlaceholder')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
               )}
-              
+
               <Button type="submit" className="w-full">
-                Save Changes
+                {t('profile.saveChanges')}
               </Button>
             </form>
           </Form>
+        </CardContent>
+      </Card>
+
+      <Card className="max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle>{t('profile.improvementsTitle')}</CardTitle>
+          <CardDescription>
+            {t('profile.improvementsDescription')}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex flex-row items-start space-x-3 space-y-0">
+              <Checkbox
+                checked={headerSettings.showStickyHeader}
+                onCheckedChange={(checked) =>
+                  updateHeaderSettings({ showStickyHeader: !!checked })
+                }
+              />
+              <div className="space-y-1 leading-none">
+                <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  {t('profile.stickyHeader')}
+                </label>
+                <p className="text-sm text-muted-foreground">
+                  {t('profile.stickyHeaderDescription')}
+                </p>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>

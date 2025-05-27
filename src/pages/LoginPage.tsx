@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,8 +11,10 @@ import { Input } from "@/components/ui/input";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 export default function LoginPage() {
+  const { t } = useTranslation(['auth', 'common']);
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSent, setIsSent] = useState(false);
@@ -46,7 +49,7 @@ export default function LoginPage() {
       ) : (
         <Card className="w-[350px]">
           <CardHeader>
-            <CardTitle>Login</CardTitle>
+            <CardTitle>{t('auth:login')}</CardTitle>
             <CardDescription>
               Enter your email to receive a magic link
             </CardDescription>
