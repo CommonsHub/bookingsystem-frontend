@@ -8,7 +8,8 @@ import Backend from 'i18next-http-backend';
 export const languages = {
   en: { name: 'English', flag: '🇬🇧', nativeName: 'English' },
   fr: { name: 'French', flag: '🇫🇷', nativeName: 'Français' },
-  nl: { name: 'Dutch', flag: '🇳🇱', nativeName: 'Nederlands' }
+  nl: { name: 'Dutch', flag: '🇳🇱', nativeName: 'Nederlands' },
+  de: { name: 'German', flag: '🇩🇪', nativeName: 'Deutsch' }
 };
 
 i18n
