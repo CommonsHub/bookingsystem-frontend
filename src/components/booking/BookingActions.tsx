@@ -5,6 +5,7 @@ import { CheckCircle, X } from "lucide-react";
 import { Booking } from "@/types";
 import { useTranslation } from "react-i18next";
 import { MarkAsPaidButton } from "./MarkAsPaidButton";
+import { PayNowButton } from "./PayNowButton";
 import { canUserApproveBookings } from "@/utils/bookingHelpers";
 
 interface BookingActionsProps {
@@ -13,7 +14,7 @@ interface BookingActionsProps {
   canCancelBooking: boolean;
   canMarkAsPaid: boolean;
   onApprove: () => void;
-  onCancel: () => void;  
+  onCancel: () => void;
 }
 
 export const BookingActions = ({
@@ -24,10 +25,13 @@ export const BookingActions = ({
   onApprove,
   onCancel,
 }: BookingActionsProps) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { t } = useTranslation();
+  
+  // Check if "Pay now" button should be shown (only for approved bookings)
+  const canPayNow = booking.status === "approved";
+  
   // Don't show the card if no actions are available
-  if (!canApproveBooking && !canCancelBooking && !canMarkAsPaid) {
+  if (!canApproveBooking && !canCancelBooking && !canMarkAsPaid && !canPayNow) {
     return null;
   }
   console.log('BookingActions rendered', { booking, canApproveBooking, canCancelBooking, canMarkAsPaid });
@@ -61,6 +65,8 @@ export const BookingActions = ({
           )
         }
         
+        {canPayNow && <PayNowButton booking={booking} />}
+
         {canMarkAsPaid &&
           < MarkAsPaidButton booking={booking} />
         }
