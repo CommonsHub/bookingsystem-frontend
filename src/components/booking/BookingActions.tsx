@@ -21,9 +21,7 @@ interface BookingActionsProps {
   canApproveBooking: boolean;
   canCancelBooking: boolean;
   onApprove: () => void;
-  onCancel: () => void;
-  isAdmin: boolean;
-  
+  onCancel: () => void;  
 }
 
 export const BookingActions = ({
@@ -32,10 +30,10 @@ export const BookingActions = ({
   canCancelBooking,
   onApprove,
   onCancel,
-  isAdmin,
 }: BookingActionsProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
+  console.log("can approve booking:", canApproveBooking);
+  console.log("can cancel booking:", canCancelBooking);
   return (
     <Card>
       <CardHeader>
@@ -43,7 +41,7 @@ export const BookingActions = ({
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Approve Button (Admin Only) */}
-        {isAdmin && (
+        {
           canApproveBooking ? (
             <Button onClick={onApprove} className="w-full gap-2">
               <CheckCircle2 className="h-4 w-4" />
@@ -63,7 +61,7 @@ export const BookingActions = ({
               Approve Booking
             </Button>
           )
-        )}
+        }
         
 
         {booking.status === "approved" && (

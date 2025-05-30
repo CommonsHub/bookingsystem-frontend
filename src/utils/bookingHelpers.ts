@@ -5,9 +5,6 @@ import { Booking, User } from "@/types";
 export const canUserApproveBookings = (user: User | null): boolean => {
   if (!user) return false;
   
-  // Allow verified users to approve bookings
-  if (user.verified) return true;
-  
   // Allow users with commonshub.brussels email domain
   if (user.email.endsWith('@commonshub.brussels')) return true;
   
