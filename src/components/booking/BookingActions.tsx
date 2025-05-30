@@ -13,7 +13,7 @@ interface BookingActionsProps {
   canCancelBooking: boolean;
   canMarkAsPaid: boolean;
   onApprove: () => void;
-  onCancel: () => void;
+  onCancel: () => void;  
 }
 
 export const BookingActions = ({
@@ -24,6 +24,7 @@ export const BookingActions = ({
   onApprove,
   onCancel,
 }: BookingActionsProps) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { t } = useTranslation();
   // Don't show the card if no actions are available
   if (!canApproveBooking && !canCancelBooking && !canMarkAsPaid) {
@@ -36,17 +37,30 @@ export const BookingActions = ({
       <CardHeader>
         <CardTitle>{t('booking.actions')}</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3">
-        {canApproveBooking && (
-          <Button
-            onClick={onApprove}
-            className="w-full bg-green-600 hover:bg-green-700 text-white"
-          >
-            <CheckCircle className="mr-2 h-4 w-4" />
-            {t('buttons.approve')}
-          </Button>
-        )}
-
+      <CardContent className="space-y-4">
+        {/* Approve Button (Admin Only) */}
+        {
+          canApproveBooking ? (
+            <Button onClick={onApprove} className="w-full gap-2">
+              <CheckCircle2 className="h-4 w-4" />
+              Approve Booking
+            </Button>
+          ) : (
+            <Button
+              disabled
+              className="w-full gap-2"
+              title={
+                booking.status !== "pending"
+                  ? "This booking is not pending approval"
+                  : "You need to be verified or have a commonshub.brussels email to approve bookings"
+              }
+            >
+              <CheckCircle2 className="h-4 w-4" />
+              {t('buttons.approve')}
+            </Button>
+          )
+        }
+        
         {canMarkAsPaid &&
           < MarkAsPaidButton booking={booking} />
         }
