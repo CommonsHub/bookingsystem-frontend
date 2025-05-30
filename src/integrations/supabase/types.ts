@@ -14,17 +14,23 @@ export type Database = {
           additional_comments: string | null
           approved_at: string | null
           approved_by_email: string | null
+          calendar_url: string | null
           cancelled_at: string | null
           cancelled_by_email: string | null
           created_at: string | null
           created_by_email: string
           created_by_name: string | null
+          currency: string | null
           description: string | null
           end_time: string
           estimated_attendees: number | null
           id: string
           is_public_event: boolean | null
+          language: string | null
+          luma_event_url: string | null
           organizer: string | null
+          price: number | null
+          public_uri: string | null
           room_capacity: string
           room_id: string
           room_name: string
@@ -36,17 +42,23 @@ export type Database = {
           additional_comments?: string | null
           approved_at?: string | null
           approved_by_email?: string | null
+          calendar_url?: string | null
           cancelled_at?: string | null
           cancelled_by_email?: string | null
           created_at?: string | null
           created_by_email: string
           created_by_name?: string | null
+          currency?: string | null
           description?: string | null
           end_time: string
           estimated_attendees?: number | null
           id?: string
           is_public_event?: boolean | null
+          language?: string | null
+          luma_event_url?: string | null
           organizer?: string | null
+          price?: number | null
+          public_uri?: string | null
           room_capacity?: string
           room_id: string
           room_name: string
@@ -58,17 +70,23 @@ export type Database = {
           additional_comments?: string | null
           approved_at?: string | null
           approved_by_email?: string | null
+          calendar_url?: string | null
           cancelled_at?: string | null
           cancelled_by_email?: string | null
           created_at?: string | null
           created_by_email?: string
           created_by_name?: string | null
+          currency?: string | null
           description?: string | null
           end_time?: string
           estimated_attendees?: number | null
           id?: string
           is_public_event?: boolean | null
+          language?: string | null
+          luma_event_url?: string | null
           organizer?: string | null
+          price?: number | null
+          public_uri?: string | null
           room_capacity?: string
           room_id?: string
           room_name?: string
