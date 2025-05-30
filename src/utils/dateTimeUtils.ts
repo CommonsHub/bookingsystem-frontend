@@ -47,15 +47,32 @@ export const getTimeString = (date: Date | undefined): string => {
   return `${hours}:${minutes}`;
 };
 
-// Parse natural language date inputs
+// Get the appropriate chrono parser for the given language
+const getChronoParser = (language: string) => {
+  switch (language) {
+    case 'de':
+      return Chrono.de;
+    case 'fr':
+      return Chrono.fr;
+    case 'nl':
+      return Chrono.nl;
+    case 'en':
+    default:
+      return Chrono.en;
+  }
+};
+
+// Parse natural language date inputs with language support
 export const parseNaturalLanguageDate = (
   text: string, 
-  referenceDate: Date = new Date()
+  referenceDate: Date = new Date(),
+  language: string = 'en'
 ): Date | undefined => {
   try {
     if (!text) return undefined;
 
-    const parseResult = Chrono.parse(text, {
+    const parser = getChronoParser(language);
+    const parseResult = parser.parse(text, {
       instant: referenceDate,
       timezone: "CET"
     }, {

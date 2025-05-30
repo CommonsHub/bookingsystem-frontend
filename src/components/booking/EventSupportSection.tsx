@@ -18,9 +18,9 @@ export const EventSupportSection = ({ control }: EventSupportSectionProps) => {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <h3 className="text-lg font-medium">{t('form.eventSupport.professionalTitle')}</h3>
+        <h3 className="text-lg font-medium">{t('form.sections.eventSupport.professionalTitle')}</h3>
         <p className="text-sm text-muted-foreground">
-          {t('form.eventSupport.professionalDescription')}
+          {t('form.sections.eventSupport.professionalDescription')}
         </p>
 
         <FormField
@@ -54,7 +54,7 @@ export const EventSupportSection = ({ control }: EventSupportSectionProps) => {
                         </FormControl>
                         <div className="space-y-1 leading-none">
                           <FormLabel>
-                            {t(option.nameKey)}
+                            {t(`form.sections.eventSupport.${option.nameKey.split('.').pop()}`)}
                           </FormLabel>
                         </div>
                       </FormItem>
@@ -81,10 +81,10 @@ export const EventSupportSection = ({ control }: EventSupportSectionProps) => {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel>
-                  {t('form.eventSupport.publicEventLabel')}
+                  {t('form.sections.eventSupport.publicEventLabel')}
                 </FormLabel>
                 <p className="text-sm text-muted-foreground">
-                  {t('form.eventSupport.publicEventDescription')}
+                  {t('form.sections.eventSupport.publicEventDescription')}
                 </p>
               </div>
             </FormItem>

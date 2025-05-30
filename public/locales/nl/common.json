@@ -29,7 +29,9 @@
     "newDescription": "Vul het onderstaande formulier in om een zaalreservering aan te vragen",
     "roomBookingDetails": "Zaalreserveringsdetails",
     "enterDetails": "Voer de details van uw boekingsaanvraag in",
-    "price": "Prijs"
+    "price": "Prijs",
+    "markAsPaid": "Markeren als betaald",
+    "markingAsPaid": "Markeren als betaald..."
   },
   "form": {
     "sections": {
@@ -133,6 +135,15 @@
       "label": "Taal",
       "notSet": "Niet ingesteld",
       "readOnlyNote": "Taal kan niet worden gewijzigd na het aanmaken van de boeking"
+    },
+    "actions": {
+      "cancel": "Annuleren",
+      "update": "Boeking bijwerken",
+      "updating": "Bijwerken...",
+      "submit": "Boekingsaanvraag indienen",
+      "submitting": "Indienen...",
+      "clearDraft": "Concept wissen",
+      "startNew": "Nieuw beginnen"
     }
   },
   "profile": {
@@ -183,7 +194,9 @@
     "copyBooking": "Boeking kopiëren",
     "language": "Taal",
     "notSpecified": "Niet gespecificeerd",
-    "price": "Prijs"
+    "price": "Prijs",
+    "markAsPaid": "Markeren als betaald",
+    "markingAsPaid": "Markeren als betaald..."
   },
   "roomInfo": {
     "title": "Zaalinformatie",
@@ -212,7 +225,8 @@
     "pending": "In behandeling",
     "approved": "Goedgekeurd",
     "rejected": "Afgewezen",
-    "cancelled": "Geannuleerd"
+    "cancelled": "Geannuleerd",
+    "paid": "Betaald"
   },
   "nav": {
     "profile": "Profiel",
@@ -234,7 +248,8 @@
     "submit": "Boekingsaanvraag indienen",
     "submitting": "Indienen...",
     "clearDraft": "Concept wissen",
-    "editBooking": "Boeking bewerken"
+    "editBooking": "Boeking bewerken",
+    "approve": "Goedkeuren"
   },
   "messages": {
     "loadingBooking": "Boekingsdetails laden...",

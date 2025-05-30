@@ -1,53 +1,67 @@
 
 import { FormData } from "@/components/booking/BookingFormSchema";
+import { Booking } from "@/types";
 
-export const createDefaultFormValues = (email: string = "", overrides: Partial<FormData> = {}): FormData => {
+export const createDefaultFormValues = (
+  defaultEmail: string,
+  overrides: Partial<FormData> = {}
+): FormData => {
   return {
     title: "",
     description: "",
     roomId: "",
     setupOption: "",
     requiresAdditionalSpace: false,
-    startDate: undefined,
-    endDate: undefined,
-    email,
+    startDate: new Date(),
+    endDate: new Date(),
+    email: defaultEmail,
     name: "",
+    organizer: "",
+    estimatedAttendees: undefined,
     cateringOptions: [],
     cateringComments: "",
     eventSupportOptions: [],
     membershipStatus: "",
     additionalComments: "",
-    isPublicEvent: false,
+    isPublicEvent: true,
     lumaEventUrl: "",
     calendarUrl: "",
     publicUri: "",
     roomNotes: "",
+    bookingId: "",
+    language: "en",
+    price: undefined,
+    currency: "EUR",
     ...overrides,
   };
 };
 
-export const transformBookingToFormData = (booking: any): FormData => {
+export const transformBookingToFormData = (booking: Booking): FormData => {
   return {
     title: booking.title,
-    description: booking.description,
+    description: booking.description || "",
     roomId: booking.room.id,
     setupOption: booking.selectedSetup || "",
     requiresAdditionalSpace: booking.requiresAdditionalSpace || false,
-    startDate: booking.startTime ? new Date(booking.startTime) : undefined,
-    endDate: booking.endTime ? new Date(booking.endTime) : undefined,
+    startDate: new Date(booking.startTime),
+    endDate: new Date(booking.endTime),
     email: booking.createdBy.email,
-    name: booking.createdBy.name,
-    cateringOptions: [],
-    cateringComments: "",
-    eventSupportOptions: [],
-    membershipStatus: "",
-    additionalComments: booking.additionalComments || "",
-    isPublicEvent: booking.isPublicEvent || false,
-    organizer: booking.organizer,
+    name: booking.createdBy.name || "",
+    organizer: booking.organizer || "",
     estimatedAttendees: booking.estimatedAttendees,
+    cateringOptions: booking.cateringOptions || [],
+    cateringComments: booking.cateringComments || "",
+    eventSupportOptions: booking.eventSupportOptions || [],
+    membershipStatus: booking.membershipStatus || "",
+    additionalComments: booking.additionalComments || "",
+    isPublicEvent: booking.isPublicEvent ?? true,
     lumaEventUrl: booking.lumaEventUrl || "",
     calendarUrl: booking.calendarUrl || "",
     publicUri: booking.publicUri || "",
-    roomNotes: booking.roomNotes || "",
+    roomNotes: "",
+    bookingId: booking.id,
+    language: booking.language || "en",
+    price: booking.price,
+    currency: booking.currency || "EUR",
   };
 };

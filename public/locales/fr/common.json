@@ -29,7 +29,9 @@
     "newDescription": "Remplissez le formulaire ci-dessous pour demander une réservation de salle",
     "roomBookingDetails": "Détails de la réservation de salle",
     "enterDetails": "Entrez les détails de votre demande de réservation",
-    "price": "Prix"
+    "price": "Prix",
+    "markAsPaid": "Marquer comme payé",
+    "markingAsPaid": "Marquage comme payé..."
   },
   "form": {
     "sections": {
@@ -133,6 +135,15 @@
       "label": "Langue",
       "notSet": "Non défini",
       "readOnlyNote": "La langue ne peut pas être modifiée après la création de la réservation"
+    },
+    "actions": {
+      "cancel": "Annuler",
+      "update": "Mettre à jour la réservation",
+      "updating": "Mise à jour...",
+      "submit": "Soumettre la demande de réservation",
+      "submitting": "Soumission...",
+      "clearDraft": "Effacer le brouillon",
+      "startNew": "Commencer nouveau"
     }
   },
   "profile": {
@@ -183,7 +194,9 @@
     "copyBooking": "Copier la réservation",
     "language": "Langue",
     "notSpecified": "Non spécifié",
-    "price": "Prix"
+    "price": "Prix",
+    "markAsPaid": "Marquer comme payé",
+    "markingAsPaid": "Marquage comme payé..."
   },
   "roomInfo": {
     "title": "Informations sur la salle",
@@ -212,7 +225,8 @@
     "pending": "En attente",
     "approved": "Approuvé",
     "rejected": "Rejeté",
-    "cancelled": "Annulé"
+    "cancelled": "Annulé",
+    "paid": "Payé"
   },
   "nav": {
     "profile": "Profil",
@@ -234,7 +248,8 @@
     "submit": "Soumettre la demande de réservation",
     "submitting": "Soumission...",
     "clearDraft": "Effacer le brouillon",
-    "editBooking": "Modifier la réservation"
+    "editBooking": "Modifier la réservation",
+    "approve": "Approuver"
   },
   "messages": {
     "loadingBooking": "Chargement des détails de la réservation...",

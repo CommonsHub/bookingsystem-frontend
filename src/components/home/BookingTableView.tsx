@@ -2,7 +2,7 @@
 import { Booking, User } from "@/types";
 import { formatDateTime } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import { MessageSquare, Trash2, Users, Hash, Copy, Globe, Calendar, Clock, MapPin } from "lucide-react";
+import { MessageSquare, Trash2, Users, Hash, Copy, Globe, Calendar, Clock, MapPin, CreditCard, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "./StatusBadge";
 import { useTranslation } from "react-i18next";
@@ -17,6 +17,10 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { languages } from "@/i18n/i18n";
+import { useAuth } from "@/context/AuthContext";
+import { useBooking } from "@/context/BookingContext";
+import { canUserApproveBookings } from "@/utils/bookingHelpers";
+import { useState } from "react";
 
 interface BookingTableViewProps {
   bookings: Booking[];
@@ -34,6 +38,8 @@ export const BookingTableView = ({
   onCancelBooking,
 }: BookingTableViewProps) => {
   const { t } = useTranslation();
+  const { updateBooking } = useBooking();
+  const [updatingBookings, setUpdatingBookings] = useState<Set<string>>(new Set());
   
   const stopPropagation = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -42,6 +48,22 @@ export const BookingTableView = ({
   const handleCopyBooking = (e: React.MouseEvent, bookingId: string) => {
     e.stopPropagation();
     window.location.href = `/bookings/new?copy=${bookingId}`;
+  };
+
+  const handleMarkAsPaid = async (e: React.MouseEvent, booking: Booking) => {
+    e.stopPropagation();
+    setUpdatingBookings(prev => new Set(prev).add(booking.id));
+    try {
+      await updateBooking(booking.id, { ...booking, status: "paid" });
+    } catch (error) {
+      console.error("Error marking booking as paid:", error);
+    } finally {
+      setUpdatingBookings(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(booking.id);
+        return newSet;
+      });
+    }
   };
 
   const getLanguageDisplay = (languageCode?: string) => {
@@ -64,6 +86,10 @@ export const BookingTableView = ({
       day: 'numeric',
       year: 'numeric'
     });
+  };
+
+  const canMarkAsPaid = (booking: Booking) => {
+    return user && canUserApproveBookings(user) && booking.status === "approved";
   };
 
   return (
@@ -108,6 +134,40 @@ export const BookingTableView = ({
               </div>
             </div>
 
+            {/* Event Links for mobile */}
+            {(booking.lumaEventUrl || booking.calendarUrl) && (
+              <div className="flex items-center gap-2 mt-3 pt-2 border-t" onClick={stopPropagation}>
+                {booking.lumaEventUrl && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-6 w-6 p-0 text-blue-600"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(booking.lumaEventUrl, '_blank');
+                    }}
+                    title="Open Luma event"
+                  >
+                    <ExternalLink className="h-3 w-3" />
+                  </Button>
+                )}
+                {booking.calendarUrl && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-6 w-6 p-0 text-green-600"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(booking.calendarUrl, '_blank');
+                    }}
+                    title="Open calendar event"
+                  >
+                    <Calendar className="h-3 w-3" />
+                  </Button>
+                )}
+              </div>
+            )}
+
             <div className="flex items-center justify-between mt-3 pt-3 border-t">
               <div className="flex items-center gap-1 text-xs text-muted-foreground">
                 <span className="truncate">
@@ -122,6 +182,19 @@ export const BookingTableView = ({
               </div>
               
               <div className="flex items-center gap-1" onClick={stopPropagation}>
+                {canMarkAsPaid(booking) && (
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    className="h-7 w-7 p-0 text-green-600" 
+                    onClick={(e) => handleMarkAsPaid(e, booking)}
+                    title={t('booking.markAsPaid')}
+                    disabled={updatingBookings.has(booking.id)}
+                  >
+                    <CreditCard className="h-3 w-3" />
+                  </Button>
+                )}
+                
                 {(booking.status === "pending" || booking.status === "approved") && 
                   canUserCancelBooking(booking, user) && (
                     <Button 
@@ -169,6 +242,7 @@ export const BookingTableView = ({
               <TableHead className="font-semibold">{t('booking.attendees')}</TableHead>
               <TableHead className="font-semibold">{t('booking.status')}</TableHead>
               <TableHead className="font-semibold">{t('booking.language')}</TableHead>
+              <TableHead className="font-semibold">Links</TableHead>
               <TableHead className="font-semibold">{t('booking.createdBy')}</TableHead>
               <TableHead className="font-semibold">{t('booking.comments')}</TableHead>
               <TableHead className="font-semibold text-center">{t('booking.actions')}</TableHead>
@@ -218,6 +292,38 @@ export const BookingTableView = ({
                     </span>
                   </div>
                 </TableCell>
+                <TableCell onClick={stopPropagation}>
+                  <div className="flex items-center gap-1">
+                    {booking.lumaEventUrl && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 w-8 p-0 text-blue-600 hover:bg-blue-50"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(booking.lumaEventUrl, '_blank');
+                        }}
+                        title="Open Luma event"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                      </Button>
+                    )}
+                    {booking.calendarUrl && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 w-8 p-0 text-green-600 hover:bg-green-50"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(booking.calendarUrl, '_blank');
+                        }}
+                        title="Open calendar event"
+                      >
+                        <Calendar className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
+                </TableCell>
                 <TableCell className="max-w-[150px]">
                   <div className="truncate" title={booking.createdBy.name || booking.createdBy.email}>
                     {booking.createdBy.name || booking.createdBy.email.split("@")[0]}
@@ -233,6 +339,19 @@ export const BookingTableView = ({
                 </TableCell>
                 <TableCell onClick={stopPropagation}>
                   <div className="flex items-center justify-center gap-1">
+                    {canMarkAsPaid(booking) && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        className="h-8 w-8 p-0 text-green-600 hover:bg-green-50" 
+                        onClick={(e) => handleMarkAsPaid(e, booking)}
+                        title={t('booking.markAsPaid')}
+                        disabled={updatingBookings.has(booking.id)}
+                      >
+                        <CreditCard className="h-4 w-4" />
+                      </Button>
+                    )}
+                    
                     {(booking.status === "pending" || booking.status === "approved") && 
                       canUserCancelBooking(booking, user) && (
                         <Button 

@@ -20,7 +20,6 @@ export interface User {
   id: string;
   email: string;
   name?: string;
-  verified: boolean;
   profileId?: string;
 }
 
@@ -57,6 +56,7 @@ export interface Booking {
   cateringOptions?: string[];
   cateringComments?: string;
   eventSupportOptions?: string[];
+  membershipStatus?: string;
   // Add price and currency fields
   price?: number;
   currency?: string;
@@ -86,7 +86,8 @@ export type BookingStatus =
   | "pending"
   | "approved"
   | "rejected"
-  | "cancelled";
+  | "cancelled"
+  | "paid";
 export type CommentStatus = "draft" | "published";
 
 export interface CateringOption {
@@ -139,4 +140,9 @@ export interface BookingDatabaseFields {
   // Add price and currency fields
   price?: number;
   currency?: string;
+  // Add the new database fields
+  catering_options?: string[];
+  catering_comments?: string;
+  event_support_options?: string[];
+  membership_status?: string;
 }

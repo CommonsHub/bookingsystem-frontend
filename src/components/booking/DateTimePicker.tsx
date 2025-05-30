@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils";
 import { FormControl } from "../ui/form";
 import { toast } from "../ui/toast-utils";
 import { combineDateAndTime, generateTimeOptions, getTimeString, parseNaturalLanguageDate } from "@/utils/dateTimeUtils";
+import { useTranslation } from "react-i18next";
 
 interface DateTimePickerProps {
   label: string;
@@ -50,12 +51,13 @@ export function DateTimePicker({
   naturalLanguagePlaceholder = "Type naturally"
 }: DateTimePickerProps) {
   const [naturalInputText, setNaturalInputText] = useState("");
+  const { t, i18n } = useTranslation();
 
   const handleNaturalLanguageInput = () => {
     try {
       if (!naturalInputText) return;
       
-      const parsedDate = parseNaturalLanguageDate(naturalInputText, referenceDate);
+      const parsedDate = parseNaturalLanguageDate(naturalInputText, referenceDate, i18n.language);
       
       if (parsedDate) {
         if (minDate && parsedDate < minDate) {

@@ -4,6 +4,7 @@ import AddComment from "@/components/AddComment";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Comment } from "@/types";
 import { getRelativeTime } from "@/lib/utils";
+import { useAuth } from "@/context/AuthContext";
 
 interface CommentSectionProps {
   comments: Comment[];
@@ -15,11 +16,12 @@ interface CommentSectionProps {
   isSubmitting: boolean;
 }
 
-export const CommentSection = ({ 
-  comments, 
-  onSubmitComment, 
-  isSubmitting 
+export const CommentSection = ({
+  comments,
+  onSubmitComment,
+  isSubmitting
 }: CommentSectionProps) => {
+  const { user } = useAuth();
   const visibleComments = comments;
 
   return (
@@ -39,29 +41,55 @@ export const CommentSection = ({
       ) : (
         <div className="space-y-4">
           {visibleComments.map((comment) => (
-            <Card key={comment.id}>
-              <CardHeader className="pb-2">
-                <div className="flex justify-between items-center">
-                  <div className="font-medium">
-                    {comment.createdBy.name || "Anonymous"}
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    {getRelativeTime(comment.createdAt)}
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p>{comment.content}</p>
-              </CardContent>
-            </Card>
+            <>{
+              comment.createdBy.name === "System" ?
+                // light comment like display with the parsed content
+                // of the booking changes
+                <Card key={comment.id} className="bg-muted/20">
+                  <CardHeader className="pb-2">
+                    <div className="text-sm text-muted-foreground">
+                      {getRelativeTime(comment.createdAt)}
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-700">{comment.content}</p>
+                  </CardContent>
+                </Card>
+                :
+                <Card key={comment.id}>
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-center">
+                      <div className="font-medium">
+                        {comment.createdBy.name || "Anonymous"}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {getRelativeTime(comment.createdAt)}
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p>{comment.content}</p>
+                  </CardContent>
+                </Card>
+            }
+            </>
           ))}
-        </div>
+        </div >
       )}
 
-      <AddComment
-        onSubmit={onSubmitComment}
-        isSubmitting={isSubmitting}
-      />
+      {user ?
+        <AddComment
+          onSubmit={onSubmitComment}
+          isSubmitting={isSubmitting}
+        />
+        :
+        // If user is not authenticated, show a message to log in to comment
+        <div className="text-center py-8 border rounded-lg bg-muted/10">
+          <p className="text-muted-foreground">
+            <a href="/login" className="text-blue-600 hover:underline">Log in</a> to add a comment.
+          </p>
+        </div>
+      }
     </div>
   );
 };

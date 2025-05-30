@@ -1,0 +1,81 @@
+
+{
+  "validation": {
+    "required": "Dieses Feld ist erforderlich",
+    "email": "Ungültige E-Mail-Adresse",
+    "minLength": "Mindestens {{min}} Zeichen erforderlich",
+    "maxLength": "Maximal {{max}} Zeichen erlaubt",
+    "min": "Wert muss mindestens {{min}} sein",
+    "max": "Wert darf höchstens {{max}} sein",
+    "pattern": "Ungültiges Format",
+    "date": "Ungültiges Datum",
+    "time": "Ungültige Zeit",
+    "url": "Ungültige URL",
+    "number": "Muss eine Zahl sein",
+    "integer": "Muss eine ganze Zahl sein",
+    "positive": "Muss eine positive Zahl sein",
+    "custom": "Ungültiger Wert"
+  },
+  "booking": {
+    "titleRequired": "Titel ist erforderlich",
+    "roomRequired": "Raum ist erforderlich",
+    "startDateRequired": "Startdatum ist erforderlich",
+    "endDateRequired": "Enddatum ist erforderlich",
+    "endAfterStart": "Enddatum muss nach dem Startdatum liegen",
+    "nameRequired": "Name ist erforderlich",
+    "emailRequired": "E-Mail ist erforderlich",
+    "emailInvalid": "Ungültige E-Mail-Adresse",
+    "attendeesMin": "Mindestens 1 Teilnehmer erforderlich",
+    "attendeesMax": "Maximal 1000 Teilnehmer erlaubt",
+    "pastDate": "Datum kann nicht in der Vergangenheit liegen",
+    "conflictingBooking": "Konflikt mit bestehender Buchung",
+    "roomUnavailable": "Raum ist nicht verfügbar",
+    "insufficientPermissions": "Unzureichende Berechtigungen",
+    "duplicateBooking": "Doppelte Buchung",
+    "invalidTimeRange": "Ungültiger Zeitbereich"
+  },
+  "auth": {
+    "invalidCredentials": "Ungültige Anmeldedaten",
+    "userNotFound": "Benutzer nicht gefunden",
+    "userExists": "Benutzer existiert bereits",
+    "weakPassword": "Passwort ist zu schwach",
+    "passwordMismatch": "Passwörter stimmen nicht überein",
+    "emailNotVerified": "E-Mail nicht bestätigt",
+    "tokenExpired": "Token ist abgelaufen",
+    "tokenInvalid": "Ungültiger Token",
+    "sessionExpired": "Sitzung ist abgelaufen",
+    "accountLocked": "Konto ist gesperrt",
+    "tooManyAttempts": "Zu viele Versuche",
+    "providerError": "Anbieter-Fehler"
+  },
+  "network": {
+    "offline": "Keine Internetverbindung",
+    "timeout": "Anfrage-Timeout",
+    "serverError": "Server-Fehler",
+    "notFound": "Ressource nicht gefunden",
+    "forbidden": "Zugriff verweigert",
+    "unauthorized": "Nicht autorisiert",
+    "rateLimited": "Rate-Limit erreicht",
+    "maintenance": "Wartungsmodus",
+    "connectionError": "Verbindungsfehler"
+  },
+  "file": {
+    "tooLarge": "Datei ist zu groß",
+    "invalidType": "Ungültiger Dateityp",
+    "uploadFailed": "Upload fehlgeschlagen",
+    "downloadFailed": "Download fehlgeschlagen",
+    "corrupted": "Datei ist beschädigt",
+    "notFound": "Datei nicht gefunden",
+    "accessDenied": "Zugriff auf Datei verweigert"
+  },
+  "generic": {
+    "unknownError": "Unbekannter Fehler",
+    "somethingWentWrong": "Etwas ist schiefgelaufen",
+    "tryAgain": "Bitte versuchen Sie es erneut",
+    "contactSupport": "Bitte kontaktieren Sie den Support",
+    "operationFailed": "Vorgang fehlgeschlagen",
+    "dataCorrupted": "Daten sind beschädigt",
+    "featureUnavailable": "Feature nicht verfügbar",
+    "maintenanceMode": "Wartungsmodus aktiv"
+  }
+}
