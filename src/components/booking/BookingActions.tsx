@@ -1,11 +1,10 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, X } from "lucide-react";
-import { Booking } from "@/types";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CheckCircle2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { MarkAsPaidButton } from "./MarkAsPaidButton";
-import { canUserApproveBookings } from "@/utils/bookingHelpers";
+import { PayNowButton } from "./PayNowButton";
 
 interface BookingActionsProps {
   booking: Booking;
@@ -13,7 +12,7 @@ interface BookingActionsProps {
   canCancelBooking: boolean;
   canMarkAsPaid: boolean;
   onApprove: () => void;
-  onCancel: () => void;  
+  onCancel: () => void;
 }
 
 export const BookingActions = ({
@@ -24,10 +23,13 @@ export const BookingActions = ({
   onApprove,
   onCancel,
 }: BookingActionsProps) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { t } = useTranslation();
+
+  // Check if "Pay now" button should be shown (only for approved bookings)
+  const canPayNow = booking.status === "approved";
+
   // Don't show the card if no actions are available
-  if (!canApproveBooking && !canCancelBooking && !canMarkAsPaid) {
+  if (!canApproveBooking && !canCancelBooking && !canMarkAsPaid && !canPayNow) {
     return null;
   }
   console.log('BookingActions rendered', { booking, canApproveBooking, canCancelBooking, canMarkAsPaid });
@@ -60,7 +62,9 @@ export const BookingActions = ({
             </Button>
           )
         }
-        
+
+        {canPayNow && <PayNowButton booking={booking} />}
+
         {canMarkAsPaid &&
           < MarkAsPaidButton booking={booking} />
         }
