@@ -1,10 +1,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { MarkAsPaidButton } from "./MarkAsPaidButton";
 import { PayNowButton } from "./PayNowButton";
+import { Booking } from "@/types";
 
 interface BookingActionsProps {
   booking: Booking;
