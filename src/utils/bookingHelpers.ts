@@ -7,8 +7,6 @@ export const canUserApproveBookings = (user: User | null): boolean => {
   // Allow users with commonshub.brussels email domain
   if (user.email.endsWith("@commonshub.brussels")) return true;
 
-  if (user.email === "friedger@gmail.com") return true; // Special case for Friedger
-
   return false;
 };
 
