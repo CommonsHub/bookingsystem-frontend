@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
+import { useAuth } from "@/context/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Profile } from "@/types";
-import { useAuth } from "@/context/AuthContext";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export function useProfile() {
@@ -38,15 +38,28 @@ export function useProfile() {
     try {
       setLoading(true);
 
-      const { error } = await supabase
+      // Update profile in profiles table
+      const { error: profileError } = await supabase
         .from("profiles")
         .update(updates)
         .eq("id", user.id);
 
-      if (error) {
+      if (profileError) {
         toast.error("Error updating profile");
-        console.error("Error updating profile:", error);
+        console.error("Error updating profile:", profileError);
         return false;
+      }
+
+      // If full_name is being updated, also update user metadata
+      if (updates.full_name !== undefined) {
+        const { error: userError } = await supabase.auth.updateUser({
+          data: { full_name: updates.full_name },
+        });
+
+        if (userError) {
+          console.error("Error updating user metadata:", userError);
+          // Don't return false here as the profile was updated successfully
+        }
       }
 
       toast.success("Profile updated successfully");
