@@ -27,7 +27,7 @@ export const BookingActions = ({
   const { t } = useTranslation();
 
   // Check if "Pay now" button should be shown (only for approved bookings)
-  const canPayNow = booking.status === "approved";
+  const canPayNow = booking.status === "approved" && booking.currency === "EUR";
 
   // Don't show the card if no actions are available
   if (!canApproveBooking && !canCancelBooking && !canMarkAsPaid && !canPayNow) {

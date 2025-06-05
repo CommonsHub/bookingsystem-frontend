@@ -1,4 +1,3 @@
-
 {
   "app": {
     "title": "Commons Hub Brussel Boekingen"
@@ -254,14 +253,19 @@
   "messages": {
     "loadingBooking": "Boekingsdetails laden...",
     "bookingNotFound": "Boeking niet gevonden",
-    "bookingIdMissing": "Boeking-ID ontbreekt",
-    "savingDraft": "Concept opslaan...",
+    "bookingIdMissing": "Boekings-ID ontbreekt",
+    "savingDraft": "Concept wordt opgeslagen...",
     "draftLoaded": "Concept geladen",
     "draftCleared": "Concept gewist",
-    "bookingSubmitted": "Boekingsaanvraag ingediend! Het wordt bekeken door een beheerder.",
-    "bookingError": "Er was een fout bij het maken van uw boekingsaanvraag.",
+    "bookingSubmitted": "Boekingsaanvraag ingediend! Deze wordt bekeken door een beheerder.",
+    "bookingError": "Er is een fout opgetreden bij het aanmaken van uw boekingsaanvraag.",
     "bookingUpdated": "Boeking succesvol bijgewerkt!",
-    "bookingUpdateError": "Kan boeking niet bijwerken"
+    "bookingUpdateError": "Bijwerken van boeking mislukt",
+    "paymentError": "Betaling mislukt. Probeer het opnieuw!",
+    "paymentSuccess": "Betaling geaccepteerd!",
+    "paymentSuccessDetails": "Bekijk details van bestelling {{orderId}} hier.",
+    "paymentSuccessWithoutOrderId": "Betaling was succesvol.",
+    "paymentSuccessWithoutOrderIdResolution": "We hebben echter geen verdere details. Neem contact op met Commons Hub."
   },
   "greeting": "Hallo {{name}}!",
   "footer": {

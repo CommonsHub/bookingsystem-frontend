@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useBooking } from "@/context/BookingContext";
 import { toast } from "@/components/ui/toast-utils";
 import { BookingHeader } from "@/components/booking/BookingHeader";
@@ -9,13 +9,18 @@ import { RoomInfoCard } from "@/components/booking/RoomInfoCard";
 import { CommentSection } from "@/components/booking/CommentSection";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Edit, Copy } from "lucide-react";
+import { Edit, Copy, ExternalLink } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import "../styles/BookingDetail.css";
 
 const BookingDetail = () => {
   const { t } = useTranslation();
-  const { id } = useParams<{ id: string }>();
+  const { id, status } = useParams<{ id: string, status?: string }>();
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const orderId = searchParams.get("orderId");
+
   const navigate = useNavigate();
   const {
     getBookingById,
@@ -102,9 +107,6 @@ const BookingDetail = () => {
   const canEditBooking = booking.status !== "cancelled" && canUserCancelBooking(booking, user);
   const canCopyBooking = booking.status === "cancelled";
 
-  console.log("status", canApproveBooking, canMarkAsPaid, canCancelBooking, canEditBooking, canCopyBooking);
-  console.log("user", user, canUserApproveBookings(user));
-
   const handleSubmitComment = async (commentData: {
     content: string;
     name: string;
@@ -165,8 +167,8 @@ const BookingDetail = () => {
 
   return (
     <div className="space-y-8">
-      <BookingHeader booking={booking} actionButtons={actionButtons} />
-
+      <BookingHeader booking={booking} actionButtons={actionButtons} order={
+        { status, orderId }} />
       <div className="booking-detail-grid">
         <div className="space-y-6">
           <BookingDetailsCard booking={booking} />

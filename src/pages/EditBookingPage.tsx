@@ -18,7 +18,7 @@ import { BookingHeaderNavigation } from "@/components/booking/BookingHeaderNavig
 const EditBookingPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { bookingId } = useParams<{ bookingId: string }>();
+  const { id } = useParams<{ id: string }>();
   const { bookings, loading: bookingsLoading } = useBooking();
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
@@ -26,14 +26,14 @@ const EditBookingPage = () => {
 
   const defaultEmail = user?.email || "";
   const enhancedRooms = rooms;
-  const booking = bookings.find((b) => b.id === bookingId);
+  const booking = bookings.find((b) => b.id === id);
 
   const [defaultValues, setDefaultValues] = useState<FormData>(
     createDefaultFormValues(defaultEmail)
   );
 
   useEffect(() => {
-    if (!bookingId) {
+    if (!id) {
       toast.error(t('messages.bookingIdMissing'));
       navigate("/");
       return;
@@ -54,7 +54,7 @@ const EditBookingPage = () => {
     const formData = transformBookingToFormData(booking);
     setDefaultValues(formData);
     setLoading(false);
-  }, [bookingId, booking, bookingsLoading, navigate, t]);
+  }, [id, booking, bookingsLoading, navigate, t]);
 
   const handleSubmit = async (data: FormData) => {
     if (!booking) return;
@@ -131,7 +131,7 @@ const EditBookingPage = () => {
 
       <BookingForm
         isEdit={true}
-        bookingId={bookingId}
+        bookingId={id}
         rooms={enhancedRooms}
         defaultValues={defaultValues}
         onSubmit={handleSubmit}

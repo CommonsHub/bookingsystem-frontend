@@ -1,4 +1,3 @@
-
 {
   "app": {
     "title": "Buchungsmanagement"
@@ -116,7 +115,10 @@
     "approved": "Genehmigt",
     "rejected": "Abgelehnt",
     "cancelled": "Storniert",
-    "paid": "Bezahlt"
+    "paid": "Bezahlt",
+    "payNow": {
+      "unsupportedCurrency": "Buchungen können nur in EUR direkt bezahlt werden."
+    }
   },
   "status": {
     "draft": "Entwurf",
@@ -260,22 +262,22 @@
     "italian": "Italienisch"
   },
   "messages": {
-    "bookingSubmitted": "Buchung erfolgreich eingereicht",
-    "bookingUpdated": "Buchung erfolgreich aktualisiert",
+    "bookingSubmitted": "Buchungsanfrage eingereicht! Sie wird geprüft.",
+    "bookingUpdated": "Buchung erfolgreich aktualisiert!",
     "bookingCancelled": "Buchung erfolgreich storniert",
     "bookingDeleted": "Buchung erfolgreich gelöscht",
     "bookingApproved": "Buchung erfolgreich genehmigt",
     "bookingRejected": "Buchung erfolgreich abgelehnt",
-    "bookingError": "Fehler beim Einreichen der Buchung",
-    "bookingUpdateError": "Fehler beim Aktualisieren der Buchung",
-    "bookingDeleteError": "Fehler beim Löschen der Buchung",
-    "bookingNotFound": "Buchung nicht gefunden",
-    "unauthorized": "Nicht autorisiert",
-    "networkError": "Netzwerkfehler",
-    "genericError": "Es ist ein Fehler aufgetreten",
+    "bookingError": "Beim Erstellen Ihrer Buchungsanfrage ist ein Fehler aufgetreten.",
+    "bookingUpdateError": "Buchung konnte nicht aktualisiert werden",
+    "paymentError": "Zahlung fehlgeschlagen. Bitte versuchen Sie es erneut!",
+    "paymentSuccess": "Zahlung akzeptiert!",
+    "paymentSuccessDetails": "Details zur Bestellung {{orderId}} hier ansehen.",
+    "paymentSuccessWithoutOrderId": "Die Zahlung war erfolgreich.",
+    "paymentSuccessWithoutOrderIdResolution": "Wir haben jedoch keine weiteren Details. Bitte kontaktieren Sie das Commons Hub.",
     "draftSaved": "Entwurf gespeichert",
     "draftLoaded": "Entwurf geladen",
-    "draftDeleted": "Entwurf gelöscht",
+    "draftCleared": "Entwurf gelöscht",
     "logoutConfirmation": "Möchten Sie sich wirklich abmelden?",
     "logoutDraftWarning": "Sie haben ungespeicherte Entwürfe. Möchten Sie diese behalten?",
     "keepDrafts": "Entwürfe behalten",
