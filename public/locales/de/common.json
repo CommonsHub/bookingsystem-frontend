@@ -117,7 +117,7 @@
     "cancelled": "Storniert",
     "paid": "Bezahlt",
     "payNow": {
-      "unsupportedCurrency": "Buchungen nur in EUR kann direkt bezahlt werden."
+      "unsupportedCurrency": "Buchungen können nur in EUR direkt bezahlt werden."
     }
   },
   "status": {

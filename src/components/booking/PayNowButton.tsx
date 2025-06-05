@@ -15,7 +15,7 @@ export const PayNowButton = ({ booking }: PayNowButtonProps) => {
 
   const handlePayNow = () => {
     if (booking.currency !== "EUR") {
-      alert(t("booking.payNow.unsupportedCurrency"));
+      toast.error(t("booking.payNow.unsupportedCurrency"));
       return;
     }
     const amount = Math.floor(booking.price * 100);
