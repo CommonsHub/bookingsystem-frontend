@@ -1,4 +1,3 @@
-
 {
   "app": {
     "title": "Buchungsmanagement"
@@ -116,7 +115,10 @@
     "approved": "Genehmigt",
     "rejected": "Abgelehnt",
     "cancelled": "Storniert",
-    "paid": "Bezahlt"
+    "paid": "Bezahlt",
+    "payNow": {
+      "unsupportedCurrency": "Buchungen nur in EUR kann direkt bezahlt werden."
+    }
   },
   "status": {
     "draft": "Entwurf",

@@ -1,4 +1,3 @@
-
 {
   "app": {
     "title": "Commons Hub Brussels Bookings"
@@ -196,7 +195,10 @@
     "notSpecified": "Not specified",
     "price": "Price",
     "markAsPaid": "Mark as Paid",
-    "markingAsPaid": "Marking as Paid..."
+    "markingAsPaid": "Marking as Paid...",
+    "payNow": {
+      "unsupportedCurrency": "Only bookings in EUR can be paid directly"
+    }
   },
   "roomInfo": {
     "title": "Room Information",
@@ -261,7 +263,12 @@
     "bookingSubmitted": "Booking request submitted! It will be viewed by an administrator.",
     "bookingError": "There was an error creating your booking request.",
     "bookingUpdated": "Booking updated successfully!",
-    "bookingUpdateError": "Failed to update booking"
+    "bookingUpdateError": "Failed to update booking",
+    "paymentError": "Payment failed. Please try again!",
+    "paymentSuccess": "Payment accepted!",
+    "paymentSuccessDetails": "See details of Order {{orderId}} here.",
+    "paymentSuccessWithoutOrderId": "Payment was successful.",
+    "paymentSuccessWithoutOrderIdResolution": "However, we don't have more details. Please contact the Commons Hub."
   },
   "greeting": "Hi {{name}}!",
   "footer": {
