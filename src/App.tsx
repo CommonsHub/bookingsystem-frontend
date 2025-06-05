@@ -26,8 +26,8 @@ const App: React.FC = () => {
                 <Route index element={<HomePage />} />
                 <Route path="/bookings/new" element={<NewBookingPage />} />
                 <Route path="/bookings/:id" element={<BookingDetail />} />
-                <Route path="/bookings/:bookingId/edit" element={<EditBookingPage />} />
-                <Route path="/bookings/:bookingId/payment/:status" element={<BookingDetail />} />
+                <Route path="/bookings/:id/edit" element={<EditBookingPage />} />
+                <Route path="/bookings/:id/payment/:status" element={<BookingDetail />} />
                 <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
                 <Route path="/auth/callback" element={<AuthCallback />} />
                 <Route path="/login" element={<LoginPage />} />
