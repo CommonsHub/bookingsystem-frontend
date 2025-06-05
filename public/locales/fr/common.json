@@ -1,4 +1,3 @@
-
 {
   "app": {
     "title": "Commons Hub Bruxelles Réservations"
@@ -254,14 +253,19 @@
   "messages": {
     "loadingBooking": "Chargement des détails de la réservation...",
     "bookingNotFound": "Réservation non trouvée",
-    "bookingIdMissing": "ID de réservation manquant",
-    "savingDraft": "Sauvegarde du brouillon...",
+    "bookingIdMissing": "L'identifiant de réservation est manquant",
+    "savingDraft": "Enregistrement du brouillon...",
     "draftLoaded": "Brouillon chargé",
     "draftCleared": "Brouillon effacé",
     "bookingSubmitted": "Demande de réservation soumise ! Elle sera examinée par un administrateur.",
-    "bookingError": "Il y a eu une erreur lors de la création de votre demande de réservation.",
+    "bookingError": "Une erreur s'est produite lors de la création de votre demande de réservation.",
     "bookingUpdated": "Réservation mise à jour avec succès !",
-    "bookingUpdateError": "Échec de la mise à jour de la réservation"
+    "bookingUpdateError": "Échec de la mise à jour de la réservation",
+    "paymentError": "Le paiement a échoué. Veuillez réessayer !",
+    "paymentSuccess": "Paiement accepté !",
+    "paymentSuccessDetails": "Voir les détails de la commande {{orderId}} ici.",
+    "paymentSuccessWithoutOrderId": "Le paiement a été effectué avec succès.",
+    "paymentSuccessWithoutOrderIdResolution": "Cependant, nous n'avons pas plus de détails. Veuillez contacter le Commons Hub."
   },
   "greeting": "Salut {{name}} !",
   "footer": {
