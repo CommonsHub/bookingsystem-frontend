@@ -273,5 +273,12 @@
   },
   "language": {
     "select": "Sélectionner la langue"
+  },
+  "comments": {
+    "label": "Commentaire",
+    "placeholder": "Ajouter un commentaire...",
+    "addComment": "Ajouter un commentaire",
+    "submitting": "Envoi en cours...",
+    "addCommentHint": "comme {{name}}"
   }
 }

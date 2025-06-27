@@ -1,11 +1,11 @@
-
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Send } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/context/AuthContext";
+import { useProfile } from "@/hooks/useProfile";
+import { Send } from "lucide-react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface AddCommentProps {
   onSubmit: (comment: { content: string; name: string; email: string }) => void;
@@ -15,17 +15,19 @@ interface AddCommentProps {
 const AddComment = ({ onSubmit, isSubmitting = false }: AddCommentProps) => {
   const [content, setContent] = useState("");
   const { user } = useAuth();
+  const { profile } = useProfile();
+  const { t } = useTranslation();
 
   if (!user) {
     return null;
   }
-  const name = user.name || "";
   const email = user.email || "";
+  const name = profile?.full_name || user.name || email.split("@")[0] || "";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!content.trim() || !name.trim() || !email.trim()) return;
+    if (!content.trim() || !email.trim()) return;
 
     onSubmit({ content, name, email });
     setContent("");
@@ -34,23 +36,26 @@ const AddComment = ({ onSubmit, isSubmitting = false }: AddCommentProps) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <Label htmlFor="comment">Comment</Label>
+        <Label htmlFor="comment">{t('comments.label')}</Label>
         <Textarea
           id="comment"
-          placeholder="Add a comment..."
+          placeholder={t('comments.placeholder')}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           className="min-h-32"
           required
         />
       </div>
-      <div className="flex justify-end">
-        <Button type="submit" disabled={isSubmitting} className="gap-2">
+      <div className="flex flex-col justify-end items-end space-y-2">
+        <Button type="submit" disabled={isSubmitting} className="">
           <Send className="h-4 w-4" />
-          {isSubmitting ? "Submitting..." : "Add Comment"}
+          {isSubmitting ? t('comments.submitting') : t('comments.addComment')}
         </Button>
+        <div className="text-sm text-muted-foreground mb-4">
+          {t('comments.addCommentHint', { name: name })}
+        </div>
       </div>
-    </form>
+    </form >
   );
 };
 

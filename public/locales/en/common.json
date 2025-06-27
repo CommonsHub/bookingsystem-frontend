@@ -276,5 +276,12 @@
   },
   "language": {
     "select": "Select language"
+  },
+  "comments": {
+    "label": "Comment",
+    "placeholder": "Add a comment...",
+    "addComment": "Add Comment",
+    "submitting": "Submitting...",
+    "addCommentHint": "as {{name}}"
   }
 }

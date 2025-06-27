@@ -320,5 +320,12 @@
     "showLess": "Weniger anzeigen",
     "expand": "Erweitern",
     "collapse": "Einklappen"
+  },
+  "comments": {
+    "label": "Kommentar",
+    "placeholder": "Kommentar hinzufügen...",
+    "addComment": "Kommentar hinzufügen",
+    "submitting": "Wird übermittelt...",
+    "addCommentHint": "als {{name}}"
   }
 }

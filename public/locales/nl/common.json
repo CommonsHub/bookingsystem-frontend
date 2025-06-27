@@ -273,5 +273,12 @@
   },
   "language": {
     "select": "Selecteer taal"
+  },
+  "comments": {
+    "label": "Reactie",
+    "placeholder": "Voeg een reactie toe...",
+    "addComment": "Reactie toevoegen",
+    "submitting": "Bezig met verzenden...",
+    "addCommentHint": "als {{name}}"
   }
 }
