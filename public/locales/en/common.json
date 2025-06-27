@@ -283,5 +283,6 @@
     "addComment": "Add Comment",
     "submitting": "Submitting...",
     "addCommentHint": "as {{name}}"
-  }
+  },
+  "anonymous": "anonymous"
 }

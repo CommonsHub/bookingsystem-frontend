@@ -20,7 +20,7 @@ export const BookingHeader = ({ booking, actionButtons, order }: BookingHeaderPr
 
 
   // Get the creator's display name
-  const creatorName = booking.createdBy.name || booking.createdBy.email;
+  const creatorName = booking.createdBy.name || booking.createdBy.email.split("@")[0] || t('anonymous');
 
   return (
     <>
@@ -55,7 +55,7 @@ export const BookingHeader = ({ booking, actionButtons, order }: BookingHeaderPr
               <CheckCircle2 className="h-4 w-4" />
               <AlertTitle>{t('alerts.bookingApproved')}</AlertTitle>
               <AlertDescription>
-                {t('alerts.approvedBy')} {booking.approvedBy.name || booking.approvedBy.email} {t('alerts.on')}{" "}
+                {t('alerts.approvedBy')} {booking.approvedBy.name || booking.approvedBy.email.split("@")[0]} {t('alerts.on')}{" "}
                 {formatDate(booking.approvedAt)}
               </AlertDescription>
             </Alert>
@@ -68,7 +68,7 @@ export const BookingHeader = ({ booking, actionButtons, order }: BookingHeaderPr
               <X className="h-4 w-4" />
               <AlertTitle>{t('alerts.bookingCancelled')}</AlertTitle>
               <AlertDescription>
-                {t('alerts.cancelledBy')} {booking.cancelledBy.name || booking.cancelledBy.email} {t('alerts.on')}{" "}
+                {t('alerts.cancelledBy')} {booking.cancelledBy.name || booking.cancelledBy.email.split("@")[0]} {t('alerts.on')}{" "}
                 {formatDate(booking.cancelledAt)}
               </AlertDescription>
             </Alert>

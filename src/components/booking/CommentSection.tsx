@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Comment } from "@/types";
 import { getRelativeTime } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
+import { useTranslation } from "react-i18next";
+import { useAppTranslation } from "@/hooks/use-translation";
 
 interface CommentSectionProps {
   comments: Comment[];
@@ -22,6 +24,7 @@ export const CommentSection = ({
   isSubmitting
 }: CommentSectionProps) => {
   const { user } = useAuth();
+  const { t } = useAppTranslation();
   const visibleComments = comments;
 
   return (
@@ -60,7 +63,7 @@ export const CommentSection = ({
                   <CardHeader className="pb-2">
                     <div className="flex justify-between items-center">
                       <div className="font-medium">
-                        {comment.createdBy.name || "Anonymous"}
+                        {comment.createdBy.name || t("anonymous")}
                       </div>
                       <div className="text-xs text-muted-foreground">
                         {getRelativeTime(comment.createdAt)}

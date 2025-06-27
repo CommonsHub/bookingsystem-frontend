@@ -21,7 +21,7 @@ export const BookingContactInfo = ({ booking }: BookingContactInfoProps) => {
         <Mail className="h-5 w-5 text-muted-foreground mt-0.5" />
         <div>
           <h4 className="font-medium">Contact Email</h4>
-          <p className="text-muted-foreground">{booking.createdBy.email}</p>
+          <p className="text-muted-foreground">{booking.createdBy.email.split("@")[0]}@...</p>
         </div>
       </div>
     </>

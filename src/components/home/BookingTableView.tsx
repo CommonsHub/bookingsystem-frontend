@@ -40,7 +40,7 @@ export const BookingTableView = ({
   const { t } = useTranslation();
   const { updateBooking } = useBooking();
   const [updatingBookings, setUpdatingBookings] = useState<Set<string>>(new Set());
-  
+
   const stopPropagation = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
@@ -73,16 +73,16 @@ export const BookingTableView = ({
   };
 
   const formatTime = (dateString: string) => {
-    return new Date(dateString).toLocaleTimeString([], { 
-      hour: '2-digit', 
+    return new Date(dateString).toLocaleTimeString([], {
+      hour: '2-digit',
       minute: '2-digit',
-      hour12: false 
+      hour12: false
     });
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString([], { 
-      month: 'short', 
+    return new Date(dateString).toLocaleDateString([], {
+      month: 'short',
       day: 'numeric',
       year: 'numeric'
     });
@@ -180,13 +180,13 @@ export const BookingTableView = ({
                   </Badge>
                 )}
               </div>
-              
+
               <div className="flex items-center gap-1" onClick={stopPropagation}>
                 {canMarkAsPaid(booking) && (
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     size="sm"
-                    className="h-7 w-7 p-0 text-green-600" 
+                    className="h-7 w-7 p-0 text-green-600"
                     onClick={(e) => handleMarkAsPaid(e, booking)}
                     title={t('booking.markAsPaid')}
                     disabled={updatingBookings.has(booking.id)}
@@ -194,13 +194,13 @@ export const BookingTableView = ({
                     <CreditCard className="h-3 w-3" />
                   </Button>
                 )}
-                
-                {(booking.status === "pending" || booking.status === "approved") && 
+
+                {(booking.status === "pending" || booking.status === "approved") &&
                   canUserCancelBooking(booking, user) && (
-                    <Button 
-                      variant="ghost" 
+                    <Button
+                      variant="ghost"
                       size="sm"
-                      className="h-7 w-7 p-0 text-destructive" 
+                      className="h-7 w-7 p-0 text-destructive"
                       onClick={(e) => {
                         e.stopPropagation();
                         onCancelBooking(booking.id);
@@ -209,13 +209,13 @@ export const BookingTableView = ({
                     >
                       <Trash2 className="h-3 w-3" />
                     </Button>
-                )}
-                
+                  )}
+
                 {booking.status === "cancelled" && (
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     size="sm"
-                    className="h-7 w-7 p-0 text-blue-600" 
+                    className="h-7 w-7 p-0 text-blue-600"
                     onClick={(e) => handleCopyBooking(e, booking.id)}
                     title={t('booking.copyBooking')}
                   >
@@ -325,7 +325,7 @@ export const BookingTableView = ({
                   </div>
                 </TableCell>
                 <TableCell className="max-w-[150px]">
-                  <div className="truncate" title={booking.createdBy.name || booking.createdBy.email}>
+                  <div className="truncate" title={booking.createdBy.name || booking.createdBy.email.split("@")[0]}>
                     {booking.createdBy.name || booking.createdBy.email.split("@")[0]}
                   </div>
                 </TableCell>
@@ -340,10 +340,10 @@ export const BookingTableView = ({
                 <TableCell onClick={stopPropagation}>
                   <div className="flex items-center justify-center gap-1">
                     {canMarkAsPaid(booking) && (
-                      <Button 
-                        variant="ghost" 
+                      <Button
+                        variant="ghost"
                         size="sm"
-                        className="h-8 w-8 p-0 text-green-600 hover:bg-green-50" 
+                        className="h-8 w-8 p-0 text-green-600 hover:bg-green-50"
                         onClick={(e) => handleMarkAsPaid(e, booking)}
                         title={t('booking.markAsPaid')}
                         disabled={updatingBookings.has(booking.id)}
@@ -351,13 +351,13 @@ export const BookingTableView = ({
                         <CreditCard className="h-4 w-4" />
                       </Button>
                     )}
-                    
-                    {(booking.status === "pending" || booking.status === "approved") && 
+
+                    {(booking.status === "pending" || booking.status === "approved") &&
                       canUserCancelBooking(booking, user) && (
-                        <Button 
-                          variant="ghost" 
+                        <Button
+                          variant="ghost"
                           size="sm"
-                          className="h-8 w-8 p-0 text-destructive hover:bg-destructive/10" 
+                          className="h-8 w-8 p-0 text-destructive hover:bg-destructive/10"
                           onClick={(e) => {
                             e.stopPropagation();
                             onCancelBooking(booking.id);
@@ -366,13 +366,13 @@ export const BookingTableView = ({
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
-                    )}
-                    
+                      )}
+
                     {booking.status === "cancelled" && (
-                      <Button 
-                        variant="ghost" 
+                      <Button
+                        variant="ghost"
                         size="sm"
-                        className="h-8 w-8 p-0 text-blue-600 hover:bg-blue-50" 
+                        className="h-8 w-8 p-0 text-blue-600 hover:bg-blue-50"
                         onClick={(e) => handleCopyBooking(e, booking.id)}
                         title={t('booking.copyBooking')}
                       >
