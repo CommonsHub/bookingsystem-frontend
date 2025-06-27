@@ -147,23 +147,7 @@ const BookingDetail = () => {
   };
 
   // Create action buttons
-  const actionButtons = (
-    <>
-      {canEditBooking && (
-        <Button onClick={handleEditBooking} className="gap-2">
-          <Edit className="h-4 w-4" />
-          {t('buttons.editBooking')}
-        </Button>
-      )}
-
-      {canCopyBooking && (
-        <Button onClick={handleCopyBooking} variant="outline" className="gap-2">
-          <Copy className="h-4 w-4" />
-          Copy Booking
-        </Button>
-      )}
-    </>
-  );
+  const actionButtons = (null);
 
   return (
     <div className="space-y-8">
@@ -182,9 +166,13 @@ const BookingDetail = () => {
         <div className="booking-sidebar">
           <BookingActions
             booking={booking}
+            canEditBooking={canEditBooking}
             canApproveBooking={canApproveBooking}
             canCancelBooking={canCancelBooking}
             canMarkAsPaid={canMarkAsPaid}
+            canCopyBooking={canCopyBooking}
+            onEditBooking={handleEditBooking}
+            onCopyBooking={handleCopyBooking}
             onApprove={handleApproveBooking}
             onCancel={handleCancelBooking}
           />

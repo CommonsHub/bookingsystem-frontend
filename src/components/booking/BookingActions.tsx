@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, X } from "lucide-react";
+import { CheckCircle2, Copy, Edit, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { MarkAsPaidButton } from "./MarkAsPaidButton";
 import { PayNowButton } from "./PayNowButton";
@@ -9,18 +9,26 @@ import { Booking } from "@/types";
 
 interface BookingActionsProps {
   booking: Booking;
+  canCopyBooking?: boolean;
+  canEditBooking?: boolean;
   canApproveBooking: boolean;
   canCancelBooking: boolean;
   canMarkAsPaid: boolean;
+  onEditBooking?: () => void;
+  onCopyBooking?: () => void;
   onApprove: () => void;
   onCancel: () => void;
 }
 
 export const BookingActions = ({
   booking,
+  canEditBooking,
+  canCopyBooking,
   canApproveBooking,
   canCancelBooking,
   canMarkAsPaid,
+  onEditBooking,
+  onCopyBooking,
   onApprove,
   onCancel,
 }: BookingActionsProps) => {
@@ -78,6 +86,22 @@ export const BookingActions = ({
           >
             <X className="mr-2 h-4 w-4" />
             {t('buttons.cancel')}
+          </Button>
+        )}
+
+        {(canEditBooking || canCopyBooking) && (
+          <div className="border-t" />)}
+        {canEditBooking && (
+          <Button onClick={onEditBooking} className="w-full gap-2">
+            <Edit className="h-4 w-4" />
+            {t('buttons.editBooking')}
+          </Button>
+        )}
+
+        {canCopyBooking && (
+          <Button onClick={onCopyBooking} variant="outline" className="w-full gap-2">
+            <Copy className="h-4 w-4" />
+            Copy Booking
           </Button>
         )}
       </CardContent>
