@@ -29,6 +29,11 @@ const Header = () => {
               <span className="hidden md:block">New Booking</span>
             </Link>
           </Button>
+          <Button asChild variant="outline">
+            <Link to="/ics-preview" className="flex items-center space-x-2">
+              <span className="hidden md:block">ICS Preview</span>
+            </Link>
+          </Button>
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

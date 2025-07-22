@@ -16,6 +16,7 @@ import LoginPage from "./pages/LoginPage";
 import NewBookingPage from "./pages/NewBookingPage";
 import NotFound from "./pages/NotFound";
 import ProfilePage from "./pages/ProfilePage";
+import ICSPreviewPage from "./pages/ICSPreviewPage";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
                   }
                 />
                 <Route path="bookings/:id" element={<BookingDetail />} />
+                <Route path="ics-preview" element={<ICSPreviewPage />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>
