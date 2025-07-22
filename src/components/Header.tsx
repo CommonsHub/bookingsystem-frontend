@@ -60,7 +60,12 @@ const Header = () => {
               </Link>
             </Button>
             
-            {user ? (
+            <Button asChild variant="outline">
+            <Link to="/ics-preview" className="flex items-center space-x-2">
+              <span className="hidden md:block">ICS Preview</span>
+            </Link>
+          </Button>
+          {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button

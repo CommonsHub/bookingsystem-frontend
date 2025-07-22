@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage";
 import NewBookingPage from "./pages/NewBookingPage";
 import BookingDetail from "./pages/BookingDetail";
 import ProfilePage from "./pages/ProfilePage";
+import ICSPreviewPage from "./pages/ICSPreviewPage";
 import AuthCallback from "./pages/AuthCallback";
 import LoginPage from "./pages/LoginPage";
 import NotFound from "./pages/NotFound";
@@ -31,6 +32,7 @@ const App: React.FC = () => {
                 <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
                 <Route path="/auth/callback" element={<AuthCallback />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/ics-preview" element={<ICSPreviewPage />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>
