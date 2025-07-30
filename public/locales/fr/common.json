@@ -207,6 +207,36 @@
     "videoConferencing": "Visioconférence",
     "coffeeStation": "Station de café"
   },
+  "catering": {
+    "question": "Avez-vous besoin de restauration ?",
+    "description": "Le café, le thé et l'eau sont inclus dans le prix. Pour la restauration déjeuner, nous travaillons avec des fournisseurs locaux (Tasty Break pour des sandwichs simples, Apus et Les Cocottes Volantes pour une cuisine bio exceptionnelle).",
+    "commentsLabel": "Des commentaires supplémentaires pour la restauration ou d'autres demandes ?",
+    "commentsPlaceholder": "Ajoutez ici toute exigence alimentaire spéciale ou autres demandes",
+    "servicesTitle": "Services de restauration",
+    "additionalNotes": "Notes supplémentaires",
+    "options": {
+      "simpleLunch": {
+        "name": "Déjeuner simple : sandwichs",
+        "description": "8,50€/par personne"
+      },
+      "awesomeLunch": {
+        "name": "Déjeuner formidable : salades/sandwichs du traiteur bio",
+        "description": "25€ (<25) ou 22€"
+      },
+      "afterEventDrinks": {
+        "name": "Boissons après événement (vin et jus)",
+        "description": "8€/personne"
+      },
+      "afterEventSnacks": {
+        "name": "Collations après événement",
+        "description": "4€/personne"
+      },
+      "coffeeBreakSnacks": {
+        "name": "Collations pendant la pause café (fruits|noix|sucreries)",
+        "description": "4€/pp demi-journée | 6€/pp journée complète"
+      }
+    }
+  },
   "pricing": {
     "totalEstimate": "Estimation totale",
     "tentativeQuote": "Devis provisoire",

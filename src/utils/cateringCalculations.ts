@@ -1,5 +1,5 @@
 
-import { cateringOptions } from "@/components/booking/CateringSection";
+import { cateringOptionsData } from "@/data/cateringOptions";
 
 export const calculateCateringCosts = (
   selectedCatering: string[],
@@ -9,11 +9,11 @@ export const calculateCateringCosts = (
   const cateringItems: string[] = [];
   
   selectedCatering.forEach(cateringId => {
-    const option = cateringOptions.find(opt => opt.id === cateringId);
+    const option = cateringOptionsData.find(opt => opt.id === cateringId);
     if (option && estimatedAttendees > 0) {
       const itemCost = option.price * estimatedAttendees;
       cateringPrice += itemCost;
-      cateringItems.push(`${option.name}: €${itemCost}`);
+      cateringItems.push(`${option.id}: €${itemCost}`);
     }
   });
 

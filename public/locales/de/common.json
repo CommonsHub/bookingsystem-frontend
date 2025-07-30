@@ -238,6 +238,34 @@
     "error": "Fehler bei der Preisberechnung"
   },
   "catering": {
+    "question": "Benötigen Sie Catering?",
+    "description": "Kaffee, Tee und Wasser sind im Preis inbegrepen. Für Mittagscatering arbeiten wir mit lokalen Anbietern zusammen (Tasty Break für einfache Sandwiches, Apus und Les Cocottes Volantes für biologisch großartiges Essen).",
+    "commentsLabel": "Zusätzliche Kommentare zum Catering oder andere Wünsche?",
+    "commentsPlaceholder": "Fügen Sie hier spezielle Diätanforderungen oder andere Wünsche hinzu",
+    "servicesTitle": "Catering-Services",
+    "additionalNotes": "Zusätzliche Notizen",
+    "options": {
+      "simpleLunch": {
+        "name": "Einfaches Mittagessen: Sandwiches",
+        "description": "8,50€/pro Person"
+      },
+      "awesomeLunch": {
+        "name": "Großartiges Mittagessen: Salate/Sandwiches vom Bio-Caterer",
+        "description": "25€ (<25) oder 22€"
+      },
+      "afterEventDrinks": {
+        "name": "Getränke nach dem Event (Wein und Saft)",
+        "description": "8€/Person"
+      },
+      "afterEventSnacks": {
+        "name": "Snacks nach dem Event",
+        "description": "4€/Person"
+      },
+      "coffeeBreakSnacks": {
+        "name": "Snacks während der Kaffeepause (Obst|Nüsse|Süßigkeiten)",
+        "description": "4€/pp halber Tag | 6€/pp ganzer Tag"
+      }
+    },
     "coffee": "Kaffee & Tee",
     "lunch": "Mittagessen",
     "snacks": "Snacks",

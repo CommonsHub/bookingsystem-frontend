@@ -210,6 +210,36 @@
     "videoConferencing": "Video conferencing",
     "coffeeStation": "Coffee station"
   },
+  "catering": {
+    "question": "Do you need catering?",
+    "description": "Coffee, tea and water are included in the price. For lunch catering we work with local suppliers (Tasty Break for simple sandwiches, Apus et Les Cocottes Volantes for organic awesome food).",
+    "commentsLabel": "Any extra comments for the catering or other requests?",
+    "commentsPlaceholder": "Add any special dietary requirements or other requests here",
+    "servicesTitle": "Catering Services",
+    "additionalNotes": "Additional Notes",
+    "options": {
+      "simpleLunch": {
+        "name": "Simple lunch: sandwiches",
+        "description": "€8,50/per person"
+      },
+      "awesomeLunch": {
+        "name": "Awesome lunch: salads/sandwiches from organic caterer",
+        "description": "€25 (<25) or €22"
+      },
+      "afterEventDrinks": {
+        "name": "After event drinks (wine and juice)",
+        "description": "€8/person"
+      },
+      "afterEventSnacks": {
+        "name": "After event snacks",
+        "description": "€4/person"
+      },
+      "coffeeBreakSnacks": {
+        "name": "Snacks during coffee break (fruit|nuts|sweets)",
+        "description": "€4/pp half day | €6/pp full day"
+      }
+    }
+  },
   "pricing": {
     "totalEstimate": "Total Estimate",
     "tentativeQuote": "Tentative quote",

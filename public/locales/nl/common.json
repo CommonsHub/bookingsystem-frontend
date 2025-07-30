@@ -207,6 +207,36 @@
     "videoConferencing": "Videoconferenties",
     "coffeeStation": "Koffiestation"
   },
+  "catering": {
+    "question": "Heeft u catering nodig?",
+    "description": "Koffie, thee en water zijn inbegrepen in de prijs. Voor lunch catering werken we samen met lokale leveranciers (Tasty Break voor eenvoudige broodjes, Apus en Les Cocottes Volantes voor biologisch geweldig eten).",
+    "commentsLabel": "Extra opmerkingen voor de catering of andere verzoeken?",
+    "commentsPlaceholder": "Voeg hier speciale dieetwensen of andere verzoeken toe",
+    "servicesTitle": "Catering Services",
+    "additionalNotes": "Extra notities",
+    "options": {
+      "simpleLunch": {
+        "name": "Eenvoudige lunch: broodjes",
+        "description": "€8,50/per persoon"
+      },
+      "awesomeLunch": {
+        "name": "Geweldige lunch: salades/broodjes van biologische cateraar",
+        "description": "€25 (<25) of €22"
+      },
+      "afterEventDrinks": {
+        "name": "Drankjes na het evenement (wijn en sap)",
+        "description": "€8/persoon"
+      },
+      "afterEventSnacks": {
+        "name": "Snacks na het evenement",
+        "description": "€4/persoon"
+      },
+      "coffeeBreakSnacks": {
+        "name": "Snacks tijdens koffiepauze (fruit|noten|snoep)",
+        "description": "€4/pp halve dag | €6/pp hele dag"
+      }
+    }
+  },
   "pricing": {
     "totalEstimate": "Totale schatting",
     "tentativeQuote": "Voorlopige offerte",
