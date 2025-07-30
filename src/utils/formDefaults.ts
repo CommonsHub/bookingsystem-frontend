@@ -32,6 +32,7 @@ export const createDefaultFormValues = (
     language: "en",
     price: undefined,
     currency: "EUR",
+    quoteConfirmed: false,
     ...overrides,
   };
 };
@@ -63,5 +64,6 @@ export const transformBookingToFormData = (booking: Booking): FormData => {
     language: booking.language || "en",
     price: booking.price,
     currency: booking.currency || "EUR",
+    quoteConfirmed: false, // Default to false for existing bookings being edited
   };
 };
