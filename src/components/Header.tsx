@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
 import { useBooking } from "@/context/BookingContext";
-import { CalendarDays, PlusCircle, UserIcon } from "lucide-react";
+import { CalendarDays, PlusCircle, UserIcon, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -57,6 +57,13 @@ const Header = () => {
               <Link to="/bookings/new" className="flex items-center space-x-2">
                 <PlusCircle className="h-4 w-4" />
                 <span className="hidden md:block">{t('bookings.new')}</span>
+              </Link>
+            </Button>
+            
+            <Button asChild variant="outline">
+              <Link to="/requests/new" className="flex items-center space-x-2">
+                <FileText className="h-4 w-4" />
+                <span className="hidden md:block">{t('requests.new')}</span>
               </Link>
             </Button>
             

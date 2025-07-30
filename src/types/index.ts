@@ -90,6 +90,31 @@ export type BookingStatus =
   | "paid";
 export type CommentStatus = "draft" | "published";
 
+export type RequestStatus = "draft" | "pending" | "in_progress" | "completed" | "cancelled";
+
+export interface Request {
+  id: string;
+  title: string;
+  description: string;
+  requestType: string;
+  priority: "low" | "medium" | "high" | "urgent";
+  status: RequestStatus;
+  createdAt: string;
+  createdBy: User;
+  email: string;
+  name: string;
+  phone?: string;
+  organization?: string;
+  expectedCompletionDate?: string;
+  additionalDetails?: string;
+  attachments?: string[];
+  language?: string;
+  completedAt?: string;
+  completedBy?: User;
+  cancelledAt?: string;
+  cancelledBy?: User;
+}
+
 export interface CateringOption {
   id: string;
   name: string;

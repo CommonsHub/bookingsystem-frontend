@@ -176,6 +176,78 @@ export type Database = {
         }
         Relationships: []
       }
+      requests: {
+        Row: {
+          id: string
+          title: string
+          description: string
+          request_type: string
+          priority: string
+          status: string
+          created_at: string
+          created_by_email: string
+          created_by_name: string | null
+          email: string
+          name: string
+          phone: string | null
+          organization: string | null
+          expected_completion_date: string | null
+          additional_details: string | null
+          attachments: string[] | null
+          language: string | null
+          completed_at: string | null
+          completed_by_email: string | null
+          cancelled_at: string | null
+          cancelled_by_email: string | null
+        }
+        Insert: {
+          id?: string
+          title: string
+          description: string
+          request_type: string
+          priority: string
+          status?: string
+          created_at?: string
+          created_by_email: string
+          created_by_name?: string | null
+          email: string
+          name: string
+          phone?: string | null
+          organization?: string | null
+          expected_completion_date?: string | null
+          additional_details?: string | null
+          attachments?: string[] | null
+          language?: string | null
+          completed_at?: string | null
+          completed_by_email?: string | null
+          cancelled_at?: string | null
+          cancelled_by_email?: string | null
+        }
+        Update: {
+          id?: string
+          title?: string
+          description?: string
+          request_type?: string
+          priority?: string
+          status?: string
+          created_at?: string
+          created_by_email?: string
+          created_by_name?: string | null
+          email?: string
+          name?: string
+          phone?: string | null
+          organization?: string | null
+          expected_completion_date?: string | null
+          additional_details?: string | null
+          attachments?: string[] | null
+          language?: string | null
+          completed_at?: string | null
+          completed_by_email?: string | null
+          cancelled_at?: string | null
+          cancelled_by_email?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

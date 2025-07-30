@@ -280,5 +280,117 @@
     "addComment": "Ajouter un commentaire",
     "submitting": "Envoi en cours...",
     "addCommentHint": "comme {{name}}"
+  },
+  "anonymous": "anonyme",
+  "requests": {
+    "new": "Nouvelle Demande",
+    "newTitle": "Nouvelle Demande",
+    "newDescription": "Soumettre une demande simple qui n'est pas liée à un événement",
+    "title": "Demandes",
+    "subtitle": "Voir toutes les soumissions de demandes et leur statut",
+    "none": "Aucune demande trouvée",
+    "noneDescription": "Il n'y a pas encore de demandes dans le système.",
+    "tableView": "Tableau",
+    "cardView": "Cartes",
+    "showActive": "Afficher actives seulement",
+    "showAll": "Afficher toutes les demandes",
+    "sections": {
+      "basicInfo": {
+        "title": "Informations de Base",
+        "description": "Parlez-nous de votre demande"
+      },
+      "contactInfo": {
+        "title": "Informations de Contact",
+        "description": "Comment pouvons-nous vous joindre ?"
+      },
+      "additionalInfo": {
+        "title": "Détails Supplémentaires",
+        "description": "Toute autre information que vous souhaitez partager (optionnel)"
+      }
+    },
+    "basicInfo": {
+      "title": "Titre",
+      "titlePlaceholder": "Brève description de votre demande",
+      "description": "Description",
+      "descriptionPlaceholder": "Fournir des informations détaillées sur votre demande",
+      "requestType": "Type de Demande",
+      "requestTypePlaceholder": "Sélectionner le type de demande",
+      "priority": "Priorité",
+      "priorityPlaceholder": "Sélectionner le niveau de priorité",
+      "expectedCompletionDate": "Date de Fin Prévue",
+      "expectedCompletionDatePlaceholder": "Quand avez-vous besoin que ce soit terminé ?"
+    },
+    "contact": {
+      "name": "Nom",
+      "namePlaceholder": "Votre nom complet",
+      "email": "Email",
+      "emailPlaceholder": "votre.email@exemple.com",
+      "phone": "Téléphone",
+      "phonePlaceholder": "Votre numéro de téléphone (optionnel)",
+      "organization": "Organisation",
+      "organizationPlaceholder": "Votre organisation (optionnel)"
+    },
+    "additionalInfo": {
+      "label": "Détails Supplémentaires",
+      "placeholder": "Toute autre information qui pourrait être utile"
+    },
+    "status": {
+      "draft": "Brouillon",
+      "pending": "En attente",
+      "inProgress": "En cours",
+      "completed": "Terminé",
+      "cancelled": "Annulé"
+    },
+    "priority": {
+      "low": "Faible",
+      "medium": "Moyenne",
+      "high": "Élevée",
+      "urgent": "Urgente"
+    },
+    "types": {
+      "general": "Demande générale",
+      "support": "Support technique",
+      "partnership": "Demande de partenariat",
+      "feedback": "Retour ou suggestion",
+      "complaint": "Plainte",
+      "other": "Autre"
+    },
+    "table": {
+      "title": "Titre",
+      "type": "Type",
+      "priority": "Priorité",
+      "status": "Statut",
+      "createdBy": "Créé par",
+      "createdAt": "Créé le",
+      "actions": "Actions"
+    },
+    "actions": {
+      "complete": "Terminer",
+      "cancel": "Annuler"
+    },
+    "cancelDialog": {
+      "title": "Annuler la demande",
+      "description": "Êtes-vous sûr de vouloir annuler cette demande ? Cette action ne peut pas être annulée.",
+      "cancel": "Garder la demande",
+      "confirm": "Annuler la demande"
+    },
+    "messages": {
+      "requestSubmitted": {
+        "title": "Demande Soumise",
+        "description": "Votre demande a été soumise avec succès ! Nous vous répondrons bientôt."
+      },
+      "requestError": {
+        "title": "Erreur de Soumission",
+        "description": "Une erreur s'est produite lors de la soumission de votre demande. Veuillez réessayer."
+      },
+      "requestUpdated": {
+        "title": "Demande Mise à Jour",
+        "description": "Votre demande a été mise à jour avec succès !"
+      },
+      "requestUpdateError": {
+        "title": "Erreur de Mise à Jour",
+        "description": "Une erreur s'est produite lors de la mise à jour de votre demande. Veuillez réessayer."
+      }
+    }
   }
 }

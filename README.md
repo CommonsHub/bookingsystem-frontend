@@ -59,6 +59,44 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Features
+
+### Room Bookings
+- Create and manage room booking requests for events
+- Support for different room types and configurations
+- Catering and event support options
+- Public and private event management
+- Pricing calculations and payment integration
+
+### General Requests
+- Submit simple requests that are not related to events
+- Support for different request types (general inquiry, technical support, partnership, feedback, etc.)
+- Priority levels (low, medium, high, urgent)
+- Contact information and additional details
+- Expected completion date tracking
+- View and manage requests on the home page with table and card views
+- Cancel and complete request actions
+- Filter between active and all requests
+- Real-time database integration with Supabase
+- Row Level Security (RLS) for data protection
+
+## Database Setup
+
+### Requests Table Migration
+
+To set up the requests functionality, you need to run the database migration:
+
+```sql
+-- Run the migration file: supabase/migrations/20241201000000_create_requests_table.sql
+-- This creates the requests table with proper indexes and Row Level Security policies
+```
+
+The migration includes:
+- Requests table with all necessary fields
+- Performance indexes for common queries
+- Row Level Security (RLS) policies for data protection
+- User permissions for authenticated users
+
 ## Environment Variables
 
 Please refer to `.env.example` for a complete list of environment variables used in this project.
