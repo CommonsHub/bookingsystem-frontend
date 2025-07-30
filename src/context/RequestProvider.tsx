@@ -14,6 +14,7 @@ interface RequestContextType {
   updateRequest: (id: string, requestData: Partial<Request>) => Promise<void>;
   cancelRequest: (id: string) => void;
   completeRequest: (id: string) => void;
+  clearRequests: () => void;
   user: User | null;
   canUserCancelRequest: (request: Request, user: User | null) => boolean;
   canUserCompleteRequest: (request: Request, user: User | null) => boolean;
@@ -44,6 +45,12 @@ export const RequestProvider: React.FC<RequestProviderProps> = ({ children }) =>
     completeRequestWithUser(id, user);
   };
 
+  // Clear all requests data
+  const clearRequests = (): void => {
+    setRequests([]);
+    console.log("Requests data cleared");
+  };
+
   const canUserCancelRequest = (request: Request, currentUser: User | null): boolean => {
     if (!currentUser) return false;
     return request.createdBy.email === currentUser.email && request.status === "pending";
@@ -63,6 +70,7 @@ export const RequestProvider: React.FC<RequestProviderProps> = ({ children }) =>
     updateRequest,
     cancelRequest,
     completeRequest,
+    clearRequests,
     user,
     canUserCancelRequest,
     canUserCompleteRequest,

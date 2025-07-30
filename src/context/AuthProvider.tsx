@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { User } from "@/types";
 import { User as SupabaseUser } from "@supabase/supabase-js";
 
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);

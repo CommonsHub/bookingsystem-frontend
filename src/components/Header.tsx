@@ -7,7 +7,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
-import { useBooking } from "@/context/BookingContext";
 import { CalendarDays, PlusCircle, UserIcon, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
@@ -19,14 +18,14 @@ import { useState } from "react";
 const Header = () => {
   const { user, signOut, getDisplayName } = useAuth();
   const { t } = useTranslation();
-  const { hasUserDrafts, clearUserDrafts } = useLogoutDraftHandler();
+  const { hasUserDrafts, clearAllData, clearUserDrafts } = useLogoutDraftHandler();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
   const handleSignOutClick = () => {
     if (hasUserDrafts()) {
       setShowLogoutDialog(true);
     } else {
-      signOut();
+      handleLogoutConfirm(true);
     }
   };
 
@@ -34,6 +33,7 @@ const Header = () => {
     if (!keepDrafts) {
       clearUserDrafts();
     }
+    clearAllData();
     setShowLogoutDialog(false);
     await signOut();
     // Trigger a page reload to refresh booking data for anonymous users

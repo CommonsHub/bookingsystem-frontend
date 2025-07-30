@@ -15,6 +15,7 @@ interface BookingContextType {
   ) => Promise<string>;
   approveBookingRequest: (id: string) => void;
   cancelBookingRequest: (id: string) => void;
+  clearBookings: () => void;
   user: User | null;
   canUserApproveBookings: (user: User | null) => boolean;
   canUserCancelBooking: (booking: Booking, user: User | null) => boolean;
@@ -29,6 +30,7 @@ export const BookingContext = createContext<BookingContextType>({
   addCommentToBooking: async () => "",
   approveBookingRequest: () => {},
   cancelBookingRequest: () => {},
+  clearBookings: () => {},
   user: null,
   canUserApproveBookings: () => false,
   canUserCancelBooking: () => false,

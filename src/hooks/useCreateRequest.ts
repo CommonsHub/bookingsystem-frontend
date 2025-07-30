@@ -74,4 +74,51 @@ export const useCreateRequest = (
   };
 
   return { createRequest };
+};
+
+// New hook for creating requests in an unauthenticated way (for embeddable use)
+export const useCreateUnauthenticatedRequest = () => {
+  const { i18n } = useTranslation();
+
+  const createUnauthenticatedRequest = async (
+    requestData: Omit<Request, "id" | "createdAt" | "status" | "createdBy">,
+  ): Promise<string> => {
+    // generate uuid v4
+    const id = uuidv4();
+
+    try {
+      const row: Database["public"]["Tables"]["requests"]["Insert"] = {
+        id,
+        title: requestData.title,
+        description: requestData.description,
+        request_type: requestData.requestType,
+        priority: requestData.priority,
+        status: "pending",
+        created_by_email: requestData.email, // Use the email from the form
+        created_by_name: requestData.name, // Use the name from the form
+        email: requestData.email,
+        name: requestData.name,
+        phone: requestData.phone,
+        organization: requestData.organization,
+        expected_completion_date: requestData.expectedCompletionDate,
+        additional_details: requestData.additionalDetails,
+        attachments: requestData.attachments,
+        language: i18n.language, // Add current language
+      };
+
+      const { error } = await supabase.from("requests").insert(row);
+
+      if (error) {
+        console.error("Error creating unauthenticated request:", error);
+        throw error;
+      }
+
+      return id;
+    } catch (error) {
+      console.error("Error in createUnauthenticatedRequest:", error);
+      throw error;
+    }
+  };
+
+  return { createUnauthenticatedRequest };
 }; 

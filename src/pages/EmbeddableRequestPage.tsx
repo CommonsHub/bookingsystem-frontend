@@ -2,89 +2,46 @@ import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { RequestFormData } from "@/components/request/RequestFormSchema";
 import { RequestForm } from "@/components/request/RequestForm";
-import { useAuth } from "@/context/AuthContext";
-import { useRequest } from "@/context/RequestProvider";
+import { useCreateUnauthenticatedRequest } from "@/hooks/useCreateRequest";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { createDefaultRequestValues } from "@/utils/requestDefaults";
-import { supabase } from "@/integrations/supabase/client";
 
 const EmbeddableRequestPage = () => {
-  const { user, loading } = useAuth();
-  const { createRequest } = useRequest();
+  const { createUnauthenticatedRequest } = useCreateUnauthenticatedRequest();
   const { toast } = useToast();
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formDefaultValues, setFormDefaultValues] = useState<RequestFormData | null>(null);
-  const [showOtpSent, setShowOtpSent] = useState(false);
-  const [pendingRequestData, setPendingRequestData] = useState<RequestFormData | null>(null);
 
   // Get URL parameters for customization
   const showHeader = searchParams.get('showHeader') !== 'false';
   const redirectUrl = searchParams.get('redirectUrl') || '/';
-  const requestType = searchParams.get('requestType') || '';
-  const priority = searchParams.get('priority') || '';
+  const requestType = searchParams.get('requestType') || 'general';
+  const priority = searchParams.get('priority') || 'medium';
   const title = searchParams.get('title') || '';
   const description = searchParams.get('description') || '';
 
   // Initialize default values
   useEffect(() => {
-    const email = user?.email || "";
-    const name = user?.name || "";
-    
     setFormDefaultValues(
-      createDefaultRequestValues(email, {
-        name,
+      createDefaultRequestValues("", {
+        name: "",
         requestType: requestType || undefined,
         priority: (priority as "low" | "medium" | "high" | "urgent") || undefined,
         title: title || undefined,
         description: description || undefined,
       })
     );
-  }, [user, requestType, priority, title, description]);
+  }, [requestType, priority, title, description]);
 
-  // Handle pending request submission after authentication
-  useEffect(() => {
-    if (user && pendingRequestData) {
-      // User has been authenticated, submit the pending request
-      submitRequest(pendingRequestData);
-      setPendingRequestData(null);
-    }
-  }, [user, pendingRequestData]);
+
 
   const handleCreateRequest = async (data: RequestFormData) => {
     setIsSubmitting(true);
     try {
-      // If user is not authenticated, create user via OTP
-      if (!user) {
-        const { error } = await supabase.auth.signInWithOtp({
-          email: data.email,
-          options: {
-            data: {
-              full_name: data.name,
-            },
-            emailRedirectTo: window.location.origin + '/embed/request',
-          },
-        });
-        
-        if (error) {
-          throw error;
-        }
-        
-        // Store the request data to submit after authentication
-        setPendingRequestData(data);
-        setShowOtpSent(true);
-        
-        toast({
-          title: "Verification email sent",
-          description: "Please check your email and click the verification link to complete your request submission.",
-        });
-        
-        return;
-      }
-      
-      // User is authenticated, proceed with request creation
+      // Submit the request directly using the unauthenticated hook
       await submitRequest(data);
     } catch (error) {
       console.error("Error creating request:", error);
@@ -111,12 +68,21 @@ const EmbeddableRequestPage = () => {
   const submitRequest = useCallback(async (data: RequestFormData) => {
     // Transform the form data to match the Request type
     const requestData = {
-      ...data,
+      title: data.title,
+      description: data.description,
+      requestType: data.requestType,
+      priority: data.priority,
+      email: data.email,
+      name: data.name,
+      phone: data.phone,
+      organization: data.organization,
       expectedCompletionDate: data.expectedCompletionDate?.toISOString(),
+      additionalDetails: data.additionalDetails,
+      attachments: data.attachments,
     };
     
-    // Create the request using the context
-    const requestId = await createRequest(requestData);
+    // Create the request using the unauthenticated hook
+    const requestId = await createUnauthenticatedRequest(requestData);
     
     // Show success toast
     toast({
@@ -137,7 +103,7 @@ const EmbeddableRequestPage = () => {
     setTimeout(() => {
       window.location.href = redirectUrl;
     }, 1500);
-  }, [createRequest, toast, t, redirectUrl]);
+  }, [createUnauthenticatedRequest, toast, t, redirectUrl]);
 
   const handleCancel = () => {
     // Send cancel message to parent window if embedded
@@ -153,7 +119,7 @@ const EmbeddableRequestPage = () => {
   };
 
   // Show loading while initializing
-  if (loading || !formDefaultValues) {
+  if (!formDefaultValues) {
     return (
       <div className="flex items-center justify-center min-h-screen p-8">
         <div className="text-center">
@@ -164,24 +130,7 @@ const EmbeddableRequestPage = () => {
     );
   }
 
-  // Show OTP sent message
-  if (showOtpSent) {
-    return (
-      <div className="min-h-screen flex items-center justify-center p-8">
-        <div className="text-center max-w-md mx-auto">
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-            <h3 className="text-lg font-semibold mb-2 text-blue-800">Check Your Email</h3>
-            <p className="text-blue-700 mb-4">
-              We've sent a verification link to your email address. Please check your inbox and click the link to complete your request submission.
-            </p>
-            <p className="text-sm text-blue-600">
-              You can close this window and return after verifying your email.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+
 
   return (
     <div className="min-h-screen bg-background">
