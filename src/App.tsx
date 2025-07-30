@@ -17,6 +17,8 @@ import NotFound from "./pages/NotFound";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import EditBookingPage from "./pages/EditBookingPage";
 import NewRequestPage from "./pages/NewRequestPage";
+import RequestDetail from "./pages/RequestDetail";
+import EditRequestPage from "./pages/EditRequestPage";
 import EmbeddableRequestPage from "./pages/EmbeddableRequestPage";
 
 const App: React.FC = () => {
@@ -32,6 +34,8 @@ const App: React.FC = () => {
                 <Route index element={<HomePage />} />
                 <Route path="/bookings/new" element={<NewBookingPage />} />
                 <Route path="/requests/new" element={<NewRequestPage />} />
+                <Route path="/requests/:id" element={<RequestDetail />} />
+                <Route path="/requests/:id/edit" element={<EditRequestPage />} />
                 <Route path="/bookings/:id" element={<BookingDetail />} />
                 <Route path="/bookings/:id/edit" element={<EditBookingPage />} />
                 <Route path="/bookings/:id/payment/:status" element={<BookingDetail />} />

@@ -4,8 +4,8 @@ import { Booking, User } from "@/types";
 export const canUserApproveBookings = (user: User | null): boolean => {
   if (!user) return false;
 
-  // Allow users with commonshub.brussels email domain
-  if (user.email.endsWith("@commonshub.brussels")) return true;
+  // Allow users with commonshub.brussels or qualiaworks.com email domain
+  if (user.email.endsWith("@commonshub.brussels") || user.email.endsWith("@qualiaworks.com")) return true;
 
   return false;
 };

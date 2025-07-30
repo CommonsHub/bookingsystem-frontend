@@ -21,6 +21,7 @@ interface RequestFormProps {
   onCancel: () => void;
   isSubmitting?: boolean;
   isEmbed?: boolean;
+  isEdit?: boolean;
 }
 
 const requestTypes = [
@@ -39,7 +40,7 @@ const priorityLevels = [
   { value: "urgent", label: "Urgent", color: "text-red-600" },
 ];
 
-export const RequestForm = ({ defaultValues, onSubmit, onCancel, isSubmitting = false, isEmbed = false }: RequestFormProps) => {
+export const RequestForm = ({ defaultValues, onSubmit, onCancel, isSubmitting = false, isEmbed = false, isEdit = false }: RequestFormProps) => {
   const { t } = useTranslation();
   
   const form = useForm<RequestFormData>({
@@ -55,8 +56,12 @@ export const RequestForm = ({ defaultValues, onSubmit, onCancel, isSubmitting = 
     <div className={`${isEmbed ? 'w-full' : 'max-w-4xl mx-auto'} space-y-6`}>
       {!isEmbed && (
         <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">{t('requests.newTitle')}</h1>
-          <p className="text-muted-foreground">{t('requests.newDescription')}</p>
+          <h1 className="text-3xl font-bold tracking-tight">
+            {isEdit ? t('requests.edit.title') : t('requests.newTitle')}
+          </h1>
+          <p className="text-muted-foreground">
+            {isEdit ? t('requests.edit.description') : t('requests.newDescription')}
+          </p>
         </div>
       )}
 

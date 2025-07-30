@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Request } from "@/types";
+import { Request, RequestComment } from "@/types";
 import { toast } from "@/components/ui/toast-utils";
 
 export const useFetchRequests = () => {
@@ -56,6 +56,7 @@ export const useFetchRequests = () => {
             email: row.cancelled_by_email,
             name: undefined,
           } : undefined,
+          comments: [], // Initialize with empty comments array
         }));
 
         setRequests(transformedRequests);

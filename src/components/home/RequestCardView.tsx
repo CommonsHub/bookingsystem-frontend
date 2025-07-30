@@ -6,6 +6,7 @@ import { RequestStatusBadge } from "./RequestStatusBadge";
 import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
 import { FileText, Calendar, User as UserIcon, Building2, AlertTriangle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface RequestCardViewProps {
   requests: Request[];
@@ -53,6 +54,7 @@ export const RequestCardView = ({
   onCompleteRequest,
 }: RequestCardViewProps) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   if (requests.length === 0) {
     return (
@@ -71,7 +73,11 @@ export const RequestCardView = ({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {requests.map((request) => (
-        <Card key={request.id} className="hover:shadow-md transition-shadow">
+        <Card 
+          key={request.id} 
+          className="hover:shadow-md transition-shadow cursor-pointer"
+          onClick={() => navigate(`/requests/${request.id}`)}
+        >
           <CardHeader className="pb-3">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-2">
@@ -108,7 +114,7 @@ export const RequestCardView = ({
                 <Badge className={getPriorityColor(request.priority)}>
                   {t(`requests.priority.${request.priority}`)}
                 </Badge>
-                <div className="flex gap-2">
+                <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
                   {canUserCompleteRequest(request, user) && (
                     <Button
                       size="sm"

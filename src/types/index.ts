@@ -71,6 +71,15 @@ export interface Comment {
   status: CommentStatus;
 }
 
+export interface RequestComment {
+  id: string;
+  requestId: string;
+  content: string;
+  createdAt: string;
+  createdBy: User;
+  status: CommentStatus;
+}
+
 export interface Profile {
   id: string;
   full_name: string | null;
@@ -113,6 +122,7 @@ export interface Request {
   completedBy?: User;
   cancelledAt?: string;
   cancelledBy?: User;
+  comments: RequestComment[];
 }
 
 export interface CateringOption {

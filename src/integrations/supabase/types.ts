@@ -146,6 +146,44 @@ export type Database = {
           },
         ]
       }
+      request_comments: {
+        Row: {
+          id: string
+          request_id: string
+          content: string
+          created_at: string
+          created_by_email: string
+          created_by_name: string | null
+          status: string
+        }
+        Insert: {
+          id?: string
+          request_id: string
+          content: string
+          created_at?: string
+          created_by_email: string
+          created_by_name?: string | null
+          status?: string
+        }
+        Update: {
+          id?: string
+          request_id?: string
+          content?: string
+          created_at?: string
+          created_by_email?: string
+          created_by_name?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "request_comments_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           address: string | null

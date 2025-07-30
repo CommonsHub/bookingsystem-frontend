@@ -253,10 +253,16 @@
     "editBooking": "Edit Booking",
     "approve": "Approve"
   },
+  "common": {
+    "back": "Back",
+    "edit": "Edit",
+    "backToHome": "Back to Home"
+  },
   "messages": {
     "loadingBooking": "Loading booking details...",
     "bookingNotFound": "Booking not found",
     "bookingIdMissing": "Booking ID is missing",
+    "requestIdMissing": "Request ID is missing",
     "savingDraft": "Saving draft...",
     "draftLoaded": "Draft loaded",
     "draftCleared": "Draft cleared",
@@ -289,6 +295,10 @@
     "new": "New Request",
     "newTitle": "New Request",
     "newDescription": "Submit a simple request that's not related to an event",
+    "edit": {
+      "title": "Edit Request",
+      "description": "Update the details of your request"
+    },
     "title": "Requests",
     "subtitle": "View all request submissions and their status",
     "none": "No requests found",
@@ -393,7 +403,32 @@
       "requestUpdateError": {
         "title": "Update Error",
         "description": "There was an error updating your request. Please try again."
-      }
-    }
+      },
+      "requestCancelled": "Request cancelled successfully",
+      "requestCompleted": "Request completed successfully",
+      "cancelError": "Failed to cancel request",
+      "completeError": "Failed to complete request"
+    },
+    "detail": {
+      "information": "Request Information",
+      "description": "Description",
+      "type": "Request Type",
+      "priority": "Priority",
+      "status": "Status",
+      "additionalDetails": "Additional Details",
+      "expectedCompletion": "Expected Completion Date",
+      "attachments": "Attachments",
+      "actions": "Actions",
+      "contactInfo": "Contact Information",
+      "timeline": "Timeline",
+      "created": "Request Created",
+      "completed": "Request Completed",
+      "cancelled": "Request Cancelled",
+      "createdOn": "Created on"
+    },
+    "notFound": "Request not found",
+    "notFoundDescription": "The request you're looking for doesn't exist or you don't have permission to view it.",
+    "cannotEdit": "Cannot edit request",
+    "cannotEditDescription": "This request cannot be edited because it has been completed or cancelled."
   }
 }

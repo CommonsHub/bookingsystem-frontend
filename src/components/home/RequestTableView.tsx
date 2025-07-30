@@ -13,6 +13,7 @@ import { RequestStatusBadge } from "./RequestStatusBadge";
 import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
 import { FileText, Calendar, User as UserIcon, Building2, AlertTriangle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface RequestTableViewProps {
   requests: Request[];
@@ -60,6 +61,7 @@ export const RequestTableView = ({
   onCompleteRequest,
 }: RequestTableViewProps) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   if (requests.length === 0) {
     return (
@@ -91,7 +93,11 @@ export const RequestTableView = ({
         </TableHeader>
         <TableBody>
           {requests.map((request) => (
-            <TableRow key={request.id}>
+            <TableRow 
+              key={request.id}
+              className="cursor-pointer hover:bg-muted/50 transition-colors"
+              onClick={() => navigate(`/requests/${request.id}`)}
+            >
               <TableCell>
                 <div>
                   <div className="font-medium">{request.title}</div>
@@ -138,7 +144,7 @@ export const RequestTableView = ({
                 </div>
               </TableCell>
               <TableCell className="text-right">
-                <div className="flex justify-end gap-2">
+                <div className="flex justify-end gap-2" onClick={(e) => e.stopPropagation()}>
                   {canUserCompleteRequest(request, user) && (
                     <Button
                       size="sm"

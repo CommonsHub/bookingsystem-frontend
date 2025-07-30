@@ -2,6 +2,7 @@ import React, { createContext, useContext } from "react";
 import { Request, User } from "@/types";
 import { useAuth } from "./AuthContext";
 import { useRequestOperations } from "@/hooks/useRequestOperations";
+import { useRequestCommentOperations } from "@/hooks/useRequestCommentOperations";
 
 interface RequestProviderProps {
   children: React.ReactNode;
@@ -14,10 +15,12 @@ interface RequestContextType {
   updateRequest: (id: string, requestData: Partial<Request>) => Promise<void>;
   cancelRequest: (id: string) => void;
   completeRequest: (id: string) => void;
+  addCommentToRequest: (requestId: string, content: string, email: string, name: string) => Promise<string>;
   clearRequests: () => void;
   user: User | null;
   canUserCancelRequest: (request: Request, user: User | null) => boolean;
   canUserCompleteRequest: (request: Request, user: User | null) => boolean;
+  canUserMarkAsCompleted: (request: Request, user: User | null) => boolean;
   loading: boolean;
 }
 
@@ -35,6 +38,8 @@ export const RequestProvider: React.FC<RequestProviderProps> = ({ children }) =>
     cancelRequest: cancelRequestWithUser, 
     completeRequest: completeRequestWithUser 
   } = useRequestOperations();
+  
+  const { addCommentToRequest } = useRequestCommentOperations(setRequests);
 
   // Wrapper functions to match the context interface
   const cancelRequest = (id: string): void => {
@@ -63,6 +68,15 @@ export const RequestProvider: React.FC<RequestProviderProps> = ({ children }) =>
     return request.createdBy.email === currentUser.email && request.status === "in_progress";
   };
 
+  const canUserMarkAsCompleted = (request: Request, currentUser: User | null): boolean => {
+    if (!currentUser) return false;
+    // Admin-only action - check if user has admin permissions
+    // This could be based on email domain or other criteria
+    const isAdmin = currentUser.email?.endsWith('@commonshub.brussels') || 
+                   currentUser.email?.endsWith('@qualiaworks.com');
+    return isAdmin && request.status !== "completed" && request.status !== "cancelled";
+  };
+
   const value = {
     requests,
     getRequestById,
@@ -70,10 +84,12 @@ export const RequestProvider: React.FC<RequestProviderProps> = ({ children }) =>
     updateRequest,
     cancelRequest,
     completeRequest,
+    addCommentToRequest,
     clearRequests,
     user,
     canUserCancelRequest,
     canUserCompleteRequest,
+    canUserMarkAsCompleted,
     loading,
   };
 
