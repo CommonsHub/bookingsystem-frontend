@@ -42,7 +42,7 @@ export interface QuoteData {
   isWeekend: boolean;
   weekendSurcharge: number;
   cateringPrice: number;
-  cateringItems: string[];
+  cateringItems: Array<{ id: string; cost: number }>;
   totalPrice: number;
   attendees: number;
   duration: number;
