@@ -81,7 +81,7 @@ export const useCreateUnauthenticatedRequest = () => {
   const { i18n } = useTranslation();
 
   const createUnauthenticatedRequest = async (
-    requestData: Omit<Request, "id" | "createdAt" | "status" | "createdBy">,
+    requestData: Omit<Request, "id" | "createdAt" | "status" | "createdBy" | "comments">,
   ): Promise<string> => {
     // generate uuid v4
     const id = uuidv4();
