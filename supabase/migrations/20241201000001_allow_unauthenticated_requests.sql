@@ -3,6 +3,7 @@
 DROP POLICY IF EXISTS "Users can insert their own requests" ON public.requests;
 
 -- Create a new policy that allows unauthenticated inserts
+DROP POLICY IF EXISTS "Allow unauthenticated request creation" ON public.requests;
 CREATE POLICY "Allow unauthenticated request creation" ON public.requests
     FOR INSERT WITH CHECK (true);
 

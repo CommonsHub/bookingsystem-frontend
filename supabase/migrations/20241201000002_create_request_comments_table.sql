@@ -19,6 +19,7 @@ ALTER TABLE public.request_comments ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for RLS
 -- Users can view comments for requests they can access
+DROP POLICY IF EXISTS "Users can view request comments" ON public.request_comments;
 CREATE POLICY "Users can view request comments" ON public.request_comments
     FOR SELECT USING (
         EXISTS (
@@ -34,6 +35,7 @@ CREATE POLICY "Users can view request comments" ON public.request_comments
     );
 
 -- Users can insert comments for requests they can access
+DROP POLICY IF EXISTS "Users can insert request comments" ON public.request_comments;
 CREATE POLICY "Users can insert request comments" ON public.request_comments
     FOR INSERT WITH CHECK (
         EXISTS (
@@ -49,10 +51,12 @@ CREATE POLICY "Users can insert request comments" ON public.request_comments
     );
 
 -- Users can update their own comments
+DROP POLICY IF EXISTS "Users can update their own request comments" ON public.request_comments;
 CREATE POLICY "Users can update their own request comments" ON public.request_comments
     FOR UPDATE USING (created_by_email = auth.jwt() ->> 'email');
 
 -- Users can delete their own comments
+DROP POLICY IF EXISTS "Users can delete their own request comments" ON public.request_comments;
 CREATE POLICY "Users can delete their own request comments" ON public.request_comments
     FOR DELETE USING (created_by_email = auth.jwt() ->> 'email');
 
