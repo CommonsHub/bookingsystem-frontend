@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { QuoteData } from "@/utils/pricingCalculations";
 import { useTranslation } from "react-i18next";
+import { cateringOptionsData } from "@/data/cateringOptions";
 
 interface PricingDisplayProps {
   quote: QuoteData;
@@ -11,6 +12,12 @@ interface PricingDisplayProps {
 
 export const PricingDisplay = ({ quote, vatMessage }: PricingDisplayProps) => {
   const { t } = useTranslation();
+
+  // Function to get translated catering option name
+  const getCateringOptionName = (optionId: string) => {
+    const option = cateringOptionsData.find(opt => opt.id === optionId);
+    return option ? t(option.nameKey) : optionId;
+  };
 
   return (
     <Card className="mt-6">
@@ -55,7 +62,9 @@ export const PricingDisplay = ({ quote, vatMessage }: PricingDisplayProps) => {
                 <span className="font-semibold">€{quote.cateringPrice}</span>
               </div>
               {quote.cateringItems.map((item, index) => (
-                <p key={index} className="text-sm text-muted-foreground">{item}</p>
+                <p key={index} className="text-sm text-muted-foreground">
+                  {getCateringOptionName(item.id)}: €{item.cost}
+                </p>
               ))}
             </div>
           </>
