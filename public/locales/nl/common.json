@@ -280,5 +280,117 @@
     "addComment": "Reactie toevoegen",
     "submitting": "Bezig met verzenden...",
     "addCommentHint": "als {{name}}"
+  },
+  "anonymous": "anoniem",
+  "requests": {
+    "new": "Nieuwe Aanvraag",
+    "newTitle": "Nieuwe Aanvraag",
+    "newDescription": "Dien een eenvoudige aanvraag in die niet gerelateerd is aan een evenement",
+    "title": "Aanvragen",
+    "subtitle": "Bekijk alle aanvraaginzendingen en hun status",
+    "none": "Geen aanvragen gevonden",
+    "noneDescription": "Er zijn nog geen aanvragen in het systeem.",
+    "tableView": "Tabel",
+    "cardView": "Kaarten",
+    "showActive": "Alleen actieve tonen",
+    "showAll": "Alle aanvragen tonen",
+    "sections": {
+      "basicInfo": {
+        "title": "Basisinformatie",
+        "description": "Vertel ons over uw aanvraag"
+      },
+      "contactInfo": {
+        "title": "Contactinformatie",
+        "description": "Hoe kunnen we u bereiken?"
+      },
+      "additionalInfo": {
+        "title": "Aanvullende Details",
+        "description": "Alle andere informatie die u wilt delen (optioneel)"
+      }
+    },
+    "basicInfo": {
+      "title": "Titel",
+      "titlePlaceholder": "Korte beschrijving van uw aanvraag",
+      "description": "Beschrijving",
+      "descriptionPlaceholder": "Geef gedetailleerde informatie over uw aanvraag",
+      "requestType": "Aanvraagtype",
+      "requestTypePlaceholder": "Selecteer het type aanvraag",
+      "priority": "Prioriteit",
+      "priorityPlaceholder": "Selecteer prioriteitsniveau",
+      "expectedCompletionDate": "Verwachte Voltooiingsdatum",
+      "expectedCompletionDatePlaceholder": "Wanneer heeft u dit nodig?"
+    },
+    "contact": {
+      "name": "Naam",
+      "namePlaceholder": "Uw volledige naam",
+      "email": "E-mail",
+      "emailPlaceholder": "uw.email@voorbeeld.com",
+      "phone": "Telefoon",
+      "phonePlaceholder": "Uw telefoonnummer (optioneel)",
+      "organization": "Organisatie",
+      "organizationPlaceholder": "Uw organisatie (optioneel)"
+    },
+    "additionalInfo": {
+      "label": "Aanvullende Details",
+      "placeholder": "Alle andere informatie die nuttig zou kunnen zijn"
+    },
+    "status": {
+      "draft": "Concept",
+      "pending": "In behandeling",
+      "inProgress": "In uitvoering",
+      "completed": "Voltooid",
+      "cancelled": "Geannuleerd"
+    },
+    "priority": {
+      "low": "Laag",
+      "medium": "Gemiddeld",
+      "high": "Hoog",
+      "urgent": "Dringend"
+    },
+    "types": {
+      "general": "Algemene vraag",
+      "support": "Technische ondersteuning",
+      "partnership": "Partnership verzoek",
+      "feedback": "Feedback of suggestie",
+      "complaint": "Klacht",
+      "other": "Andere"
+    },
+    "table": {
+      "title": "Titel",
+      "type": "Type",
+      "priority": "Prioriteit",
+      "status": "Status",
+      "createdBy": "Aangemaakt door",
+      "createdAt": "Aangemaakt op",
+      "actions": "Acties"
+    },
+    "actions": {
+      "complete": "Voltooien",
+      "cancel": "Annuleren"
+    },
+    "cancelDialog": {
+      "title": "Aanvraag annuleren",
+      "description": "Weet u zeker dat u deze aanvraag wilt annuleren? Deze actie kan niet ongedaan worden gemaakt.",
+      "cancel": "Aanvraag behouden",
+      "confirm": "Aanvraag annuleren"
+    },
+    "messages": {
+      "requestSubmitted": {
+        "title": "Aanvraag Ingediend",
+        "description": "Uw aanvraag is succesvol ingediend! We nemen binnenkort contact met u op."
+      },
+      "requestError": {
+        "title": "Indieningsfout",
+        "description": "Er is een fout opgetreden bij het indienen van uw aanvraag. Probeer het opnieuw."
+      },
+      "requestUpdated": {
+        "title": "Aanvraag Bijgewerkt",
+        "description": "Uw aanvraag is succesvol bijgewerkt!"
+      },
+      "requestUpdateError": {
+        "title": "Bijwerkingsfout",
+        "description": "Er is een fout opgetreden bij het bijwerken van uw aanvraag. Probeer het opnieuw."
+      }
+    }
   }
 }

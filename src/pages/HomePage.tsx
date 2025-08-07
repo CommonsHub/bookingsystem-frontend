@@ -1,8 +1,9 @@
 
 import { Link } from "react-router-dom";
 import { useBooking } from "@/context/BookingContext";
+import { useRequest } from "@/context/RequestProvider";
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, FileText } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useState } from "react";
@@ -13,21 +14,39 @@ import { BookingTableView } from "@/components/home/BookingTableView";
 import { BookingCardView } from "@/components/home/BookingCardView";
 import { CancelBookingDialog } from "@/components/home/CancelBookingDialog";
 import { BookingLoadingState } from "@/components/home/BookingLoadingState";
+import { RequestControls } from "@/components/home/RequestControls";
+import { RequestTableView } from "@/components/home/RequestTableView";
+import { RequestCardView } from "@/components/home/RequestCardView";
+import { CancelRequestDialog } from "@/components/home/CancelRequestDialog";
 import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
   const { t } = useTranslation();
   const { bookings, user, canUserCancelBooking, cancelBookingRequest } = useBooking();
+  const { requests, canUserCancelRequest, canUserCompleteRequest, cancelRequest, completeRequest } = useRequest();
   const isMobile = useIsMobile();
-  const [viewMode, setViewMode] = useState<'list' | 'grid'>(isMobile ? 'grid' : 'list');
+  const [bookingViewMode, setBookingViewMode] = useState<'list' | 'grid'>(isMobile ? 'grid' : 'list');
+  const [requestViewMode, setRequestViewMode] = useState<'list' | 'grid'>(isMobile ? 'grid' : 'list');
   const [showAllBookings, setShowAllBookings] = useState(false);
+  const [showAllRequests, setShowAllRequests] = useState(false);
   const [bookingToCancel, setBookingToCancel] = useState<string | null>(null);
+  const [requestToCancel, setRequestToCancel] = useState<string | null>(null);
 
   const handleCancelBooking = (id: string) => {
     cancelBookingRequest(id);
     setBookingToCancel(null);
   };
 
+  const handleCancelRequest = (id: string) => {
+    cancelRequest(id);
+    setRequestToCancel(null);
+  };
+
+  const handleCompleteRequest = (id: string) => {
+    completeRequest(id);
+  };
+
+  // const visibleBookings = bookings;
   const visibleBookings = bookings.filter((booking) => {
     // First filter for permissions - hide drafts not created by the current user
     if (booking.status === "draft" && (!user || user.email !== booking.createdBy.email)) {
@@ -57,6 +76,25 @@ const HomePage = () => {
     return true;
   });
 
+  const visibleRequests = requests.filter((request) => {
+    // First filter for permissions - hide drafts not created by the current user
+    if (request.status === "draft" && (!user || user.email !== request.createdBy.email)) {
+      return false;
+    }
+
+    // Then filter by status
+    if (!showAllRequests) {
+      // For active requests: hide cancelled and completed requests
+      if (request.status === "cancelled" || request.status === "completed") {
+        return false;
+      }
+      return true;
+    }
+
+    // For all requests: show everything (including cancelled and completed)
+    return true;
+  });
+
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
@@ -76,6 +114,12 @@ const HomePage = () => {
         onConfirm={() => bookingToCancel && handleCancelBooking(bookingToCancel)}
       />
 
+      <CancelRequestDialog
+        isOpen={!!requestToCancel}
+        onClose={() => setRequestToCancel(null)}
+        onConfirm={() => requestToCancel && handleCancelRequest(requestToCancel)}
+      />
+
       <BookingLoadingState 
         visibleBookings={visibleBookings}
         showAllBookings={showAllBookings}
@@ -83,13 +127,13 @@ const HomePage = () => {
       >
         <div>
           <BookingControls
-            viewMode={viewMode}
+            viewMode={bookingViewMode}
             showAllBookings={showAllBookings}
-            onViewModeChange={setViewMode}
+            onViewModeChange={setBookingViewMode}
             onToggleShowAll={() => setShowAllBookings(!showAllBookings)}
           />
 
-          {viewMode === 'list' ? (
+          {bookingViewMode === 'list' ? (
             <BookingTableView
               bookings={visibleBookings}
               showAllBookings={showAllBookings}
@@ -107,6 +151,45 @@ const HomePage = () => {
           )}
         </div>
       </BookingLoadingState>
+
+      {/* Requests Section */}
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight">{t('requests.title')}</h2>
+            <p className="text-muted-foreground mt-1">
+              {t('requests.subtitle')}
+            </p>
+          </div>
+        </div>
+
+        <RequestControls
+          viewMode={requestViewMode}
+          showAllRequests={showAllRequests}
+          onViewModeChange={setRequestViewMode}
+          onToggleShowAll={() => setShowAllRequests(!showAllRequests)}
+        />
+
+        {requestViewMode === 'list' ? (
+          <RequestTableView
+            requests={visibleRequests}
+            canUserCancelRequest={canUserCancelRequest}
+            canUserCompleteRequest={canUserCompleteRequest}
+            user={user}
+            onCancelRequest={(id) => setRequestToCancel(id)}
+            onCompleteRequest={handleCompleteRequest}
+          />
+        ) : (
+          <RequestCardView
+            requests={visibleRequests}
+            canUserCancelRequest={canUserCancelRequest}
+            canUserCompleteRequest={canUserCompleteRequest}
+            user={user}
+            onCancelRequest={(id) => setRequestToCancel(id)}
+            onCompleteRequest={handleCompleteRequest}
+          />
+        )}
+      </div>
     </div>
   );
 };

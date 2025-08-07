@@ -31,7 +31,7 @@ export const LogoutConfirmDialog = ({
         <AlertDialogHeader>
           <AlertDialogTitle>Confirm Logout</AlertDialogTitle>
           <AlertDialogDescription>
-            You have draft booking data saved locally. Would you like to keep this data for future use? 
+            You have draft booking and request data saved locally. Would you like to keep this data for future use? 
             This data could be accessed by other users on this device.
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -41,7 +41,7 @@ export const LogoutConfirmDialog = ({
             onClick={() => onConfirm(false)}
             className={buttonVariants({ variant: "destructive" })}
           >
-            Clear Drafts & Logout
+            Clear All Drafts & Logout
           </AlertDialogAction>
           <AlertDialogAction
             onClick={() => onConfirm(true)}

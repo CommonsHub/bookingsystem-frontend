@@ -146,6 +146,44 @@ export type Database = {
           },
         ]
       }
+      request_comments: {
+        Row: {
+          id: string
+          request_id: string
+          content: string
+          created_at: string
+          created_by_email: string
+          created_by_name: string | null
+          status: string
+        }
+        Insert: {
+          id?: string
+          request_id: string
+          content: string
+          created_at?: string
+          created_by_email: string
+          created_by_name?: string | null
+          status?: string
+        }
+        Update: {
+          id?: string
+          request_id?: string
+          content?: string
+          created_at?: string
+          created_by_email?: string
+          created_by_name?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "request_comments_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           address: string | null
@@ -173,6 +211,78 @@ export type Database = {
           id?: string
           updated_at?: string
           vat_number?: string | null
+        }
+        Relationships: []
+      }
+      requests: {
+        Row: {
+          id: string
+          title: string
+          description: string
+          request_type: string
+          priority: string
+          status: string
+          created_at: string
+          created_by_email: string
+          created_by_name: string | null
+          email: string
+          name: string
+          phone: string | null
+          organization: string | null
+          expected_completion_date: string | null
+          additional_details: string | null
+          attachments: string[] | null
+          language: string | null
+          completed_at: string | null
+          completed_by_email: string | null
+          cancelled_at: string | null
+          cancelled_by_email: string | null
+        }
+        Insert: {
+          id?: string
+          title: string
+          description: string
+          request_type: string
+          priority: string
+          status?: string
+          created_at?: string
+          created_by_email: string
+          created_by_name?: string | null
+          email: string
+          name: string
+          phone?: string | null
+          organization?: string | null
+          expected_completion_date?: string | null
+          additional_details?: string | null
+          attachments?: string[] | null
+          language?: string | null
+          completed_at?: string | null
+          completed_by_email?: string | null
+          cancelled_at?: string | null
+          cancelled_by_email?: string | null
+        }
+        Update: {
+          id?: string
+          title?: string
+          description?: string
+          request_type?: string
+          priority?: string
+          status?: string
+          created_at?: string
+          created_by_email?: string
+          created_by_name?: string | null
+          email?: string
+          name?: string
+          phone?: string | null
+          organization?: string | null
+          expected_completion_date?: string | null
+          additional_details?: string | null
+          attachments?: string[] | null
+          language?: string | null
+          completed_at?: string | null
+          completed_by_email?: string | null
+          cancelled_at?: string | null
+          cancelled_by_email?: string | null
         }
         Relationships: []
       }

@@ -327,5 +327,117 @@
     "addComment": "Kommentar hinzufügen",
     "submitting": "Wird übermittelt...",
     "addCommentHint": "als {{name}}"
+  },
+  "anonymous": "anonym",
+  "requests": {
+    "new": "Neue Anfrage",
+    "newTitle": "Neue Anfrage",
+    "newDescription": "Reichen Sie eine einfache Anfrage ein, die nicht mit einem Ereignis zusammenhängt",
+    "title": "Anfragen",
+    "subtitle": "Alle Anfrageeinreichungen und ihren Status anzeigen",
+    "none": "Keine Anfragen gefunden",
+    "noneDescription": "Es sind noch keine Anfragen im System vorhanden.",
+    "tableView": "Tabelle",
+    "cardView": "Karten",
+    "showActive": "Nur aktive anzeigen",
+    "showAll": "Alle Anfragen anzeigen",
+    "sections": {
+      "basicInfo": {
+        "title": "Grundinformationen",
+        "description": "Erzählen Sie uns von Ihrer Anfrage"
+      },
+      "contactInfo": {
+        "title": "Kontaktinformationen",
+        "description": "Wie können wir Sie erreichen?"
+      },
+      "additionalInfo": {
+        "title": "Zusätzliche Details",
+        "description": "Alle anderen Informationen, die Sie teilen möchten (optional)"
+      }
+    },
+    "basicInfo": {
+      "title": "Titel",
+      "titlePlaceholder": "Kurze Beschreibung Ihrer Anfrage",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Geben Sie detaillierte Informationen zu Ihrer Anfrage an",
+      "requestType": "Anfragetyp",
+      "requestTypePlaceholder": "Wählen Sie den Anfragetyp",
+      "priority": "Priorität",
+      "priorityPlaceholder": "Wählen Sie die Prioritätsstufe",
+      "expectedCompletionDate": "Erwartetes Fertigstellungsdatum",
+      "expectedCompletionDatePlaceholder": "Wann benötigen Sie dies fertiggestellt?"
+    },
+    "contact": {
+      "name": "Name",
+      "namePlaceholder": "Ihr vollständiger Name",
+      "email": "E-Mail",
+      "emailPlaceholder": "ihre.email@beispiel.com",
+      "phone": "Telefon",
+      "phonePlaceholder": "Ihre Telefonnummer (optional)",
+      "organization": "Organisation",
+      "organizationPlaceholder": "Ihre Organisation (optional)"
+    },
+    "additionalInfo": {
+      "label": "Zusätzliche Details",
+      "placeholder": "Alle anderen Informationen, die hilfreich sein könnten"
+    },
+    "status": {
+      "draft": "Entwurf",
+      "pending": "Ausstehend",
+      "inProgress": "In Bearbeitung",
+      "completed": "Abgeschlossen",
+      "cancelled": "Storniert"
+    },
+    "priority": {
+      "low": "Niedrig",
+      "medium": "Mittel",
+      "high": "Hoch",
+      "urgent": "Dringend"
+    },
+    "types": {
+      "general": "Allgemeine Anfrage",
+      "support": "Technischer Support",
+      "partnership": "Partnerschaftsanfrage",
+      "feedback": "Feedback oder Vorschlag",
+      "complaint": "Beschwerde",
+      "other": "Andere"
+    },
+    "table": {
+      "title": "Titel",
+      "type": "Typ",
+      "priority": "Priorität",
+      "status": "Status",
+      "createdBy": "Erstellt von",
+      "createdAt": "Erstellt am",
+      "actions": "Aktionen"
+    },
+    "actions": {
+      "complete": "Abschließen",
+      "cancel": "Stornieren"
+    },
+    "cancelDialog": {
+      "title": "Anfrage stornieren",
+      "description": "Sind Sie sicher, dass Sie diese Anfrage stornieren möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "cancel": "Anfrage behalten",
+      "confirm": "Anfrage stornieren"
+    },
+    "messages": {
+      "requestSubmitted": {
+        "title": "Anfrage eingereicht",
+        "description": "Ihre Anfrage wurde erfolgreich eingereicht! Wir melden uns bald bei Ihnen."
+      },
+      "requestError": {
+        "title": "Übermittlungsfehler",
+        "description": "Beim Übermitteln Ihrer Anfrage ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+      },
+      "requestUpdated": {
+        "title": "Anfrage aktualisiert",
+        "description": "Ihre Anfrage wurde erfolgreich aktualisiert!"
+      },
+      "requestUpdateError": {
+        "title": "Aktualisierungsfehler",
+        "description": "Beim Aktualisieren Ihrer Anfrage ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+      }
+    }
   }
 }

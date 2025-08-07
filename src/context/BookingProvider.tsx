@@ -32,6 +32,12 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
 
+  // Clear all bookings data
+  const clearBookings = (): void => {
+    setBookings([]);
+    console.log("Bookings data cleared");
+  };
+
   const value = {
     bookings,
     getBookingById,
@@ -40,6 +46,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     addCommentToBooking,
     approveBookingRequest,
     cancelBookingRequest,
+    clearBookings,
     user,
     canUserApproveBookings,
     canUserCancelBooking,

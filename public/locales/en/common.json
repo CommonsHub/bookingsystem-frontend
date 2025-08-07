@@ -253,10 +253,16 @@
     "editBooking": "Edit Booking",
     "approve": "Approve"
   },
+  "common": {
+    "back": "Back",
+    "edit": "Edit",
+    "backToHome": "Back to Home"
+  },
   "messages": {
     "loadingBooking": "Loading booking details...",
     "bookingNotFound": "Booking not found",
     "bookingIdMissing": "Booking ID is missing",
+    "requestIdMissing": "Request ID is missing",
     "savingDraft": "Saving draft...",
     "draftLoaded": "Draft loaded",
     "draftCleared": "Draft cleared",
@@ -284,5 +290,145 @@
     "submitting": "Submitting...",
     "addCommentHint": "as {{name}}"
   },
-  "anonymous": "anonymous"
+  "anonymous": "anonymous",
+  "requests": {
+    "new": "New Request",
+    "newTitle": "New Request",
+    "newDescription": "Submit a simple request that's not related to an event",
+    "edit": {
+      "title": "Edit Request",
+      "description": "Update the details of your request"
+    },
+    "title": "Requests",
+    "subtitle": "View all request submissions and their status",
+    "none": "No requests found",
+    "noneDescription": "There are no requests in the system yet.",
+    "tableView": "Table",
+    "cardView": "Cards",
+    "showActive": "Show active only",
+    "showAll": "Show all requests",
+    "sections": {
+      "basicInfo": {
+        "title": "Basic Information",
+        "description": "Tell us about your request"
+      },
+      "contactInfo": {
+        "title": "Contact Information",
+        "description": "How can we reach you?"
+      },
+      "additionalInfo": {
+        "title": "Additional Details",
+        "description": "Any other information you'd like to share (optional)"
+      }
+    },
+    "basicInfo": {
+      "title": "Title",
+      "titlePlaceholder": "Brief description of your request",
+      "description": "Description",
+      "descriptionPlaceholder": "Provide detailed information about your request",
+      "requestType": "Request Type",
+      "requestTypePlaceholder": "Select the type of request",
+      "priority": "Priority",
+      "priorityPlaceholder": "Select priority level",
+      "expectedCompletionDate": "Expected Completion Date",
+      "expectedCompletionDatePlaceholder": "When do you need this completed?"
+    },
+    "contact": {
+      "name": "Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "your.email@example.com",
+      "phone": "Phone",
+      "phonePlaceholder": "Your phone number (optional)",
+      "organization": "Organization",
+      "organizationPlaceholder": "Your organization (optional)"
+    },
+    "additionalInfo": {
+      "label": "Additional Details",
+      "placeholder": "Any other information that might be helpful"
+    },
+    "status": {
+      "draft": "Draft",
+      "pending": "Pending",
+      "inProgress": "In Progress",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "priority": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "urgent": "Urgent"
+    },
+    "types": {
+      "general": "General Inquiry",
+      "support": "Technical Support",
+      "partnership": "Partnership Request",
+      "feedback": "Feedback or Suggestion",
+      "complaint": "Complaint",
+      "other": "Other"
+    },
+    "table": {
+      "title": "Title",
+      "type": "Type",
+      "priority": "Priority",
+      "status": "Status",
+      "createdBy": "Created By",
+      "createdAt": "Created At",
+      "actions": "Actions"
+    },
+    "actions": {
+      "complete": "Complete",
+      "cancel": "Cancel"
+    },
+    "cancelDialog": {
+      "title": "Cancel Request",
+      "description": "Are you sure you want to cancel this request? This action cannot be undone.",
+      "cancel": "Keep Request",
+      "confirm": "Cancel Request"
+    },
+    "messages": {
+      "requestSubmitted": {
+        "title": "Request Submitted",
+        "description": "Your request has been submitted successfully! We'll get back to you soon."
+      },
+      "requestError": {
+        "title": "Submission Error",
+        "description": "There was an error submitting your request. Please try again."
+      },
+      "requestUpdated": {
+        "title": "Request Updated",
+        "description": "Your request has been updated successfully!"
+      },
+      "requestUpdateError": {
+        "title": "Update Error",
+        "description": "There was an error updating your request. Please try again."
+      },
+      "requestCancelled": "Request cancelled successfully",
+      "requestCompleted": "Request completed successfully",
+      "cancelError": "Failed to cancel request",
+      "completeError": "Failed to complete request"
+    },
+    "detail": {
+      "information": "Request Information",
+      "description": "Description",
+      "type": "Request Type",
+      "priority": "Priority",
+      "status": "Status",
+      "additionalDetails": "Additional Details",
+      "expectedCompletion": "Expected Completion Date",
+      "attachments": "Attachments",
+      "actions": "Actions",
+      "contactInfo": "Contact Information",
+      "timeline": "Timeline",
+      "created": "Request Created",
+      "completed": "Request Completed",
+      "cancelled": "Request Cancelled",
+      "createdOn": "Created on"
+    },
+    "notFound": "Request not found",
+    "notFoundDescription": "The request you're looking for doesn't exist or you don't have permission to view it.",
+    "cannotEdit": "Cannot edit request",
+    "cannotEditDescription": "This request cannot be edited because it has been completed or cancelled."
+  }
 }
