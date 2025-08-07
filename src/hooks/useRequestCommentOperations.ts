@@ -2,6 +2,7 @@ import { toast } from "@/components/ui/toast-utils";
 import { supabase } from "@/integrations/supabase/client";
 import { Request, RequestComment } from "@/types";
 import { v4 as uuidv4 } from "uuid";
+import { callEdgeFunction, createRequestCommentPayload } from "@/utils/edgeFunctionUtils";
 
 export const useRequestCommentOperations = (
   setRequests: React.Dispatch<React.SetStateAction<Request[]>>,
@@ -30,6 +31,27 @@ export const useRequestCommentOperations = (
         console.error("Error creating request comment:", error);
         toast.error("Failed to create comment");
         throw error;
+      }
+
+      // Call edge function directly after successful database insert
+      const commentRecord = {
+        id: data.id,
+        request_id: requestId,
+        content,
+        created_at: data.created_at,
+        created_by_email: email,
+        created_by_name: name,
+        status: "published",
+      };
+      
+      const edgeFunctionResult = await callEdgeFunction(
+        createRequestCommentPayload(commentRecord, 'new_request_comment')
+      );
+
+      if (!edgeFunctionResult.success) {
+        console.warn("Edge function call failed:", edgeFunctionResult.error);
+        // Don't throw error here as the comment was created successfully
+        // Just log the warning
       }
 
       const newComment: RequestComment = {
