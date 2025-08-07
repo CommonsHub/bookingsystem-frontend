@@ -5,6 +5,7 @@ import { FormData } from "./BookingFormSchema";
 import { Room } from "@/types";
 import { PricingPlaceholder } from "./PricingPlaceholder";
 import { PricingDisplay } from "./PricingDisplay";
+import { QuoteConfirmationSection } from "./QuoteConfirmationSection";
 import { 
   calculateRoomPrice, 
   calculateMemberDiscount, 
@@ -20,7 +21,7 @@ interface PricingQuoteSectionProps {
 }
 
 export const PricingQuoteSection = ({ rooms }: PricingQuoteSectionProps) => {
-  const { watch } = useFormContext<FormData>();
+  const { watch, control } = useFormContext<FormData>();
   
   const roomId = watch("roomId");
   const startDate = watch("startDate");
@@ -97,5 +98,10 @@ export const PricingQuoteSection = ({ rooms }: PricingQuoteSectionProps) => {
 
   const vatMessage = getVATMessage(roomId);
 
-  return <PricingDisplay quote={quote} vatMessage={vatMessage} />;
+  return (
+    <>
+      <PricingDisplay quote={quote} vatMessage={vatMessage} />
+      <QuoteConfirmationSection control={control} />
+    </>
+  );
 };

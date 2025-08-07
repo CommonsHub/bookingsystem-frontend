@@ -235,7 +235,18 @@
     "perHour": "pro Stunde",
     "perPerson": "pro Person",
     "loading": "Berechne Preis...",
-    "error": "Fehler bei der Preisberechnung"
+    "error": "Fehler bei der Preisberechnung",
+    "totalEstimate": "Gesamtschätzung",
+    "tentativeQuote": "Vorläufiges Angebot",
+    "tentativeDisclaimer": "* Dies ist ein vorläufiges Angebot. Die endgültigen Preise können variieren und werden bei der Genehmigung bestätigt.",
+    "tentativePriceQuote": "Vorläufiges Preisangebot",
+    "selectRoomAndDates": "Bitte wählen Sie einen Raum und setzen Sie Ihre Termine, um die Preise zu sehen",
+    "weekendSurcharge": "Wochenendzuschlag",
+    "catering": "Catering",
+    "nonPublicSurchargeDescription": "Zusätzliche Gebühr für private Veranstaltungen, die nicht öffentlich zugänglich sind",
+    "quoteConfirmation": "Angebotsbestätigung",
+    "confirmQuote": "Ich bestätige dieses Angebot und stimme zu, mit der Buchungsanfrage fortzufahren",
+    "confirmQuoteRequired": "Bitte bestätigen Sie das Angebot, bevor Sie Ihre Buchungsanfrage einreichen"
   },
   "catering": {
     "question": "Benötigen Sie Catering?",

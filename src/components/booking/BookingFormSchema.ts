@@ -35,6 +35,10 @@ export const formSchema = z.object({
   // Add price and currency fields
   price: z.number().min(0, { message: "Price must be positive" }).optional(),
   currency: z.string().default("EUR"),
+  // Add quote confirmation field
+  quoteConfirmed: z.boolean().refine(val => val === true, {
+    message: "Please confirm the quote before submitting your booking request"
+  }),
 });
 
 export type FormData = z.infer<typeof formSchema>;

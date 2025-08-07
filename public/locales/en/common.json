@@ -250,7 +250,10 @@
     "weekendSurcharge": "Weekend surcharge",
     "catering": "Catering",
     "nonPublicSurcharge": "Non-public event surcharge (30%)",
-    "nonPublicSurchargeDescription": "Additional charge for private events not open to the public"
+    "nonPublicSurchargeDescription": "Additional charge for private events not open to the public",
+    "quoteConfirmation": "Quote Confirmation",
+    "confirmQuote": "I confirm this quote and agree to proceed with the booking request",
+    "confirmQuoteRequired": "Please confirm the quote before submitting your booking request"
   },
   "status": {
     "draft": "Draft",

@@ -247,7 +247,10 @@
     "weekendSurcharge": "Weekendtoeslag",
     "catering": "Catering",
     "nonPublicSurcharge": "Toeslag niet-openbaar evenement (30%)",
-    "nonPublicSurchargeDescription": "Extra kosten voor privé-evenementen die niet open zijn voor het publiek"
+    "nonPublicSurchargeDescription": "Extra kosten voor privé-evenementen die niet open zijn voor het publiek",
+    "quoteConfirmation": "Offertebevestiging",
+    "confirmQuote": "Ik bevestig deze offerte en ga akkoord om door te gaan met de reserveringsaanvraag",
+    "confirmQuoteRequired": "Bevestig de offerte voordat u uw reserveringsaanvraag indient"
   },
   "status": {
     "draft": "Concept",
