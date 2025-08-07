@@ -35,22 +35,27 @@ ALTER TABLE public.requests ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for RLS
 -- Users can view their own requests
+DROP POLICY IF EXISTS "Users can view their own requests" ON public.requests;
 CREATE POLICY "Users can view their own requests" ON public.requests
     FOR SELECT USING (auth.jwt() ->> 'email' = created_by_email);
 
 -- Users can insert their own requests
+DROP POLICY IF EXISTS "Users can insert their own requests" ON public.requests;
 CREATE POLICY "Users can insert their own requests" ON public.requests
     FOR INSERT WITH CHECK (auth.jwt() ->> 'email' = created_by_email);
 
 -- Users can update their own requests
+DROP POLICY IF EXISTS "Users can update their own requests" ON public.requests;
 CREATE POLICY "Users can update their own requests" ON public.requests
     FOR UPDATE USING (auth.jwt() ->> 'email' = created_by_email);
 
 -- Users can delete their own requests (if needed)
+DROP POLICY IF EXISTS "Users can delete their own requests" ON public.requests;
 CREATE POLICY "Users can delete their own requests" ON public.requests
     FOR DELETE USING (auth.jwt() ->> 'email' = created_by_email);
 
 -- Admins can view all requests (you may need to adjust this based on your admin role setup)
+DROP POLICY IF EXISTS "Admins can view all requests" ON public.requests;
 CREATE POLICY "Admins can view all requests" ON public.requests
     FOR SELECT USING (
         EXISTS (
@@ -61,6 +66,7 @@ CREATE POLICY "Admins can view all requests" ON public.requests
     );
 
 -- Admins can update all requests
+DROP POLICY IF EXISTS "Admins can update all requests" ON public.requests;
 CREATE POLICY "Admins can update all requests" ON public.requests
     FOR UPDATE USING (
         EXISTS (
