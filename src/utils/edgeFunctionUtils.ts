@@ -1,8 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
 // Edge function URL
-const EDGE_FUNCTION_URL = 'https://sokfvqtgpbeybjifaywh.supabase.co/functions/v1/bookingnotifications';
-
+const EDGE_FUNCTION_NAME = 'requests';
 // Type definitions for edge function payloads
 interface EdgeFunctionPayload {
   record: Record<string, unknown>;
@@ -13,7 +12,8 @@ interface EdgeFunctionPayload {
 export async function callEdgeFunction(payload: EdgeFunctionPayload): Promise<{ success: boolean; message?: string; error?: string }> {
   try {
     // Use Supabase's built-in function invocation which handles authentication
-    const { data, error } = await supabase.functions.invoke('bookingnotifications', {
+    const { data, error } = await supabase.functions.invoke(EDGE_FUNCTION_NAME, {
+      method: 'POST',
       body: payload,
     });
 

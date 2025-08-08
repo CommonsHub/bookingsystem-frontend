@@ -5,6 +5,40 @@ import { handleCalendarEntry } from "./handleCalendar.ts";
 import { sendEmail } from "./sendEmail.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 
+// CORS middleware function
+function withCors(handler: (req: Request) => Promise<Response>): (req: Request) => Promise<Response> {
+  return async (req: Request) => {
+    // Handle CORS preflight requests
+    if (req.method === 'OPTIONS') {
+      return new Response(null, {
+        status: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Max-Age': '86400',
+        },
+      });
+    }
+
+    // Call the original handler
+    const response = await handler(req);
+
+    
+    // Add CORS headers to the response
+    const newHeaders = new Headers(response.headers);
+    newHeaders.set('Access-Control-Allow-Origin', '*');
+    newHeaders.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    newHeaders.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Client-Info, X-Client-Name, X-Client-Version');
+    
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: newHeaders,
+    });
+  };
+}
+
 export async function handler(req: Request) {
   try {
     // Handle direct function calls from frontend
@@ -18,18 +52,18 @@ export async function handler(req: Request) {
     const supabaseServiceKey = (globalThis as any).Deno?.env?.get("SUPABASE_SERVICE_ROLE_KEY");
     
     if (!supabaseUrl || !supabaseServiceKey) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: "Missing Supabase configuration",
-        }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          status: 500,
-        }
-      );
+          return new Response(
+      JSON.stringify({
+        success: false,
+        error: "Missing Supabase configuration",
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        status: 500,
+      }
+    );
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
@@ -139,5 +173,5 @@ export async function handler(req: Request) {
   }
 }
 
-// @ts-ignore
-(globalThis as any).Deno?.serve?.length === 1 ? (globalThis as any).Deno.serve(handler) : (globalThis as any).Deno.serve({ port: 8000 }, handler);
+// @ts-expect-error - Deno serve API
+(globalThis as any).Deno?.serve?.length === 1 ? (globalThis as any).Deno.serve(withCors(handler)) : (globalThis as any).Deno.serve({ port: 8000 }, withCors(handler));
