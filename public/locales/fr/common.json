@@ -142,7 +142,8 @@
       "submit": "Soumettre la demande de réservation",
       "submitting": "Soumission...",
       "clearDraft": "Effacer le brouillon",
-      "startNew": "Commencer nouveau"
+      "startNew": "Commencer nouveau",
+      "markAsCompleted": "Marquer comme terminé"
     }
   },
   "profile": {

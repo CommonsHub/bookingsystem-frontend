@@ -142,7 +142,8 @@
       "submit": "Submit Booking Request",
       "submitting": "Submitting...",
       "clearDraft": "Clear Draft",
-      "startNew": "Start New"
+      "startNew": "Start New",
+      "markAsCompleted": "Mark as Completed"
     }
   },
   "profile": {

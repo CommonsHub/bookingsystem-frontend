@@ -142,7 +142,8 @@
       "submit": "Boekingsaanvraag indienen",
       "submitting": "Indienen...",
       "clearDraft": "Concept wissen",
-      "startNew": "Nieuw beginnen"
+      "startNew": "Nieuw beginnen",
+      "markAsCompleted": "Markeren als voltooid"
     }
   },
   "profile": {
