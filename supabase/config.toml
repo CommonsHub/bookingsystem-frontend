@@ -2,7 +2,7 @@ project_id = "sokfvqtgpbeybjifaywh"
 [functions.requests]
 enabled = true
 verify_jwt = true
-import_map = "./functions/requests/deno.json"
+import_map = "./functions/edge-requests/deno.json"
 # Uncomment to specify a custom file path to the entrypoint.
 # Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
 entrypoint = "./functions/edge-requests/src/index.ts"
@@ -118,7 +118,7 @@ enabled = true
 # in emails.
 site_url = "https://booking.commonshub.brussels"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
-additional_redirect_urls = ["https://booking.commonshub.brussels", "http://localhost:3000", "http://localhost:8080", "https://*.lovable.app/", "http://localhost:8081"]
+additional_redirect_urls = ["https://booking.commonshub.brussels", "http://localhost:3000", "http://localhost:8080", "https://*.lovable.app/", "http://localhost:8081", "http://localhost:8080/*"]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
 jwt_expiry = 3600
 # If disabled, the refresh token will never expire.
