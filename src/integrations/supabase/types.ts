@@ -286,6 +286,59 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          id: number
+          user_id: string
+          role: string
+          created_at: string
+          created_by: string | null
+        }
+        Insert: {
+          id?: number
+          user_id: string
+          role: string
+          created_at?: string
+          created_by?: string | null
+        }
+        Update: {
+          id?: number
+          user_id?: string
+          role?: string
+          created_at?: string
+          created_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      role_permissions: {
+        Row: {
+          id: number
+          role: string
+          permission: string
+          created_at: string
+        }
+        Insert: {
+          id?: number
+          role: string
+          permission: string
+          created_at?: string
+        }
+        Update: {
+          id?: number
+          role?: string
+          permission?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

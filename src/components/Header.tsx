@@ -14,6 +14,7 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 import { LogoutConfirmDialog } from "./LogoutConfirmDialog";
 import { useLogoutDraftHandler } from "@/hooks/useLogoutDraftHandler";
 import { useState } from "react";
+import { canUserApproveBookings } from "@/utils/bookingHelpers";
 
 const Header = () => {
   const { user, signOut, getDisplayName } = useAuth();
@@ -67,11 +68,13 @@ const Header = () => {
               </Link>
             </Button>
             
-            <Button asChild variant="outline">
-            <Link to="/ics-preview" className="flex items-center space-x-2">
-              <span className="hidden md:block">ICS Preview</span>
-            </Link>
-          </Button>
+            {canUserApproveBookings(user) && (
+              <Button asChild variant="outline">
+                <Link to="/ics-preview" className="flex items-center space-x-2">
+                  <span className="hidden md:block">ICS Preview</span>
+                </Link>
+              </Button>
+            )}
           {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>

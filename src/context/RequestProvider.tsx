@@ -3,6 +3,7 @@ import { Request, User } from "@/types";
 import { useAuth } from "./AuthContext";
 import { useRequestOperations } from "@/hooks/useRequestOperations";
 import { useRequestCommentOperations } from "@/hooks/useRequestCommentOperations";
+import { isAdmin } from "@/utils/adminUtils";
 
 interface RequestProviderProps {
   children: React.ReactNode;
@@ -70,11 +71,8 @@ export const RequestProvider: React.FC<RequestProviderProps> = ({ children }) =>
 
   const canUserMarkAsCompleted = (request: Request, currentUser: User | null): boolean => {
     if (!currentUser) return false;
-    // Admin-only action - check if user has admin permissions
-    // This could be based on email domain or other criteria
-    const isAdmin = currentUser.email?.endsWith('@commonshub.brussels') || 
-                   currentUser.email?.endsWith('@qualiaworks.com');
-    return isAdmin && request.status !== "completed" && request.status !== "cancelled";
+    // Admin-only action - check if user has admin permissions using RBAC
+    return isAdmin(currentUser) && request.status !== "completed" && request.status !== "cancelled";
   };
 
   const value = {

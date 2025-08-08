@@ -1,7 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 import { AuthContext } from "./AuthContext";
 import { useEffect, useState } from "react";
-import { User } from "@/types";
+import { User, UserRole } from "@/types";
 import { User as SupabaseUser } from "@supabase/supabase-js";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -9,18 +9,52 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
   const baseUrl = import.meta.env.VITE_DEPLOY_URL || window.location.origin
 
+  const fetchUserRoles = async (userId: string): Promise<UserRole[]> => {
+    try {
+      const { data, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId);
+
+      if (error) {
+        console.error('Error fetching user roles:', error);
+        return [];
+      }
+
+      return data?.map(row => row.role as UserRole) || [];
+    } catch (error) {
+      console.error('Error fetching user roles:', error);
+      return [];
+    }
+  };
+
+  const supabaseUserToUser = async (supabaseUser: SupabaseUser | null): Promise<User | null> => {
+    if (!supabaseUser) return null;
+    
+    const roles = await fetchUserRoles(supabaseUser.id);
+    
+    return {
+      id: supabaseUser.id,
+      email: supabaseUser.email || "",
+      name: supabaseUser.user_metadata.full_name || "",
+      roles,
+    };
+  };
+
   useEffect(() => {
     // Check active sessions and sets the user
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(supabaseUserToUser(session?.user ?? null));
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      const user = await supabaseUserToUser(session?.user ?? null);
+      setUser(user);
       setLoading(false);
     });
 
     // Listen for changes on auth state (sign in, sign out, etc.)
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(supabaseUserToUser(session?.user ?? null));
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      const user = await supabaseUserToUser(session?.user ?? null);
+      setUser(user);
       setLoading(false);
     });
 
@@ -56,12 +90,3 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     </AuthContext.Provider>
   );
 }
-
-const supabaseUserToUser = (user: SupabaseUser | null): User | null => {
-  if (!user) return null;
-  return {
-    id: user.id,
-    email: user.email || "",
-    name: user.user_metadata.full_name || "",
-  };
-};
