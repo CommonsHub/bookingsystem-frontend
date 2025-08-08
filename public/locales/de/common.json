@@ -139,6 +139,7 @@
     "loading": "Lädt...",
     "saving": "Speichert...",
     "submitting": "Reicht ein...",
+    "markAsCompleted": "Als abgeschlossen markieren",
     "title": {
       "label": "Titel",
       "placeholder": "Geben Sie den Titel der Veranstaltung ein",

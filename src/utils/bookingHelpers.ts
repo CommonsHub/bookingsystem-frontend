@@ -1,13 +1,9 @@
 import { Booking, User } from "@/types";
+import { isAdmin } from "./adminUtils";
 
 // Function to check if a user can approve bookings
 export const canUserApproveBookings = (user: User | null): boolean => {
-  if (!user) return false;
-
-  // Allow users with commonshub.brussels or qualiaworks.com email domain
-  if (user.email.endsWith("@commonshub.brussels") || user.email.endsWith("@qualiaworks.com")) return true;
-
-  return false;
+  return isAdmin(user);
 };
 
 // Function to check if a user can cancel a specific booking

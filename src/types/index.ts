@@ -16,11 +16,14 @@ export interface RoomSetupOption {
   description: string;
 }
 
+export type UserRole = 'admin' | 'moderator' | 'support' | 'user';
+
 export interface User {
   id: string;
   email: string;
   name?: string;
   profileId?: string;
+  roles?: UserRole[];
 }
 
 export interface Booking {

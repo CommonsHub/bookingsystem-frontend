@@ -1,0 +1,8 @@
+{
+  "imports": {
+    "npm:googleapis": "npm:googleapis@^137.0.0",
+    "jsr:@std/dotenv": "jsr:@std/dotenv",
+    "npm:@supabase/supabase-js@2": "npm:@supabase/supabase-js@2",
+    "nostr-tools": "npm:nostr-tools@^2.15.1"
+  }
+}

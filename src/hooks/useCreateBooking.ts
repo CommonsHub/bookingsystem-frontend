@@ -5,6 +5,7 @@ import { Database } from "@/integrations/supabase/types";
 import { Booking, BookingDatabaseFields, User } from "@/types";
 import { v4 as uuidv4 } from "uuid";
 import { useTranslation } from "react-i18next";
+import { callEdgeFunction, createBookingPayload } from "@/utils/edgeFunctionUtils";
 
 export const useCreateBooking = (
   setBookings: React.Dispatch<React.SetStateAction<Booking[]>>,
@@ -21,7 +22,8 @@ export const useCreateBooking = (
       // Store room capacity as a string (no need to convert since it's already a string)
       const roomCapacity = bookingData.room.capacity;
 
-      const row: Database["public"]["Tables"]["bookings"]["Insert"] = {
+      // Prepare the booking data to send to edge function
+      const bookingRecord = {
         id,
         title: bookingData.title,
         description: bookingData.description,
@@ -37,24 +39,27 @@ export const useCreateBooking = (
         is_public_event: bookingData.isPublicEvent,
         organizer: bookingData.organizer,
         estimated_attendees: bookingData.estimatedAttendees,
-        language: i18n.language, // Add current language
+        language: i18n.language,
         price: bookingData.price,
         currency: bookingData.currency,
-        // Add the new fields
         catering_options: bookingData.cateringOptions,
         catering_comments: bookingData.cateringComments,
         event_support_options: bookingData.eventSupportOptions,
         membership_status: bookingData.membershipStatus,
       };
+      
+      // Call edge function to handle database insertion and notifications
+      const edgeFunctionResult = await callEdgeFunction(
+        createBookingPayload(bookingRecord, 'new_booking')
+      );
 
-      const { error } = await supabase.from("bookings").insert(row);
-
-      if (error) {
-        console.error("Error creating booking:", error);
+      if (!edgeFunctionResult.success) {
+        console.error("Edge function call failed:", edgeFunctionResult.error);
         toast.error("Failed to create booking");
-        throw error;
+        throw new Error(edgeFunctionResult.error || "Failed to create booking");
       }
 
+      // Update local state with the new booking
       const { data: newBookings } = await supabase
         .from("bookings")
         .select("*")
