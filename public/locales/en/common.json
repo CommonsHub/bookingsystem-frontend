@@ -412,7 +412,8 @@
     },
     "actions": {
       "complete": "Complete",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "markAsCompleted": "Mark as Completed"
     },
     "cancelDialog": {
       "title": "Cancel Request",

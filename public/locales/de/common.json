@@ -452,7 +452,8 @@
     },
     "actions": {
       "complete": "Abschließen",
-      "cancel": "Stornieren"
+      "cancel": "Stornieren",
+      "markAsCompleted": "Als abgeschlossen markieren"
     },
     "cancelDialog": {
       "title": "Anfrage stornieren",
@@ -476,7 +477,32 @@
       "requestUpdateError": {
         "title": "Aktualisierungsfehler",
         "description": "Beim Aktualisieren Ihrer Anfrage ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
-      }
-    }
+      },
+      "requestCancelled": "Anfrage erfolgreich storniert",
+      "requestCompleted": "Anfrage erfolgreich abgeschlossen",
+      "cancelError": "Anfrage konnte nicht storniert werden",
+      "completeError": "Anfrage konnte nicht abgeschlossen werden"
+    },
+    "detail": {
+      "information": "Anfrage-Informationen",
+      "description": "Beschreibung",
+      "type": "Anfrage-Typ",
+      "priority": "Priorität",
+      "status": "Status",
+      "additionalDetails": "Zusätzliche Details",
+      "expectedCompletion": "Erwartetes Abschlussdatum",
+      "attachments": "Anhänge",
+      "actions": "Aktionen",
+      "contactInfo": "Kontaktinformationen",
+      "timeline": "Zeitlinie",
+      "created": "Anfrage erstellt",
+      "completed": "Anfrage abgeschlossen",
+      "cancelled": "Anfrage storniert",
+      "createdOn": "Erstellt am"
+    },
+    "notFound": "Anfrage nicht gefunden",
+    "notFoundDescription": "Die gesuchte Anfrage existiert nicht oder Sie haben keine Berechtigung, sie anzuzeigen.",
+    "cannotEdit": "Anfrage kann nicht bearbeitet werden",
+    "cannotEditDescription": "Diese Anfrage kann nicht bearbeitet werden, da sie abgeschlossen oder storniert wurde."
   }
 }
