@@ -402,6 +402,9 @@
       "cancel": "Annuleren",
       "markAsCompleted": "Markeren als voltooid"
     },
+    "form": {
+      "submit": "Aanvraag indienen"
+    },
     "cancelDialog": {
       "title": "Aanvraag annuleren",
       "description": "Weet u zeker dat u deze aanvraag wilt annuleren? Deze actie kan niet ongedaan worden gemaakt.",

@@ -455,6 +455,9 @@
       "cancel": "Stornieren",
       "markAsCompleted": "Als abgeschlossen markieren"
     },
+    "form": {
+      "submit": "Anfrage einreichen"
+    },
     "cancelDialog": {
       "title": "Anfrage stornieren",
       "description": "Sind Sie sicher, dass Sie diese Anfrage stornieren möchten? Diese Aktion kann nicht rückgängig gemacht werden.",

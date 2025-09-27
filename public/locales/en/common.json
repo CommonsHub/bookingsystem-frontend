@@ -415,6 +415,9 @@
       "cancel": "Cancel",
       "markAsCompleted": "Mark as Completed"
     },
+    "form": {
+      "submit": "Submit Request"
+    },
     "cancelDialog": {
       "title": "Cancel Request",
       "description": "Are you sure you want to cancel this request? This action cannot be undone.",

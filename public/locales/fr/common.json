@@ -402,6 +402,9 @@
       "cancel": "Annuler",
       "markAsCompleted": "Marquer comme terminé"
     },
+    "form": {
+      "submit": "Soumettre la demande"
+    },
     "cancelDialog": {
       "title": "Annuler la demande",
       "description": "Êtes-vous sûr de vouloir annuler cette demande ? Cette action ne peut pas être annulée.",
