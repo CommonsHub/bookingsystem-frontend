@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { CreditCard, ExternalLink } from "lucide-react";
 import { Booking } from "@/types";
 import { useTranslation } from "react-i18next";
+import { toast } from "@/components/ui/toast-utils";
 
 const baseUrl = import.meta.env.VITE_DEPLOY_URL || window.location.origin
 

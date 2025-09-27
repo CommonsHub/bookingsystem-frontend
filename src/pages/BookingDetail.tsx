@@ -7,6 +7,7 @@ import { BookingDetailsCard } from "@/components/booking/BookingDetailsCard";
 import { BookingActions } from "@/components/booking/BookingActions";
 import { RoomInfoCard } from "@/components/booking/RoomInfoCard";
 import { CommentSection } from "@/components/booking/CommentSection";
+import { CancelBookingDialog } from "@/components/home/CancelBookingDialog";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Edit, Copy, ExternalLink } from "lucide-react";
@@ -33,6 +34,7 @@ const BookingDetail = () => {
     loading
   } = useBooking();
   const [submitting, setSubmitting] = useState(false);
+  const [showCancelDialog, setShowCancelDialog] = useState(false);
 
   if (!id) return <div>{t('messages.bookingIdMissing')}</div>;
 
@@ -135,7 +137,12 @@ const BookingDetail = () => {
   };
 
   const handleCancelBooking = () => {
+    setShowCancelDialog(true);
+  };
+
+  const handleConfirmCancel = () => {
     cancelBookingRequest(id);
+    setShowCancelDialog(false);
   };
 
   const handleEditBooking = () => {
@@ -179,6 +186,12 @@ const BookingDetail = () => {
           <RoomInfoCard booking={booking} />
         </div>
       </div>
+      
+      <CancelBookingDialog
+        isOpen={showCancelDialog}
+        onClose={() => setShowCancelDialog(false)}
+        onConfirm={handleConfirmCancel}
+      />
     </div>
   );
 };
