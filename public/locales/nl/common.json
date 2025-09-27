@@ -399,7 +399,11 @@
     },
     "actions": {
       "complete": "Voltooien",
-      "cancel": "Annuleren"
+      "cancel": "Annuleren",
+      "markAsCompleted": "Markeren als voltooid"
+    },
+    "form": {
+      "submit": "Aanvraag indienen"
     },
     "cancelDialog": {
       "title": "Aanvraag annuleren",
@@ -423,7 +427,32 @@
       "requestUpdateError": {
         "title": "Bijwerkingsfout",
         "description": "Er is een fout opgetreden bij het bijwerken van uw aanvraag. Probeer het opnieuw."
-      }
-    }
+      },
+      "requestCancelled": "Aanvraag succesvol geannuleerd",
+      "requestCompleted": "Aanvraag succesvol voltooid",
+      "cancelError": "Kan aanvraag niet annuleren",
+      "completeError": "Kan aanvraag niet voltooien"
+    },
+    "detail": {
+      "information": "Aanvraag informatie",
+      "description": "Beschrijving",
+      "type": "Aanvraag type",
+      "priority": "Prioriteit",
+      "status": "Status",
+      "additionalDetails": "Aanvullende details",
+      "expectedCompletion": "Verwachte voltooiingsdatum",
+      "attachments": "Bijlagen",
+      "actions": "Acties",
+      "contactInfo": "Contactinformatie",
+      "timeline": "Tijdlijn",
+      "created": "Aanvraag aangemaakt",
+      "completed": "Aanvraag voltooid",
+      "cancelled": "Aanvraag geannuleerd",
+      "createdOn": "Aangemaakt op"
+    },
+    "notFound": "Aanvraag niet gevonden",
+    "notFoundDescription": "De aanvraag die u zoekt bestaat niet of u heeft geen toestemming om deze te bekijken.",
+    "cannotEdit": "Kan aanvraag niet bewerken",
+    "cannotEditDescription": "Deze aanvraag kan niet worden bewerkt omdat deze is voltooid of geannuleerd."
   }
 }

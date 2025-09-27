@@ -412,7 +412,11 @@
     },
     "actions": {
       "complete": "Complete",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "markAsCompleted": "Mark as Completed"
+    },
+    "form": {
+      "submit": "Submit Request"
     },
     "cancelDialog": {
       "title": "Cancel Request",

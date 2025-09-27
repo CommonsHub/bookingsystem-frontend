@@ -399,7 +399,11 @@
     },
     "actions": {
       "complete": "Terminer",
-      "cancel": "Annuler"
+      "cancel": "Annuler",
+      "markAsCompleted": "Marquer comme terminé"
+    },
+    "form": {
+      "submit": "Soumettre la demande"
     },
     "cancelDialog": {
       "title": "Annuler la demande",
@@ -423,7 +427,32 @@
       "requestUpdateError": {
         "title": "Erreur de Mise à Jour",
         "description": "Une erreur s'est produite lors de la mise à jour de votre demande. Veuillez réessayer."
-      }
-    }
+      },
+      "requestCancelled": "Demande annulée avec succès",
+      "requestCompleted": "Demande terminée avec succès",
+      "cancelError": "Échec de l'annulation de la demande",
+      "completeError": "Échec de l'achèvement de la demande"
+    },
+    "detail": {
+      "information": "Informations de la demande",
+      "description": "Description",
+      "type": "Type de demande",
+      "priority": "Priorité",
+      "status": "Statut",
+      "additionalDetails": "Détails supplémentaires",
+      "expectedCompletion": "Date d'achèvement prévue",
+      "attachments": "Pièces jointes",
+      "actions": "Actions",
+      "contactInfo": "Informations de contact",
+      "timeline": "Chronologie",
+      "created": "Demande créée",
+      "completed": "Demande terminée",
+      "cancelled": "Demande annulée",
+      "createdOn": "Créé le"
+    },
+    "notFound": "Demande introuvable",
+    "notFoundDescription": "La demande que vous recherchez n'existe pas ou vous n'avez pas la permission de la voir.",
+    "cannotEdit": "Impossible de modifier la demande",
+    "cannotEditDescription": "Cette demande ne peut pas être modifiée car elle a été terminée ou annulée."
   }
 }

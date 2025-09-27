@@ -13,6 +13,7 @@ import { RequestStatusBadge } from "@/components/home/RequestStatusBadge";
 import { RequestCommentSection } from "@/components/request/RequestCommentSection";
 import { RequestActions } from "@/components/request/RequestActions";
 import { useRequestComments } from "@/hooks/useRequestComments";
+import { CancelRequestDialog } from "@/components/home/CancelRequestDialog";
 
 const RequestDetail = () => {
   const { t } = useTranslation();
@@ -30,6 +31,7 @@ const RequestDetail = () => {
     loading
   } = useRequest();
   const [submitting, setSubmitting] = useState(false);
+  const [showCancelDialog, setShowCancelDialog] = useState(false);
   const { comments, refetch: refetchComments } = useRequestComments(id);
 
   if (!id) return <div>{t('messages.requestIdMissing')}</div>;
@@ -109,6 +111,10 @@ const RequestDetail = () => {
   const canEditRequest = request.status !== "cancelled" && request.status !== "completed";
 
   const handleCancelRequest = () => {
+    setShowCancelDialog(true);
+  };
+
+  const handleConfirmCancel = () => {
     setSubmitting(true);
     try {
       cancelRequest(id);
@@ -118,6 +124,7 @@ const RequestDetail = () => {
       toast.error(t('requests.messages.cancelError'));
     } finally {
       setSubmitting(false);
+      setShowCancelDialog(false);
     }
   };
 
@@ -402,8 +409,14 @@ const RequestDetail = () => {
           </Card>
         </div>
       </div>
+
+      <CancelRequestDialog
+        isOpen={showCancelDialog}
+        onClose={() => setShowCancelDialog(false)}
+        onConfirm={handleConfirmCancel}
+      />
     </div>
   );
 };
 
-export default RequestDetail; 
+export default RequestDetail;

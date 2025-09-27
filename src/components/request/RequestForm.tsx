@@ -319,7 +319,7 @@ export const RequestForm = ({ defaultValues, onSubmit, onCancel, isSubmitting = 
               {t('form.actions.cancel')}
             </Button>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? t('form.actions.submitting') : t('form.actions.submit')}
+              {isSubmitting ? t('form.actions.submitting') : t('requests.form.submit')}
             </Button>
           </div>
         </form>
