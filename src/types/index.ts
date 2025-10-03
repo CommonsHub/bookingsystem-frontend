@@ -6,6 +6,7 @@ export interface Room {
   location: string;
   description?: string;
   setupOptions?: RoomSetupOption[];
+  imageUrl?: string;  // Optional string for the image path (e.g., '/images/room1.jpg')
 }
 
 export interface RoomSetupOption {

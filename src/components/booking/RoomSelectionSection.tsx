@@ -19,6 +19,18 @@ interface RoomSelectionSectionProps {
   setSelectedRoomId: (id: string | null) => void;
 }
 
+// Utility function to render room image if available
+function renderRoomImage(room: Room) {
+  if (!room.imageUrl) return null;
+  return (
+    <img
+      src={room.imageUrl}
+      alt={`${room.name} image`}
+      className="h-8 w-8 object-cover rounded-md mr-2"
+    />
+  );
+}
+
 export const RoomSelectionSection = ({
   control,
   rooms,
@@ -73,6 +85,9 @@ export const RoomSelectionSection = ({
                         </FormControl>
                         <div className="space-y-1 flex-1">
                           <div className="flex items-center">
+                                {/* NEW: Add the image here – it will appear before the icon and text */}
+                            {/* Render room image if available */}
+                            {renderRoomImage(room)}
                             <Users className="h-4 w-4 text-red-500 mr-2" />
                             <span>{room.capacity} {t('booking.people')}: {room.name}</span>
                           </div>

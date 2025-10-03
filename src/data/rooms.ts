@@ -7,6 +7,8 @@ export const rooms: Room[] = [
     capacity: "17-100",
     location: "2st Floor",
     description: "Large conference space",
+    imageUrl: '/public/Elinor_Ostrom.jpg', 
+
     setupOptions: [
       {
         type: "Workshop",
@@ -28,6 +30,7 @@ export const rooms: Room[] = [
         maxCapacity: 120,
         icon: "mic",
         description: "standing, networking",
+
       },
     ],
   },
@@ -37,6 +40,7 @@ export const rooms: Room[] = [
     capacity: "10-17",
     location: "2nd Floor",
     description: "Medium-sized conference room",
+    imageUrl: '/public/satoshi.png',  
     setupOptions: [],
   },
   {
@@ -45,6 +49,7 @@ export const rooms: Room[] = [
     capacity: "12",
     location: "2nd Floor",
     description: "Perfect for small meetings",
+    imageUrl: '/public/angel.heif',  
     setupOptions: [],
   },
   {
