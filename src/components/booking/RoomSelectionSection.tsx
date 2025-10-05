@@ -26,7 +26,7 @@ function renderRoomImage(room: Room) {
     <img
       src={room.imageUrl}
       alt={`${room.name} image`}
-      className="h-8 w-8 object-cover rounded-md mr-2"
+      className="h-16 w-16 object-cover rounded-md mr-2"
     />
   );
 }
